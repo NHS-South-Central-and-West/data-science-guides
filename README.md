@@ -6,10 +6,16 @@ A repository containing worked examples in R & Python of some common data scienc
 
 - Exploratory Data Analysis
 - Hypothesis Testing (Chi-Squared, T-Test, ANOVA?)
-- Linear Regression
-- Logistic Regression
-- Basic ML Pipeline (Classification?)
-- Clustering?
+- Regression
+  - Linear Regression
+  - Generalised Linear Models
+  - Multilevel Regression
+  - Generalised Additive Models
+- Forecasting
+- Machine Learning
+  - Supervised Learning (Classification)
+  - Unsupervised Learning (Clustering)
+- Deep Learning
 
 ## Resources
 
