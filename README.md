@@ -47,3 +47,4 @@ You should now be able to run any of the source code you want!
 
 - [R for Data Science](https://r4ds.hadley.nz/)
 - [Telling Stories with Data](https://tellingstorieswithdata.com/)
+- [StatQuest](https://www.youtube.com/@statquest)
