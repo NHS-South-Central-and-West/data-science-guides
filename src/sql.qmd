@@ -1,0 +1,136 @@
+---
+title: "Importing Data from SQL"
+author: "Paul Johnson"
+date: "`r Sys.Date()`"
+---
+
+One of the first tasks you will need to do with any analysis is loading in the data. While you may have data from a variety of sources, the most common will be in a SQL database. Here we will cover how to access a SQL database and extract data in either R or Python.
+
+## R
+
+### Packages
+
+The R packages you need to interact with SQL are:
+
+-   DBI
+-   ODBC
+
+I won't import either package here because they are only needed for a handful of functions.
+
+### Establish SQL Connection
+
+```{r}
+#| label: r-sql-connection
+
+con <- DBI::dbConnect(
+  odbc::odbc(),
+  driver = 'SQL Server',
+  server = '{db-server}',
+  database = '{db-name}',
+  trustedconnection = TRUE
+)
+
+```
+
+### Running SQL Query
+
+```{r}
+#| label: r-get-data
+
+df <- DBI::dbGetQuery(
+  con,
+  'SELECT X
+  FROM DB'
+)
+
+```
+
+```{r}
+
+head(df)
+
+dplyr::glimpse(df)
+
+```
+
+### Export to CSV
+
+```{r}
+
+readr::write_csv(df, 'path-to-save-df\df.csv')
+
+```
+
+## Python
+
+### Libraries
+
+You need the following Python libraries to run the code in this notebook:
+
+- pyodbc - accessing ODBC databases
+- sqlalchemy - establishing a connection and interacts with pandas
+- pandas - storing, manipulating, and exporting dataframes
+
+```{python}
+
+import pyodbc
+import sqlalchemy as sa
+import pandas as pd
+
+from sqlalchemy import create_engine
+
+```
+
+### Establish SQL Connection
+
+In order to run a SQL query in Python, you need to set Python up so that it can interpret the specific SQL dialect and find the database that it is running the query on. The SQLAlchemy function `create_engine()` will give Python everything it needs to do this, but you also have to feed in the following parameters as a string (example given in code):
+
+- SQL dialect ('mssql')
+- Python library for interacting with the database ('pyodbc')
+- Database location
+- SQL driver ('?driver=SQL+Server')
+
+```{python}
+
+engine = sa.create_engine('mssql+pyodbc://{server-and-db-address}?driver=SQL+Server',echo = True)
+
+```
+
+Having specified a SQL engine, you can establish a connection.
+
+```{python}
+
+conn = engine.connect()
+
+```
+
+### Running SQL Query
+
+You have two ways of going about running a SQL query in a Python script. You can either write your query out explicitly in your Python script, or you can read in an external SQL query. If the query is particularly lengthy, it is better to store is as a .sql file and call it from Python, to make it easier to read your code, and to maintain both components.
+
+```{python}
+# open and read sql query
+query = open('path-to-query\query.sql', 'r')
+
+# read query in to pandas dataframe
+df = pd.read_sql_query(query.read(),conn)
+
+# close sql query
+query.close()
+```
+
+You can check that this process has worked as expected by inspecting your pandas dataframe.
+
+```{python}
+df.head()
+```
+
+### Export to CSV
+
+Finally, you can export your dataframe using the pandas function `to_csv()`. If you want to retain the index column that pandas adds to the dataframe, simply change `index=False` to `True`.
+
+```{python}
+
+df.to_csv('path-to-save-df\df.csv', index=False)
+
+```
