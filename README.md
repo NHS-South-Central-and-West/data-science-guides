@@ -30,6 +30,7 @@ You should now be able to run any of the source code you want!
 
 ## Methods
 
+- Importing Data from SQL
 - Exploratory Data Analysis
 - Hypothesis Testing (Chi-Squared, T-Test, ANOVA?)
 - Regression
