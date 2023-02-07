@@ -4,6 +4,12 @@ A repository containing worked examples in R & (eventually) Python of some commo
 
 ## Usage
 
+### R/Python
+
+In order to implement the guides in this repository, you will need to install R and/or Python (depending on which you wish to use). 
+
+### Git
+
 If you are new to Git, a good place to start is the [NHS-R Git Training](https://github.com/nhs-r-community/git_training/). Their [Introduction to Git](https://github.com/nhs-r-community/git_training/blob/main/guides/introduction_to_git.md) will help you understand why version control is necessary, what Git & GitHub can offer, and how to navigate these tools.
 
 ### Guides & Source Code
