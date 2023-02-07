@@ -22,8 +22,6 @@ library(xgboost)
 theme_set(theme_minimal())
 
 set.seed(456)
-
-doParallel::registerDoParallel(cores=4)
 ```
 
 # Data
