@@ -2,9 +2,13 @@
 title: "Importing Data from SQL"
 author: "Paul Johnson"
 date: "`r Sys.Date()`"
+execute:
+  eval: false
 ---
 
 One of the first tasks you will need to do with any analysis is loading in the data. While you may have data from a variety of sources, the most common will be in a SQL database. Here we will cover how to access a SQL database and extract data in either R or Python.
+
+**NOTE: Unlike other notebooks, this notebook won't run and give you outputs because it does not contain the SQL server connection and database details that it needs to pull data. You need to fill in those blanks if you want to run the code below.**
 
 ## R
 
