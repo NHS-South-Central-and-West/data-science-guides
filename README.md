@@ -6,7 +6,9 @@ A repository containing worked examples in R & (eventually) Python of some commo
 
 ### R/Python
 
-In order to implement the guides in this repository, you will need to install R and/or Python (depending on which you wish to use).
+In order to implement the guides in this repository, you will need to install R and/or Python (depending on which you wish to use). Getting R and Python installed on your local machine can prove to be a non-trivial task, and knowing which tools are best for using either language (especially Python) can sometimes act as a bit of a barrier for new users.
+
+To help reduce the barriers to entry for new users, there is a [notebook](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html) that takes you through some of these challenges, from getting either language installed on your local machine to which tools to use.
 
 ### Git
 
@@ -14,7 +16,7 @@ If you are new to Git, a good place to start is the [NHS-R Git Training](https:/
 
 ### Guides & Source Code
 
-All guides and source code are stored in the /src subdirectory. Quarto (.qmd) notebooks are the source code, and can be used to run the code locally, while Markdown (.md) files are the guides, containing outputs and visualizations along with the code itself.
+All guides are stored as html files in the /guides subdirectory, but they can be accessed from the links below. The source code for the guides are stored in the /src subdirectory. The source code (.qmd files) can be used to run the code locally.
 
 The easiest way to use any of the guides is to clone this repository to your local machine, so that you have all the files you need for setup.
 
@@ -38,7 +40,8 @@ You should now be able to run any of the source code you want!
 
 ## Methods
 
-- Importing Data from SQL
+- [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html)
+- [Importing Data from SQL](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/sql.html)
 - Exploratory Data Analysis
 - Hypothesis Testing (Chi-Squared, T-Test, ANOVA?)
 - Regression
@@ -48,7 +51,7 @@ You should now be able to run any of the source code you want!
   - Generalised Additive Models
 - Forecasting
 - Machine Learning
-  - Supervised Learning (Classification)
+  - [Supervised Learning (Classification)](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/machine-learning.html)
   - Unsupervised Learning (Clustering)
 - Deep Learning
 
