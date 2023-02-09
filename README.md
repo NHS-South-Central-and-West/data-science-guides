@@ -1,4 +1,4 @@
-# Data Science Templates
+# Data Science Guides
 
 A repository containing worked examples in R & (eventually) Python of some common data science tasks, to use as a space for learning how to implement these methods, and as a template for applying data science to SCW work.
 
@@ -6,7 +6,7 @@ A repository containing worked examples in R & (eventually) Python of some commo
 
 ### R/Python
 
-In order to implement the guides in this repository, you will need to install R and/or Python (depending on which you wish to use). 
+In order to implement the guides in this repository, you will need to install R and/or Python (depending on which you wish to use).
 
 ### Git
 
