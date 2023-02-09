@@ -27,14 +27,15 @@ set.seed(456)
 # Data
 
 ```{r}
+#| label: data
 
-heartdisease_raw <- MLDataR::heartdisease %>%
+heartdisease_raw <- MLDataR::heartdisease |>
   janitor::clean_names()
 
 glimpse(heartdisease_raw)
 
 heartdisease_raw <-
-  heartdisease_raw %>%
+  heartdisease_raw |>
   mutate(
     sex = as.factor(sex),
     fasting_bs = as.factor(fasting_bs),
@@ -74,72 +75,72 @@ train_folds
 #| warning: false
 
 # heart disease
-train_df %>%
+train_df |>
   count(heart_disease)
 
 # age
-train_df %>%
+train_df |>
   ggplot(aes(age, fill = heart_disease)) +
   geom_histogram(binwidth = 5, position = "dodge")
 
-train_df %>%
+train_df |>
   ggplot(aes(sex, fill = heart_disease)) +
   geom_bar(position = "dodge")
 
 # resting ecg
-train_df %>%
+train_df |>
   count(resting_ecg)
 
-train_df %>%
+train_df |>
   ggplot(aes(resting_ecg, fill = heart_disease)) +
   geom_bar(position = "dodge")
 
-train_df %>% 
-  group_by(resting_ecg) %>% 
-  count(heart_disease) %>% 
+train_df |> 
+  group_by(resting_ecg) |> 
+  count(heart_disease) |> 
   mutate(freq = n/sum(n))
 
 # max hr
-train_df %>%
+train_df |>
   ggplot(aes(max_hr, fill = heart_disease)) +
   geom_histogram(position = "dodge")
 
-train_df %>%
+train_df |>
   ggplot(aes(max_hr, fill = heart_disease)) +
   geom_histogram(position = "dodge")
 
 # heart peak reading
-train_df %>%
+train_df |>
   ggplot(aes(heart_peak_reading)) +
   geom_histogram()
 
-train_df %>%
+train_df |>
   ggplot(aes(heart_peak_reading, fill = heart_disease)) +
   geom_histogram(position = "dodge")
 
 # cholesterol  
-train_df %>%
+train_df |>
   ggplot(aes(cholesterol)) +
   geom_histogram()
 
-train_df %>%
+train_df |>
   ggplot(aes(cholesterol, fill = heart_disease)) +
   geom_histogram(position = "dodge")
 
-train_df %>%
+train_df |>
   ggplot(aes(cholesterol, max_hr, fill = heart_disease)) +
   geom_point()
 
 # angina
-train_df %>%
+train_df |>
   count(angina)
 
-train_df %>%
+train_df |>
   ggplot(aes(angina, fill = heart_disease)) +
   geom_bar(position = "dodge")
 
 # fasting bs
-train_df %>%
+train_df |>
   ggplot(aes(fasting_bs, fill = heart_disease)) +
   geom_bar(position = "dodge")
 
@@ -150,44 +151,44 @@ train_df %>%
 ```{r}
 #| label: logistic-regression
 
-model_rec <- recipe(heart_disease ~ ., data = train_df) %>%
-  step_corr(all_numeric(), threshold = 0.8) %>%
+model_rec <- recipe(heart_disease ~ ., data = train_df) |>
+  step_corr(all_numeric(), threshold = 0.8) |>
   # 
-  step_novel(all_nominal_predictors()) %>%
+  step_novel(all_nominal_predictors()) |>
   # remove no variance predictors
-  step_zv(all_predictors()) %>%
+  step_zv(all_predictors()) |>
   # normalize data so that it is between 0 and 1
-  step_normalize(all_numeric_predictors()) %>%
+  step_normalize(all_numeric_predictors()) |>
   # standardize data so that is has mean zero and sd one
-  step_center(all_numeric_predictors()) %>%
-  step_scale(all_numeric_predictors()) %>%
+  step_center(all_numeric_predictors()) |>
+  step_scale(all_numeric_predictors()) |>
   step_dummy(all_nominal_predictors(), one_hot = TRUE)
 
-model_rec %>%
-  prep() %>%
+model_rec |>
+  prep() |>
   bake(new_data = NULL)
 
-model_train <- model_rec %>%
-  prep() %>%
+model_train <- model_rec |>
+  prep() |>
   bake(new_data = NULL)
 
-model_test <- model_rec %>%
-  prep() %>%
+model_test <- model_rec |>
+  prep() |>
   bake(new_data = test_df)
 
-log_mod <- 
-  logistic_reg() %>%
-  set_engine('glm') %>%
+log_mod <-
+  logistic_reg() |>
+  set_engine('glm') |>
   set_mode('classification')
 
 model_wf <-
-  workflow() %>%
+  workflow() |>
   add_recipe(model_rec)
 
 eval_metrics <- metric_set(roc_auc, accuracy, sensitivity, specificity)
 
-log_rs <- model_wf %>%
-  add_model(log_mod) %>%
+log_rs <- model_wf |>
+  add_model(log_mod) |>
   fit_resamples(
     resamples = train_folds,
     metrics = eval_metrics,
@@ -196,13 +197,13 @@ log_rs <- model_wf %>%
 
 collect_metrics(log_rs)
 
-log_rs %>%
+log_rs |>
   conf_mat_resampled()
 
-log_rs %>%
-  collect_predictions() %>%
-  group_by(id) %>%
-  roc_curve(heart_disease, .pred_1) %>%
+log_rs |>
+  collect_predictions() |>
+  group_by(id) |>
+  roc_curve(heart_disease, .pred_1) |>
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
   geom_abline(lty = 2, color = "gray80", size = 1.5) +
   geom_path(show.legend = FALSE, alpha = 0.6, size = 1.2) +
@@ -216,14 +217,14 @@ log_rs %>%
 #| label: random-forest
 
 rf_mod <- 
-  rand_forest(trees = 1000) %>%
-  set_mode("classification") %>%
+  rand_forest(trees = 1000) |>
+  set_mode("classification") |>
   set_engine("ranger")
 
 rf_mod
 
-rf_rs <- model_wf %>%
-  add_model(rf_mod) %>%
+rf_rs <- model_wf |>
+  add_model(rf_mod) |>
   fit_resamples(
     resamples = train_folds,
     metrics = eval_metrics,
@@ -232,13 +233,13 @@ rf_rs <- model_wf %>%
 
 collect_metrics(rf_rs)
 
-rf_rs %>%
+rf_rs |>
   conf_mat_resampled()
 
-rf_rs %>%
-  collect_predictions() %>%
-  group_by(id) %>%
-  roc_curve(heart_disease, .pred_1) %>%
+rf_rs |>
+  collect_predictions() |>
+  group_by(id) |>
+  roc_curve(heart_disease, .pred_1) |>
   ggplot(aes(1 - specificity, sensitivity, color = id)) +
   geom_abline(lty = 2, color = "gray80", size = 1.5) +
   geom_path(show.legend = FALSE, alpha = 0.6, size = 1.2) +
@@ -259,13 +260,13 @@ xgb_mod <-
     min_n = tune(),
     loss_reduction = tune(),
     stop_iter = tune()
-    ) %>%
-  set_mode("classification") %>%
+    ) |>
+  set_mode("classification") |>
   set_engine("xgboost")
 
 search_res <-
-  model_wf %>%
-  add_model(xgb_mod) %>%
+  model_wf |>
+  add_model(xgb_mod) |>
   tune_bayes(
     resamples = train_folds,
     # To use non-default parameter ranges
@@ -282,12 +283,12 @@ show_best(search_res, metric = "accuracy")
 
 autoplot(search_res, type = "performance")
 
-best_xgb <- search_res %>%
+best_xgb <- search_res |>
   select_best("accuracy")
   
-xgb_rs <- model_wf %>%
-  add_model(xgb_mod) %>%
-  finalize_workflow(best_xgb) %>%
+xgb_rs <- model_wf |>
+  add_model(xgb_mod) |>
+  finalize_workflow(best_xgb) |>
   fit_resamples(
     resamples = train_folds,
     metrics = eval_metrics,
@@ -300,16 +301,16 @@ collect_metrics(xgb_rs)
 ```{r}
 #| label: final-model
 
-final_mod <- model_wf %>%
-  add_model(xgb_mod) %>%
-  finalize_workflow(best_xgb) %>%
+final_mod <- model_wf |>
+  add_model(xgb_mod) |>
+  finalize_workflow(best_xgb) |>
   last_fit(train_test_split)
 
 final_mod
 
 collect_metrics(final_mod)
 
-collect_predictions(final_mod) %>%
+collect_predictions(final_mod) |>
   conf_mat(heart_disease, .pred_class)
 
 ```
