@@ -1,0 +1,54 @@
+---
+title: "Getting Started with R & Python"
+author: "Paul Johnson"
+date: "`r Sys.Date()`"
+---
+
+Learning any programming language is challenging, and it's reasonable to be intimidated by the steep learning curve that you face when first delving into the process of learning how to code. However, there are a wealth of resources that can help you in that process, and it doesn't take long to get from your first lines of code to some interesting outputs!
+
+This guide won't spend a ton of time trying to teach the basics of using R or Python or programming in general. Instead, this guide will focus on overcoming the initial barriers to getting from deciding to use R/Python to running your first lines of code.
+
+If you are looking to learn R or Python, the following resources are a good place to start:
+
+- [Learning Python](https://developers.google.com/edu/python)
+- The NHS-R Community's [Introduction to R](https://nhs-r-community.github.io/intro_r/) and [Introduction to RStudio](https://github.com/nhs-r-community/intro-r-rstudio)
+
+## Installation
+
+Getting R or Python installed on your local machine requires submitting a request with the IT Self-Service Portal. The IT team may not have previous experience dealing with either language, so it can help the process if you are familiar with what you need.
+
+In the case of R, everything you need can be found on the [Posit website](https://posit.co/download/rstudio-desktop/). You can download both R and RStudio (software for working with R more efficiently).
+
+If you share this link with IT, installation should be relatively simple. However, in order to maximise performance, it is better to install both R and RStudio on your C drive.
+
+The process for installing Python is a little more involved, though should still be relatively simple if you are following these steps. First, you can download the latest version of Python from the [Python website](https://www.python.org/downloads/).
+
+When IT install Python from this link, there are several "Optional Features" available. Any features that are checked as default should be installed, but you should also make sure that 'pip' is one of the features that is checked.
+
+Next, there are several "Advanced Options" that are available to select in the installation process. Again, the defaults should remain checked, but in addition to these, the "Add Python to environment variables" option needs to be checked. This should mean that Python is setup properly on your local machine.
+
+## Tools
+
+### R
+
+Getting from an R installation to running your first lines of code is a little easier than doing the same with Python. The biggest reason for this is the monopoly that Posit (formerly RStudio) has over the tools for using R.
+
+RStudio is the best available Integrated Development Environment (IDE) for writing R code, and it is highly recommended that you stick to using RStudio when you first start using R. There are other IDEs and text editors that can handle R (for example, VS Code), but when you start out, it is easiest to stick to RStudio.
+
+### Python
+
+Unlike R, there are a multitude of different IDEs that you can use for Python. While this is a good thing (lots of options) it can be a little intimidating for someone first dipping their toes into the Pythonic waters.
+
+The most popular choices for Python are:
+
+- [Jupyter Notebook](https://jupyter.org/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [PyCharm](https://www.jetbrains.com/pycharm/)
+
+While there are a myriad of other options, such as DataSpell, Spyder, Atom, and Sublime Text, the above choices are popular and relatively easy to get started with. There is no right answer here, so the best bet is just to try some out and see what feels good for you. Jupyter is generally a good choice to start you off, because it is a little easier to set up and start writing code immediately.
+
+Another option, which will be particularly enticing for anyone that is already familiar with R, is RStudio. If you are already using R and are comfortable/familiar with RStudio, it might be easiest to start by trying Python out using the environment you're familiar with.
+
+## Virtual Environments
+
+Virtual environments in both R and Python matter, but especially Python!
