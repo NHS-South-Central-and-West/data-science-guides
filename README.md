@@ -42,7 +42,7 @@ You should now be able to run any of the source code you want!
 
 - [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html)
 - [Importing Data from SQL](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/sql.html)
-- [Exploratory Data Analysis]((https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/exploratory-data-analysis.html))
+- [Exploratory Data Analysis](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/exploratory-data-analysis.html)
 - Hypothesis Testing (Chi-Squared, T-Test, ANOVA?)
 - Regression
   - Linear Regression
@@ -65,7 +65,7 @@ You should now be able to run any of the source code you want!
 
 ## Acknowledgements
 
-- Datasets used have come from several sources
+- Datasets used have come from several sources:
   - Fingertips
   - NHS-R Datasets
   - MLDataR
