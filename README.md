@@ -42,7 +42,7 @@ You should now be able to run any of the source code you want!
 
 - [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html)
 - [Importing Data from SQL](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/sql.html)
-- Exploratory Data Analysis
+- [Exploratory Data Analysis]((https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/exploratory-data-analysis.html))
 - Hypothesis Testing (Chi-Squared, T-Test, ANOVA?)
 - Regression
   - Linear Regression
@@ -53,6 +53,8 @@ You should now be able to run any of the source code you want!
 - Machine Learning
   - [Supervised Learning (Classification)](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/machine-learning.html)
   - Unsupervised Learning (Clustering)
+  - Cross-Validation
+  - Gradient-Boosted Decision Trees
 - Deep Learning
 
 ## Resources
@@ -60,3 +62,10 @@ You should now be able to run any of the source code you want!
 - [R for Data Science](https://r4ds.hadley.nz/)
 - [Telling Stories with Data](https://tellingstorieswithdata.com/)
 - [StatQuest](https://www.youtube.com/@statquest)
+
+## Acknowledgements
+
+- Datasets used have come from several sources
+  - Fingertips
+  - NHS-R Datasets
+  - MLDataR
