@@ -176,23 +176,3 @@ rf_rs |>
   coord_equal()
 
 ```
-
-
-# Fit Final Model
-
-```{r}
-#| label: final-model
-
-final_mod <- model_wf |>
-  add_model(rf_mod) |>
-  finalize_workflow(best_rf) |>
-  last_fit(train_test_split)
-
-final_mod
-
-collect_metrics(final_mod)
-
-collect_predictions(final_mod) |>
-  conf_mat(heart_disease, .pred_class)
-
-```
