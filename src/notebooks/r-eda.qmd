@@ -1,0 +1,146 @@
+---
+title: "Exploratory Data Analysis in R"
+author: "Paul Johnson"
+date: today
+---
+
+# Setup
+
+```{r}
+#| label: setup
+
+# import packages
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+})
+
+theme_set(theme_minimal())
+
+```
+
+# Data
+
+```{r}
+#| label: data
+
+df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
+
+df <- df |> 
+  mutate(
+    sex = as.factor(sex),
+    fasting_bs = as.factor(fasting_bs),
+    resting_ecg = as.factor(resting_ecg),
+    angina = as.factor(angina),
+    heart_disease = as.factor(heart_disease)
+  )
+
+```
+
+# Exploring Data
+
+```{r}
+#| label: explore
+
+head(df)
+
+glimpse(df)
+
+```
+
+# Summary Statistics
+
+```{r}
+#| label: summary-stats
+
+summary(df)
+
+# heart disease
+df |>
+  count(heart_disease)
+
+# resting ecg
+df |>
+  count(resting_ecg)
+
+df |> 
+  group_by(resting_ecg) |> 
+  count(heart_disease) |> 
+  mutate(freq = n/sum(n))
+
+# angina
+df |>
+  count(angina)
+
+```
+
+# Data Visualisation
+
+```{r}
+#| label: data-viz
+#| message: false
+#| warning: false
+
+# age distribution
+df |>
+  ggplot(aes(age)) +
+  geom_histogram(binwidth = 5)
+
+# age distribution by heart disease
+df |>
+  ggplot(aes(age, fill = heart_disease)) +
+  geom_histogram(binwidth = 5, position = "dodge")
+
+# sex distribution by heart disease
+df |>
+  ggplot(aes(sex, fill = heart_disease)) +
+  geom_bar(position = "dodge")
+
+# resting ecg distribution by heart disease
+df |>
+  ggplot(aes(resting_ecg, fill = heart_disease)) +
+  geom_bar(position = "dodge")
+
+# max hr
+df |>
+  ggplot(aes(max_hr, fill = heart_disease)) +
+  geom_histogram(position = "dodge")
+
+df |>
+  ggplot(aes(max_hr, fill = heart_disease)) +
+  geom_histogram(position = "dodge")
+
+# heart peak reading
+df |>
+  ggplot(aes(heart_peak_reading)) +
+  geom_histogram()
+
+df |>
+  ggplot(aes(heart_peak_reading, fill = heart_disease)) +
+  geom_histogram(position = "dodge")
+
+# cholesterol  
+df |>
+  ggplot(aes(cholesterol)) +
+  geom_histogram()
+
+df |>
+  ggplot(aes(cholesterol, fill = heart_disease)) +
+  geom_histogram(position = "dodge")
+
+df |>
+  ggplot(aes(cholesterol, max_hr, colour = heart_disease)) +
+  geom_point(size=2)
+
+# angina
+df |>
+  ggplot(aes(angina, fill = heart_disease)) +
+  geom_bar(position = "dodge")
+
+# fasting bs
+df |>
+  ggplot(aes(fasting_bs, fill = heart_disease)) +
+  geom_bar(position = "dodge")
+
+```
+

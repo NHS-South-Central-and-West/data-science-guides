@@ -1,0 +1,208 @@
+---
+title: "Exploratory Data Analysis in Python"
+author: "Paul Johnson"
+date: today
+---
+
+## Setup
+
+```{python}
+#| label: py-setup
+
+# import packages
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# data path
+path = '../data/'
+file_name = 'heart_disease.csv'
+
+# import data
+df = pd.read_csv(f"{path}{file_name}")
+
+```
+
+## Exploring Data
+
+```{python}
+#| label: df-head
+
+df.head()
+
+```
+
+```{python}
+#| label: df-info
+
+df.info()
+
+```
+
+## Summary Statistics
+
+```{python}
+#| label: df-describe
+
+df.describe()
+
+```
+
+```{python}
+#| label: heart-disease-count
+
+# heart disease
+df['heart_disease'].value_counts()
+
+```
+
+```{python}
+#| label: resting-ecg-count
+
+# resting ecg
+df['resting_ecg'].value_counts()
+
+```
+
+```{python}
+#| label: heart-disease-by-resting-ecg-count
+
+df.groupby(['resting_ecg'])['heart_disease'].value_counts()
+
+```
+
+```{python}
+#| label: heart-disease-by-resting-ecg-freq
+
+df.groupby(['resting_ecg'])['heart_disease'].value_counts(normalize=True).round(3)
+
+```
+
+```{python}
+#| label: angina-count
+
+# angina
+df['angina'].value_counts()
+
+```
+
+## Data Visualisation
+
+```{python}
+#| label: age-dist
+
+# age distribution
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='age', binwidth=5)
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: age-by-heart-disease
+
+# age distribution by heart disease
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='age', hue='heart_disease', binwidth=5, multiple='dodge')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: sex-by-heart-disease
+
+# sex distribution by heart disease
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='sex', hue='heart_disease', binwidth=5, multiple='dodge')
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: ecg-by-heart-disease
+# resting ecg distribution by heart disease
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='resting_ecg', hue='heart_disease', binwidth=5, multiple='dodge')
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: max-hr
+# max hr
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='max_hr', binwidth=5)
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: max-hr-by-heart-disease
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='max_hr', hue='heart_disease', binwidth=5, multiple='dodge')
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: heart-peak-reading
+# heart peak reading
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='heart_peak_reading', binwidth=5)
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: heart-peak-reading-by-heart-disease
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='heart_peak_reading', hue='heart_disease', binwidth=5, multiple='dodge')
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: cholesterol
+# cholesterol  
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='cholesterol', binwidth=5)
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: cholesterol-by-heart-disease
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='cholesterol', hue='heart_disease', binwidth=5, multiple='dodge')
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: cholesterol-by-max-hr
+fig, ax = plt.subplots(figsize=(9,6))
+sns.scatterplot(data=df, x='cholesterol', y='max_hr', hue='heart_disease')
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: angina-by-heart-disease
+# angina
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='angina', hue='heart_disease', binwidth=5, multiple='dodge')
+sns.despine()
+plt.show()
+```
+
+```{python}
+#| label: fasting-bs-by-heart-disease
+# fasting bs
+fig, ax = plt.subplots(figsize=(9,6))
+sns.histplot(data=df, x='fasting_bs', hue='heart_disease', binwidth=5, multiple='dodge')
+sns.despine()
+plt.show()
+```
