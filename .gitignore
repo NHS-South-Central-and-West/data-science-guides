@@ -210,3 +210,5 @@ cython_debug/
 #.idea/
 
 /.quarto/
+
+/.luarc.json
