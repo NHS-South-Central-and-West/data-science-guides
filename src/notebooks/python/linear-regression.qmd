@@ -1,0 +1,68 @@
+---
+title: "Linear Regression in Python: The Relationship Between Deprivation & Life Expectancy"
+author: "Paul Johnson"
+date: today
+---
+
+## Setup
+
+```{python}
+#| label: imports
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import statsmodels.api as sm
+
+```
+
+```{python}
+#| label: data
+
+# data path
+path = '../../../data/'
+file_name = 'deprivation.csv'
+
+# import data
+df = pd.read_csv(f"{path}{file_name}")
+
+```
+
+```{python}
+#| label: data_summary
+
+# data summary
+df.info()
+df.describe()
+df.head()
+```
+
+## EDA
+
+```{python}
+#| label: deprivation-plot
+
+# imd
+fig, ax = plt.subplots(figsize=(9,6))
+sns.scatterplot(x='life_expectancy', y='imd_score', data=df)
+sns.despine()
+plt.show()
+
+```
+
+## Linear Regression
+
+```{python}
+#| label: model
+
+# create model
+model = sm.OLS.from_formula('life_expectancy ~ imd_score', data=df)
+
+# fit model
+results = model.fit()
+
+# print summary
+print(results.summary())
+
+```
