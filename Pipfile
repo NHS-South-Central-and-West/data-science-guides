@@ -12,6 +12,11 @@ rpy2 = "*"
 nbformat = "*"
 nbclient = "*"
 jupyter = "*"
+sklearn = "*"
+scikit-learn = "*"
+statsmodels = "*"
+torch = "*"
+torchvision = "*"
 
 [dev-packages]
 
