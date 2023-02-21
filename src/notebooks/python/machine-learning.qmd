@@ -1,0 +1,148 @@
+---
+title: "End-to-End Machine Learning in Python: Predicting Heart Disease"
+author: "Paul Johnson"
+date: today
+---
+
+## Setup
+
+```{python}
+#| label: imports
+
+# import libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import f1_score
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+
+```
+
+```{python}
+#| label: data
+
+# data path
+path = '../../../data/'
+file_name = 'heart_disease.csv'
+
+# import data
+df = pd.read_csv(f"{path}{file_name}")
+
+```
+
+```{python}
+#| label: data_summary
+
+# data summary
+df.info()
+df.describe()
+df.head()
+```
+
+## Data Cleaning
+
+```{python}
+#| label: data_cleaning
+
+# check for missing values
+df.isna().sum()
+
+# drop missing values
+df.dropna(inplace=True)
+
+# check for duplicates
+df.duplicated().sum()
+
+# drop duplicates
+df.drop_duplicates(inplace=True)
+
+```
+
+# Data Preprocessing
+
+```{python}
+#| label: data_preprocessing
+
+# get categorical columns
+cat_cols = df.select_dtypes(include='object').columns
+# get numerical columns
+num_cols = df.select_dtypes(exclude='object').columns
+
+# one-hot encode categorical columns
+df = pd.get_dummies(df, columns=cat_cols, drop_first=True)
+
+# check data
+df.info()
+
+```
+
+## Train/Test Split
+
+```{python}
+#| label: train_test_split
+
+# split data into train and test sets
+X = df.drop('heart_disease', axis=1)
+y = df['heart_disease']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+```
+
+## Model Training
+
+```{python}
+#| label: train
+
+# train logistic regression
+log = LogisticRegression()
+log_clf = log.fit(X_train, y_train)
+
+# train random forest
+rf = RandomForestClassifier()
+rf_clf = rf.fit(X_train, y_train)
+
+```
+
+## Model Evaluation
+
+```{python}
+#| label: evaluation
+
+# evaluate logistic regression model
+log_preds = log_clf.predict(X_test)
+log_f1 = f1_score(y_test, log_preds)
+
+# evaluate random forest model
+rf_preds = rf_clf.predict(X_test)
+rf_f1 = f1_score(y_test, rf_preds)
+
+# compare model performance
+print(f"Logistic Regression F1 Score: {log_f1:.4f}")
+print(f"Random Forest F1 Score: {rf_f1:.4f}")
+
+```
+
+## Model Interpretation
+
+The random forest has a higher F1 score than the logistic regression model, so that is the model we will use. We can compute the features that are most important in predicting heart disease in the random forest.
+
+```{python}
+#| label: feature-importance
+
+# get feature importance
+feat_importance = pd.DataFrame({'feature': X.columns, 'importance': rf.feature_importances_})
+
+# plot feature importance
+plt.figure(figsize=(8, 10))
+sns.barplot(x='importance', y='feature', data=feat_importance.sort_values(by='importance', ascending=False))
+sns.despine()
+plt.show()
+
+```
