@@ -1,10 +1,9 @@
 ---
-title: "ML Pipeline: Predicting Heart Disease"
+title: "End-to-End Machine Learning in R: Predicting Heart Disease"
 author: "Paul Johnson"
-date: "`r Sys.Date()`"
+date: today
 ---
 
-# R
 
 ## Setup
 
@@ -18,28 +17,22 @@ suppressPackageStartupMessages({
   library(tidymodels)
 })
 
-# import packages required for models
-library(xgboost)
-
 theme_set(theme_minimal())
 
-set.seed(456)
 ```
 
 ## Data
+
+An important step in any machine learning workflow is exploratory analysis, in order to get a better understanding of the data. 
 
 ### Import Data
 
 ```{r}
 #| label: import-data
 
-heartdisease_raw <- MLDataR::heartdisease |>
-  janitor::clean_names()
+df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
 
-glimpse(heartdisease_raw)
-
-heartdisease_raw <-
-  heartdisease_raw |>
+df <- df |> 
   mutate(
     sex = as.factor(sex),
     fasting_bs = as.factor(fasting_bs),
@@ -48,6 +41,8 @@ heartdisease_raw <-
     heart_disease = as.factor(heart_disease)
   )
 
+glimpse(df)
+
 ```
 
 ### Train/Test Split
@@ -55,7 +50,7 @@ heartdisease_raw <-
 ```{r}
 
 train_test_split <-
-  rsample::initial_split(heartdisease_raw,
+  rsample::initial_split(df,
                          strata = heart_disease,
                          prop = 0.7)
 
@@ -67,6 +62,7 @@ test_df <- rsample::testing(train_test_split)
 #### Specify Cross-Validation Folds
 
 ```{r}
+
 train_folds <- vfold_cv(train_df, strata = heart_disease)
 train_folds
 
@@ -77,16 +73,12 @@ train_folds
 ```{r}
 
 model_rec <- recipe(heart_disease ~ ., data = train_df) |>
-  step_corr(all_numeric(), threshold = 0.8) |>
-  # 
-  step_novel(all_nominal_predictors()) |>
-  # remove no variance predictors
-  step_zv(all_predictors()) |>
   # normalize data so that it is between 0 and 1
   step_normalize(all_numeric_predictors()) |>
   # standardize data so that is has mean zero and sd one
   step_center(all_numeric_predictors()) |>
   step_scale(all_numeric_predictors()) |>
+  # one-hot encode categorical variables
   step_dummy(all_nominal_predictors(), one_hot = TRUE)
 
 model_rec |>
@@ -103,7 +95,9 @@ model_test <- model_rec |>
 
 ```
 
-## Logistic Regression
+## Fit Models
+
+### Logistic Regression
 
 ```{r}
 #| label: logistic-regression
@@ -143,7 +137,7 @@ log_rs |>
 
 ```
 
-## Random Forest
+### Random Forest
 
 ```{r}
 #| label: random-forest
@@ -176,13 +170,5 @@ rf_rs |>
   geom_abline(lty = 2, color = "gray80", size = 1.5) +
   geom_path(show.legend = FALSE, alpha = 0.6, size = 1.2) +
   coord_equal()
-
-```
-
-# Python
-
-```{python}
-
-
 
 ```

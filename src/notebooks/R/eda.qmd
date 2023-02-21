@@ -4,7 +4,9 @@ author: "Paul Johnson"
 date: today
 ---
 
-# Setup
+Exploratory data analysis (EDA) is the first step in any advanced analytics work, and can even serve as as a piece of analysis itself.
+
+## Setup
 
 ```{r}
 #| label: setup
@@ -15,17 +17,13 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 
+# set ggplot theme
 theme_set(theme_minimal())
 
-```
-
-# Data
-
-```{r}
-#| label: data
-
+# import data
 df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
 
+# convert discrete variables to factor type
 df <- df |> 
   mutate(
     sex = as.factor(sex),
@@ -37,14 +35,25 @@ df <- df |>
 
 ```
 
-# Exploring Data
+
+## Data Exploration
+
+The first step when doing EDA is to examine the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.
 
 ```{r}
 #| label: explore
 
+# view first rows in the dataset
 head(df)
 
+# overview of the data
 glimpse(df)
+
+# unique values of the outcome variable
+unique(df$heart_disease)
+
+# unique values of a continuous explanatory variable
+unique(df$cholesterol)
 
 ```
 
@@ -72,12 +81,18 @@ df |>
 df |>
   count(angina)
 
+# cholesterol
+df |> 
+  count(cholesterol)
+
 ```
 
 # Data Visualisation
 
+## Distributions
+
 ```{r}
-#| label: data-viz
+#| label: distributions
 #| message: false
 #| warning: false
 
@@ -128,9 +143,6 @@ df |>
   ggplot(aes(cholesterol, fill = heart_disease)) +
   geom_histogram(position = "dodge")
 
-df |>
-  ggplot(aes(cholesterol, max_hr, colour = heart_disease)) +
-  geom_point(size=2)
 
 # angina
 df |>
@@ -144,3 +156,50 @@ df |>
 
 ```
 
+## Association (Relationship) Between Variables
+
+### Box Plots
+
+Box plots are an effective way to visualize the observed relationship between a continuous explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). 
+
+```{r}
+#| label: boxplots
+#| message: false
+#| warning: false
+
+# age and heart disease
+df |>
+  ggplot(aes(age, heart_disease, fill = heart_disease)) +
+  geom_boxplot()
+
+# max hr and heart disease
+df |>
+  ggplot(aes(max_hr, heart_disease, fill = heart_disease)) +
+  geom_boxplot()
+
+
+
+```
+
+### Scatter Plots
+
+Scatter plots are appropriate when seeking to visualize the association between two continuous variables, or a continuous variable and the continuous outcome.
+
+```{r}
+#| label: scatterplots
+#| message: false
+#| warning: false
+
+# cholesterol
+df |>
+  ggplot(aes(cholesterol, max_hr, colour = heart_disease)) +
+  geom_point(size=2)
+
+# filtering out zero values
+
+df |> 
+  filter(cholesterol != 0) |> 
+  ggplot(aes(cholesterol, max_hr, colour = heart_disease)) +
+  geom_point(size=2)
+
+```
