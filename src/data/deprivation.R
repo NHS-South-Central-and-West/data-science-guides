@@ -1,4 +1,4 @@
-# script to read and format raw data for deprivation models
+# script to read and format raw data for deprivation dataset
 
 # Setup ----
 
