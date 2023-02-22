@@ -213,5 +213,3 @@ cython_debug/
 
 /.luarc.json
 
-# COVID-19 Image Data
-/data/ct-scans/
