@@ -17,6 +17,7 @@ import statsmodels.api as sm
 
 ```
 
+## Data
 ```{python}
 #| label: data
 
@@ -29,16 +30,23 @@ df = pd.read_csv(f"{path}{file_name}")
 
 ```
 
+## Exploratory Data Analysis
+
 ```{python}
-#| label: data_summary
+#| label: data-summary
 
 # data summary
 df.info()
-df.describe()
 df.head()
+
 ```
 
-## EDA
+```{python}
+#| label: summary-stats
+
+df.describe()
+
+```
 
 ```{python}
 #| label: deprivation-plot
@@ -51,13 +59,71 @@ plt.show()
 
 ```
 
+```{python}
+#| label: phsyiological-plot
+
+# physiological risk factors
+fig, ax = plt.subplots(figsize=(9,6))
+sns.scatterplot(x='life_expectancy', y='physiological_risk_factors', data=df)
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: behavioural-plot
+
+# behavioural risk factors
+fig, ax = plt.subplots(figsize=(9,6))
+sns.scatterplot(x='life_expectancy', y='behavioural_risk_factors', data=df)
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: life-expectancy-correlations
+
+# correlations with life expectancy
+df.corr(numeric_only=True).loc[:,'life_expectancy']
+
+```
+
+```{python}
+#| label: correlation-matrix
+
+# correlation matrix
+corr = df[[
+    'life_expectancy', 'mortality', 'imd_score',
+    'physiological_risk_factors', 'behavioural_risk_factors']].corr()
+corr
+
+```
+
+```{python}
+#| label: correlation-plot
+
+# plot correlation matrix
+f, ax = plt.subplots(figsize=(9, 6))
+sns.heatmap(corr,
+    cmap=sns.diverging_palette(220, 10, as_cmap=True),
+    vmin=-1.0, vmax=1.0,
+    square=True, ax=ax, annot=True)
+plt.show()
+
+```
+
+There are strong correlations between life expectancy and the three independent variables, however, the correlation between IMD score and the two risk factor variables is also relatively strong, and in the case of behavioural risk factors, it is very strong. This could be an issue.
+
 ## Linear Regression
 
 ```{python}
 #| label: model
 
 # create model
-model = sm.OLS.from_formula('life_expectancy ~ imd_score', data=df)
+model = sm.OLS.from_formula(
+    'life_expectancy ~ imd_score + physiological_risk_factors + behavioural_risk_factors',
+    data=df)
 
 # fit model
 results = model.fit()
@@ -66,3 +132,5 @@ results = model.fit()
 print(results.summary())
 
 ```
+
+The results suggest that each of the explanatory variables has a small but significant effect on life expectancy. As deprivation increases (IMD score increases), life expectancy decreases, while as the index score representing physiological and behavioural risk factors (meaning a better performance in that Health Index subdomain) increases, life expectancy increases.
