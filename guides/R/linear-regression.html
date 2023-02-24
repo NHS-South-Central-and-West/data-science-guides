@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Paul Johnson">
-<meta name="dcterms.date" content="2023-02-21">
+<meta name="dcterms.date" content="2023-02-24">
 
 <title>Linear Regression in R: The Relationship Between Deprivation &amp; Life Expectancy</title>
 <style>
@@ -2626,7 +2626,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 21, 2023</p>
+      <p class="date">February 24, 2023</p>
     </div>
   </div>
   
@@ -2636,6 +2636,8 @@ vertical-align: -.125em;
 
 </header>
 
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
@@ -2656,8 +2658,9 @@ vertical-align: -.125em;
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>deprivation_df <span class="ot">&lt;-</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  readr<span class="sc">::</span><span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;deprivation.csv&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="visual-exploration-of-deprivation-and-health-inequalities-data" class="level2">
-<h2 class="anchored" data-anchor-id="visual-exploration-of-deprivation-and-health-inequalities-data">Visual Exploration of Deprivation and Health Inequalities Data</h2>
+</section>
+<section id="exploratory-data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>deprivation_df <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  psych<span class="sc">::</span><span class="fu">describe</span>() <span class="sc">%&gt;%</span></span>
