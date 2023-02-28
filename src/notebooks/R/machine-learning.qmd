@@ -4,6 +4,17 @@ author: "Paul Johnson"
 date: today
 ---
 
+An end-to-end machine learning workflow can be broken down into many steps, and there are an extensive number of layers of complexity that can be added, serving a variety of purposes. However, in this guide we will work through a bare bones workflow, using a simple dataset, in order to get a better understanding of the process.
+
+A simple end-to-end ML solution will typically include the following steps:
+
+1. Importing & Cleaning Data
+2. Exploratory Data Analysis (which will be skipped in this guide because it has been carried out in an earlier guide which can be found [here](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/eda.html))
+2. Data Preprocessing
+3. Model Fitting/Training/Tuning
+4. Model Evaluation
+
+For a more detailed discussion about a simple modeling workflow in R, the [Model Workflow](https://www.tmwr.org/workflows.html) chapter in Tidy Modeling with R is a great resource.
 
 ## Setup
 
@@ -22,8 +33,6 @@ theme_set(theme_minimal())
 ```
 
 ## Data
-
-An important step in any machine learning workflow is exploratory analysis, in order to get a better understanding of the data. 
 
 ### Import Data
 
@@ -47,7 +56,11 @@ glimpse(df)
 
 ### Train/Test Split
 
+One of the central tenets of machine learning is that the model should not be trained on the same data that it is evaluated on. This is because the model could learn spurious/random patterns and correlations in the training data, and this will harm the model's ability to make good predictions on new, unseen data. There are many way of trying to resolve this, but the most simple approach is to split the data into a training and test set. The training set will be used to train the model, and the test set will be used to evaluate the model.
+
 ```{r}
+
+set.seed(123)
 
 train_test_split <-
   rsample::initial_split(df,
@@ -59,116 +72,188 @@ test_df <- rsample::testing(train_test_split)
 
 ```
 
-#### Specify Cross-Validation Folds
+
+### Specify Cross-Validation Folds
+
+On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model.
+
+We will use 5-fold cross-validation to train our models. This means that the training data will be split into 5 folds, and each fold will be used as a test set once, and the remaining folds will be used as training sets. This will be repeated 5 times, and the average performance will be used to evaluate the model.
+
+This helps make the training process more generalizable.
 
 ```{r}
 
-train_folds <- vfold_cv(train_df, strata = heart_disease)
+set.seed(123)
+
+train_folds <- vfold_cv(train_df, v = 5, strata = heart_disease)
 train_folds
 
 ```
 
-## Preprocessing
+### Preprocessing
+
+The purpose of preprocessing is to prepare the data for model fitting. This can take a number of different forms, but some of the most common preprocessing steps include:
+
+- Normalizing/Standardizing data
+- One-hot encoding categorical variables
+- Removing outliers
+- Imputing missing values
+
+We will build two different preprocessing recipes and see which performs better. The first will be a 'basic' recipe that one-hot encodes all categorical features, and removes any features that have strong correlation with another feature in the dataset. The second recipe will include both these steps but will also normalize the numeric features so that they have a mean of zero and a standard deviation of one.
 
 ```{r}
 
-model_rec <- recipe(heart_disease ~ ., data = train_df) |>
-  # normalize data so that it is between 0 and 1
-  step_normalize(all_numeric_predictors()) |>
-  # standardize data so that is has mean zero and sd one
-  step_center(all_numeric_predictors()) |>
-  step_scale(all_numeric_predictors()) |>
+basic_recipe <- recipe(heart_disease ~ ., data = train_df) |>
   # one-hot encode categorical variables
-  step_dummy(all_nominal_predictors(), one_hot = TRUE)
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |> 
+  step_corr(all_numeric_predictors(), threshold = .5)
 
-model_rec |>
+scaled_recipe <- recipe(heart_disease ~ ., data = train_df) |>
+  # normalize data so that it has mean zero and sd one
+  step_normalize(all_numeric_predictors()) |> 
+  # one-hot encode categorical variables
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |> 
+  step_corr(all_numeric_predictors(), threshold = .5)
+
+basic_recipe |>
   prep() |>
   bake(new_data = NULL)
 
-model_train <- model_rec |>
+scaled_recipe |>
   prep() |>
   bake(new_data = NULL)
 
-model_test <- model_rec |>
-  prep() |>
-  bake(new_data = test_df)
-
 ```
 
-## Fit Models
+## Model Fitting/Training/Tuning
 
-### Logistic Regression
+There are many different types of models that can be used for classification problems, and selecting the right model for the problem at hand can be difficult when you are first starting out with machine learning.
+
+Simple models like linear and logistic regressions are often a good place to start and can be used to get a better understanding of the data and the problem at hand, and can give you a good idea of baseline performance before building more complex models to improve performance. Another example of a simple model is the K-Nearest Neighbors (KNN) algorithm, which is a non-parametric model that can be used for both classification and regression problems. We will fit a logistic regression and a KNN, as well as fitting a Random Forest model. Random Forests are a more complex model that often perform well on classification problems.
+
+### Model Selection
 
 ```{r}
-#| label: logistic-regression
+#| label: model-selection
 
-log_mod <-
-  logistic_reg() |>
-  set_engine('glm') |>
-  set_mode('classification')
-
-model_wf <-
-  workflow() |>
-  add_recipe(model_rec)
-
-eval_metrics <- metric_set(roc_auc, accuracy, sensitivity, specificity)
-
-log_rs <- model_wf |>
-  add_model(log_mod) |>
-  fit_resamples(
-    resamples = train_folds,
-    metrics = eval_metrics,
-    control = control_resamples(save_pred = TRUE)
+# create a list of preprocessing recipes
+preprocessers <-
+  list(
+    basic = basic_recipe,
+    scaled = scaled_recipe
   )
 
-collect_metrics(log_rs)
+# create a list of candidate models
+models <- list(
+  log = 
+    logistic_reg(
+      penalty = tune()
+    ) |>
+    set_engine('glm') |>
+    set_mode('classification'),
+  knn = 
+    nearest_neighbor(
+      weight_func = tune(),
+      neighbors = tune()
+      ) |>
+    set_engine('kknn') |>
+    set_mode('classification'),
+  rf =
+    rand_forest(trees = 1000,
+                mtry = tune(),
+                min_n = tune()
+                ) |>
+    set_engine('ranger') |>
+    set_mode('classification')
+  )
 
-log_rs |>
-  conf_mat_resampled()
+# combine these lists as a workflow set
+model_workflows <-
+  workflow_set(
+    preproc = preprocessers,
+    models = models
+  )
 
-log_rs |>
-  collect_predictions() |>
-  group_by(id) |>
-  roc_curve(heart_disease, .pred_1) |>
-  ggplot(aes(1 - specificity, sensitivity, color = id)) +
-  geom_abline(lty = 2, color = "gray80", size = 1.5) +
-  geom_path(show.legend = FALSE, alpha = 0.6, size = 1.2) +
-  coord_equal()
+# specify the metrics on which the models will be evaluated
+eval_metrics <- metric_set(f_meas, accuracy)
+
+# train and tune models
+trained_models <- 
+  model_workflows |> 
+  workflow_map(
+    fn = 'tune_grid',
+    resamples = train_folds,
+    grid = 10,
+    metrics = eval_metrics,
+    verbose = TRUE,
+    seed = 123,
+    control = control_grid(
+      save_pred = TRUE,
+      parallel_over = "everything",
+      save_workflow = TRUE)
+    )
 
 ```
 
-### Random Forest
+#### Comparing Model Performance
 
 ```{r}
-#| label: random-forest
+# inspect the best performing models
+trained_models |> 
+  rank_results(select_best=TRUE) |> 
+  filter(.metric == 'f_meas') |> 
+  select(wflow_id, model, f1 = mean)
 
-rf_mod <- 
-  rand_forest(trees = 1000) |>
-  set_mode("classification") |>
-  set_engine("ranger")
-
-rf_mod
-
-rf_rs <- model_wf |>
-  add_model(rf_mod) |>
-  fit_resamples(
-    resamples = train_folds,
-    metrics = eval_metrics,
-    control = control_resamples(save_pred = TRUE)
-  )
-
-collect_metrics(rf_rs)
-
-rf_rs |>
-  conf_mat_resampled()
-
-rf_rs |>
-  collect_predictions() |>
-  group_by(id) |>
-  roc_curve(heart_disease, .pred_1) |>
-  ggplot(aes(1 - specificity, sensitivity, color = id)) +
-  geom_abline(lty = 2, color = "gray80", size = 1.5) +
-  geom_path(show.legend = FALSE, alpha = 0.6, size = 1.2) +
-  coord_equal()
+# plot performance
+trained_models |> 
+  autoplot()
 
 ```
+
+## Finalising Model
+
+```{r}
+
+# save best performing model
+best_results <- 
+   trained_models |>  
+   extract_workflow_set_result('basic_rf') |>  
+   select_best(metric = 'f_meas')
+
+best_results
+
+rf_test_results <- 
+   trained_models %>% 
+   extract_workflow('basic_rf') %>% 
+   finalize_workflow(best_results) %>% 
+   last_fit(split = train_test_split, metrics=eval_metrics)
+
+collect_metrics(rf_test_results)
+
+rf_test_results |> 
+  conf_mat_resampled(tidy=FALSE)
+
+rf_test_results |> 
+  conf_mat_resampled(tidy=FALSE) |> 
+  autoplot(type='heatmap')
+
+```
+
+## Next Steps
+
+In this post, we have covered a simple but robust machine learning workflow. We have have used the `tidymodels` package to fit a logistic regression model, a k-nearest neighbours model, and a random forest model to the heart disease dataset. 
+We used cross-validation to make the results more generalizable, and we used hyperparameter tuning to improve model performance.
+
+The next steps would be to consider what strategies for cross-validation would be most appropriate for the model we are building, what hyperparameter tuning process would produce the best performance, and some more complex algorithms that might outperform the models we've built here.
+
+## Resources
+
+There are lots of great (and free) resources online for learning about machine learning.
+
+- [Machine Learning University](https://aws.amazon.com/machine-learning/mlu)
+- [MLU Explain](https://mlu-explain.github.io/)
+- [Machine Learning for Beginners](https://microsoft.github.io/ML-For-Beginners/?utm_source=substack&utm_medium=email#/)
+
+- Data Talks Club: Machine Learning Zoomcamp [[Github](https://github.com/alexeygrigorev/mlbookcamp-code/tree/master/course-zoomcamp)|[Youtube](https://www.youtube.com/watch?v=MqI8vt3-cag&list=PL3MmuxUbc_hIhxl5Ji8t4O6lPAOpHaCLR)]
+
+The majority of these resources are focused on Python, but there are some great resources for R as well. In particular, the [Tidy Modeling with R](https://www.tmwr.org/) book is a great resource for learning about machine learning in R.
