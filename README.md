@@ -51,7 +51,8 @@ You should now be able to run any of the source code you want!
   - Generalised Additive Models
 - Forecasting
 - Machine Learning
-  - Simple Supervised ML Workflow [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/machine-learning.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/machine-learning.html)]
+  - Introduction to ML Concepts
+  - End-to-End ML Workflow [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/machine-learning.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/machine-learning.html)]
   - Unsupervised Learning (Clustering)
   - Cross-Validation
   - Gradient-Boosted Decision Trees
