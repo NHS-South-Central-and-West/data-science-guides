@@ -28,9 +28,9 @@ A simple end-to-end ML solution will typically include the following steps:
 2. Exploratory Data Analysis (which will be skipped in this guide because it has been carried out in an earlier guide which can be found [here](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/eda.html))
 2. Data Preprocessing
 3. Model Training
-  - Selecting from Candidate Models
-  - Hyperparameter Tuning
-  - Identifying Best Model
+    - Selecting from Candidate Models
+    - Hyperparameter Tuning
+    - Identifying Best Model
 4. Fitting Model on Test Data
 5. Model Evaluation
 
