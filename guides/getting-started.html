@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Paul Johnson">
-<meta name="dcterms.date" content="2023-02-09">
+<meta name="dcterms.date" content="2023-03-01">
 
 <title>Getting Started with R &amp; Python</title>
 <style>
@@ -2563,7 +2563,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 9, 2023</p>
+      <p class="date">March 1, 2023</p>
     </div>
   </div>
   
@@ -2589,29 +2589,49 @@ vertical-align: -.125em;
 <p>When IT install Python from this link, there are several “Optional Features” available. Any features that are checked as default should be installed, but you should also make sure that ‘pip’ is one of the features that is checked.</p>
 <p>Next, there are several “Advanced Options” that are available to select in the installation process. Again, the defaults should remain checked, but in addition to these, the “Add Python to environment variables” option needs to be checked. This should mean that Python is setup properly on your local machine.</p>
 </section>
-<section id="tools" class="level2">
-<h2 class="anchored" data-anchor-id="tools">Tools</h2>
-<section id="r" class="level3">
-<h3 class="anchored" data-anchor-id="r">R</h3>
+<section id="programming-environments" class="level2">
+<h2 class="anchored" data-anchor-id="programming-environments">Programming Environments</h2>
+<section id="integrated-development-environments-ides" class="level3">
+<h3 class="anchored" data-anchor-id="integrated-development-environments-ides">Integrated Development Environments (IDEs)</h3>
+<p>Integrated Development Environments (IDEs) are tools that can be used to write, run, and debug code. They are a great way to get started with a new language, because they can help you to avoid some of the more common mistakes that you might make when you are first learning how to code.</p>
+<section id="r" class="level4">
+<h4 class="anchored" data-anchor-id="r">R</h4>
 <p>Getting from an R installation to running your first lines of code is a little easier than doing the same with Python. The biggest reason for this is the monopoly that Posit (formerly RStudio) has over the tools for using R.</p>
 <p>RStudio is the best available Integrated Development Environment (IDE) for writing R code, and it is highly recommended that you stick to using RStudio when you first start using R. There are other IDEs and text editors that can handle R (for example, VS Code), but when you start out, it is easiest to stick to RStudio.</p>
 </section>
-<section id="python" class="level3">
-<h3 class="anchored" data-anchor-id="python">Python</h3>
+<section id="python" class="level4">
+<h4 class="anchored" data-anchor-id="python">Python</h4>
 <p>Unlike R, there are a multitude of different IDEs that you can use for Python. While this is a good thing (lots of options) it can be a little intimidating for someone first dipping their toes into the Pythonic waters.</p>
-<p>The most popular choices for Python are:</p>
-<ul>
-<li><a href="https://jupyter.org/">Jupyter Notebook</a></li>
-<li><a href="https://code.visualstudio.com/">Visual Studio Code</a></li>
-<li><a href="https://www.jetbrains.com/pycharm/">PyCharm</a></li>
-</ul>
-<p>While there are a myriad of other options, such as DataSpell, Spyder, Atom, and Sublime Text, the above choices are popular and relatively easy to get started with. There is no right answer here, so the best bet is just to try some out and see what feels good for you. Jupyter is generally a good choice to start you off, because it is a little easier to set up and start writing code immediately.</p>
-<p>Another option, which will be particularly enticing for anyone that is already familiar with R, is RStudio. If you are already using R and are comfortable/familiar with RStudio, it might be easiest to start by trying Python out using the environment you’re familiar with.</p>
+<p>The most popular IDEs for Python are <a href="https://jupyter.org/">Jupyter Notebook</a>, <a href="https://code.visualstudio.com/">Visual Studio Code</a>, and <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>. There are a myriad of other options, such as DataSpell, Spyder, Atom, and Sublime Text (which is technically a text editor, which is a <a href="(https://www.freecodecamp.org/news/what-is-the-difference-between-an-ide-and-a-text-editor/)">slightly different thing</a>), but the above choices are popular and relatively easy to get started with. There is no right answer here, so the best bet is just to try some out and see what feels good for you. Jupyter is generally a good choice to start you off, because it is a little easier to set up and start writing code immediately.</p>
+<p>In addition to dedicated software, there are also a number of web-based IDEs that can be used for Python (and R). The most popular of these is <a href="https://colab.research.google.com/">Google Colab</a>, which is a free service that can be used to run Python code in the cloud.</p>
+<p>Finally, another option, which will be particularly enticing for anyone that is already familiar with R, is RStudio. If you are already using R and are comfortable/familiar with RStudio, it might be easiest to start by trying Python out using the environment you’re familiar with.</p>
 </section>
 </section>
-<section id="virtual-environments" class="level2">
-<h2 class="anchored" data-anchor-id="virtual-environments">Virtual Environments</h2>
-<p>Virtual environments in both R and Python matter, but especially Python!</p>
+<section id="package-management" class="level3">
+<h3 class="anchored" data-anchor-id="package-management">Package Management</h3>
+<section id="r-1" class="level4">
+<h4 class="anchored" data-anchor-id="r-1">R</h4>
+<p>R has a built-in package management function, <code>install.packages()</code>, which can be used to install packages from CRAN. If you need to install a package from other sources, you can use the <code>devtools</code> package. For example, you can install packages from Github using the <code>devtools::install_github()</code> function.</p>
+</section>
+<section id="python-1" class="level4">
+<h4 class="anchored" data-anchor-id="python-1">Python</h4>
+<p>Python has a built-in package manager called <code>pip</code>, which can be used to install packages from PyPI, using the <code>pip install</code> command in the terminal. If you need to install a package from other sources, you can use the <code>pip install</code> command with the URL of the package.</p>
+</section>
+</section>
+<section id="virtual-environments" class="level3">
+<h3 class="anchored" data-anchor-id="virtual-environments">Virtual Environments</h3>
+<p>Virtual environments are a way of creating isolated environments for your code. This means that you can have different versions of the same package installed in different virtual environments, and you can switch between them as needed. This is particularly useful when you are working on multiple projects that require different versions of the same package. It also means that you can have different versions of the same package installed on your local machine without having to worry about breaking your code.</p>
+<p>While it is possible to install packages in both R and Python without using virtual environments (and may be easier in the short term), it is recommended to use a virtual environment when building data science projects. This is because it helps to avoid problems that can occur when you have multiple versions of the same package installed on your local machine, and it also helps to ensure that your code will run on other people’s machines.</p>
+<section id="r-2" class="level4">
+<h4 class="anchored" data-anchor-id="r-2">R</h4>
+<p>The best way to create virtual environments in R is to use the <a href="https://rstudio.github.io/renv/"><code>renv</code></a> package. Virtual environments can be set up for R by running <code>renv::init()</code> in the console. This will create a new folder called <code>renv</code> in your project directory, and will create a new virtual environment for your project. You can then install packages in this virtual environment using the <code>install.packages()</code> function, or by using the <code>renv::install()</code> function.</p>
+</section>
+<section id="python-2" class="level4">
+<h4 class="anchored" data-anchor-id="python-2">Python</h4>
+<p>Python has a built-in way of creating virtual environments called <code>venv</code>. It can be used to create a new virtual environment by running <code>python -m venv &lt;name of virtual environment&gt;</code> in the terminal. This will create a new folder in your project directory called <code>.venv</code>, which will contain all of the packages that you install in that virtual environment.</p>
+<p>There are also several third-party tools that can be used to create virtual environments in Python. The most popular of these is <a href="https://docs.conda.io/en/latest/">conda</a>, which is a package manager that can be used to create virtual environments. However, conda is not free to use for commercial purposes, so it is not recommended for use in the NHS. Free alternatives to venv include <a href="https://virtualenv.pypa.io/en/latest/">virtualenv</a>, <a href="https://pipenv.pypa.io/en/latest/">pipenv</a> and <a href="https://python-poetry.org/">poetry</a>. While these are all good options (I personally like pipenv), they are not as well supported as venv, so it is recommended that you stick to venv when you first start using Python.</p>
+</section>
+</section>
 </section>
 
 </main>
