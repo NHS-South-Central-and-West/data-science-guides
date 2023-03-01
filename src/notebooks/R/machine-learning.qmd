@@ -4,6 +4,22 @@ author: "Paul Johnson"
 date: today
 ---
 
+```{r}
+#| label: setup
+#| code-fold: true
+
+# import packages
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(tidymodels)
+})
+
+# set plot theme
+theme_set(theme_minimal())
+
+```
+
 An end-to-end machine learning workflow can be broken down into many steps, and there are an extensive number of layers of complexity that can be added, serving a variety of purposes. However, in this guide we will work through a bare bones workflow, using a simple dataset, in order to get a better understanding of the process.
 
 A simple end-to-end ML solution will typically include the following steps:
@@ -19,22 +35,6 @@ A simple end-to-end ML solution will typically include the following steps:
 5. Model Evaluation
 
 For a more detailed discussion about a simple modeling workflow in R, the [Model Workflow](https://www.tmwr.org/workflows.html) chapter in Tidy Modeling with R is a great resource.
-
-```{r}
-#| label: setup
-#| collapse: true
-
-# import packages
-suppressPackageStartupMessages({
-  library(dplyr)
-  library(ggplot2)
-  library(tidymodels)
-})
-
-# set plot theme
-theme_set(theme_minimal())
-
-```
 
 ## Data
 
