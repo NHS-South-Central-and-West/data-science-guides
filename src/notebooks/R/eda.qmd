@@ -4,12 +4,9 @@ author: "Paul Johnson"
 date: today
 ---
 
-Exploratory data analysis (EDA) is the first step in any advanced analytics work, and can even serve as as a piece of analysis itself.
-
-## Setup
-
 ```{r}
 #| label: setup
+#| code-fold: true
 
 # import packages
 suppressPackageStartupMessages({
@@ -24,7 +21,7 @@ theme_set(theme_minimal())
 df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
 
 # convert discrete variables to factor type
-df <- df |> 
+df <- df |>
   mutate(
     sex = as.factor(sex),
     fasting_bs = as.factor(fasting_bs),
@@ -35,10 +32,15 @@ df <- df |>
 
 ```
 
+Exploratory data analysis (EDA) is the process of inspecting, visualising, and summarising a dataset. It is the first step in any data science project, and the importance of EDA can often be overlooked. Without exploring the data, it is difficult to know how to construct a piece of analysis or a model, and it is difficult to know if the data is suitable for the task at hand. As a critical step in the data science workflow, it is important to spend time on EDA and to be thorough and methodical in the process. While EDA is often the most time-consuming step in an analysis, taking the time to explore the data can save time in the long run.
 
-## Data Exploration
+EDA is an iterative process. In this tutorial, we will use the `dplyr` and `ggplot2` packages to explore a dataset containing information about heart disease. We will start by inspecting the data itself, to get a sense of the structure and the components of the dataset, and to identify any data quality issues (such as missing values). We will then compute summary statistics to get a better understanding of the distribution and central tendency of the variables that are relevant to the analysis. Finally, we will use data visualisations to explore specific variables in more detail, and to identify any interesting relationships between variables.
 
-The first step when doing EDA is to examine the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.
+## Inspecting the Data
+
+The first step when doing EDA is to inspect the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.
+
+We can use the `head()` and `glimpse()` functions to get a sense of the structure of the data. The `head()` function returns the first five rows of the data, and `glimpse()` returns a summary of the data, including the number of rows, the number of columns, the column names, the data type of each column, and the first few rows of the data. In addition to these two methods, we can use the `distinct()` function to get a list of all unique values of a particular variable. This is useful for discrete variables, such as the outcome variable, which can take on a limited number of values. For continuous variables (or any variables with a large number of unique values) the output of `distinct()` (a tibble) can be difficult to read, so we can use the `unique()` function to get a list of all unique values, which will be returned as a vector.
 
 ```{r}
 #| label: explore
@@ -50,46 +52,77 @@ head(df)
 glimpse(df)
 
 # unique values of the outcome variable
-unique(df$heart_disease)
+df |>
+  distinct(heart_disease)
 
 # unique values of a continuous explanatory variable
 unique(df$cholesterol)
 
 ```
 
-# Summary Statistics
+## Summary Statistics
+
+Summary statistics are a quick and easy way to get a sense of the distribution, central tendency, and dispersion of the variables in the dataset. We can use the `summary()` function to get a summary of the data, including the mean and median values, the 1st and 3rd quartiles, and the minimum and maximum values of each numeric column. It also returns the count values for each factor column, and the number of NA values for each column.
+
+If we want to examine a particular variable, the functions `mean()`, `median()`, `quantile()`, `min()`, and `max()` will return the same information as the `summary()` function. We can also get a sense of dispersion by computing the standard deviation or variance of a variable. The `sd()` function returns the standard deviation of a variable, and the `var()` function returns the variance.
+
+Finally, we can use the `count()` function to get a count of the number of observations in each category of a discrete variable. Proportions can also be computed by dividing the count by the total number of observations. Using the `group_by()` function to group the data by a particular variable, and the `mutate()` function to add a new column to the data, we can compute the proportion as `n/sum(n)`.
 
 ```{r}
 #| label: summary-stats
 
+# summary of the data
 summary(df)
 
-# heart disease
+# mean age
+mean(df$age)
+
+# median age
+median(df$age)
+
+# min and max age
+min(df$age)
+max(df$age)
+
+# dispersion of age
+sd(df$age)
+var(df$age)
+
+# heart disease count
 df |>
   count(heart_disease)
 
-# resting ecg
+# resting ecg count
 df |>
   count(resting_ecg)
-
-df |> 
-  group_by(resting_ecg) |> 
-  count(heart_disease) |> 
-  mutate(freq = n/sum(n))
 
 # angina
 df |>
   count(angina)
 
 # cholesterol
-df |> 
+df |>
   count(cholesterol)
+
+# heart disease proportion
+df |> 
+  group_by(resting_ecg) |> 
+  count(heart_disease) |> 
+  mutate(freq = n/sum(n))
 
 ```
 
-# Data Visualisation
+## Data Visualisation
 
-## Distributions
+Data visualisation is a powerful tool for exploring data. It allows us to quickly identify patterns and relationships in the data, and to identify any data quality issues. In this tutorial, we will use the `ggplot2` package to create a series of data visualisations to explore the data in more detail. We will start by creating a series of histograms to get a sense of the distribution of the variables in the dataset. We will then create a series of bar charts to explore the relationship between the variables and the outcome variable. Finally, we will create a series of scatter plots to explore the relationship between the variables.
+
+While inspecting and summarising the data is a good first step, data visualisation is a more effective way to explore the data. It allows us to quickly identify patterns and relationships in the data, and to identify any data quality issues that might not be immediately obvious without a visual representation of the data.
+
+In this tutorial, we will use the `ggplot2` package to create a series of data visualisations to explore the data in more detail. ``ggplot2`` is an incredibly flexible and powerful package for creating data visualisations. While it can be a little difficult to make sense of the syntax at first, it is well worth the effort to learn how to use it. Learning how to use ``ggplot2`` is beyond the scope of this tutorial, but there are a number of excellent resources available online, including the [ggplot2 documentation](https://ggplot2.tidyverse.org/) and this [ggplot2 cheatsheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf).
+
+### Visualising the Distribution of a Variable
+
+We can use the `geom_histogram()` function to create a histogram of a continuous variable, and the `geom_bar()` function to create a bar chart of a discrete variable. The `binwidth` argument can be used to control the width of the bins in the histogram, and the `position` argument can be used to control how the bars are displayed. The default value of `position = 'stack'` will stack the bars on top of each other, while `position = 'dodge'` will display the bars side by side. The `fill` argument can be used to split the bars by a particular variable and display them in different colours.
 
 ```{r}
 #| label: distributions
@@ -104,26 +137,26 @@ df |>
 # age distribution by heart disease
 df |>
   ggplot(aes(age, fill = heart_disease)) +
-  geom_histogram(binwidth = 5, position = "dodge")
+  geom_histogram(binwidth = 5, position = 'dodge')
 
 # sex distribution by heart disease
 df |>
   ggplot(aes(sex, fill = heart_disease)) +
-  geom_bar(position = "dodge")
+  geom_bar(position = 'dodge')
 
 # resting ecg distribution by heart disease
 df |>
   ggplot(aes(resting_ecg, fill = heart_disease)) +
-  geom_bar(position = "dodge")
+  geom_bar(position = 'dodge')
 
 # max hr
 df |>
   ggplot(aes(max_hr, fill = heart_disease)) +
-  geom_histogram(position = "dodge")
+  geom_histogram(position = 'dodge')
 
 df |>
   ggplot(aes(max_hr, fill = heart_disease)) +
-  geom_histogram(position = "dodge")
+  geom_histogram(position = 'dodge')
 
 # heart peak reading
 df |>
@@ -132,7 +165,7 @@ df |>
 
 df |>
   ggplot(aes(heart_peak_reading, fill = heart_disease)) +
-  geom_histogram(position = "dodge")
+  geom_histogram(position = 'dodge')
 
 # cholesterol  
 df |>
@@ -141,29 +174,31 @@ df |>
 
 df |>
   ggplot(aes(cholesterol, fill = heart_disease)) +
-  geom_histogram(position = "dodge")
+  geom_histogram(position = 'dodge')
 
 
 # angina
 df |>
   ggplot(aes(angina, fill = heart_disease)) +
-  geom_bar(position = "dodge")
+  geom_bar(position = 'dodge')
 
 # fasting bs
 df |>
   ggplot(aes(fasting_bs, fill = heart_disease)) +
-  geom_bar(position = "dodge")
+  geom_bar(position = 'dodge')
 
 ```
 
-## Association (Relationship) Between Variables
+### Visualising Relationships Between Variables
 
-### Box Plots
+Beyond the distribution of a single variable, it is also important to explore the relationship between variables using methods like scatter plots and box plots.
 
-Box plots are an effective way to visualize the observed relationship between a continuous explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). 
+#### Box Plots
+
+Box plots are an effective way to visualize the observed relationship (or association, at least) between a continuous explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). We can use the ``geom_boxplot()`` function to create box plots, and the ``fill`` argument to split the box plots by a particular variable and display them in different colours.
 
 ```{r}
-#| label: boxplots
+#| label: box-plots
 #| message: false
 #| warning: false
 
@@ -177,16 +212,19 @@ df |>
   ggplot(aes(max_hr, heart_disease, fill = heart_disease)) +
   geom_boxplot()
 
-
+# max hr and heart disease, split by sex
+df |>
+  ggplot(aes(max_hr, heart_disease, fill = sex)) +
+  geom_boxplot()
 
 ```
 
-### Scatter Plots
+#### Scatter Plots
 
-Scatter plots are appropriate when seeking to visualize the association between two continuous variables, or a continuous variable and the continuous outcome.
+Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the ``geom_point()`` function to create scatter plots, and the ``colour`` argument to split the scatter plots by a particular variable and display them in different colours.
 
 ```{r}
-#| label: scatterplots
+#| label: scatter-plots
 #| message: false
 #| warning: false
 
@@ -196,8 +234,7 @@ df |>
   geom_point(size=2)
 
 # filtering out zero values
-
-df |> 
+df |>
   filter(cholesterol != 0) |> 
   ggplot(aes(cholesterol, max_hr, colour = heart_disease)) +
   geom_point(size=2)
