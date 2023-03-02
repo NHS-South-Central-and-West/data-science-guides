@@ -4,10 +4,9 @@ author: "Paul Johnson"
 date: today
 ---
 
-## Setup
-
 ```{python}
-#| label: py-setup
+#| label: setup
+#| code-fold: true
 
 # import packages
 import pandas as pd
@@ -16,15 +15,35 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # data path
-path = '../data/'
+path = '../../../data/'
 file_name = 'heart_disease.csv'
 
 # import data
 df = pd.read_csv(f"{path}{file_name}")
 
+# set plot style
+sns.set_style('whitegrid')
+
+# set plot size
+plt.rcParams['figure.figsize'] = (9, 6)
+
+# set plot colour palette
+colours = ['#217CA3', '#FFC933', '#C4274C']
+sns.set_palette(sns.color_palette(colours))
+
 ```
 
-## Exploring Data
+Exploratory data analysis (EDA) is the process of inspecting, visualising, and summarising a dataset. It is the first step in any data science project, and the importance of EDA can often be overlooked. Without exploring the data, it is difficult to know how to construct a piece of analysis or a model, and it is difficult to know if the data is suitable for the task at hand. As a critical step in the data science workflow, it is important to spend time on EDA and to be thorough and methodical in the process. While EDA is often the most time-consuming step in an analysis, taking the time to explore the data can save time in the long run.
+
+EDA is an iterative process. In this tutorial, we will use the `pandas` and `seaborn` packages to explore a dataset containing information about heart disease. We will start by inspecting the data itself, to get a sense of the structure and the components of the dataset, and to identify any data quality issues (such as missing values). We will then compute summary statistics to get a better understanding of the distribution and central tendency of the variables that are relevant to the analysis. Finally, we will use data visualisations to explore specific variables in more detail, and to identify any interesting relationships between variables.
+
+## Inspecting the Data
+
+The first step when doing EDA is to inspect the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.
+
+We can use the `head()` and `info()` functions to get a sense of the structure of the data. The `head()` function returns the first five rows of the data, and the `info()` method returns a summary of the data, including the number of rows, the number of columns, the column names, and the data type of each column. The `info()` method is particularly useful for identifying missing values, as it returns the number of non-null values in each column. If the number of non-null values is less than the number of rows, then there are missing values in the column.
+
+In addition to these two methods, we can also use the `nunique()` method to count the number of unique values in each column, which helps identify categorical variables, and we can use the `unique()` method to get a list of the unique values in a column.
 
 ```{python}
 #| label: df-head
@@ -40,19 +59,74 @@ df.info()
 
 ```
 
-## Summary Statistics
-
 ```{python}
-#| label: df-describe
+#| label: count-unique
 
-df.describe()
+# count unique values in each column
+df.nunique()
 
 ```
 
 ```{python}
+#| label: heart-disease-unique
+
+# unique values of the outcome variable
+df.heart_disease.unique()
+
+```
+
+```{python}
+#| label: cholesterol-unique
+
+# unique values of a continuous explanatory variable
+df.cholesterol.unique()
+
+```
+
+## Summary Statistics
+
+Summary statistics are a quick and easy way to get a sense of the distribution and central tendency of the variables in the dataset. We can use the `describe()` method to get a quick overview of every column in the dataset, including the row count, the mean and standard deviation, the minimum and maximum value, and quartiles of each variable.
+
+```{python}
+#| label: df-describe
+
+# summary of the data
+df.describe()
+
+```
+
+If we want to examine a particular variable, the functions `mean()`, `median()`, `quantile()`, `min()`, and `max()` will return the same information as the `describe()` function. We can also get a sense of dispersion by computing the standard deviation or variance of a variable. The `std()` function returns the standard deviation of a variable, and the `var()` function returns the variance.
+
+```{python}
+#| label: avg-age
+
+# mean & median age
+df.age.mean(), df.age.median()
+
+```
+
+```{python}
+#| label: min-max-age
+
+# min and max age
+df.age.min(), df.age.max()
+
+```
+
+```{python}
+#| label: dispersion-age
+
+# dispersion of age
+df.age.std(), df.age.var()
+
+```
+
+Finally, we can use the `value_counts()` function to get a count of the number of observations in each category of a discrete variable.
+
+```{python}
 #| label: heart-disease-count
 
-# heart disease
+# heart disease count
 df['heart_disease'].value_counts()
 
 ```
@@ -60,22 +134,8 @@ df['heart_disease'].value_counts()
 ```{python}
 #| label: resting-ecg-count
 
-# resting ecg
+# resting ecg count
 df['resting_ecg'].value_counts()
-
-```
-
-```{python}
-#| label: heart-disease-by-resting-ecg-count
-
-df.groupby(['resting_ecg'])['heart_disease'].value_counts()
-
-```
-
-```{python}
-#| label: heart-disease-by-resting-ecg-freq
-
-df.groupby(['resting_ecg'])['heart_disease'].value_counts(normalize=True).round(3)
 
 ```
 
@@ -87,13 +147,52 @@ df['angina'].value_counts()
 
 ```
 
+```{python}
+#| label: cholesterol-count
+
+# cholesterol
+df['cholesterol'].value_counts()
+
+```
+
+We can also use the `groupby()` method to get the counts of each category in a categorical variable, grouped by another categorical variable.
+
+```{python}
+#| label: heart-disease-by-resting-ecg-count
+
+df.groupby(['resting_ecg'])['heart_disease'].value_counts()
+
+```
+
+In addition to the counts, we can also get the proportions of each category using the `normalize=True` argument.
+
+```{python}
+#| label: heart-disease-by-resting-ecg-freq
+
+df.groupby(['resting_ecg'])['heart_disease'].value_counts(normalize=True).round(3)
+
+```
+
 ## Data Visualisation
+
+While inspecting the data directly and using summary statistics to describe it is a good first step, data visualisation is a more effective way to explore the data. It allows us to quickly identify patterns and relationships in the data, and to identify any data quality issues that might not be immediately obvious without a visual representation of the data.
+
+When using data visualisation for exploratory purposes, the intent is generally to visualise the way data is distributed, both within and between variables. This can be done using a variety of different types of plots, including histograms, bar charts, box plots, scatter plots, and line plots. How variables are distributed can tell us a lot about the variable itself, and how variables are distributed relative to each other can tell us a lot about the potential relationship between the variables.
+
+In this tutorial, we will use the `matplotlib` and `seaborn` packages to create a series of data visualisations to explore the data in more detail. The `seaborn` package is a high-level data visualisation library that is built on top of `matplotlib`. Although data visualisation in Python is not as straightforward as it is in R, `seaborn` makes it much easier to create good quality and informative plots.
+
+### Visualising Data Distributions
+
+The first step in the exploratory process is to visualise the data distributions of key variables in the dataset. This allows us to get a sense of the typical values and central tendency of the variable, as well as identifying any outliers or other data quality issues.
+
+#### Continuous Distributions
+
+For continuous variables, we can use histograms to visualise the distribution of the data. We can use the `histplot()` function to create a histogram of a continuous variable. The `binwidth` argument allows us to specify the width of the bins in the histogram.
 
 ```{python}
 #| label: age-dist
 
 # age distribution
-fig, ax = plt.subplots(figsize=(9,6))
 sns.histplot(data=df, x='age', binwidth=5)
 sns.despine()
 plt.show()
@@ -101,10 +200,133 @@ plt.show()
 ```
 
 ```{python}
+#| label: max-hr-dist
+
+# max hr distribution
+sns.histplot(data=df, x='max_hr', binwidth=10)
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: cholesterol-dist
+
+# cholesterol distribution
+sns.histplot(data=df, x='cholesterol', binwidth=25)
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: filter-zeroes-cholesterol-dist
+
+# cholesterol distribution
+sns.histplot(data=df.loc[df.cholesterol!=0], x='cholesterol', binwidth=25)
+sns.despine()
+plt.show()
+
+```
+
+The inflated zero values in the cholesterol distribution suggests that there may be an issue with data quality that needs addressing.
+
+#### Discrete Distributions
+
+We can use bar plots to visualise the distribution of discrete variables. We can use the `countplot()` function to create a bar plot of a discrete variable.
+
+```{python}
+#| label: heart-disease-dist
+
+# heart disease distribution
+sns.countplot(data=df, x='heart_disease')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: sex-dist
+
+# sex distribution
+sns.countplot(data=df, x='sex')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: angina-dist
+
+# angina distribution
+sns.countplot(data=df, x='angina')
+sns.despine()
+plt.show()
+
+```
+
+### Comparing Distributions
+
+There are a number of ways to compare the distributions of multiple variables. Bar plots can be used to visualise two discrete variables, while histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable, and scatter plots are particularly useful for comparing the distribution of two continuous variables.
+
+#### Visualising Multiple Discrete Variables
+
+Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). We can use the `countplot()` function to create bar plots, and the `hue` argument to split the bars by a particular variable and display them in different colours.
+
+```{python}
+#| label: heart-disease-by-sex
+
+# heart disease by sex
+sns.countplot(data=df, x='heart_disease', hue='sex')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: heart-disease-by-resting-ecg
+
+# heart disease by resting ecg
+sns.countplot(data=df, x='heart_disease', hue='resting_ecg')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: heart-disease-by-angina
+
+# angina
+sns.countplot(data=df, x='heart_disease', hue='angina')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: heart-disease-by-fasting-bs
+
+# fasting bs
+sns.countplot(data=df, x='heart_disease', hue='fasting_bs')
+sns.despine()
+plt.show()
+
+```
+
+#### Visualising A Continuous Variable Across Discrete Groups
+
+Histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable.
+
+##### Histogram Plots
+
+We can use the `histplot()` function to create a histogram of a continuous variable. The `hue` argument allows us to split the histogram by a particular variable and display them in different colours, while the `multiple` argument allows us to specify how the histograms should be displayed. The `multiple` argument can be set to `stack` to stack the histograms on top of each other, or `dodge` to display the histograms side-by-side.
+
+```{python}
+
+```{python}
 #| label: age-by-heart-disease
 
 # age distribution by heart disease
-fig, ax = plt.subplots(figsize=(9,6))
 sns.histplot(data=df, x='age', hue='heart_disease', binwidth=5, multiple='dodge')
 sns.despine()
 plt.show()
@@ -112,97 +334,201 @@ plt.show()
 ```
 
 ```{python}
-#| label: sex-by-heart-disease
-
-# sex distribution by heart disease
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='sex', hue='heart_disease', binwidth=5, multiple='dodge')
-sns.despine()
-plt.show()
-```
-
-```{python}
-#| label: ecg-by-heart-disease
-# resting ecg distribution by heart disease
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='resting_ecg', hue='heart_disease', binwidth=5, multiple='dodge')
-sns.despine()
-plt.show()
-```
-
-```{python}
-#| label: max-hr
-# max hr
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='max_hr', binwidth=5)
-sns.despine()
-plt.show()
-```
-
-```{python}
-#| label: max-hr-by-heart-disease
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='max_hr', hue='heart_disease', binwidth=5, multiple='dodge')
-sns.despine()
-plt.show()
-```
-
-```{python}
-#| label: heart-peak-reading
-# heart peak reading
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='heart_peak_reading', binwidth=5)
-sns.despine()
-plt.show()
-```
-
-```{python}
-#| label: heart-peak-reading-by-heart-disease
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='heart_peak_reading', hue='heart_disease', binwidth=5, multiple='dodge')
-sns.despine()
-plt.show()
-```
-
-```{python}
-#| label: cholesterol
-# cholesterol  
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='cholesterol', binwidth=5)
-sns.despine()
-plt.show()
-```
-
-```{python}
 #| label: cholesterol-by-heart-disease
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='cholesterol', hue='heart_disease', binwidth=5, multiple='dodge')
+
+# cholesterol
+sns.histplot(data=df, x='cholesterol', hue='heart_disease', binwidth=25, multiple='dodge')
 sns.despine()
 plt.show()
+
 ```
 
 ```{python}
-#| label: cholesterol-by-max-hr
-fig, ax = plt.subplots(figsize=(9,6))
-sns.scatterplot(data=df, x='cholesterol', y='max_hr', hue='heart_disease')
+#| label: filtered-zeroes-cholesterol-by-heart-disease
+
+# filter zero values
+sns.histplot(
+    data=df.loc[df.cholesterol!=0],
+    x='cholesterol',
+    hue='heart_disease',
+    binwidth=25,
+    multiple='dodge')
+
 sns.despine()
 plt.show()
+
+```
+
+The fact that there is a significantly larger proportion of positive heart disease cases in the zero cholesterol values further demonstrates the need to address this data quality issue.
+
+##### Box Plots
+
+Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the `boxplot()` function to create box plots, and the `hue` argument to split the box plots by a particular variable and display them in different colours.
+
+However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained [here](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.
+
+```{python}
+#| label: age-by-heart-disease-box
+
+# age & heart disease
+sns.boxplot(data=df, x='heart_disease', y='age')
+sns.despine()
+plt.show()
+
 ```
 
 ```{python}
-#| label: angina-by-heart-disease
-# angina
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='angina', hue='heart_disease', binwidth=5, multiple='dodge')
+#| label: age-box-split-by-sex
+
+# age & heart disease, split by sex
+# fig, ax = plt.subplots(figsize=(10,6))
+sns.boxplot(data=df, x='heart_disease', y='age', hue='sex')
 sns.despine()
 plt.show()
+
 ```
 
 ```{python}
-#| label: fasting-bs-by-heart-disease
-# fasting bs
-fig, ax = plt.subplots(figsize=(9,6))
-sns.histplot(data=df, x='fasting_bs', hue='heart_disease', binwidth=5, multiple='dodge')
+#| label: max-hr-by-heart-disease-box
+
+# max hr & heart disease
+sns.boxplot(data=df, x='heart_disease', y='max_hr')
 sns.despine()
 plt.show()
+
 ```
+
+```{python}
+#| label: max-hr-box-split-by-sex
+
+# max hr & heart disease, split by sex
+# fig, ax = plt.subplots(figsize=(10,6))
+sns.boxplot(data=df, x='heart_disease', y='max_hr', hue='sex')
+sns.despine()
+plt.show()
+
+```
+
+#### Visualising Multiple Discrete Variables
+
+Scatter plots are an effective way to visualize how two continuous variables vary together.
+We can use the `scatterplot()` function to create scatter plots, and the `hue` argument to split the scatter plots by a particular variable and display them in different colours.
+
+```{python}
+#| label: age-resting-bp-scatter
+
+# age & resting bp
+sns.scatterplot(data=df, x='age', y='resting_bp')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: filtered-zeroes-resting-bp-scatter
+
+# age & resting bp
+sns.scatterplot(data=df.loc[df.resting_bp!=0], x='age', y='resting_bp')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: age-cholesterol-scatter
+
+sns.scatterplot(data=df.loc[df.cholesterol!=0], x='age', y='cholesterol')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: age-max-hr-scatter
+
+sns.scatterplot(data=df, x='age', y='max_hr')
+sns.despine()
+plt.show()
+
+```
+
+The scatter plot visualising age and resting blood pressure highlights another observation that needs to be removed due to data quality issues.
+
+If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The `regplot()` function can be used to add a regression line to a scatter plot. The `ci` argument specifies whether or not to display the confidence interval of the regression line.
+
+```{python}
+#| label: max-hr-by-age-regression-plot
+
+# age & max hr
+sns.regplot(data=df, x='age', y='max_hr', ci=None)
+sns.despine()
+plt.show()
+
+```
+
+You can also include discrete variables by assigning the discrete groups different colours in the scatter plot, and if you add regression lines to these plots, separate regression lines will be fit to the discrete groups. This can be useful for visualising how the association between the two continuous variables varies across the discrete groups.
+
+The `lmplot()` function can be used to create scatter plots with regression lines, and the `hue` argument can be used to split the scatter plots by a particular variable and display them in different colours.
+
+```{python}
+#| label: resting-bp-heart-disease-scatter
+
+# age & resting bp, split by heart disease
+sns.scatterplot(data=df.loc[df.resting_bp!=0], x='age', y='resting_bp', hue='heart_disease')
+sns.despine()
+plt.show()
+
+```
+
+```{python}
+#| label: cholesterol-regression-plot
+
+# age & cholesterol, split by heart disease (with regression line)
+sns.lmplot(
+    data=df.loc[df.cholesterol!=0],
+    x='age', y='cholesterol',
+    hue='heart_disease',
+    ci=None,
+    height = 6,
+    aspect=1.5)
+
+plt.show()
+
+```
+
+```{python}
+#| label: max-hr-regression-plot
+
+# age & max hr, split by heart disease (with regression line)
+sns.lmplot(
+    data=df,
+    x='age', y='max_hr',
+    hue='heart_disease',
+    ci=None,
+    height = 6,
+    aspect=1.5)
+
+plt.show()
+
+```
+
+## Next Steps
+
+There are many more visualisation techniques that you can use to explore your data, and you can find a comprehensive list of them on the [seaborn API reference](https://seaborn.pydata.org/api.html) and [matplotlib API reference](https://matplotlib.org/stable/api/index.html) pages. There are also a number of other Python libraries that can be used to create visualisations, including [plotly](https://plotly.com/python/), [bokeh](https://docs.bokeh.org/en/latest/docs/user_guide.html), and [altair](https://altair-viz.github.io/).
+
+The next step in the data science process is to build a model to either explain or predict the outcome variable, heart disease. The exploratory work done here can help inform decisions about the choice of the model, and the choice of the variables that will be used to build the model. It will also help clean up the data, particularly the zero values in the cholesterol and resting blood pressure variables, to ensure that the model is built on the best possible data.
+
+## Resources
+
+There are a wealth of resources available to help you learn more about data visualisation, and while the resources for producing visualisations in R are more extensive, there are still a number of good resources for producing visualisations in Python.
+
+Here are some of the best freely available resources:
+
+- Scientific Visualization: Python + Matplotlib [[PDF](https://hal.inria.fr/hal-03427242/document)|[GitHub](https://github.com/rougier/scientific-visualization-book)]
+- [Seaborn Tutorials](https://seaborn.pydata.org/tutorial.html)
+- [Matplotlib Cheatsheets](https://github.com/matplotlib/cheatsheets)
+
+While the following resources are R-based, they are still useful for learning about data visualisation principles:
+
+- [Data Visualization: A Practical Introduction](https://socviz.co/)
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/)
