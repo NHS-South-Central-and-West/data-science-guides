@@ -17,6 +17,7 @@ scikit-learn = "*"
 statsmodels = "*"
 torch = "*"
 torchvision = "*"
+scipy = "*"
 
 [dev-packages]
 
