@@ -34,7 +34,7 @@ A simple end-to-end ML solution will typically include the following steps:
 4. Fitting Model on Test Data
 5. Model Evaluation
 
-For a more detailed discussion about a simple modeling workflow in R, the [Model Workflow](https://www.tmwr.org/workflows.html) chapter in Tidy Modeling with R is a great resource.
+For a more detailed discussion about a simple modeling workflow in R, the [Model Workflow](https://www.tmwr.org/workflows.html) section in Tidy Modeling with R is a great resource.
 
 ## Data
 
@@ -86,7 +86,9 @@ test_df <- rsample::testing(train_test_split)
 
 ### Cross-Validation Folds
 
-On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalizable.
+On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalisable.
+
+For more information on cross-validation and how it can be used to train models the [Resampling Methods](https://www.tmwr.org/resampling.html#resampling-methods) section in Tidy Modeling with R discusses cross-validation in detail, in the wider context of resampling methods for training machine learning models. This helps to provide context for the purpose of cross-validation, as well as discussing some of the strategies for cross-validation.
 
 We will use 5-fold stratified cross-validation to train our models. This means that the training data will be split into 5 folds, ensuring that each fold has the same proportion of the target classes. Each fold will be used as a test set once, and the remaining folds will be used as training sets. This will be repeated 5 times, and the average performance will be used to evaluate the model.
 
@@ -213,6 +215,8 @@ eval_metrics <- metric_set(f_meas, accuracy)
 
 Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the `tune_grid()` function to tune the models, which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using  F1 score and accuracy.
 
+For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, the [Model Tuning and the Dangers of Overfitting](https://www.tmwr.org/tuning.html) section of Tidy Modeling with R is a good place to start. In addition, the AWS overview of [hyperparameter tuning](https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html) is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan's [Hyperparameter Tuning for Machine Learning Models](https://www.jeremyjordan.me/hyperparameter-tuning/) blogpost is thorough but easy to follow.
+
 ```{r}
 #| label: train-models
 
@@ -333,3 +337,7 @@ For a guided video course, Data Talks Club's Machine Learning Zoomcamp is very g
 Finally, while the above resources will give you a good intrdouction to machine learning, Python is used in all of them for the code examples. If you want to learn about machine learning in R, Max Kuhn & Julia Silge's Tidy Modeling with R is a good starting point:
 
 - [Tidy Modeling with R](https://www.tmwr.org/)
+
+If you are particularly interested in learning the mathematics that underpins machine learning, I would highly recommend the following book, which is admittedly not free but is very, very good:
+
+- [Mathematics of Machine Learning](https://tivadardanka.com/books/mathematics-of-machine-learning)

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Paul Johnson">
-<meta name="dcterms.date" content="2023-03-01">
+<meta name="dcterms.date" content="2023-03-02">
 
 <title>End-to-End Machine Learning in R: Predicting Heart Disease</title>
 <style>
@@ -2626,7 +2626,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 1, 2023</p>
+      <p class="date">March 2, 2023</p>
     </div>
   </div>
   
@@ -2665,7 +2665,7 @@ vertical-align: -.125em;
 <li>Fitting Model on Test Data</li>
 <li>Model Evaluation</li>
 </ol>
-<p>For a more detailed discussion about a simple modeling workflow in R, the <a href="https://www.tmwr.org/workflows.html">Model Workflow</a> chapter in Tidy Modeling with R is a great resource.</p>
+<p>For a more detailed discussion about a simple modeling workflow in R, the <a href="https://www.tmwr.org/workflows.html">Model Workflow</a> section in Tidy Modeling with R is a great resource.</p>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
 <section id="import-data" class="level3">
@@ -2722,7 +2722,8 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 </section>
 <section id="cross-validation-folds" class="level3">
 <h3 class="anchored" data-anchor-id="cross-validation-folds">Cross-Validation Folds</h3>
-<p>On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalizable.</p>
+<p>On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalisable.</p>
+<p>For more information on cross-validation and how it can be used to train models the <a href="https://www.tmwr.org/resampling.html#resampling-methods">Resampling Methods</a> section in Tidy Modeling with R discusses cross-validation in detail, in the wider context of resampling methods for training machine learning models. This helps to provide context for the purpose of cross-validation, as well as discussing some of the strategies for cross-validation.</p>
 <p>We will use 5-fold stratified cross-validation to train our models. This means that the training data will be split into 5 folds, ensuring that each fold has the same proportion of the target classes. Each fold will be used as a test set once, and the remaining folds will be used as training sets. This will be repeated 5 times, and the average performance will be used to evaluate the model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set random seed to ensure reproducibility</span></span>
@@ -2879,6 +2880,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>eval_metrics <span class="ot">&lt;-</span> <span class="fu">metric_set</span>(f_meas, accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the <code>tune_grid()</code> function to tune the models, which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using F1 score and accuracy.</p>
+<p>For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, the <a href="https://www.tmwr.org/tuning.html">Model Tuning and the Dangers of Overfitting</a> section of Tidy Modeling with R is a good place to start. In addition, the AWS overview of <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html">hyperparameter tuning</a> is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan’s <a href="https://www.jeremyjordan.me/hyperparameter-tuning/">Hyperparameter Tuning for Machine Learning Models</a> blogpost is thorough but easy to follow.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train and tune models</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>trained_models <span class="ot">&lt;-</span> </span>
@@ -3013,6 +3015,10 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <p>Finally, while the above resources will give you a good intrdouction to machine learning, Python is used in all of them for the code examples. If you want to learn about machine learning in R, Max Kuhn &amp; Julia Silge’s Tidy Modeling with R is a good starting point:</p>
 <ul>
 <li><a href="https://www.tmwr.org/">Tidy Modeling with R</a></li>
+</ul>
+<p>If you are particularly interested in learning the mathematics that underpins machine learning, I would highly recommend the following book, which is admittedly not free but is very, very good:</p>
+<ul>
+<li><a href="https://tivadardanka.com/books/mathematics-of-machine-learning">Mathematics of Machine Learning</a></li>
 </ul>
 </section>
 
