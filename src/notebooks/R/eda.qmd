@@ -132,13 +132,15 @@ While inspecting the data directly and using summary statistics to describe it i
 
 When using data visualisation for exploratory purposes, the intent is generally to visualise the way data is distributed, both within and between variables. This can be done using a variety of different types of plots, including histograms, bar charts, box plots, scatter plots, and line plots. How variables are distributed can tell us a lot about the variable itself, and how variables are distributed relative to each other can tell us a lot about the potential relationship between the variables.
 
-In this tutorial, we will use the `ggplot2` package to create a series of data visualisations to explore the data in more detail. ``ggplot2`` is an incredibly flexible and powerful package for creating data visualisations. While it can be a little difficult to make sense of the syntax at first, it is well worth the effort to learn how to use it. Learning how to use ``ggplot2`` is beyond the scope of this tutorial, but there are a number of excellent resources available online, including the [ggplot2 documentation](https://ggplot2.tidyverse.org/) and this [ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf).
+In this tutorial, we will use the `ggplot2` package to create a series of data visualisations to explore the data in more detail. `ggplot2` is an incredibly flexible and powerful package for creating data visualisations. While it can be a little difficult to make sense of the syntax at first, it is well worth the effort to learn how to use it. Learning how to use `ggplot2` is beyond the scope of this tutorial, but there are a number of excellent resources available online, including the [ggplot2 documentation](https://ggplot2.tidyverse.org/) and this [ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf).
 
 ### Visualising Data Distributions
 
-We can use the `geom_histogram()` function to create a histogram of a continuous variable, and the `geom_bar()` function to create a bar chart of a discrete variable. The `binwidth` argument can be used to control the width of the bins in the histogram, and the `position` argument can be used to control how the bars are displayed.
+The first step in the exploratory process is to visualise the data distributions of key variables in the dataset. This allows us to get a sense of the typical values and central tendency of the variable, as well as identifying any outliers or other data quality issues.
 
 #### Continuous Distributions
+
+For continuous variables, we can use histograms to visualise the distribution of the data. We can use the `geom_histogram()` function to create a histogram of a continuous variable. The `binwidth` argument can be used to control the width of the bins in the histogram.
 
 ```{r}
 #| label: continuous-dists
@@ -153,24 +155,26 @@ df |>
 # max hr distribution
 df |>
   ggplot(aes(max_hr)) +
-  geom_histogram()
+  geom_histogram(binwidth = 10)
 
 # cholesterol distribution
 df |>
   ggplot(aes(cholesterol)) +
-  geom_histogram()
+  geom_histogram(binwidth = 25)
 
 # filter zero values
 df |> 
   filter(cholesterol != 0) |> 
   ggplot(aes(cholesterol)) +
-  geom_histogram()
+  geom_histogram(binwidth = 25)
 
 ```
 
 The inflated zero values in the cholesterol distribution suggests that there may be an issue with data quality that needs addressing.
 
 #### Discrete Distributions
+
+We can use bar plots to visualise the distribution of discrete variables. We can use the `geom_bar()` function to create a bar plot of a discrete variable.
 
 ```{r}
 #| label: discrete-dists
@@ -200,9 +204,13 @@ There are a number of ways to compare the distributions of multiple variables. B
 
 #### Visualising Multiple Discrete Variables
 
-Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). We can use the ``geom_bar()`` function to create bar plots, and the ``fill`` argument to split the bars by a particular variable and display them in different colours.
+Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical).
 
-We can use bar plots to compare heart disease prevalence across discrete groups in the data.
+We can use the `geom_bar()` function to create bar plots, but the default behaviour is to display the bars as stacked bars, which is not necessarily ideal for visualising discrete variables (though I'd recommend playing around with this yourself to decide what works in each case)
+
+The `position` argument controls how the bars are displayed. The default `position = 'stack'` argument will display the bars as stacked bars, while the `position = 'dodge'` argument will display the bars side-by-side, and the `position = 'fill'` argument will display the bars as a proportion of the total number of observations in each category.
+
+Finally, the `fill` argument splits the bars by a particular variable and display them in different colours.
 
 ```{r}
 #| label: bar-plots
@@ -231,10 +239,13 @@ df |>
 
 ```
 
-
 #### Visualising A Continuous Variable Across Discrete Groups
 
+Histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable.
+
 ##### Histogram Plots
+
+We can use the `geom_histogram()` function to create histograms. The `fill`  and `position` arguments can be used to split the bars by a particular variable and display them in different colours, as dicussed above.
 
 ```{r}
 #| label: hist-comps
@@ -259,33 +270,35 @@ df |>
 
 ```
 
-The fact that there is a significantly larger proportion of positive heart disease cases in the zero cholesterol values further demonstrates the need to address this data quality issue. 
+The fact that there is a significantly larger proportion of positive heart disease cases in the zero cholesterol values further demonstrates the need to address this data quality issue.
 
 ##### Box Plots
 
-Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the ``geom_boxplot()`` function to create box plots, and the ``fill`` argument to split the box plots by a particular variable and display them in different colours. However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained [here](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.
+Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the `geom_boxplot()` function to create box plots, and the `fill` argument to split the box plots by a particular variable and display them in different colours.
+
+However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained [here](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.
 
 ```{r}
 #| label: box-plots
 #| message: false
 #| warning: false
 
-# age and heart disease
+# age & heart disease
 df |>
   ggplot(aes(age, heart_disease, fill = heart_disease)) +
   geom_boxplot(size=0.8)
 
-# age and heart disease, split by sex
+# age & heart disease, split by sex
 df |>
   ggplot(aes(age, heart_disease, fill = sex)) +
   geom_boxplot(size=0.8)
 
-# max hr and heart disease
+# max hr & heart disease
 df |>
   ggplot(aes(max_hr, heart_disease, fill = heart_disease)) +
   geom_boxplot(size=0.8)
 
-# max hr and heart disease, split by sex
+# max hr & heart disease, split by sex
 df |>
   ggplot(aes(max_hr, heart_disease, fill = sex)) +
   geom_boxplot(size=0.8)
@@ -294,7 +307,7 @@ df |>
 
 #### Visualising Multiple Discrete Variables
 
-Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the ``geom_point()`` function to create scatter plots, and the ``colour`` argument to split the scatter plots by a particular variable and display them in different colours.
+Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the `geom_point()` function to create scatter plots, and the `colour` argument to split the scatter plots by a particular variable and display them in different colours.
 
 ```{r}
 #| label: scatter-plots
@@ -327,7 +340,7 @@ df |>
 
 The scatter plot visualising age and resting blood pressure highlights another observation that needs to be removed due to data quality issues.
 
-If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The ``geom_smooth()`` function can be used to add a regression line to a scatter plot. The ``method`` argument specifies the type of regression line to be added, and the ``se`` argument specifies whether or not to display the standard error of the regression line.
+If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The `geom_smooth()` function can be used to add a regression line to a scatter plot. The `method` argument specifies the type of regression line to be added, and the `se` argument specifies whether or not to display the standard error of the regression line.
 
 ```{r}
 #| label: adding-regression-line
