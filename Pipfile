@@ -18,6 +18,7 @@ statsmodels = "*"
 torch = "*"
 torchvision = "*"
 scipy = "*"
+skimpy = "*"
 
 [dev-packages]
 
