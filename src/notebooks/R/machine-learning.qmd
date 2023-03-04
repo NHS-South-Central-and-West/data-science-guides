@@ -1,12 +1,15 @@
 ---
-title: "End-to-End Machine Learning in R: Predicting Heart Disease"
+title: "End-to-End Machine Learning Workflow in R"
+subtitle: "Using Logistic Regression, KNN, and Random Forest in Tidymodels to Predict Heart Disease"
 author: "Paul Johnson"
 date: today
 ---
 
 ```{r}
 #| label: setup
+#| output: false
 #| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
 
 # import packages
 suppressPackageStartupMessages({
@@ -16,7 +19,20 @@ suppressPackageStartupMessages({
 })
 
 # set plot theme
-theme_set(theme_minimal())
+theme_set(theme_minimal(base_size = 14))
+
+# import data
+df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
+
+# specify categorical features as factors
+df <- df |> 
+  mutate(
+    sex = as.factor(sex),
+    fasting_bs = as.factor(fasting_bs),
+    resting_ecg = as.factor(resting_ecg),
+    angina = as.factor(angina),
+    heart_disease = as.factor(heart_disease)
+  )
 
 ```
 
@@ -38,23 +54,8 @@ For a more detailed discussion about a simple modeling workflow in R, the [Model
 
 ## Data
 
-### Import Data
-
 ```{r}
-#| label: import-data
-
-# import data
-df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
-
-# specify categorical features as factors
-df <- df |> 
-  mutate(
-    sex = as.factor(sex),
-    fasting_bs = as.factor(fasting_bs),
-    resting_ecg = as.factor(resting_ecg),
-    angina = as.factor(angina),
-    heart_disease = as.factor(heart_disease)
-  )
+#| label: inspect-data
 
 # inspect the data
 glimpse(df)
@@ -310,7 +311,7 @@ rf_test_results |>
   conf_mat_resampled(tidy=FALSE)
 
 # plot confusion matrix
-rf_test_results |> 
+rf_test_results |>
   conf_mat_resampled(tidy=FALSE) |> 
   autoplot(type='heatmap')
 
@@ -324,20 +325,16 @@ The next steps would be to consider what strategies for cross-validation would b
 
 ## Resources
 
-There are lots of great (and free) resources online for learning about machine learning:
+There are lots of great (and free) introductory resources for machine learning:
 
-- [Machine Learning University](https://aws.amazon.com/machine-learning/mlu)
+- [Machine Learning University](https://aws.amazon.com/machine-learning/mlu) (Python)
 - [MLU Explain](https://mlu-explain.github.io/)
-- [Machine Learning for Beginners](https://microsoft.github.io/ML-For-Beginners/?utm_source=substack&utm_medium=email#/)
+- [Machine Learning for Beginners](https://microsoft.github.io/ML-For-Beginners/?utm_source=substack&utm_medium=email#/) (Python/R)
 
-For a guided video course, Data Talks Club's Machine Learning Zoomcamp is very good:
+For a guided video course, Data Talks Club's Machine Learning Zoomcamp (available on [Github](https://github.com/alexeygrigorev/mlbookcamp-code/tree/master/course-zoomcamp) and [Youtube](https://www.youtube.com/watch?v=MqI8vt3-cag&list=PL3MmuxUbc_hIhxl5Ji8t4O6lPAOpHaCLR)) is well-paced and well-presented, covering a variety of machine learning methods and even covering some of the aspects that introductory course often skip over, like deployment and data engineering principles. However, while the ML Zoomcamp course is intended as an introduction to machine learning, it does assume a certain level of familiarity with programming (the course uses Python) and software engineering. The appendix section of the course is definitely helpful for bridging some of the gaps in the course, but it is still worth being aware of the way the course is structured.
 
-- Data Talks Club: Machine Learning Zoomcamp [[Github](https://github.com/alexeygrigorev/mlbookcamp-code/tree/master/course-zoomcamp)|[Youtube](https://www.youtube.com/watch?v=MqI8vt3-cag&list=PL3MmuxUbc_hIhxl5Ji8t4O6lPAOpHaCLR)]
+If you are keen to learn more about machine learning but are particularly focused on (or already have experience in) R, the ML Zoomcamp may not be the best fit. If you want to learn about machine learning in R, Max Kuhn & Julia Silge's [Tidy Modeling with R](https://www.tmwr.org/) is a great place to start.
 
-Finally, while the above resources will give you a good intrdouction to machine learning, Python is used in all of them for the code examples. If you want to learn about machine learning in R, Max Kuhn & Julia Silge's Tidy Modeling with R is a good starting point:
+If you are looking for something that goes into greater detail about a wide range of machine learning methods, then there is no better resource than [An Introduction to Statistical Learning](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf) (or its accompanying [online course]((https://www.statlearning.com/online-course))), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
 
-- [Tidy Modeling with R](https://www.tmwr.org/)
-
-If you are particularly interested in learning the mathematics that underpins machine learning, I would highly recommend the following book, which is admittedly not free but is very, very good:
-
-- [Mathematics of Machine Learning](https://tivadardanka.com/books/mathematics-of-machine-learning)
+Finally, if you are particularly interested in learning the mathematics that underpins machine learning, I would highly recommend [Mathematics of Machine Learning](https://tivadardanka.com/books/mathematics-of-machine-learning), which is admittedly not free but is very, very good. If you want to learn about the mathematics of machine learning but are not comfortable enough tackling the Mathematics of ML book, the [StatQuest](https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw) and [3Blue1Brown](https://www.youtube.com/c/3blue1brown) Youtube channels are both really accessible and well-presented.
