@@ -1,13 +1,16 @@
 ---
 title: "Exploratory Data Analysis in R"
+subtitle: "Exploring Heart Disease Diagnosis Using Summary Statistics & Data Visualisation"
 author: "Paul Johnson"
 date: today
 ---
 
 ```{r}
 #| label: setup
-#| code-fold: true
 #| output: false
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
+
 
 # import packages
 suppressPackageStartupMessages({
@@ -16,13 +19,12 @@ suppressPackageStartupMessages({
 })
 
 # ggplot theme
-# set minimal theme and specify font
-theme_set(theme_minimal(base_size = 16)) +
+# set minimal theme
+theme_set(theme_minimal(base_size = 14)) +
   # update theme to configure legend and increase plot margin
   theme_update(
     legend.position = "top",
     legend.title = element_blank(),
-    axis.text = element_text(size = 14),
     plot.margin = unit(c(0.5, 1, 1, 1), 'cm')
     ) 
 
@@ -78,6 +80,8 @@ unique(df$cholesterol)
 
 Summary statistics are a quick and easy way to get a sense of the distribution, central tendency, and dispersion of the variables in the dataset. We can use the `summary()` function to get a summary of the data, including the mean and median values, the 1st and 3rd quartiles, and the minimum and maximum values of each numeric column. It also returns the count values for each factor column, and the number of NA values for each column.
 
+While the base `summary()` function is pretty effective and works right out of the box, the package `skimr` can provide a more detailed summary of the data, using the `skim()` function. If you are looking for a single function to capture the entire process of inspecting the data and computing summary statistics, `skim()` is the function for the job, giving you a wealth of information about the dataset as a whole and each variable in the data.
+
 If we want to examine a particular variable, the functions `mean()`, `median()`, `quantile()`, `min()`, and `max()` will return the same information as the `summary()` function. We can also get a sense of dispersion by computing the standard deviation or variance of a variable. The `sd()` function returns the standard deviation of a variable, and the `var()` function returns the variance.
 
 Finally, we can use the `count()` function to get a count of the number of observations in each category of a discrete variable. Proportions can also be computed by dividing the count by the total number of observations. Using the `group_by()` function to group the data by a particular variable, and the `mutate()` function to add a new column to the data, we can compute the proportion as `n/sum(n)`.
@@ -87,6 +91,9 @@ Finally, we can use the `count()` function to get a count of the number of obser
 
 # summary of the data
 summary(df)
+
+# more detailed summary of the data
+skimr::skim(df)
 
 # mean age
 mean(df$age)
