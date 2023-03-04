@@ -1,5 +1,6 @@
 ---
 title: "Exploratory Data Analysis in Python"
+subtitle: "Exploring Heart Disease Diagnosis Using Summary Statistics & Data Visualisation"
 author: "Paul Johnson"
 date: today
 ---
@@ -7,12 +8,15 @@ date: today
 ```{python}
 #| label: setup
 #| code-fold: true
+#| code-summary: 'Setup Code'
 
 # import packages
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+from skimpy import skim
 
 # data path
 path = '../../../data/'
@@ -21,11 +25,13 @@ file_name = 'heart_disease.csv'
 # import data
 df = pd.read_csv(f"{path}{file_name}")
 
+# get categorical columns
+cat_cols = ['sex', 'fasting_bs', 'resting_ecg', 'angina', 'heart_disease']
+for col in cat_cols:
+    df[col] = df[col].astype('category')
+
 # set plot style
 sns.set_style('whitegrid')
-
-# set plot size
-plt.rcParams['figure.figsize'] = (9, 6)
 
 # set plot colour palette
 colours = ['#217CA3', '#FFC933', '#C4274C']
@@ -92,6 +98,18 @@ Summary statistics are a quick and easy way to get a sense of the distribution a
 
 # summary of the data
 df.describe()
+
+```
+
+While the `describe()` function is pretty effective, the `skimpy` package can provide a more detailed summary of the data, using the `skim()` function. If you are looking for a single function to capture the entire process of inspecting the data and computing summary statistics, `skim()` is the function for the job, giving you a wealth of information about the dataset as a whole and each variable in the data.
+
+Another package that provides a similar function is the [`ydata-profiling`](https://github.com/ydataai/ydata-profiling) package, which can be used to generate a report containing a summary of the data, including the data types, missing values, and summary statistics. The `ydata-profiling` package is particularly useful for generating a report that can be shared with others, as it can be exported as an HTML file, however it's a bit more resource-intensive than `skimpy`, so we will stick with `skimpy` for this tutorial.
+
+```{python}
+#| label: df-skim
+
+# more detailed summary of the data
+skim(df)
 
 ```
 
@@ -191,6 +209,7 @@ For continuous variables, we can use histograms to visualise the distribution of
 
 ```{python}
 #| label: age-dist
+#| fig-align: center
 
 # age distribution
 sns.histplot(data=df, x='age', binwidth=5)
@@ -201,6 +220,7 @@ plt.show()
 
 ```{python}
 #| label: max-hr-dist
+#| fig-align: center
 
 # max hr distribution
 sns.histplot(data=df, x='max_hr', binwidth=10)
@@ -211,6 +231,7 @@ plt.show()
 
 ```{python}
 #| label: cholesterol-dist
+#| fig-align: center
 
 # cholesterol distribution
 sns.histplot(data=df, x='cholesterol', binwidth=25)
@@ -221,6 +242,7 @@ plt.show()
 
 ```{python}
 #| label: filter-zeroes-cholesterol-dist
+#| fig-align: center
 
 # cholesterol distribution
 sns.histplot(data=df.loc[df.cholesterol!=0], x='cholesterol', binwidth=25)
@@ -237,6 +259,7 @@ We can use bar plots to visualise the distribution of discrete variables. We can
 
 ```{python}
 #| label: heart-disease-dist
+#| fig-align: center
 
 # heart disease distribution
 sns.countplot(data=df, x='heart_disease')
@@ -247,6 +270,7 @@ plt.show()
 
 ```{python}
 #| label: sex-dist
+#| fig-align: center
 
 # sex distribution
 sns.countplot(data=df, x='sex')
@@ -257,6 +281,7 @@ plt.show()
 
 ```{python}
 #| label: angina-dist
+#| fig-align: center
 
 # angina distribution
 sns.countplot(data=df, x='angina')
@@ -275,6 +300,7 @@ Bar plots are an effective way to visualize the observed relationship (or associ
 
 ```{python}
 #| label: heart-disease-by-sex
+#| fig-align: center
 
 # heart disease by sex
 sns.countplot(data=df, x='heart_disease', hue='sex')
@@ -285,6 +311,7 @@ plt.show()
 
 ```{python}
 #| label: heart-disease-by-resting-ecg
+#| fig-align: center
 
 # heart disease by resting ecg
 sns.countplot(data=df, x='heart_disease', hue='resting_ecg')
@@ -295,6 +322,7 @@ plt.show()
 
 ```{python}
 #| label: heart-disease-by-angina
+#| fig-align: center
 
 # angina
 sns.countplot(data=df, x='heart_disease', hue='angina')
@@ -305,6 +333,7 @@ plt.show()
 
 ```{python}
 #| label: heart-disease-by-fasting-bs
+#| fig-align: center
 
 # fasting bs
 sns.countplot(data=df, x='heart_disease', hue='fasting_bs')
@@ -322,9 +351,8 @@ Histograms and box plots are useful for comparing the distribution of a continuo
 We can use the `histplot()` function to create a histogram of a continuous variable. The `hue` argument allows us to split the histogram by a particular variable and display them in different colours, while the `multiple` argument allows us to specify how the histograms should be displayed. The `multiple` argument can be set to `stack` to stack the histograms on top of each other, or `dodge` to display the histograms side-by-side.
 
 ```{python}
-
-```{python}
 #| label: age-by-heart-disease
+#| fig-align: center
 
 # age distribution by heart disease
 sns.histplot(data=df, x='age', hue='heart_disease', binwidth=5, multiple='dodge')
@@ -335,6 +363,7 @@ plt.show()
 
 ```{python}
 #| label: cholesterol-by-heart-disease
+#| fig-align: center
 
 # cholesterol
 sns.histplot(data=df, x='cholesterol', hue='heart_disease', binwidth=25, multiple='dodge')
@@ -345,6 +374,7 @@ plt.show()
 
 ```{python}
 #| label: filtered-zeroes-cholesterol-by-heart-disease
+#| fig-align: center
 
 # filter zero values
 sns.histplot(
@@ -369,6 +399,7 @@ However, while box plots can be very useful, they are not always the most effect
 
 ```{python}
 #| label: age-by-heart-disease-box
+#| fig-align: center
 
 # age & heart disease
 sns.boxplot(data=df, x='heart_disease', y='age')
@@ -379,6 +410,7 @@ plt.show()
 
 ```{python}
 #| label: age-box-split-by-sex
+#| fig-align: center
 
 # age & heart disease, split by sex
 # fig, ax = plt.subplots(figsize=(10,6))
@@ -390,6 +422,7 @@ plt.show()
 
 ```{python}
 #| label: max-hr-by-heart-disease-box
+#| fig-align: center
 
 # max hr & heart disease
 sns.boxplot(data=df, x='heart_disease', y='max_hr')
@@ -400,6 +433,7 @@ plt.show()
 
 ```{python}
 #| label: max-hr-box-split-by-sex
+#| fig-align: center
 
 # max hr & heart disease, split by sex
 # fig, ax = plt.subplots(figsize=(10,6))
@@ -416,6 +450,7 @@ We can use the `scatterplot()` function to create scatter plots, and the `hue` a
 
 ```{python}
 #| label: age-resting-bp-scatter
+#| fig-align: center
 
 # age & resting bp
 sns.scatterplot(data=df, x='age', y='resting_bp')
@@ -426,6 +461,7 @@ plt.show()
 
 ```{python}
 #| label: filtered-zeroes-resting-bp-scatter
+#| fig-align: center
 
 # age & resting bp
 sns.scatterplot(data=df.loc[df.resting_bp!=0], x='age', y='resting_bp')
@@ -436,6 +472,7 @@ plt.show()
 
 ```{python}
 #| label: age-cholesterol-scatter
+#| fig-align: center
 
 sns.scatterplot(data=df.loc[df.cholesterol!=0], x='age', y='cholesterol')
 sns.despine()
@@ -445,6 +482,7 @@ plt.show()
 
 ```{python}
 #| label: age-max-hr-scatter
+#| fig-align: center
 
 sns.scatterplot(data=df, x='age', y='max_hr')
 sns.despine()
@@ -458,6 +496,7 @@ If there appears to be an association between the two continuous variables that 
 
 ```{python}
 #| label: max-hr-by-age-regression-plot
+#| fig-align: center
 
 # age & max hr
 sns.regplot(data=df, x='age', y='max_hr', ci=None)
@@ -472,6 +511,7 @@ The `lmplot()` function can be used to create scatter plots with regression line
 
 ```{python}
 #| label: resting-bp-heart-disease-scatter
+#| fig-align: center
 
 # age & resting bp, split by heart disease
 sns.scatterplot(data=df.loc[df.resting_bp!=0], x='age', y='resting_bp', hue='heart_disease')
@@ -482,6 +522,7 @@ plt.show()
 
 ```{python}
 #| label: cholesterol-regression-plot
+#| fig-align: center
 
 # age & cholesterol, split by heart disease (with regression line)
 sns.lmplot(
@@ -489,8 +530,8 @@ sns.lmplot(
     x='age', y='cholesterol',
     hue='heart_disease',
     ci=None,
-    height = 6,
-    aspect=1.5)
+    height = 7,
+    aspect=1.3)
 
 plt.show()
 
@@ -498,6 +539,7 @@ plt.show()
 
 ```{python}
 #| label: max-hr-regression-plot
+#| fig-align: center
 
 # age & max hr, split by heart disease (with regression line)
 sns.lmplot(
@@ -505,8 +547,8 @@ sns.lmplot(
     x='age', y='max_hr',
     hue='heart_disease',
     ci=None,
-    height = 6,
-    aspect=1.5)
+    height = 7,
+    aspect=1.3)
 
 plt.show()
 
