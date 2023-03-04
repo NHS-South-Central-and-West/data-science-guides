@@ -1,5 +1,6 @@
 ---
 title: "Getting Started with R & Python"
+subtitle: "Tips for Navigating Your First Steps with R & Python, From Installation to Programming Environments"
 author: "Paul Johnson"
 date: "`r Sys.Date()`"
 ---
