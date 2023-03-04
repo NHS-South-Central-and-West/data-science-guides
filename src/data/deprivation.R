@@ -28,11 +28,11 @@ imd_raw <-
 # filter for the indicators of interest and wrangle data into tidy structure
 health_inequalities_df <-
   wider_determinants_raw |>
-  dplyr::filter(indicator_id %in% c(92488, 90366, 93553)) |>
+  dplyr::filter(indicator_id == 90366) |> 
   dplyr::filter(area_code != "E92000001") |>
   dplyr::group_by(indicator_name, area_code, timeperiod_sortable) |>
   dplyr::summarise(value = mean(value)) |>
-  dplyr::mutate(year = stringr::str_remove_all(timeperiod_sortable, "0000")) |>
+  dplyr::mutate(year = stringr::str_remove_all(timeperiod_sortable, "0000")) |> 
   dplyr::select(indicator_name, area_code, year, value) |>
   tidyr::pivot_wider(
     names_from = indicator_name,
@@ -41,7 +41,6 @@ health_inequalities_df <-
   dplyr::full_join(imd_raw) |>
   dplyr::rename(
     life_expectancy = `Life expectancy at birth`,
-    mortality = `Mortality rate from causes considered preventable (2016 definition)`,
     imd_decile = decile
   ) |>
   tidyr::drop_na()
@@ -51,7 +50,12 @@ health_inequalities_df <-
 # import health index data
 health_index_df <-
   openxlsx::read.xlsx(
-    "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/healthandsocialcare/healthandwellbeing/datasets/healthindexengland/2015to2018/hibetadatatablesv2.xlsx",
+    
+    # look into writing a for loop to get the 2015-2020 health index data
+    # because it is split into separate sheets for each year in the link below:
+    # https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/healthandsocialcare/healthandwellbeing/datasets/healthindexscoresengland/current/healthindexscoresengland.xlsx
+    
+    'https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/healthandsocialcare/healthandwellbeing/datasets/healthindexengland/2015to2018/hibetadatatablesv2.xlsx',
     sheet = 8,
     rows = c(8:50252),
     colNames = TRUE
@@ -75,7 +79,11 @@ risk_factors <-
     names_from = indicator_grouping_name,
     values_from = index_value
   ) |>
-  janitor::clean_names()
+  janitor::clean_names() |> 
+  dplyr::rename(
+    physiological_score = physiological_risk_factors,
+    behavioural_score = behavioural_risk_factors
+  )
 
 # join risk factors to fingertips data for relevant date range
 deprivation_df <- health_inequalities_df |>
