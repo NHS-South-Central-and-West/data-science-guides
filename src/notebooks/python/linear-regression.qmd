@@ -1,25 +1,20 @@
 ---
-title: "Linear Regression in Python: The Relationship Between Deprivation & Life Expectancy"
+title: "Linear Regression in Python"
+subtitle: "Modelling the Relationship Between Deprivation & Life Expectancy Using Fingertips & ONS Health Index Data"
 author: "Paul Johnson"
 date: today
 ---
 
-## Setup
-
 ```{python}
-#| label: imports
+#| label: setup
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.api as sm
-
-```
-
-## Data
-```{python}
-#| label: data
 
 # data path
 path = '../../../data/'
@@ -30,13 +25,26 @@ df = pd.read_csv(f"{path}{file_name}")
 
 ```
 
+Linear regression is a cornerstone of data science and statistical analysis, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both extremely simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, and then t-tests).
+
+Not only is linear regression a phenomenally useful tool in a data scientist's arsenal, but it is also a fantastic way to learn about the fundamentals of statistical analysis. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because all regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.
+
+This tutorial will introduce you to linear regression in Python, using data pulled from two different sources. The first data source is the Public Health England's [Fingertips API](https://fingertips.phe.org.uk/) (for which there are packages available in [R](https://github.com/ropensci/fingertipsR) and [Python](https://github.com/publichealthengland/PHDS_fingertips_py)), which is a repository of public health data on a wide range of topics. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics' [Health Index](https://www.ons.gov.uk/releases/healthindexforengland2015to2020), which is a composite measure of the health of the population in England. The Health Index is derived froma a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite subdomains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.
+
 ## Exploratory Data Analysis
 
 ```{python}
-#| label: data-summary
+#| label: df-info
 
 # data summary
 df.info()
+
+```
+
+```{python}
+#| label: df-head
+
+# view first five rows
 df.head()
 
 ```
@@ -50,9 +58,9 @@ df.describe()
 
 ```{python}
 #| label: deprivation-plot
+#| fig-align: center
 
 # imd
-fig, ax = plt.subplots(figsize=(9,6))
 sns.scatterplot(x='life_expectancy', y='imd_score', data=df)
 sns.despine()
 plt.show()
@@ -61,10 +69,10 @@ plt.show()
 
 ```{python}
 #| label: phsyiological-plot
+#| fig-align: center
 
 # physiological risk factors
-fig, ax = plt.subplots(figsize=(9,6))
-sns.scatterplot(x='life_expectancy', y='physiological_risk_factors', data=df)
+sns.scatterplot(x='life_expectancy', y='physiological_score', data=df)
 sns.despine()
 plt.show()
 
@@ -72,10 +80,10 @@ plt.show()
 
 ```{python}
 #| label: behavioural-plot
+#| fig-align: center
 
 # behavioural risk factors
-fig, ax = plt.subplots(figsize=(9,6))
-sns.scatterplot(x='life_expectancy', y='behavioural_risk_factors', data=df)
+sns.scatterplot(x='life_expectancy', y='behavioural_score', data=df)
 sns.despine()
 plt.show()
 
@@ -94,21 +102,21 @@ df.corr(numeric_only=True).loc[:,'life_expectancy']
 
 # correlation matrix
 corr = df[[
-    'life_expectancy', 'mortality', 'imd_score',
-    'physiological_risk_factors', 'behavioural_risk_factors']].corr()
+    'life_expectancy', 'imd_score',
+    'physiological_score', 'behavioural_score']].corr()
 corr
 
 ```
 
 ```{python}
 #| label: correlation-plot
+#| fig-align: center
 
 # plot correlation matrix
-f, ax = plt.subplots(figsize=(9, 6))
 sns.heatmap(corr,
     cmap=sns.diverging_palette(220, 10, as_cmap=True),
     vmin=-1.0, vmax=1.0,
-    square=True, ax=ax, annot=True)
+    square=True, annot=True)
 plt.show()
 
 ```
@@ -122,7 +130,7 @@ There are strong correlations between life expectancy and the three independent 
 
 # create model
 model = sm.OLS.from_formula(
-    'life_expectancy ~ imd_score + physiological_risk_factors + behavioural_risk_factors',
+    'life_expectancy ~ imd_score + physiological_score + behavioural_score',
     data=df)
 
 # fit model
