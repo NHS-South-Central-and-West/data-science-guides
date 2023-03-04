@@ -1,13 +1,15 @@
 ---
-title: "Linear Regression in R: The Relationship Between Deprivation & Life Expectancy"
+title: "Linear Regression in R"
+subtitle: "Modelling the Relationship Between Deprivation & Life Expectancy Using Fingertips & ONS Health Index Data"
 author: "Paul Johnson"
 date: today
 ---
 
-## Setup
-
 ```{r}
 #| label: setup
+#| output: false
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
 
 # import packages
 suppressPackageStartupMessages({
@@ -15,8 +17,9 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 
-# set plot theme
-theme_set(theme_minimal())
+# ggplot theme
+# set minimal theme
+theme_set(theme_minimal(base_size = 14))
 
 # replace na with empty string in table outputs
 options(
@@ -25,147 +28,207 @@ options(
 )
 
 # import data
-deprivation_df <-
-  readr::read_csv(here::here("data", "deprivation.csv"))
+df <- readr::read_csv(here::here("data", "deprivation.csv"))
 
 ```
 
+Linear regression is a cornerstone of data science and statistical analysis, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both extremely simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, and then t-tests).
+
+Not only is linear regression a phenomenally useful tool in a data scientist's arsenal, but it is also a fantastic way to learn about the fundamentals of statistical analysis. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because all regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.
+
+This tutorial will introduce you to linear regression in R, using data pulled from two different sources. The first data source is the Public Health England's [Fingertips API](https://fingertips.phe.org.uk/) (for which there are packages available in [R](https://github.com/ropensci/fingertipsR) and [Python](https://github.com/publichealthengland/PHDS_fingertips_py)), which is a repository of public health data on a wide range of topics. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics' [Health Index](https://www.ons.gov.uk/releases/healthindexforengland2015to2020), which is a composite measure of the health of the population in England. The Health Index is derived froma a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite subdomains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.
 
 ## Exploratory Data Analysis
 
+First we will carry out some exploratory data analysis (EDA) to get a feel for the data, and to see if there are any obvious relationships between the variables that we can use to inform our model.
+
+We will use the `dplyr` package's `glimpse()` function to get a quick overview of the data, before using the `psych` package's `describe()` function to calculate summary statistics. The `describe()` function can compute a wide range of summary statistics, but we will only use a few of them here (the `select()` function below indicates the summary statistics that will be removed).
+
+The `knitr` package's `kable()` function is used to format the table output to make it easier to read in HTML format.
 
 ```{r}
-#| label: imd-score-eda
+#| label: df-summary
 
-deprivation_df %>%
-  psych::describe() %>%
-  filter(!row_number() %in% c(1, 2)) %>%
+# get a quick overview of the data
+glimpse(df)
+
+# calculate summary statistics
+df |>
+  psych::describe() |>
+  # remove area code and year
+  filter(!row_number() %in% c(1, 2)) |>
+  # remove summary statistics that we won't use
   select(
     -vars, -n, -trimmed, -mad,
     -skew, -kurtosis, -se, -range
-  ) %>%
-  relocate(sd, .after = median) %>%
+  ) |>
+  # format table output
+  relocate(sd, .after = median) |>
+  # kable output with summary stats rounded to 2 decimal places
   knitr::kable(digits = 2)
 
-deprivation_df %>%
-  ggplot(aes(life_expectancy, imd_score)) +
-  geom_point(size=3)
-
 ```
+
+Having taken a quick look at the data, we can now start to explore how life expectancy, our outcome variable (the variable that we are trying to explain), varies with the other variables in our dataset (the explanatory variables). We will start by plotting how life expectancy is distributed by IMD score, which is a measure of deprivation. The expectation is that there will be a negative association between the two variables, which means that areas with higher levels of deprivation (i.e. lower IMD scores) will have lower life expectancies.
 
 ```{r}
-#| label: health-index-eda
-
-deprivation_df %>%
-  ggplot(aes(life_expectancy, physiological_risk_factors)) +
-  geom_point(size=3)
-
-deprivation_df %>%
-  ggplot(aes(life_expectancy, behavioural_risk_factors)) +
-  geom_point(size=3)
+#| label: imd-plot
+df |>
+  ggplot(aes(life_expectancy, imd_score)) +
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
 
 ```
 
+There is a clear negative assocation between life expectancy and IMD score, which is what we would expect. However, there are some outliers where life expectancy seems to be higher than would be expected given the level of deprivation. The plot seems to suggest that deprivation may have a 'floor effect' on life expectancy, i.e. that higher deprivation raises the floor of life expectancy, but that there are other factors that can raise life expectancy above the floor.
+
+We can also plot the distribution of life expectancy by the Health Index scores for physiological and behavioural risk factors. These scores are index values that measure the prevalence of physiological and behavioural risk factors that are associated with poor health outcomes, against a baseline value of the national average for each risk factor in 2015. This baseline score is 100, and higher scores mean that an area has a higher prevalence of that risk factor than the national average in 2015, and lower scores mean that the area has lower prevalence. The expectation is that when the risk factor index scores increase, meaning that the risk factors are less prevalent compared against the national average, life expectancy will increase, while a decrease in the scores will be associated with a decrease in life expectancy.
+
+```{r}
+#| label: health-index-plots
+
+df |>
+  ggplot(aes(life_expectancy, physiological_score)) +
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
+
+df |>
+  ggplot(aes(life_expectancy, behavioural_score)) +
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
+
+```
+
+The plots show that there is a positive association between the risk factors scores and life expectancy, however there is significant variance in the plot of life expectancy and physiological
+
+The plots show that there is a clear negative association between life expectancy and both the physiological and behavioural risk factor scores, which is what we would expect. However, the plots also show that there are some outliers where life expectancy seems to be higher than would be expected given the level of risk factors. The plots seem to suggest that risk factors may have a 'floor effect' on life expectancy, i.e. that higher risk factors raise the floor of life expectancy, but that there are other factors that can raise life expectancy above the floor.
+
+The above plots suggest there are strong correlations between life expectancy and the three independent variables. We can confirm this by calculating a correlation matrix for the variables in our dataset, using the `correlation` package.
 
 ```{r}
 #| label: correlations
 
-deprivation_df %>%
+df |>
   select(
     area_code,
     life_expectancy,
-    physiological_risk_factors,
-    behavioural_risk_factors,
+    physiological_score,
+    behavioural_score,
     imd_score
-  ) %>%
-  group_by(area_code) %>%
-  summarise_all(.funs = "mean") %>%
-  correlation::correlation() %>%
-  summary() %>%
+  ) |>
+  group_by(area_code) |>
+  summarise_all(.funs = "mean") |>
+  correlation::correlation() |>
+  summary() |>
   knitr::kable(digit = 2)
 
 ```
 
-There are strong correlations between life expectancy and the three independent variables, however, the correlation between IMD score and the two risk factor variables is also relatively strong, and in the case of behavioural risk factors, it is very strong. This could be an issue.
+There are strong correlations between life expectancy and the three explanatory variables, however, the correlation between IMD score and the two Health Index scores is also relatively strong, and in the case of behavioural risk factors, it is very strong. This could be an issue, as it could mean that the model is not able to distinguish between the effects of deprivation and the effects of risk factors on life expectancy. This is known as multicollinearity, and it can cause problems when interpreting the results of a regression model.
+
+We can also visualise the correlation between our explanatory variables, to get a better sense of how they might be related to each other. We will start by plotting IMD score against the two Health Index scores, using scatter plots, before plotting the distributions of the scores by IMD decile, using density plots. We can use the `ggridges` package to plot the density plots, which can be useful for plotting how continuous variables are distributed across discrete groups.
 
 ```{r}
 #| label: correlation-eda
 
-deprivation_df %>%
-  ggplot(aes(imd_score, physiological_risk_factors)) +
-  geom_point(size=3)
+df |>
+  ggplot(aes(imd_score, physiological_score)) +
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
 
-deprivation_df %>%
-  ggplot(aes(imd_score, behavioural_risk_factors)) +
-  geom_point(size=3)
+df |>
+  ggplot(aes(imd_score, behavioural_score)) +
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
 
-deprivation_df %>%
-  mutate(imd_decile = as.factor(imd_decile)) %>%
-  ggplot(aes(physiological_risk_factors, imd_decile)) +
+df |>
+  mutate(imd_decile = as.factor(imd_decile)) |>
+  ggplot(aes(physiological_score, imd_decile)) +
   ggridges::geom_density_ridges()
 
-deprivation_df %>%
-  mutate(imd_decile = as.factor(imd_decile)) %>%
-  ggplot(aes(behavioural_risk_factors, imd_decile)) +
+df |>
+  mutate(imd_decile = as.factor(imd_decile)) |>
+  ggplot(aes(behavioural_score, imd_decile)) +
   ggridges::geom_density_ridges()
 
 ```
 
-The correlations are a little more obvious when plotted and inspected visually. The behavioural risk factors have a positive linear relationship with IMD (as the value of the risk factor goes up, so does IMD score/decile).
+The correlations are a little more obvious when visualised. The behavioural index scores have a negative linear assocation with IMD scores (and a positive linear association with IMD decile). This means that areas with higher level of deprivation also tend to have a higher prevalence of behavioural risk factors that are associated with poor health outcomes. The physiological index scores have a similar association with deprivation, but the relationship is not as strong as the behavioural risk factors, and there is significant variance around the linear trend.
 
 ## Linear Regression
 
-First we will transform each of the explanatory variables to make them a little easier to interpret (particularly with regard to the intercept).
+First we will transform each of the explanatory variables to make them a little easier to interpret (particularly with regard to the intercept). If we don't transform the variables, the intercept will be based on zero values of each explanatory variable, which is not very meaningful. For example, a zero value of either risk factors variable is effectively meaningless because the ONS Health Index is centred around a baseline value of 100 (which is the average value for England in 2015, the first year for which the Health Index was calculated).
 
-These transformations won't impact the regression results, but will just make the results easier to explain, as the intercept is no longer based on zero values of each explanatory variable (which are effectively meaningless, especially in the Health Index variables).
+These transformations won't impact the regression results, but will just make the results easier to interpret and explain, as the intercept is no longer based on zero values of each explanatory variable.
 
 ```{r}
 #| label: transforms
 
-imd_centre <- mean(deprivation_df$imd_score)
-imd_scale <- sd(deprivation_df$imd_score)
-physiological_centre <- 100
-physiological_scale <- sd(deprivation_df$physiological_risk_factors)
-behavioural_centre <- 100
-behavioural_scale <- sd(deprivation_df$physiological_risk_factors)
+# calculate the imd score mean and standard deviation
+imd_centre <- mean(df$imd_score)
+imd_scale <- sd(df$imd_score)
 
-deprivation_df <-
-  deprivation_df %>%
-  rowwise() %>%
+# use 100 as the centre for the risk factors and calculate the standard deviation
+physiological_centre <- 100
+physiological_scale <- sd(df$physiological_score)
+behavioural_centre <- 100
+behavioural_scale <- sd(df$physiological_score)
+
+# transform the variables
+df <-
+  df |>
+  rowwise() |>
   mutate(
     imd_transformed = (imd_score - imd_centre)/imd_scale,
-    physiological_transformed = 
-      (physiological_risk_factors - physiological_centre)/physiological_scale,
-    behavioural_transformed = 
-      (behavioural_risk_factors - behavioural_centre)/behavioural_scale
+    physiological_transformed = (physiological_score - physiological_centre)/physiological_scale,
+    behavioural_transformed = (behavioural_score - behavioural_centre)/behavioural_scale
   )
 
-deprivation_df
+# check the transformations
+glimpse(df)
 
 ```
+
+Having transformed the variables, we can now fit a linear regression model to the data. We will use the `lm()` function from the Base R `stats` package. Constructing a linear regression in R is very simple, and the syntax is relatively intuitive. The first argument in the function is the formula, which is the dependent variable on the left-hand side, and the independent variables on the right-hand side, separated by a `~` symbol. The second required argument is the `data` argument, which gives the `lm()` function a dataset to fit the regression to. There are a number of optional arguments that can be passed to the function to control the model fitting process, but we will use the default values for now.
+
+After fitting the regression model, we can call the `summary()` function to get a summary of the model results. This will give us the model coefficients, standard errors, t-statistics, p-values, and $R^2$ value. However, in this instance we will use the `sjPlot::tab_model()` function to get a nice table of the model results which renders better in HTML.
 
 ```{r}
 #| label: life-expectancy-ols
 
+# fit linear regression
 life_expectancy_ols <-
-  lm(life_expectancy ~ imd_transformed + physiological_transformed + behavioural_transformed,
-    data = deprivation_df
-  )
+  lm(
+    life_expectancy ~ imd_transformed + 
+      physiological_transformed + behavioural_transformed,
+    data = df
+    )
 
-summary(life_expectancy_ols)
+# get model summary
+# summary(life_expectancy_ols)
 
+# get model results table
 sjPlot::tab_model(
   life_expectancy_ols,
   pred.labels =
     c(
       "Intercept",
       "IMD Score",
-      "Physiological Risk Factors",
-      "Behavioural Risk Factors"
+      "Physiological Score",
+      "Behavioural Score"
     ),
   dv.labels = c("Life Expectancy")
 )
 
 ```
 
-The results suggest that each of the explanatory variables has a small but significant effect on life expectancy. As deprivation increases (IMD score increases), life expectancy decreases, while as the index score representing physiological and behavioural risk factors (meaning a better performance in that Health Index subdomain) increases, life expectancy increases.
+The results suggest that each of the explanatory variables has a small but significant effect on life expectancy. Areas with higher levels of deprivation (higher IMD scoes) also tend to have lower life expectancy, while in areas with higher physiological and behavioural index scores (meaning a better performance in that Health Index subdomain) the life expectancy tends to be higher.
+
+The $R^2$ value is 0.34, which means that the model explains 34% of the variance in life expectancy. This is not a particularly high $R^2$ value, but it is not too bad for a model with only three explanatory variables. However, it is worth noting that the $R^2$ value is not a particularly good measure of model fit for linear regression models.
+
+## Next Steps
+
+## Resources
+
+- [Regression & Other Stories](https://avehtari.github.io/ROS-Examples/)
+- [Statistical Inference via Data Science](https://moderndive.com)
