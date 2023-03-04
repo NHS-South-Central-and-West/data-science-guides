@@ -1,5 +1,6 @@
 ---
 title: "Importing Data from SQL in Python"
+subtitle: "Interacting with SQL Databases & Accessing SQL Data in Python Using PYODBC & SQLAlchemy"
 author: "Paul Johnson"
 date: today
 execute:
