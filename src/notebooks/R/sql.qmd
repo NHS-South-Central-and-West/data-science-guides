@@ -1,5 +1,6 @@
 ---
 title: "Importing Data from SQL in R"
+subtitle: "Interacting with SQL Databases & Accessing SQL Data in R Using DBI & ODBC"
 author: "Paul Johnson"
 date: today
 execute:
