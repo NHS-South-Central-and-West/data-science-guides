@@ -38,25 +38,38 @@ renv::restore()
 
 You should now be able to run any of the source code you want!
 
-## Methods
+## Guides
+
+### Getting Started
 
 - [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html)
+- R vs Python
 - Importing Data from SQL [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/sql.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/sql.html)]
+- Data Wrangling
 - Exploratory Data Analysis [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/eda.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/eda.html)]
-- Hypothesis Testing (Chi-Squared, T-Test, ANOVA?)
-- Regression
-  - Linear Regression [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/linear-regression.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/linear-regression.html)]
-  - Generalised Linear Models
-  - Multilevel Regression
-  - Generalised Additive Models
-- Forecasting
-- Machine Learning
-  - Introduction to ML Concepts
-  - End-to-End ML Workflow [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/machine-learning.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/machine-learning.html)]
-  - Unsupervised Learning (Clustering)
+
+### Statistical Methods
+
+- Hypothesis Testing (T-Test, ANOVA, Chi-Squared Test)
+- Linear Regression [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/linear-regression.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/linear-regression.html)]
+- Generalised Linear Models
+- Generalised Additive Models
+- Multilevel Regression
+- Time Series Analysis & Forecasting
+
+### Machine Learning
+
+- Introduction to ML Concepts
+- End-to-End ML Workflow [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/machine-learning.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/machine-learning.html)]
   - Cross-Validation
-  - Gradient-Boosted Decision Trees
-- Deep Learning
+  - Hyperparameter Tuning
+- Unsupervised Learning (Clustering)
+- Time Series Forecasting Using ML
+- Gradient-Boosted Decision Trees
+
+### Deep Learning
+
+- Image Classification
 
 ## Resources
 
@@ -66,7 +79,8 @@ You should now be able to run any of the source code you want!
 
 ## Acknowledgements
 
-- Datasets used have come from several sources:
-  - [Fingertips](https://docs.ropensci.org/fingertipsR/)
-  - [NHS-R Datasets](https://nhs-r-community.github.io/NHSRdatasets/)
-  - [MLDataR](https://cran.r-project.org/web/packages/MLDataR/vignettes/MLDataR.html)
+Several datasets used in this repository have been sourced from the following packages:
+
+- [Fingertips](https://docs.ropensci.org/fingertipsR/)
+- [NHS-R Datasets](https://nhs-r-community.github.io/NHSRdatasets/)
+- [MLDataR](https://cran.r-project.org/web/packages/MLDataR/vignettes/MLDataR.html)
