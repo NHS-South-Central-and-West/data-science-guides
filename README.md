@@ -50,7 +50,7 @@ You should now be able to run any of the source code you want!
 ### Statistical Methods
 
 - Hypothesis Testing (T-Test, ANOVA, Chi-Squared Test)
-- Linear Regression [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/linear-regression.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/linear-regression.html)]
+- Linear Regression [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/linear-regression.html)|[Python](https://htmlpreview.githubhttps://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/linear-regression.html)]
 - Generalised Linear Models
 - Generalised Additive Models
 - Multilevel Regression
@@ -59,6 +59,7 @@ You should now be able to run any of the source code you want!
 ### Machine Learning
 
 - Introduction to ML Concepts
+- Designing Machine Learning Solutions
 - End-to-End ML Workflow [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/machine-learning.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/machine-learning.html)]
   - Cross-Validation
   - Hyperparameter Tuning
@@ -72,14 +73,15 @@ You should now be able to run any of the source code you want!
 - Image Classification
 - Text Classification
 
-### Data Engineering
+### Delivering Data Science
 
-- Data Lakes & Warehouses
-- Data Pipelines
 - Introduction to Docker
 - Introduction to Kubernetes
 - Workflow Orchestration
-- Cloud Computing
+- Reports & Presentations
+- Web Apps & Dashboards
+- APIs
+- Data Pipelines
 
 ## Resources
 
