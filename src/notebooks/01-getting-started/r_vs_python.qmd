@@ -1,5 +1,6 @@
 ---
-title: "R Vs Python: The Age Old Language Wars"
+title: "R vs Python"
+subtitle: "Considering the Age Old Language Wars & Choosing the 'Right' Language"
 author: "Paul Johnson"
 date: "`r Sys.Date()`"
 ---
