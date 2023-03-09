@@ -41,16 +41,16 @@ You should now be able to run any of the source code you want!
 ### Getting Started
 
 - Framing Business Problems as Data Science Problems
-- [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html)
-- R vs Python
-- Importing Data from SQL [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/sql.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/sql.html)]
+- [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/getting_started_with_r_and_python.html)
+- [R vs Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/r_vs_python.html)
+- Importing Data from SQL [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/R/importing_data_from_sql.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/python/importing_data_from_sql.html)]
 - Data Wrangling
-- Exploratory Data Analysis [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/eda.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/eda.html)]
+- Exploratory Data Analysis [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/R/exploratory_data_analysis.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/python/exploratory_data_analysis.html)]
 
 ### Statistical Methods
 
 - Hypothesis Testing (T-Test, ANOVA, Chi-Squared Test)
-- Linear Regression [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/linear-regression.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/linear-regression.html)]
+- Linear Regression [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/02-statistical-methods/R/linear-_regression.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/02-statistical-methods/python/linear_regression.html)]
 - Generalised Linear Models
 - Generalised Additive Models
 - Multilevel Regression
@@ -60,7 +60,7 @@ You should now be able to run any of the source code you want!
 
 - Introduction to ML Concepts
 - Designing Machine Learning Solutions
-- End-to-End ML Workflow [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/machine-learning.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/machine-learning.html)]
+- End-to-End ML Workflow [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/03-machine-learning/R/end_to_end_ml_workflow.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/03-machine-learning/python/end_to_end_ml_workflow.html)]
   - Cross-Validation
   - Hyperparameter Tuning
 - Unsupervised Learning (Clustering)
