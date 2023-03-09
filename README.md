@@ -1,14 +1,12 @@
 # Data Science Guides
 
-A repository containing worked examples in R & (eventually) Python of some common data science tasks, to use as a space for learning how to implement these methods, and as a template for applying data science to SCW work.
+A repository containing worked examples in R & Python of some common data science tasks, to use as a space for learning how to implement these methods, and as a template for applying data science to SCW work.
 
 ## Usage
 
 ### R/Python
 
-In order to implement the guides in this repository, you will need to install R and/or Python (depending on which you wish to use). Getting R and Python installed on your local machine can prove to be a non-trivial task, and knowing which tools are best for using either language (especially Python) can sometimes act as a bit of a barrier for new users.
-
-To help reduce the barriers to entry for new users, there is a [notebook](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html) that takes you through some of these challenges, from getting either language installed on your local machine to which tools to use.
+In order to implement the guides in this repository, you will need to install R and/or Python (depending on which you wish to use). Getting R and Python installed on your local machine can prove to be a non-trivial task, and knowing which tools are best for using either language (especially Python) can sometimes act as a bit of a barrier for new users. To help reduce the barriers to entry for new users, there is a [notebook](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html) that takes you through some of these challenges, from getting either language installed on your local machine to which tools to use.
 
 ### Git
 
@@ -42,6 +40,7 @@ You should now be able to run any of the source code you want!
 
 ### Getting Started
 
+- Framing Business Problems as Data Science Problems
 - [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/getting-started.html)
 - R vs Python
 - Importing Data from SQL [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/sql.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/python/sql.html)]
@@ -69,7 +68,18 @@ You should now be able to run any of the source code you want!
 
 ### Deep Learning
 
+- Introduction to Deep Learning
 - Image Classification
+- Text Classification
+
+### Data Engineering
+
+- Data Lakes & Warehouses
+- Data Pipelines
+- Introduction to Docker
+- Introduction to Kubernetes
+- Workflow Orchestration
+- Cloud Computing
 
 ## Resources
 
