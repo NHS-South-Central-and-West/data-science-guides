@@ -50,7 +50,7 @@ You should now be able to run any of the source code you want!
 ### Statistical Methods
 
 - Hypothesis Testing (T-Test, ANOVA, Chi-Squared Test)
-- Linear Regression [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/02-statistical-methods/R/linear-_regression.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/02-statistical-methods/python/linear_regression.html)]
+- Linear Regression [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/02-statistical-methods/R/linear_regression.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/02-statistical-methods/python/linear_regression.html)]
 - Generalised Linear Models
 - Generalised Additive Models
 - Multilevel Regression
