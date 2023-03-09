@@ -21,7 +21,7 @@ While both R and Python are interpreted languages, there are a number of differe
 
 There are also some differences in terms of the data structures that are commonly used in each language, and the libraries that are available in R and Python also impact what is possible in either language, and which language is better suited to which tasks.
 
-## Data Science Tasks
+## Data Science Capabilities
 
 Both languages can be used to do virtually any data science task. For R, this is because it has been adapted to work for a wide range of tasks, while it is by design that Python can be applied to a wide variety of domains. This is because Python is designed as a general-purpose programming language, while R is designed as a statistical programming language.
 
