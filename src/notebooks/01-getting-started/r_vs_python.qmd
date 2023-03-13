@@ -5,11 +5,124 @@ author: "Paul Johnson"
 date: "`r Sys.Date()`"
 ---
 
+```{r}
+#| label: setup
+#| output: false
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
+
+# import packages
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+})
+
+# ggplot theme
+# set minimal theme
+theme_set(theme_minimal(base_size = 14)) +
+  # update theme to configure legend and increase plot margin
+  theme_update(
+    legend.position = "top",
+    legend.title = element_blank(),
+    plot.margin = unit(c(0.5, 1, 1, 1), 'cm'),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank()
+    ) 
+
+pypl_raw <- readr::read_csv(here::here('data', 'pypl.csv'))
+
+df <-
+  pypl_raw |>
+  mutate(Date=lubridate::date(Date)) |>
+  tidyr::pivot_longer(-Date, names_to='language', values_to='popularity')
+
+```
+
 R and Python are two of the most popular programming languages in the world, and they are both used extensively in data science. However, there is a lot of debate about which language is better, and which language is more suitable for data science. A quick Google search for "R vs Python" will quickly point you in the direction of plenty of strongly-held opinions about why R or Python is better and why the other language is rubbish and a total waste of time, but I think these debates are a little worn out, and it doesn't help newcomers to the field to see these dichotomous views of two of the most popular languages for data science out there.
 
 In my view, as someone that started out with R before moving on to Python, and that is comfortable using either, I don't think the most important decision is about which language you will learn. It's the decision to learn any programming language at all. I've found that different people find different languages easier to get started with. Personally, I find that Python makes a little more sense to me than R. While I've been using R a lot longer, and am quite capable with it (perhaps more so than I am with Python), I tend to be able to learn methods/concepts easier with Python, because the logic that underpins Python methods just works for me. But that doesn't mean that the logic underpinning Python is better. It just happens to be the case that it is well-aligned with the way that I think about programming. I think it is more important to find which language makes the most sense to you. Both are very strong on data science, as well as being strong in a number of other areas, and both are very popular. Playing around with them both and working out which one makes most sense to you, and which one gives you the best shot at maintaining your coding journey, is what matters.
 
 It's also worth noting that learning a second language, when you are confident with your first, is a lot easier. The hard part is learning the first language. If you crack that part, then you will be able to tackle the second, third, and fourth languages with a lot more ease and at a much faster pace. Learning R doesn't mean you have to stick to R forever, and vice versa for Python. The important thing is that you've learned a coding language. **Any** coding language.
+
+## Popularity
+
+Both R & Python are widely used in data science, and both are very popular programming languages. Although there are a number of ways to measure the popularity of a programming language, every measure demonstrates that Python is one of, if not the most popular language in the world, and R is in and around the top ten. A common measure of the popularity of a programming language is the Popularity of Programming Language (PYPL) Index, which is a measure of popularity based on the number of times they are searched for on Google. The PYPL Index is updated monthly, and the data is available from the [PYPL website](https://pypl.github.io/PYPL.html).
+
+Here is how the top ten most popular programming languages looks in 2023 (based on an average PYPL Index in 2023):
+
+```{r}
+#| label: current-popularity
+#| code-fold: true
+#| code-summary: 'Plot Code (Click to Expand)'
+
+current_pypl <-
+  df |> 
+  mutate(year = lubridate::year(Date)) |> 
+  filter(year == 2023) |> 
+  group_by(language) |> 
+  summarise(popularity = mean(popularity)) |> 
+  mutate(
+    bar_colour = 
+      case_when(
+        language == 'Python' ~ '#FFC933',
+        language == 'R' ~ '#217CA3',
+        TRUE ~ 'grey40'
+          )
+    ) |>
+  arrange(desc(popularity)) |> 
+  slice(1:10)
+
+current_pypl |> 
+  ggplot(aes(reorder(language, popularity), popularity, fill = bar_colour)) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_identity() +
+  labs(x=NULL, y= 'PYPL Index')
+
+```
+
+While Python is way out in front in first, R is also very high on the list in seventh place. This is particularly impressive given that every other language on the list is a general purpose programming language, while R is a statistical programming language. When we look at the [PYPL Index in the UK](https://pypl.github.io/PYPL.html?country=GB), we see a similar picture, with Python even further out in front in first place, and R in in fifth place. This is a testament to the popularity of R within the niche that it occupies, of which data science is a part.
+
+We can also look at how the popularity of R and Python has changed over time, in comparison with other languages that are tracked in the PYPL Index. Here is a plot of the PYPL Index over time, from 2005 to 2023:
+
+```{r}
+#| label: popularity-over-time
+#| code-fold: true
+#| code-summary: 'Plot Code (Click to Expand)'
+
+pypl_over_time <-
+  df |> 
+  mutate(
+    line_colour = 
+      case_when(
+        language == 'Python' ~ '#FFC933',
+        language == 'R' ~ '#217CA3'
+          )
+    )
+
+pypl_over_time |> 
+  ggplot() +
+  ggbump::geom_bump(
+    data = subset(pypl_over_time, !language %in% c('R', 'Python')),
+    aes(x = Date, y = popularity, group = language), 
+     colour='grey30', size = 1, smooth = 5, alpha = 0.1
+    ) +
+  ggbump::geom_bump(
+    data = subset(pypl_over_time, language %in% c('R', 'Python')),
+    aes(x = Date, y = popularity, group = language, colour=line_colour),
+    size = 1.4, smooth = 5
+  ) +
+  scale_colour_identity(guide='legend', labels=c('R', 'Python')) +
+  scale_x_date(date_breaks = "5 years", date_labels =  "%Y") + 
+  labs(x= NULL, y = 'PYPL Index')
+
+```
+
+
+As you can see, Python has been the most popular programming language since 2018, and R has been in and around the top ten for about a decade. Both languages are extremely popular, and both are likely to remain popular for the foreseeable future.
+
+While the PYPL Index is a good measure of language popularity, there are other ways of measuring the most popular programming language, such as GitHub's [_The State Of Open Source Software_](https://octoverse.github.com/2022/top-programming-languages) Report and Stack Overflow's [Developer Survey and Tag Trends](https://stackoverflow.blog/2023/01/26/comparing-tag-trends-with-our-most-loved-programming-languages/).
 
 ## Design Principles
 
@@ -17,7 +130,12 @@ The design principles that underpin a programming language can have an impact on
 
 One of the key similarities between the two languages is that they are both interpreted languages. This means that they are not compiled before they are run, and this makes them easy to use, and it makes them a good choice for beginners. The downside of interpreted languages is that they are slower than compiled languages. This is not an issue for most data science tasks, especially when you are first starting out, but it is something to be aware of if you are working with very large datasets. For more information about the differences between interpreted and compiled languages, this article from [freeCodeCamp](https://www.freecodecamp.org/news/compiled-versus-interpreted-languages/) is a good overview.
 
-While both R and Python are interpreted languages, there are a number of differences between both, in terms of the design principles that underpin each language, and these differences impact how each language works and how you write code in them. R is a [functional programming](https://www.freecodecamp.org/news/an-introduction-to-the-basic-principles-of-functional-programming-a2c2a15c84/) language, which means that you can pass functions as arguments to other functions, and you can return functions from other functions, Python is an [object-oriented programming](https://www.freecodecamp.org/news/object-oriented-programming-concepts-21bb035f7260/) (OOP) language. This means that you can pass objects as arguments to other functions, and you can return objects from other functions. This distinction is probably not something that you need to worry about when you are first starting out on your coding journey, but if you want to master either language, it's important to understand their design principles and how this affects the way that you write code. For a more in-depth discussion about the differences between functional and object-oriented programming, see this [blog post](https://www.educative.io/blog/functional-programming-vs-oop) by Tate Dorman at Educative.io.
+While both R and Python are interpreted languages, there are a number of differences between both, in terms of the design principles that underpin each language, and these differences impact how each language works and how you write code in them. R is a [functional programming](https://www.freecodecamp.org/news/an-introduction-to-the-basic-principles-of-functional-programming-a2c2a15c84/) language, which means that you can pass functions as arguments to other functions, and you can return functions from other functions, Python is an [object-oriented programming](https://www.freecodecamp.org/news/object-oriented-programming-concepts-21bb035f7260/) (OOP) language. This means that you can pass objects as arguments to other functions, and you can return objects from other functions. While R and Python have been designed differently in terms of syntax, both can also support other programming styles (both can support functional and object-oriented approaches, as well as other approaches like procedural programming). This syntactic distinction is probably not something that you need to worry about when you are first starting out on your coding journey, but if you want to master either language, it's important to understand their design principles and how this affects the way that you write code. For a more in-depth discussion about the differences between functional and object-oriented programming, see this [blog post](https://www.educative.io/blog/functional-programming-vs-oop) by Tate Dorman at Educative.io.
+
+Perhaps the most important aspect for a beginner is the readability of a language's syntax. Python is often cited as being an elegant, readable programming language, which makes things a little easier on a new learner. I think Python is  a little easier to read than R, an
+
+In the case of R, I'd argue that it is a little less readable, which does make the learning curve slightly steeper when you first start out (though any programming language will come with a relatively steep learning curve).
+ there are R packages that make a lot of tasks in R more readable, giving it strong similarities to SQL logic.
 
 There are also some differences in terms of the data structures that are commonly used in each language, and the libraries that are available in R and Python also impact what is possible in either language, and which language is better suited to which tasks.
 
@@ -28,3 +146,16 @@ Both languages can be used to do virtually any data science task. For R, this is
 For this reason, R tends to be better at statistical analysis. In addition to R's strength as a statistical programming language, there are also packages that add to R's functionality, and are arguably the strongest part of the R ecosystem. The [tidyverse](https://www.tidyverse.org/), a collection of open source packages for R that "share an underlying design philosophy, grammar, and data structures" of tidy data, have turned R into a language that excels when it comes to data manipulation and wrangling and data visualisation. The tidyverse package, [`dplyr`](https://dplyr.tidyverse.org/) (in conjunction with [`readr`](https://readr.tidyverse.org/) for importing data and [`tidyr`](https://tidyr.tidyverse.org/) for tidying data) is a powerful tool for data manipulation, while [`ggplot2`](https://ggplot2.tidyverse.org/) is a brilliant data visualisation package.
 
 Python, on the other hand, excels in a number of areas, but its biggest strength is that it is capable of doing basically anything _reasonably_ well. This owes to Python's design as a general-purpose programming language. Python tends to be the language of choice for machine learning and deep learning, and it has a very mature ecosystem of libraries for these tasks. Python also has a number of libraries that are useful for web development and data engineering, and it is a good choice for building data-driven web applications and APIs, and for building data pipelines.
+
+## NHS R & Python Communities
+
+There are already a sizeable number of people using both languages in the NHS, and there are communities that are already in place to support people using R or Python in the NHS.
+
+The NHS-R community is a pretty active community of people that are using R in the NHS. You can find them on the [NHS-R website](https://nhsrcommunity.com/), [Twitter](https://twitter.com/NHSRCommunity), and [Slack](https://nhsrcommunity.slack.com). They also have a [Github organisation](https://github.com/nhs-r-community) and a [YouTube channel](https://www.youtube.com/c/NHSRCommunity) which both contain tons of really useful resources.
+
+
+With regards to Python, the equivalent community is the NHS Python Community for Healthcare (typically shortened to NHS-PyCom). The NHS Python Community also have a [website](https://nhs-pycom.net/), a [Slack channel](https://join.slack.com/t/nhs-pycom/shared_invite/zt-z6h1hszo-3_w68FdalVM2EATVVdgCuw), and they have a [Github organisation](https://github.com/nhs-pycom) and a [YouTube channel](https://www.youtube.com/@nhs-pycom) which are both worth checking out. The NHS Python Community is a little smaller than the NHS-R community, but it is still a very active community, and it is growing quickly, with both communities collaboarting regularly to try and spread the growth of both languages in the NHS.
+
+## Resources
+
+There are a number of resources that you can use to learn R and Python, and there are also a number of resources that you can use to learn both languages. I've listed some of the resources that I've found most useful below.
