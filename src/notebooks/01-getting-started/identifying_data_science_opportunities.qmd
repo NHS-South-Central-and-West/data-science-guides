@@ -1,6 +1,6 @@
 ---
-title: "Framing Business Problems as Data Science Problems"
-subtitle: "How to Identify Business Opportunities that are Right for Data Science"
+title: "Identifying Data Science Opportunities"
+subtitle: "Framing Business Problems as Data Science Problems"
 author: "Paul Johnson"
 date: today
 ---
