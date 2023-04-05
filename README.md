@@ -59,15 +59,17 @@ pipenv install
 ```
 
 You should now be able to run all of the Python notebooks in the repository. If you receive an error message, you may have to install certain packages manually. If you are unable to resolve any errors, please submit a [reproducible example](https://stackoverflow.com/help/minimal-reproducible-example) as an [issue](https://github.com/NHS-South-Central-and-West/data-science-guides/issues) on the repository.
+
 ## Guides
 
 ### Getting Started
 
 - [Identifying Data Science Opportunities](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/identifying_data_science_opportunities.html)
+- A Scientific Approach to Answering Questions
 - [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/getting_started_with_r_and_python.html)
 - [R vs Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/r_vs_python.html)
 - Importing Data from SQL [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/R/importing_data_from_sql.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/python/importing_data_from_sql.html)]
-- Wrangling Messy Data [R|Python]
+- Handling & Wrangling Data
 - Exploratory Data Analysis [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/R/exploratory_data_analysis.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/python/exploratory_data_analysis.html)]
 
 ### Statistical Methods
