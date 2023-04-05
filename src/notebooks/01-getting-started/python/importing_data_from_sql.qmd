@@ -40,7 +40,7 @@ In order to run a SQL query in Python, you need to set Python up so that it can 
 - SQL driver ('?driver=SQL+Server')
 
 ```{python}
-#| label: engine
+#| label: sql-engine
 
 engine = sa.create_engine('mssql+pyodbc://{server-and-db-address}?driver=SQL+Server',echo = True)
 
@@ -49,7 +49,7 @@ engine = sa.create_engine('mssql+pyodbc://{server-and-db-address}?driver=SQL+Ser
 Having specified a SQL engine, you can establish a connection.
 
 ```{python}
-#| label: connection
+#| label: sql-connection
 
 conn = engine.connect()
 
@@ -60,7 +60,7 @@ conn = engine.connect()
 You have two ways of going about running a SQL query in a Python script. You can either write your query out explicitly in your Python script, or you can read in an external SQL query. If the query is particularly lengthy, it is better to store is as a .sql file and call it from Python, to make it easier to read your code, and to maintain both components.
 
 ```{python}
-#| label: query
+#| label: sql-query
 
 # open and read sql query
 query = open('path-to-query\query.sql', 'r')
@@ -76,7 +76,7 @@ query.close()
 You can check that this process has worked as expected by inspecting your pandas dataframe.
 
 ```{python}
-#| label: check
+#| label: check-data
 
 df.head()
 
@@ -87,7 +87,7 @@ df.head()
 Finally, you can export your dataframe using the pandas function `to_csv()`. If you want to retain the index column that pandas adds to the dataframe, simply change `index=False` to `True`.
 
 ```{python}
-#| label: export
+#| label: export-data
 
 df.to_csv('path-to-save-df\df.csv', index=False)
 
