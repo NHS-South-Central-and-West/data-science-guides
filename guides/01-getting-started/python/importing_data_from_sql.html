@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Paul Johnson">
-<meta name="dcterms.date" content="2023-03-04">
+<meta name="dcterms.date" content="2023-04-05">
 
 <title>Importing Data from SQL in Python</title>
 <style>
@@ -2627,7 +2627,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 4, 2023</p>
+      <p class="date">April 5, 2023</p>
     </div>
   </div>
   
@@ -2664,18 +2664,18 @@ vertical-align: -.125em;
 <li>Database location</li>
 <li>SQL driver (‘?driver=SQL+Server’)</li>
 </ul>
-<div id="engine" class="cell" data-execution_count="2">
+<div id="sql-engine" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>engine <span class="op">=</span> sa.create_engine(<span class="st">&#39;mssql+pyodbc://{server-and-db-address}?driver=SQL+Server&#39;</span>,echo <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Having specified a SQL engine, you can establish a connection.</p>
-<div id="connection" class="cell" data-execution_count="3">
+<div id="sql-connection" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> engine.<span class="ex">connect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="running-sql-query" class="level2">
 <h2 class="anchored" data-anchor-id="running-sql-query">Running SQL Query</h2>
 <p>You have two ways of going about running a SQL query in a Python script. You can either write your query out explicitly in your Python script, or you can read in an external SQL query. If the query is particularly lengthy, it is better to store is as a .sql file and call it from Python, to make it easier to read your code, and to maintain both components.</p>
-<div id="query" class="cell" data-execution_count="4">
+<div id="sql-query" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># open and read sql query</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;path-to-query\query.sql&#39;</span>, <span class="st">&#39;r&#39;</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2686,14 +2686,14 @@ vertical-align: -.125em;
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>query.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can check that this process has worked as expected by inspecting your pandas dataframe.</p>
-<div id="check" class="cell" data-execution_count="5">
+<div id="check-data" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="export-to-csv" class="level2">
 <h2 class="anchored" data-anchor-id="export-to-csv">Export to CSV</h2>
 <p>Finally, you can export your dataframe using the pandas function <code>to_csv()</code>. If you want to retain the index column that pandas adds to the dataframe, simply change <code>index=False</code> to <code>True</code>.</p>
-<div id="export" class="cell" data-execution_count="6">
+<div id="export-data" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">&#39;path-to-save-df\df.csv&#39;</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>

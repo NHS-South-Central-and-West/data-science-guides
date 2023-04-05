@@ -252,7 +252,7 @@ Histograms and box plots are useful for comparing the distribution of a continuo
 
 ##### Histogram Plots
 
-We can use the `geom_histogram()` function to create histograms. The `fill`  and `position` arguments can be used to split the bars by a particular variable and display them in different colours, as dicussed above.
+We can use the `geom_histogram()` function to create histograms. The `fill`  and `position` arguments can be used to split the bars by a particular variable and display them in different colours, as discussed above.
 
 ```{r}
 #| label: hist-comps
@@ -326,7 +326,7 @@ df |>
   ggplot(aes(age, resting_bp)) +
   geom_point(alpha = 0.8, size = 3, colour = 'gray30')
   
-# filter zero values and add regression line
+# filter zero values
 df |>
   filter(resting_bp != 0) |> 
   ggplot(aes(age, resting_bp)) +
