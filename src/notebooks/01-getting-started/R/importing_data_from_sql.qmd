@@ -23,7 +23,7 @@ I won't import either package here because they are only needed for a handful of
 ## Establish SQL Connection
 
 ```{r}
-#| label: connection
+#| label: sql-connection
 
 con <- DBI::dbConnect(
   odbc::odbc(),
@@ -38,20 +38,27 @@ con <- DBI::dbConnect(
 ## Running SQL Query
 
 ```{r}
-#| label: query
+#| label: sql-query
 
 df <- DBI::dbGetQuery(
   con,
-  'SELECT X
-  FROM DB'
+  'SELECT col_1,
+          col_2,
+          col_3
+  FROM    db_name.table_name'
 )
 
 ```
 
 ```{r}
-#| label: check
+#| label: check-first-rows
 
 head(df)
+
+```
+
+```{r}
+#| label: inspect-data
 
 dplyr::glimpse(df)
 
@@ -60,8 +67,8 @@ dplyr::glimpse(df)
 ## Export to CSV
 
 ```{r}
-#| label: export
+#| label: export-data
 
-readr::write_csv(df, 'path-to-save-df\df.csv')
+readr::write_csv(df, here::here('path-to-save-df', 'df.csv'))
 
 ```

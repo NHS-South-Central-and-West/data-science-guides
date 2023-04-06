@@ -36,7 +36,7 @@ Linear regression is a cornerstone of data science and statistical analysis, and
 
 Not only is linear regression a phenomenally useful tool in a data scientist's arsenal, but it is also a fantastic way to learn about the fundamentals of statistical analysis. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because all regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.
 
-This tutorial will introduce you to linear regression in R, using data pulled from two different sources. The first data source is the Public Health England's [Fingertips API](https://fingertips.phe.org.uk/) (for which there are packages available in [R](https://github.com/ropensci/fingertipsR) and [Python](https://github.com/publichealthengland/PHDS_fingertips_py)), which is a repository of public health data on a wide range of topics. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics' [Health Index](https://www.ons.gov.uk/releases/healthindexforengland2015to2020), which is a composite measure of the health of the population in England. The Health Index is derived froma a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite subdomains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.
+This tutorial will introduce you to linear regression in R, using data pulled from two different sources. The first data source is the Public Health England's [Fingertips API](https://fingertips.phe.org.uk/) (for which there are packages available in [R](https://github.com/ropensci/fingertipsR) and [Python](https://github.com/publichealthengland/PHDS_fingertips_py)), which is a repository of public health data on a wide range of topics. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics' [Health Index](https://www.ons.gov.uk/releases/healthindexforengland2015to2020), which is a composite measure of the health of the population in England. The Health Index is derived from a a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.
 
 ## Exploratory Data Analysis
 
@@ -76,11 +76,11 @@ Having taken a quick look at the data, we can now start to explore how life expe
 df |>
   ggplot(aes(life_expectancy, imd_score)) +
   geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
-  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#217CA3')
 
 ```
 
-There is a clear negative assocation between life expectancy and IMD score, which is what we would expect. However, there are some outliers where life expectancy seems to be higher than would be expected given the level of deprivation. The plot seems to suggest that deprivation may have a 'floor effect' on life expectancy, i.e. that higher deprivation raises the floor of life expectancy, but that there are other factors that can raise life expectancy above the floor.
+There is a clear negative association between life expectancy and IMD score, which is what we would expect. However, there are some outliers where life expectancy seems to be higher than would be expected given the level of deprivation. The plot seems to suggest that deprivation may have a 'floor effect' on life expectancy, i.e. that higher deprivation raises the floor of life expectancy, but that there are other factors that can raise life expectancy above the floor.
 
 We can also plot the distribution of life expectancy by the Health Index scores for physiological and behavioural risk factors. These scores are index values that measure the prevalence of physiological and behavioural risk factors that are associated with poor health outcomes, against a baseline value of the national average for each risk factor in 2015. This baseline score is 100, and higher scores mean that an area has a higher prevalence of that risk factor than the national average in 2015, and lower scores mean that the area has lower prevalence. The expectation is that when the risk factor index scores increase, meaning that the risk factors are less prevalent compared against the national average, life expectancy will increase, while a decrease in the scores will be associated with a decrease in life expectancy.
 
@@ -90,16 +90,14 @@ We can also plot the distribution of life expectancy by the Health Index scores 
 df |>
   ggplot(aes(life_expectancy, physiological_score)) +
   geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
-  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#217CA3')
 
 df |>
   ggplot(aes(life_expectancy, behavioural_score)) +
   geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
-  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#217CA3')
 
 ```
-
-The plots show that there is a positive association between the risk factors scores and life expectancy, however there is significant variance in the plot of life expectancy and physiological
 
 The plots show that there is a clear negative association between life expectancy and both the physiological and behavioural risk factor scores, which is what we would expect. However, the plots also show that there are some outliers where life expectancy seems to be higher than would be expected given the level of risk factors. The plots seem to suggest that risk factors may have a 'floor effect' on life expectancy, i.e. that higher risk factors raise the floor of life expectancy, but that there are other factors that can raise life expectancy above the floor.
 
@@ -134,12 +132,12 @@ We can also visualise the correlation between our explanatory variables, to get 
 df |>
   ggplot(aes(imd_score, physiological_score)) +
   geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
-  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#217CA3')
 
 df |>
   ggplot(aes(imd_score, behavioural_score)) +
   geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
-  geom_smooth(method = lm, se = FALSE, size = 2, colour='#217CA3')
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#217CA3')
 
 df |>
   mutate(imd_decile = as.factor(imd_decile)) |>
@@ -153,7 +151,7 @@ df |>
 
 ```
 
-The correlations are a little more obvious when visualised. The behavioural index scores have a negative linear assocation with IMD scores (and a positive linear association with IMD decile). This means that areas with higher level of deprivation also tend to have a higher prevalence of behavioural risk factors that are associated with poor health outcomes. The physiological index scores have a similar association with deprivation, but the relationship is not as strong as the behavioural risk factors, and there is significant variance around the linear trend.
+The correlations are a little more obvious when visualised. The behavioural index scores have a negative linear association with IMD scores (and a positive linear association with IMD decile). This means that areas with higher level of deprivation also tend to have a higher prevalence of behavioural risk factors that are associated with poor health outcomes. The physiological index scores have a similar association with deprivation, but the relationship is not as strong as the behavioural risk factors, and there is significant variance around the linear trend.
 
 ## Linear Regression
 
@@ -177,7 +175,6 @@ behavioural_scale <- sd(df$physiological_score)
 # transform the variables
 df <-
   df |>
-  rowwise() |>
   mutate(
     imd_transformed = (imd_score - imd_centre)/imd_scale,
     physiological_transformed = (physiological_score - physiological_centre)/physiological_scale,
@@ -232,7 +229,7 @@ sjPlot::tab_model(
 
 When we fit a regression model, we have to consider both how well the model fits the data (evaluation) and the influence that each explanatory variable is having on the outcome (interpretation). The evaluation process is making sure that the model is doing a good enough job that we can reasonably draw some conclusions from it, while the interpretation process is understanding the conclusions we can draw. It's important to understand the purpose that both of these processes serve, and to understand that the evaluation process is just kicking the tires, while what we are ultimately concerned with is the interpretation.
 
-There are several elements to consider when interpreting the results of a linear regression model. Broadly speaking the focus should be on the magnitude and the precision of the model coeffficients. The magnitude of the coefficients indicates the strength of the association between the explanatory variables and the outcome variable, while the precision of the coefficients indicates the uncertainty in the estimated coefficients. We use the regression model coefficients to understand the magnitude of the effect and standard errors (and confidence intervals) to understand the precision of the effect.
+There are several elements to consider when interpreting the results of a linear regression model. Broadly speaking the focus should be on the magnitude and the precision of the model coefficients. The magnitude of the coefficients indicates the strength of the association between the explanatory variables and the outcome variable, while the precision of the coefficients indicates the uncertainty in the estimated coefficients. We use the regression model coefficients to understand the magnitude of the effect and standard errors (and confidence intervals) to understand the precision of the effect.
 
 ### Model Evaluation
 
@@ -252,7 +249,7 @@ P-values are the probability of observing a coefficient as large as the estimate
 
 P-values are used to test the statistical significance of the coefficients. If the p-value is less than the significance level then the coefficient is statistically significant, and we can reject the null hypothesis that the coefficient is equal to zero. If the p-value is greater than the significance level, then the coefficient is not statistically significant, and we cannot reject the null hypothesis that the coefficient is equal to zero. The significance level is often set at 0.05, which means that we are willing to accept a 5% chance of incorrectly rejecting the null hypothesis. This means that if the p-value is less than 0.05, then there is a greater than 95% probability that the coefficient is not equal to zero. However, the significance level is a subjective decision, and can be set at any value. For example, if the significance level is set at 0.01, then we are willing to accept a 1% chance of incorrectly rejecting the null hypothesis.
 
-In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practicioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.
+In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practitioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.
 
 I think the best way to think about p-values is the position prescribed by Gelman, Hill, & Vehtari in [Regression & Other Stories](https://users.aalto.fi/~ave/ROS.pdf). Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will **some** effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.
 
@@ -262,19 +259,20 @@ Model interpretation is the process of understanding the influence that each exp
 
 #### Model Coefficients
 
-The model coefficients are the estimated values of the regression coefficients, or the estimated change in the outcome variable for a one unit change in the explanatory variable, while holding all other explanatory variables constant. The intercept is the estimated value of the outcome variablen  when all of the explanatory variables are equal to zero (or the baseline values if the variables are transformed).
+The model coefficients are the estimated values of the regression coefficients, or the estimated change in the outcome variable for a one unit change in the explanatory variable, while holding all other explanatory variables constant. The intercept is the estimated value of the outcome variable  when all of the explanatory variables are equal to zero (or the baseline values if the variables are transformed).
 
-A regression's coefficients are the most important part of interpreting the model. They specify the association between the explanatory variables and the outcome, telling us both the direction and the magnitude of the association. The direction of the association is indicated by the sign of the coefficient (positive = outcome increases with the explanatory variable, negative = outcome decreases with the explanatory variable). The magnitude of the association is indicated by the size of the coefficient (the larger the coefficient, the stronger the association). If the direction of the asssociation is going in the wrong direction to that which we expect, this obviously indicates issues either in the theory or in the model, and if the magnitude of the effect is too small to be practically significant, then either the explanatory variable is not a good predictor of the outcome, or the model is not doing a good job of fitting the data (either the explanatory variable doesn't really matter or the model is not capturing the true relationship between the explanatory variables and the outcome). However, while the direction is relatively easy to interpret, magnitude is not, because what counts as a practically significant effect is dependent on the context of the analysis.
+A regression's coefficients are the most important part of interpreting the model. They specify the association between the explanatory variables and the outcome, telling us both the direction and the magnitude of the association. The direction of the association is indicated by the sign of the coefficient (positive = outcome increases with the explanatory variable, negative = outcome decreases with the explanatory variable). The magnitude of the association is indicated by the size of the coefficient (the larger the coefficient, the stronger the association). If the direction of the association is going in the wrong direction to that which we expect, this obviously indicates issues either in the theory or in the model, and if the magnitude of the effect is too small to be practically significant, then either the explanatory variable is not a good predictor of the outcome, or the model is not doing a good job of fitting the data (either the explanatory variable doesn't really matter or the model is not capturing the true relationship between the explanatory variables and the outcome). However, while the direction is relatively easy to interpret, magnitude is not, because what counts as a practically significant effect is dependent on the context of the analysis.
 
 #### Standard Errors
 
 The standard errors are the standard deviation of the estimated coefficients. This is a measure of the precision of the estimated association between the explanatory variables and the outcome. The larger the standard error, the less precise the coefficient estimate. Precisely measured coefficients suggest that the model is fitting the data well, and we can be confident that the association between the explanatory variables and the outcome is real, and not just a result of random variation in the data. Defining what counts as 'precise' in any analysis, much like the coefficient magnitude, is dependent on the context of the analysis. However, in general, a standard error of less than 0.5 is considered to be a good estimate, and a standard error of less than 0.25 is considered to be a very precise estimate.
 
-It is important to recognise that a precise coefficient alone cannot be treated as evidence of a causal effect between the explanatory variable and the outcome but it is, at least, a good indication that the explanatory variable is a good predictor of the outcome. In order to establish a causal relationship, we may consider methods that are more robust to the presence of confounding or ommitted variables, the gold standard being randomised controlled trials, but with a strong theoretical basis and a good understanding of the data, we can make a good case for a causal relationship based on observational data.
+It is important to recognise that a precise coefficient alone cannot be treated as evidence of a causal effect between the explanatory variable and the outcome but it is, at least, a good indication that the explanatory variable is a good predictor of the outcome. In order to establish a causal relationship, we may consider methods that are more robust to the presence of confounding or omitted variables, the gold standard being randomised controlled trials, but with a strong theoretical basis and a good understanding of the data, we can make a good case for a causal relationship based on observational data.
 
 ## Next Steps
 
 ## Resources
 
+- [StatQuest: Linear Regression](https://www.youtube.com/watch?v=7ArmBVF2dCs)
 - [Regression & Other Stories](https://avehtari.github.io/ROS-Examples/)
 - [Statistical Inference via Data Science](https://moderndive.com)
