@@ -1,0 +1,231 @@
+---
+title: "Wrangling Data in R"
+subtitle: "Cleaning, Transforming, and Enriching Messy Data Using the Tidyverse"
+author: "Paul Johnson"
+date: today
+---
+
+```{r}
+#| label: setup
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
+
+# install.packages("remotes")
+# remotes::install_github("rOpenSci/fingertipsR")
+
+```
+
+The first step in any analysis is to find the right data for the problem at hand, and to transform that data so that it is structured appropriately for the method of analysis. Finding the right data can be challenging, sometimes requiring getting data from multiple sources, and even then, the data might be a mess, with missing values, duplicates, formatting that makes it difficult to work with in R or Python, and a myriad of other problems. The process of transforming data to make it suitable for analysis is often referred to as data wrangling, or data munging. The data wrangling process can take many forms, from simple data cleaning to more complex transformations like combining multiple data sets, or creating new variables to enrich the data.
+
+## R Packages for Data Wrangling
+
+Data wrangling is a task that R is extremely well suited for, particularly thanks to the tidyverse ecosystem, which provides several packages that can be used to do a wide variety of data wrangling tasks, including:
+
+- [readr](https://readr.tidyverse.org/) - package for reading tabular/rectangular data (e.g. csv files).
+- [readxl](https://readxl.tidyverse.org/) - package for reading Excel files.
+- [dplyr](https://dplyr.tidyverse.org/) - set of functions for data manipulation (filtering rows, selecting columns, re-ordering rows, adding new variables with functions of existing variables, and collapsing many values down to a single summary).
+- [tidyr](https://tidyr.tidyverse.org/) - set of functions for data transformation (changing the representation of a dataset from wide to long, or vice versa, and splitting and combining columns).
+- [stringr](https://stringr.tidyverse.org/) - tools for working with strings.
+- [lubridate](https://lubridate.tidyverse.org/) - tools for dealing with dates and times.
+
+In addition to the tidyverse packages, there are a number of other packages that come in handy when dealing with data, including:
+
+- [here](https://here.r-lib.org/) - package that simplifies how you access files on your local machine by using the relative path based on the location of your R project.
+- [janitor](https://sfirke.github.io/janitor/) - set of tools for data cleaning.
+
+Finally, there are a number of packages that help you work with particularly large data sets:
+
+- [vroom](https://vroom.r-lib.org/) - package that reads files quickly using the [ALTREP frameowrk](https://svn.r-project.org/R/branches/ALTREP/ALTREP.html).
+- [data.table](https://rdatatable.gitlab.io/data.table/) - package that provides a high-performance version of base R’s data.frame with syntax and feature enhancements for ease of use, convenience and programming speed.
+- [arrow](https://arrow.apache.org/docs/r/) - package for using Apache Arrow, which handles in-memory and larger-than-memory data very quickly.
+- [sparklyr](https://spark.rstudio.com/) - R interface for Apache Spark.
+
+Although the tidyverse packages are very popular, they are not required to work with data in R. There will be equivalent ways to do things using only base R functions too. However, I think the tidyverse is particularly user-friendly, especially for those that are coming to R from SQL, so I will focus on data wrangling using a tidyverse workflow in this guide.
+
+## Fingertips Data
+
+We will use Public Health England's Fingertips API as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it.
+
+First, we can look at what is available. The `fingertipsR::indicators_unique()` function returns a list of all unique indicators from the Fingerips API, as well as their indicator IDs. We can use the `View()` function to open the data in a new window and take a closer look at what is available.
+
+```{r}
+#| label: fingertips-data
+
+inds <- fingertipsR::indicators_unique()
+
+# View(inds)
+
+```
+
+If we were interested in a particular indicator, this would be a good way of finding the ID and getting the data. However, if we're looking for a group of indicators about a particular topic, then the Fingertips profiles are going to be more useful.
+
+```{r}
+
+profiles <- fingertipsR::profiles()
+
+# View(profiles)
+
+```
+
+From the profiles, we can identify topics that are of particular interest, for example the Public Health Outcomes Framework (profile ID = 19).
+```{r}
+
+phof_inds <- fingertipsR::indicators(ProfileID=19)
+
+# View(phof_inds)
+
+```
+
+There are lots of indicators available from this profile. We can also check the area types that the indicators in the Public Health Outcomes Framework are available for, using either the `fingerprintsR::area_types()` function, with the `ProfileID` argument set to the profile we are interested in, or the `fingertipsR::indicator_area_types()` function, with the `IndicatorID` argument set to one of the indicators that we are interested in.
+
+```{r}
+
+fingertipsR::area_types(ProfileID=19) |>
+  dplyr::select(AreaTypeID, AreaTypeName)
+
+fingertipsR::indicator_areatypes(IndicatorID=phof_inds$IndicatorID[1])
+
+```
+
+The list of area types is quite long, but from the `indicator_area_types()` function, we can see that there are six area types available for the first indicator in the list of profile indicators. The area types ending in 2 are all upper tier local authorities (the different types being different local authority boundaries from different points in time), while the other two area types refer to Government Office Regions and England as a whole.
+
+We will use the most recent upper tier local authority boundaries, which have the `AreaTypeID`, 402.
+
+Having identified the profile and area type we are interested in, we can now pull the data from the Fingertips API using the `fingertipsR::fingertips_data()` function.
+
+```{r}
+#| label: import-data
+
+# pull wider determinants raw data from fingertips
+phof_raw <-
+  fingertipsR::fingertips_data(
+    ProfileID = 19,
+    AreaTypeID = 302
+  )
+
+
+```
+
+```{r}
+#| label: check-data
+
+dplyr::glimpse(phof_raw)
+
+phof_raw |>
+  dplyr::distinct(IndicatorName) |>
+  head()
+
+```
+
+With the raw data imported, we are now able to start the process of cleaning and wrangling the data into a format that is ready for analysis.
+
+## Data Wrangling
+
+First, we will clean the column names using the `janitor::clean_names()` function. This will convert all column names to lower case, remove any spaces and replace them with underscores, and remove any special characters. This will make it easier to work with the data in the future.
+
+```{r}
+#| label: clean-data
+
+phof_raw <-
+  phof_raw |>
+  janitor::clean_names()
+
+```
+
+
+We've got a total of 168 indicators, which means some of the indicators from the Public Health Outcomes Framework are not available for upper tier local authorities. We can filter the data to just the indicators we are interested in (as well as filtering any rows where the value is missing), using the `dplyr::filter()` function. We can also use the `dplyr::group_by()` and `dplyr::summarise()` functions to get the mean value of the indicators across all areas in the data. Below is an example:
+
+```{r}
+
+phof_raw |>
+  dplyr::filter(
+    indicator_id %in% c(90366, 20101, 11601) &
+    !is.na(value)) |>
+    dplyr::group_by(indicator_name) |>
+    dplyr::summarise(mean(value))
+
+```
+
+The data pulled from the Fingertips API has a number of idiosyncracies that need addressing when wrangling the data. For example, the `timeperiod_sortable` column refers to the year that the data relates to, and it contains four superfluous zeros at the end of each year (i.e, 20230000). We can use the `dplyr::mutate()` function to create a `year` column which strips out the zeros from the `timeperiod_sortable` column (using the `stringr::str_remove_all()` function).
+
+```{r}
+#| label: wrangle-data
+
+# filter for the indicators of interest and wrangle data into tidy structure
+phof_raw |>
+  dplyr::filter(indicator_id %in% c(90366, 20101, 11601) & area_code == "E92000001") |>
+  dplyr::group_by(indicator_name, area_code, timeperiod_sortable) |>
+  dplyr::summarise(value = mean(value)) |>
+  dplyr::mutate(year = stringr::str_remove_all(timeperiod_sortable, "0000")) |>
+  dplyr::select(indicator_name, area_code, year, value)
+
+```
+
+We can also remove the ID that appended to the beginning of each indicator name. We can use `str_remove_all()` again, using a regular expression to remove everything up to and including the dash in the indicator name (and the space immediately after).
+
+```{r}
+
+phof_raw |>
+  dplyr::filter(indicator_id %in% c(90366, 20101, 11601)) |>
+  dplyr::mutate(indicator_name = stringr::str_remove(indicator_name, "^[^-]+- ")) |>
+  dplyr::distinct(indicator_name)
+
+```
+
+Finally, the data is structured in a wide format, with each indicator having its own column. This is not a tidy structure, as each column should represent a variable, and each row should represent an observation. We can use the `tidyr::pivot_wider()` function to convert the data into a tidy structure, with each indicator having its own row. We can also use the `dplyr::rename()` function to rename the columns to something more meaningful, and the `tidyr::drop_na()` function to remove any rows where the value is missing.
+
+```{r}
+
+phof_raw |>
+  dplyr::filter(indicator_id %in% c(90366, 20101, 11601)) |>
+  dplyr::select(indicator_id, indicator_name, area_code, timeperiod_sortable, sex, value) |>
+  tidyr::pivot_wider(
+    names_from = indicator_name,
+    values_from = value
+  ) |>
+  dplyr::rename(
+      life_expectancy = `A01b - Life expectancy at birth`,
+      low_birth_weight = `C04 - Low birth weight of term babies`,
+      outdoor_space = `B16 - Utilisation of outdoor space for exercise/health reasons`
+  )
+
+```
+
+We can combine all of the above steps into a single function, which we can then apply to the raw data to get the data into a tidy structure.
+
+```{r}
+
+# function to wrangle data into tidy structure
+wrangle_phof_data <- function(data) {
+  data |>
+    dplyr::filter(indicator_id %in% c(90366, 20101, 11601)) |>
+    dplyr::group_by(indicator_name, area_code, timeperiod_sortable) |>
+    dplyr::summarise(value = mean(value)) |>
+    dplyr::mutate(year = stringr::str_remove_all(timeperiod_sortable, "0000")) |>
+    dplyr::select(indicator_name, area_code, year, value) |>
+    tidyr::pivot_wider(
+      names_from = indicator_name,
+      values_from = value
+    ) |>
+    dplyr::rename(
+      life_expectancy = `A01b - Life expectancy at birth`,
+      low_birth_weight = `C04 - Low birth weight of term babies`,
+      outdoor_space = `B16 - Utilisation of outdoor space for exercise/health reasons`
+    ) |>
+    tidyr::drop_na()
+}
+
+phof <- wrangle_phof_data(phof_raw)
+
+```
+
+## Next Steps
+
+We have successfully imported, cleaned, and wrangled Fingertips data into a tidy structure. We can now move on to the next step of the data science process, which is to explore the data and perform some analysis.
+
+We could save the data to a CSV file at this point, using the `readr::write_csv()` function (for example, `readr::write_csv(phof, here::here("data/phof.csv"))`), or we could perform the analysis on the dataframe object we have created.
+
+## Resources
+
+- [{dplyr} - A Grammar of Data Manipulation](https://dplyr.tidyverse.org/)
+- [Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel](https://observablehq.com/@observablehq/data-wrangling-translations?utm_campaign=Data_Elixir&utm_source=Data_Elixir_430)

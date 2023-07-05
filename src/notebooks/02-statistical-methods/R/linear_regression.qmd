@@ -276,3 +276,4 @@ It is important to recognise that a precise coefficient alone cannot be treated 
 - [StatQuest: Linear Regression](https://www.youtube.com/watch?v=7ArmBVF2dCs)
 - [Regression & Other Stories](https://avehtari.github.io/ROS-Examples/)
 - [Statistical Inference via Data Science](https://moderndive.com)
+- [A User's Guide to Statistical Inference and Regression](https://mattblackwell.github.io/gov2002-book/)

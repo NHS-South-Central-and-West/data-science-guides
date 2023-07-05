@@ -19,6 +19,7 @@ torch = "*"
 torchvision = "*"
 scipy = "*"
 skimpy = "*"
+fingertips-py = "*"
 
 [dev-packages]
 
