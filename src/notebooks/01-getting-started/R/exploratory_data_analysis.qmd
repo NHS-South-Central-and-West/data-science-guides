@@ -252,7 +252,7 @@ Histograms and box plots are useful for comparing the distribution of a continuo
 
 ##### Histogram Plots
 
-We can use the `geom_histogram()` function to create histograms. The `fill`  and `position` arguments can be used to split the bars by a particular variable and display them in different colours, as discussed above.
+We can use the `geom_histogram()` function to create histograms. The `fill` and `position` arguments can be used to split the bars by a particular variable and display them in different colours, as discussed above.
 
 ```{r}
 #| label: hist-comps
@@ -400,6 +400,7 @@ The next step in the data science process is to build a model to either explain 
 
 There are a wealth of resources available to help you learn more about ggplot2 and data visualisation. Here are some of the best freely available resources:
 
-- [Data Visualization: A Practical Introduction](https://socviz.co/)
-- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/)
-- [Data Visualization with R](https://rkabacoff.github.io/datavis/)
+-   [Data Visualization: A Practical Introduction](https://socviz.co/)
+-   [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/)
+-   [Data Visualization with R](https://rkabacoff.github.io/datavis/)
+-   [{ggeasy} - Easy Access to {ggplot2} Commands](https://jonocarroll.github.io/ggeasy/)
