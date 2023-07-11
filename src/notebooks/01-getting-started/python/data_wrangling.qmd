@@ -1,0 +1,80 @@
+---
+title: "Wrangling Data in Python"
+subtitle: "Cleaning and Preparing Messy Data Using Pandas/Polars"
+author: "Paul Johnson"
+date: today
+---
+
+```{python}
+#| label: setup
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
+
+import pandas as pd
+import polars as pl
+
+import fingertips_py as ftp
+
+```
+
+The first step in any analysis is to find the right data for the problem at hand, and to transform that data so that it is structured appropriately for the method of analysis. Finding the right data can be challenging, sometimes requiring getting data from multiple sources, and even then, the data might be a mess, with missing values, duplicates, formatting that makes it difficult to work with in R or Python, and a myriad of other problems. The process of transforming data to make it suitable for analysis is often referred to as data wrangling, or data munging. The data wrangling process can take many forms, from simple data cleaning to more complex transformations like combining multiple data sets, or creating new variables to enrich the data.
+
+## Python Libraries for Data Wrangling
+
+The Python ecosystem for data wrangling is not quite as rich as in R, but there is one library that is extremely dominant (pandas) and one library that is seeking to disrupt it (polars).
+
+## Fingertips Data
+
+We will use Public Health England's Fingertips API as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it.
+
+First, we can look at what is available.
+
+The `fingertips_py` library does seem to be a little less mature than the R equivalent, but it does have some useful functions. We can use the `get_all_profiles()` function to get a list of all the profiles available in the API.
+
+```{python}
+
+profiles_raw = ftp.get_all_profiles()
+
+profiles = pd.DataFrame(profiles_raw)
+
+profiles.head()
+
+```
+
+```{python}
+
+phof_raw = ftp.get_profile_by_name('public health outcomes framework')
+
+phof = pd.DataFrame(phof_raw)
+
+phof.head()
+
+```
+
+
+```{python}
+
+phof_meta = ftp.get_metadata_for_profile_as_dataframe(phof['Id'])
+indicator_meta = phof_meta[phof_meta['Indicator'].str.contains('Healthy')]
+print(indicator_meta)
+```
+
+
+## Next Steps
+
+We have successfully imported, cleaned, and wrangled Fingertips data into a tidy structure. We can now move on to the next step of the data science process, which is to explore the data and perform some analysis.
+
+We could save the data to a CSV file at this point, using the pandas `write_csv()` function (for example, `pd.write_csv(phof, "data/phof.csv")`), or we could perform the analysis on the dataframe object we have created.
+
+This is just one example of the data wrangling process, but in reality there is a vast array of ways you might transform data in the process of preparing it for an analysis. There is no set recipe for this process, but the goal is to transform data from whatever raw form it arrives in to something structured (typically this means tidy data) that lends itself to analysis.
+
+## Resources
+
+- [Hadley Wickham - Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf)
+- [Modern Polars](https://kevinheavey.github.io/modern-polars/performance.html)
+- [Pandas Anti Patterns](https://www.aidancooper.co.uk/pandas-anti-patterns/)
+- [Minimally Sufficient Pandas](https://www.dunderdata.com/blog/minimally-sufficient-pandas)
+- [Pandas Data Structures](https://www.metasnake.com/blog/pandas-data-structures.html)
+- [Pandas Series Introduction](https://www.metasnake.com/blog/pandas-series-intro.html)
+
+
