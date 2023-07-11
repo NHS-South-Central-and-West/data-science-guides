@@ -227,5 +227,10 @@ We could save the data to a CSV file at this point, using the `readr::write_csv(
 
 ## Resources
 
-- [{dplyr} - A Grammar of Data Manipulation](https://dplyr.tidyverse.org/)
+- [Hadley Wickham - Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf)
+- [Data Transformation with {dplyr}](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf)
+- [Data Tidying with {tidyr}](https://posit.co/wp-content/uploads/2022/10/tidyr.pdf)
+- [Top 10 Must-Know {dplyr} Commands for Data Wrangling in R!](https://yuzar-blog.netlify.app/posts/2023-01-31-datawrangling1/)
+- [Data Wrangling with R](https://cengel.github.io/R-data-wrangling/)
 - [Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel](https://observablehq.com/@observablehq/data-wrangling-translations?utm_campaign=Data_Elixir&utm_source=Data_Elixir_430)
+- [R to Python: Data Wrangling Snippets](https://gist.github.com/conormm/fd8b1980c28dd21cfaf6975c86c74d07?permalink_comment_id=3726652)
