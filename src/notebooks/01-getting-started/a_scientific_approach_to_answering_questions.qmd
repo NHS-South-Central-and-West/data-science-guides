@@ -1,0 +1,31 @@
+---
+title: "A Scientific Approach to Answering Questions"
+subtitle: "Learning to Approach Business Problems & Questions in a Scientific Way"
+author: "Paul Johnson"
+date: today
+---
+
+While it is important to learn the methods detailed in these guides (and more), the greatest emphasis should be placed on learning how to use the scientific method to approach problems. Approaching business problems scientifically, trying to build theories based on our observations about the subject being studied, is often overlooked, as this is in many ways the most complex part of the process. It is also less exciting than learning new ways to analyse data, so for someone that is new to data science, it is quite easy to deemphasise this and focus on doing the fun parts instead.
+
+These issues are exacerbated by the fact that any data science education, whether formal or self-taught, is often focused on the methods and tools required for data science. There is less explicit focus on the "process", but this is because the process is taught implicitly through the methods. Teaching the various methods and tools that a data scientist needs to know is time-consuming and complex, and in the process of learning and applying the methods, the student will also learn the scientific approach to problem solving. That said, once someone has mastered the methods, they are (relatively) east to apply to real-world problems, while the process of doing science the right way is more difficult, and requires careful consideration for every practicioner, no matter how experienced they are.
+
+All of this ties into the same questions that should be asked when identifying data science opportunities. But having identified these opportunities, it is important not to skip to identifying a cool method for solving the problem. Instead, focus on the problem itself, and then identify the method or methods that will be most appropriate for answering it.
+
+## A Scientific Approach to Solving Problems
+
+The guides here obviously focus on the methods, but before diving into the code, I think it is important to highlight the importance of learning to implement these methods appropriately, and approaching data science in the "correct" way. This means understanding the problem, generating theories about how to solve it, identifying the data that is needed to test these theories, and building a robust model that is informed by your theory and that is appropriate for the data you have. Before jumping into the code and the iterative process of model building, it is important to take the time to think carefully about your theory, the variables that are relevant to the phenomenon you are studying and the causal mechanism that guides it (or the data generating process), and your expectations from your model. Only once you've thought carefully about all of these things should you start to think about the method(s) you should use.
+
+A simple, concise approach to framing the problem and maximising the value of data science is to use the following framework suggested by Tom Carpenter:
+
+{{< tweet tcarpenter216 1646304103004504064 >}}
+
+If you follow these five steps detailed by Tom, you stand a good chance of creating a solution to your problem that does a good job of generating real business value, and really getting to the heart of the problem you are trying to solve.
+
+For anyone that is analytically minded, it is very easy to fall into the trap of hyperfocusing on the cool methodological approaches you could take to solving a problem. This is something that I regularly have to check myself on, because I find it so easy to get excited about the fancy methods I could apply to a particular situation. However, despite the fact that the methods are often the most fun part of the job, the fact remains that a very fancy model won't get you very far if you haven't spent a lot of time thinking carefully about the problem that model is trying to solve, gathering the data that is needed to solve it, and preparing the data in a way that maximises the model's performance.
+
+The easiest way to avoid falling into the same trap that I regularly slip into is to treat the methods as a means to an end. The goal should always be to build a solution to a specific problem, with a clear understanding of what "success" looks like in that context. And if you also get to make something fancy in the process? Well isn't that exciting!
+
+## Resources
+
+- [Key Skills for Aspiring Data Scientists: Problem Solving and the Scientific Method](https://faculty.ai/blog/key-skills-for-aspiring-data-scientists-problem-solving-and-the-scientific-method/)
+- [Richard Feynman on the Scientific Method](https://research-training-centre.sps.ed.ac.uk/feynman-scientific-method-and-sociology/)
