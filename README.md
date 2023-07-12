@@ -65,7 +65,7 @@ You should now be able to run all of the Python notebooks in the repository. If 
 ### Getting Started
 
 - [Identifying Data Science Opportunities](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/identifying_data_science_opportunities.html)
-- A Scientific Approach to Answering Questions
+- [A Scientific Approach to Problem Solving](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/scientific_approach_to_problem_solving.html)
 - [Getting Started with R & Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/getting_started_with_r_and_python.html)
 - [R vs Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/r_vs_python.html)
 - Importing Data from SQL [[R](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/R/importing_data_from_sql.html)|[Python](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/01-getting-started/python/importing_data_from_sql.html)]
