@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Paul Johnson">
-<meta name="dcterms.date" content="2023-07-05">
+<meta name="dcterms.date" content="2023-07-10">
 
-<title>Handling &amp; Wrangling Data in R</title>
+<title>Wrangling Data in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -2609,8 +2609,8 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Handling &amp; Wrangling Data in R</h1>
-<p class="subtitle lead">Cleaning, Transforming, and Enriching Messy Data Using the Tidyverse</p>
+<h1 class="title">Wrangling Data in R</h1>
+<p class="subtitle lead">Cleaning and Preparing Messy Data Using the Tidyverse</p>
 </div>
 
 
@@ -2627,7 +2627,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 5, 2023</p>
+      <p class="date">July 10, 2023</p>
     </div>
   </div>
   
@@ -2918,13 +2918,19 @@ $ Timeperiodrange                     &lt;chr&gt; &quot;3y&quot;, &quot;3y&quot;
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
 <p>We have successfully imported, cleaned, and wrangled Fingertips data into a tidy structure. We can now move on to the next step of the data science process, which is to explore the data and perform some analysis.</p>
-<p>We could save the data to a CSV file at this point, using the <code>readr::write_csv()</code> function (for example, <code>readr::write_csv(phof, here::here(&quot;data/phof.csv&quot;))</code>), or we could perform the analysis on the dataframe object we have created.</p>
+<p>We could save the data to a CSV file at this point, using the readr <code>write_csv()</code> function (for example, <code>readr::write_csv(phof, here::here(&quot;data/phof.csv&quot;))</code>), or we could perform the analysis on the dataframe object we have created.</p>
+<p>This is just one example of the data wrangling process, but in reality there is a vast array of ways you might transform data in the process of preparing it for an analysis. There is no set recipe for this process, but the goal is to transform data from whatever raw form it arrives in to something structured (typically this means tidy) that lends itself to analysis.</p>
 </section>
 <section id="resources" class="level2">
 <h2 class="anchored" data-anchor-id="resources">Resources</h2>
 <ul>
-<li><a href="https://dplyr.tidyverse.org/">{dplyr} - A Grammar of Data Manipulation</a></li>
+<li><a href="https://vita.had.co.nz/papers/tidy-data.pdf">Hadley Wickham - Tidy Data</a></li>
+<li><a href="https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf">Data Transformation with {dplyr}</a></li>
+<li><a href="https://posit.co/wp-content/uploads/2022/10/tidyr.pdf">Data Tidying with {tidyr}</a></li>
+<li><a href="https://yuzar-blog.netlify.app/posts/2023-01-31-datawrangling1/">Top 10 Must-Know {dplyr} Commands for Data Wrangling in R!</a></li>
+<li><a href="https://cengel.github.io/R-data-wrangling/">Data Wrangling with R</a></li>
 <li><a href="https://observablehq.com/@observablehq/data-wrangling-translations?utm_campaign=Data_Elixir&amp;utm_source=Data_Elixir_430">Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel</a></li>
+<li><a href="https://gist.github.com/conormm/fd8b1980c28dd21cfaf6975c86c74d07?permalink_comment_id=3726652">R to Python: Data Wrangling Snippets</a></li>
 </ul>
 </section>
 

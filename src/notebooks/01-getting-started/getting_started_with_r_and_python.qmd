@@ -12,6 +12,8 @@ This guide won't spend a ton of time trying to teach the basics of using R or Py
 If you are looking to learn R or Python, the following resources are a good place to start:
 
 - [Learning Python](https://developers.google.com/edu/python)
+- [The Python Tutorial](https://docs.python.org/3/tutorial)
+- [QuantEcon Data Science: Python Fundamentals](https://datascience.quantecon.org/python_fundamentals/index.html)
 - The NHS-R Community's [Introduction to R](https://nhs-r-community.github.io/intro_r/) and [Introduction to RStudio](https://github.com/nhs-r-community/intro-r-rstudio)
 
 ## Installation
