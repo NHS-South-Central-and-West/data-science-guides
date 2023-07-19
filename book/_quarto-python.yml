@@ -4,6 +4,7 @@ project:
 
 book:
   title: "Python Data Science Guides"
+  site-url: https://python-data-science-guides.netlify.app
   page-footer:
     center: |
       <a href="https://r-data-science-guides.netlify.app">
