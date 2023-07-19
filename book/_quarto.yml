@@ -29,7 +29,7 @@ format:
     fig-align: center
     execute:
       cache: true
-      freeze: auto
+      freeze: false
       echo: true
       warning: false
       message: false
