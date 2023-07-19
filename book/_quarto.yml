@@ -19,7 +19,7 @@ format:
       - cosmo
       - theme.scss
     mainfont: Arial
-    monofont: Fira Code
+    monofont: Fira Code Light
     code-link: true
     code-block-bg: true
     highlight-style: github

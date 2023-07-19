@@ -12,6 +12,12 @@ $teal:    #00A499 !default;
 $cyan:    #00A9CE !default;
 // scss-docs-end color-variables
 
+// import google fonts
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+$font-family-sans-serif: Arial !default;
+$font-family-monospace: 'Fira Code' !default;
+
 /*-- scss:rules --*/
 
 .sidebar-title {
