@@ -1,4 +1,5 @@
 /.quarto/
 /.jupyter_cache/
+_book_*/
 *_cache/
 *_files/
