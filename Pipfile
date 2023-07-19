@@ -4,23 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pandas = "*"
-numpy = "*"
 matplotlib = "*"
+pandas = "*"
 seaborn = "*"
-rpy2 = "*"
-nbformat = "*"
-nbclient = "*"
-jupyter = "*"
-sklearn = "*"
-scikit-learn = "*"
-statsmodels = "*"
-torch = "*"
-torchvision = "*"
-scipy = "*"
+numpy = "*"
 skimpy = "*"
 fingertips-py = "*"
 polars = "*"
+jupyter-cache = "*"
+statsmodels = "*"
 
 [dev-packages]
 
