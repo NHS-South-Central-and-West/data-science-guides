@@ -15,8 +15,8 @@ $cyan:    #00A9CE !default;
 // import google fonts
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
-$font-family-sans-serif: Arial !default;
-$font-family-monospace: 'Fira Code' !default;
+$font-family-sans-serif: Arial, -apple-system, 'Helvetica', Roboto, sans-serif !default;
+$font-family-monospace: 'Fira Code', 'Courier New', monospace !default;
 
 /*-- scss:rules --*/
 
