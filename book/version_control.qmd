@@ -1,0 +1,7 @@
+#  Version Control {#sec-version-control .unnumbered}
+
+Version control systems like Git are vital for the management of any codebase. Version control means that changes to the code (and anything else in the repository) can be tracked over time. This is a software engineering best-practice that has also been adopted in data science. It is an excellent 'habit' to learn when working with code, because it allows you to track changes, and therefore, revert to previous versions of the code if necessary. It also makes collaboration significantly easier, as it allows multiple people to work on the same codebase without creating conflicts.
+
+If you are new to Git, a good place to start is the [NHS-R Git Training](https://github.com/nhs-r-community/git_training/). Their [Introduction to Git](https://github.com/nhs-r-community/git_training/blob/main/guides/introduction_to_git.md) will help you understand why version control is necessary, what Git & GitHub can offer, and how to navigate these tools.
+
+These data science guides are designed to be used with Git because this is a very important skill for data science, and while it can be a bit challenging at first, it is incredibly valuable to learn, and everyone who wants to do some of the tasks in these guides should also be using Git to manage their work.

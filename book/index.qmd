@@ -1,0 +1,28 @@
+# Welcome {.unnumbered}
+
+::: {.content-visible when-profile="r"}
+**For the Python {{< fa brands python size=lg >}} version of this book, [click here](https://python-data-science-guides.netlify.app).**
+:::
+
+::: {.content-visible when-profile="python"}
+**For the {{< fa brands r-project size=lg >}} version of this book, [click here](https://r-data-science-guides.netlify.app).**
+:::
+
+Data Science Guides is a series of worked examples of common data science tasks in R & Python, to use as a space for learning how to implement these methods, and as a template for applying data science at NHS South, Central and West CSU (and beyond).
+
+The intention of these guides is not to teach the reader to use R or Python, nor is the intention to teach the foundations of mathematics, statistics, and probability that underpin many of the methods used in data science. While these guides should be easy enough to follow for a relative beginner, teaching these fundamentals is beyond the scope of this book. 
+
+Instead, the hope is that these guides serve as simple starting points for anyone looking to use a particular method, using R/Python, or for anyone looking to kick off a data science project with limited experience.
+
+This book is freely available and licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+## Resources
+
+There are lots of resources for learning some of the foundations and principles that are not available in these data science guides.
+
+- [Learning Statistics with R](https://learningstatisticswithr.com/)
+- [Beyond Multiple Linear Regression](https://bookdown.org/roback/bookdown-BeyondMLR/)
+- [Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/)
+- [Telling Stories with Data](https://tellingstorieswithdata.com/)
+- [StatQuest](https://www.youtube.com/@statquest)
+

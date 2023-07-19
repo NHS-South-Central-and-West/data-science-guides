@@ -1,0 +1,181 @@
+---
+execute:
+  eval: false
+---
+
+# Importing Data from SQL {#sec-sql}
+
+::: {.content-visible when-profile="python"}
+
+```{python}
+#| label: py-setup
+#| output: false
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
+
+import pyodbc
+import sqlalchemy as sa
+import pandas as pd
+
+from sqlalchemy import create_engine
+
+```
+
+:::
+
+One of the first tasks you will need to do with any analysis is loading in the data. While you may have data from a variety of sources, the most common will be in a SQL database. Here we will cover how to access a SQL database and extract data in R.
+
+**NOTE: Unlike other notebooks, this notebook won't run and give you outputs because it does not contain the SQL server connection and database details that it needs to pull data. You need to fill in those blanks if you want to run the code below.**
+
+## Packages
+
+::: {.content-visible when-profile="r"}
+
+The R packages you need to interact with SQL are:
+
+-   DBI
+-   ODBC
+
+:::
+
+::: {.content-visible when-profile="python"}
+
+
+The python packages you need to interact with SQL are:
+
+- pyodbc - accessing ODBC databases
+- sqlalchemy - establishing a connection and interacts with pandas
+- pandas - storing, manipulating, and exporting dataframes
+
+:::
+
+I won't import either package here because they are only needed for a handful of functions.
+
+## Establish SQL Connection
+
+::: {.content-visible when-profile="r"}
+
+```{r}
+#| label: r-connection
+
+con <- DBI::dbConnect(
+  odbc::odbc(),
+  driver = 'SQL Server',
+  server = '{db-server}',
+  database = '{db-name}',
+  trustedconnection = TRUE
+)
+
+```
+
+:::
+
+::: {.content-visible when-profile="python"}
+
+In order to run a SQL query in Python, you need to set Python up so that it can interpret the specific SQL dialect and find the database that it is running the query on. The SQLAlchemy function `create_engine()` will give Python everything it needs to do this, but you also have to feed in the following parameters as a string (example given in code):
+
+- SQL dialect ('mssql')
+- Python library for interacting with the database ('pyodbc')
+- Database location
+- SQL driver ('?driver=SQL+Server')
+
+```{python}
+#| label: py-engine
+
+engine = sa.create_engine('mssql+pyodbc://{server-and-db-address}?driver=SQL+Server',echo = True)
+
+```
+
+Having specified a SQL engine, you can establish a connection.
+
+```{python}
+#| label: py-connection
+
+conn = engine.connect()
+
+```
+
+:::
+
+## Running SQL Query
+
+::: {.content-visible when-profile="r"}
+
+```{r}
+#| label: r-query
+
+df <- DBI::dbGetQuery(
+  con,
+  'SELECT col_1,
+          col_2,
+          col_3
+  FROM    db_name.table_name'
+)
+
+```
+
+```{r}
+#| label: r-check
+
+head(df)
+
+dplyr::glimpse(df)
+
+```
+
+:::
+
+::: {.content-visible when-profile="python"}
+
+You have two ways of going about running a SQL query in a Python script. You can either write your query out explicitly in your Python script, or you can read in an external SQL query. If the query is particularly lengthy, it is better to store is as a .sql file and call it from Python, to make it easier to read your code, and to maintain both components.
+
+```{python}
+#| label: py-query
+
+# open and read sql query
+query = open('path-to-query\query.sql', 'r')
+
+# read query in to pandas dataframe
+df = pd.read_sql_query(query.read(),conn)
+
+# close sql query
+query.close()
+
+```
+
+You can check that this process has worked as expected by inspecting your pandas dataframe.
+
+```{python}
+#| label: py-check
+
+df.head()
+
+```
+
+:::
+
+## Export to CSV
+
+::: {.content-visible when-profile="r"}
+
+```{r}
+#| label: r-export
+
+readr::write_csv(df, here::here('path-to-save-df', 'df.csv'))
+
+```
+
+:::
+
+::: {.content-visible when-profile="python"}
+
+Finally, you can export your dataframe using the pandas function `to_csv()`. If you want to retain the index column that pandas adds to the dataframe, simply change `index=False` to `True`.
+
+```{python}
+#| label: py-export
+
+df.to_csv('path-to-save-df\df.csv', index=False)
+
+```
+
+:::

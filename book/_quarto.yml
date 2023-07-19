@@ -1,0 +1,39 @@
+project:
+  type: book
+
+book:
+  author: "Paul Johnson - Principal Data Scientist"
+  date: last-modified
+  date-format: "MMM YYYY"
+  favicon: figures/favicon.ico
+  repo-url: https://github.com/NHS-South-Central-and-West/data-science-guides
+  repo-actions: [issue, source]
+  sidebar:
+    logo: figures/scw_logo.jpg
+    search: true
+
+format:
+  html:
+    theme:
+      - cosmo
+      - theme.scss
+    mainfont: Arial
+    monofont: Fira Code
+    code-link: true
+    code-block-bg: true
+    highlight-style: github
+    callout-appearance: simple
+    fig-width: 12
+    fig-height: 8
+    fig-align: center
+    execute:
+      cache: true
+      freeze: false
+      echo: true
+      warning: false
+      message: false
+
+profile:
+  group:
+    - [r, python]
+  default: r

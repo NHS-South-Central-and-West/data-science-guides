@@ -1,0 +1,29 @@
+# Installing R {#sec-installation .unnumbered}
+
+Getting R or Python installed on your local machine requires submitting a request with the IT Self-Service Portal. The IT team may not have previous experience dealing with either language, so it can help the process if you are familiar with what you need.
+
+In the case of R, everything you need can be found on the [Posit website](https://posit.co/download/rstudio-desktop/). You can download both R and RStudio (software for working with R more efficiently).
+
+If you share this link with IT, installation should be relatively simple. However, in order to maximise performance, it is better to install both R and RStudio on your C drive.
+
+## Programming Environments
+
+### Integrated Development Environments (IDEs)
+
+Integrated Development Environments (IDEs) are tools that can be used to write, run, and debug code. They are a great way to get started with a new language, because they can help you to avoid some of the more common mistakes that you might make when you are first learning how to code.
+
+Getting from an R installation to running your first lines of code is a little easier than doing the same with Python. The biggest reason for this is the monopoly that Posit (formerly RStudio) has over the tools for using R.
+
+RStudio is the best available Integrated Development Environment (IDE) for writing R code, and it is highly recommended that you stick to using RStudio when you first start using R. There are other IDEs and text editors that can handle R (for example, VS Code), but when you start out, it is easiest to stick to RStudio.
+
+### Package Management
+
+R has a built-in package management function, `install.packages()`, which can be used to install packages from CRAN. If you need to install a package from other sources, you can use the `devtools` package. For example, you can install packages from Github using the `devtools::install_github()` function.
+
+### Virtual Environments
+
+Virtual environments are a way of creating isolated environments for your code. This means that you can have different versions of the same package installed in different virtual environments, and you can switch between them as needed. This is particularly useful when you are working on multiple projects that require different versions of the same package. It also means that you can have different versions of the same package installed on your local machine without having to worry about breaking your code.
+
+While it is possible to install packages in both R and Python without using virtual environments (and may be easier in the short term), it is recommended to use a virtual environment when building data science projects. This is because it helps to avoid problems that can occur when you have multiple versions of the same package installed on your local machine, and it also helps to ensure that your code will run on other people's machines.
+
+The best way to create virtual environments in R is to use the [`renv`](https://rstudio.github.io/renv/) package. Virtual environments can be set up for R by running `renv::init()` in the console. This will create a new folder called `renv` in your project directory, and will create a new virtual environment for your project. You can then install packages in this virtual environment using the `install.packages()` function, or by using the `renv::install()` function.
