@@ -1,0 +1,336 @@
+# End-to-End Machine Learning Workflow {#sec-ml-workflow}
+
+```{r}
+#| label: setup
+#| output: false
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
+
+# import packages
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(tidymodels)
+})
+
+# set plot theme
+theme_set(scwplot::theme_scw(base_size = 14))
+
+# import data
+df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
+
+# specify categorical features as factors
+df <- df |> 
+  mutate(
+    sex = as.factor(sex),
+    fasting_bs = as.factor(fasting_bs),
+    resting_ecg = as.factor(resting_ecg),
+    angina = as.factor(angina),
+    heart_disease = as.factor(heart_disease)
+  )
+
+```
+
+An end-to-end machine learning workflow can be broken down into many steps, and there are an extensive number of layers of complexity that can be added, serving a variety of purposes. However, in this guide we will work through a bare bones workflow, using a simple dataset, in order to get a better understanding of the process.
+
+A simple end-to-end ML solution will typically include the following steps:
+
+1. Importing & Cleaning Data
+2. Exploratory Data Analysis (which will be skipped in this guide because it has been carried out in an earlier guide which can be found [here](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/eda.html))
+2. Data Preprocessing
+3. Model Training
+    - Selecting from Candidate Models
+    - Hyperparameter Tuning
+    - Identifying Best Model
+4. Fitting Model on Test Data
+5. Model Evaluation
+
+For a more detailed discussion about a simple modeling workflow in R, the [Model Workflow](https://www.tmwr.org/workflows.html) section in Tidy Modeling with R is a great resource.
+
+## Data
+
+```{r}
+#| label: inspect-data
+
+# inspect the data
+glimpse(df)
+
+```
+
+### Train/Test Split
+
+One of the central tenets of machine learning is that the model should not be trained on the same data that it is evaluated on. This is because the model could learn spurious/random patterns and correlations in the training data, and this will harm the model's ability to make good predictions on new, unseen data. There are many way of trying to resolve this, but the most simple approach is to split the data into a training and test set. The training set will be used to train the model, and the test set will be used to evaluate the model.
+
+```{r}
+#| label: train-test-split
+
+# set random seed to ensure reproducibility
+set.seed(123)
+
+# split data into train/test sets
+train_test_split <-
+  rsample::initial_split(df,
+                         strata = heart_disease,
+                         prop = 0.7)
+
+# extract training and test sets
+train_df <- rsample::training(train_test_split)
+test_df <- rsample::testing(train_test_split)
+
+```
+
+
+### Cross-Validation Folds
+
+On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalisable.
+
+For more information on cross-validation and how it can be used to train models the [Resampling Methods](https://www.tmwr.org/resampling.html#resampling-methods) section in Tidy Modeling with R discusses cross-validation in detail, in the wider context of resampling methods for training machine learning models. This helps to provide context for the purpose of cross-validation, as well as discussing some of the strategies for cross-validation.
+
+We will use 5-fold stratified cross-validation to train our models. This means that the training data will be split into 5 folds, ensuring that each fold has the same proportion of the target classes. Each fold will be used as a test set once, and the remaining folds will be used as training sets. This will be repeated 5 times, and the average performance will be used to evaluate the model.
+
+```{r}
+#| label: cv-folds
+
+# set random seed to ensure reproducibility
+set.seed(123)
+
+# create cross-validation folds
+train_folds <- vfold_cv(train_df, v = 5, strata = heart_disease)
+
+# inspect the folds
+train_folds
+
+```
+
+### Preprocessing
+
+The purpose of preprocessing is to prepare the data for model fitting. This can take a number of different forms, but some of the most common preprocessing steps include:
+
+- Normalizing/Standardizing data
+- One-hot encoding categorical variables
+- Removing outliers
+- Imputing missing values
+
+We will build two different preprocessing recipes and see which performs better. The first will be a 'basic' recipe that one-hot encodes all categorical features, and removes any features that have strong correlation with another feature in the dataset. The second recipe will include both these steps but will also normalize the numeric features so that they have a mean of zero and a standard deviation of one.
+
+```{r}
+#| label: preprocessing
+
+# specify simple preprocessing recipe
+basic_recipe <- recipe(heart_disease ~ ., data = train_df) |>
+  # one-hot encode categorical variables
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
+  # remove features that have strong correlation with another feature
+  step_corr(all_numeric_predictors(), threshold = .5)
+
+# specify scaled preprocessing recipe
+scaled_recipe <- recipe(heart_disease ~ ., data = train_df) |>
+  # normalize data so that it has mean zero and sd one
+  step_normalize(all_numeric_predictors()) |> 
+  # one-hot encode categorical variables
+  step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
+  # remove features that have strong correlation with another feature
+  step_corr(all_numeric_predictors(), threshold = .5)
+
+# inspect basic preprocessing recipe
+basic_recipe |>
+  prep() |>
+  bake(new_data = NULL)
+
+# inspect scaled preprocessing recipe
+scaled_recipe |>
+  prep() |>
+  bake(new_data = NULL)
+
+```
+
+## Model Training
+
+There are many different types of models that can be used for classification problems, and selecting the right model for the problem at hand can be difficult when you are first starting out with machine learning.
+
+Simple models like [linear](https://parsnip.tidymodels.org/reference/linear_reg.html) and [logistic](https://parsnip.tidymodels.org/reference/logistic_reg.html) regressions are often a good place to start and can be used to get a better understanding of the data and the problem at hand, and can give you a good idea of baseline performance before building more complex models to improve performance. Another example of a simple model is [K-Nearest Neighbours](https://parsnip.tidymodels.org/reference/nearest_neighbor.html) (KNN), which is a non-parametric model that can be used for both classification and regression problems.
+
+We will fit a logistic regression and a KNN, as well as fitting a Random Forest model, which is a good example of a slightly more complex model that will often perform well on structured data.
+
+### Model Selection
+
+```{r}
+#| label: setup-workflow
+
+# create a list of preprocessing recipes
+preprocessers <-
+  list(
+    basic = basic_recipe,
+    scaled = scaled_recipe
+  )
+
+# create a list of candidate models
+models <- list(
+  # logistic regression
+  log = 
+    logistic_reg(
+      # tune regularization parameters
+      penalty = tune(),
+      mixture = tune()
+    ) |>
+    set_engine('glmnet') |>
+    set_mode('classification'),
+  # k-nearest neighbours
+  knn = 
+    nearest_neighbor(
+      # tune weighting function and number of neighbours
+      weight_func = tune(),
+      neighbors = tune()
+      ) |>
+    set_engine('kknn') |>
+    set_mode('classification'),
+  # random forest
+  rf =
+    rand_forest(
+      # number of trees
+      trees = 1000,
+      # tune number of features to consider at each split
+      # and minimum number of observations in a leaf
+      mtry = tune(),
+      min_n = tune()
+      ) |>
+    set_engine('ranger') |>
+    set_mode('classification')
+  )
+
+# combine these lists as a workflow set
+model_workflows <-
+  workflow_set(
+    preproc = preprocessers,
+    models = models
+  )
+
+# specify the metrics on which the models will be evaluated
+eval_metrics <- metric_set(f_meas, accuracy)
+
+```
+
+Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the `tune_grid()` function to tune the models, which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using  F1 score and accuracy.
+
+For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, the [Model Tuning and the Dangers of Overfitting](https://www.tmwr.org/tuning.html) section of Tidy Modeling with R is a good place to start. In addition, the AWS overview of [hyperparameter tuning](https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html) is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan's [Hyperparameter Tuning for Machine Learning Models](https://www.jeremyjordan.me/hyperparameter-tuning/) blogpost is thorough but easy to follow.
+
+```{r}
+#| label: train-models
+
+# train and tune models
+trained_models <- 
+  model_workflows |>
+  workflow_map(
+    # function to use for hyperparameter tuning
+    fn = 'tune_grid',
+    # cv folds for resampling
+    resamples = train_folds,
+    # grid of hyperparameter values to search over
+    grid = 10,
+    # metrics to evaluate model performance
+    metrics = eval_metrics,
+    verbose = TRUE,
+    seed = 123,
+    # control parameters for tuning
+    control = control_grid(
+      save_pred = TRUE,
+      parallel_over = 'everything',
+      save_workflow = TRUE)
+    )
+
+```
+
+#### Comparing Model Performance
+
+Once the models have been trained we can inspect the results to see which model performed best. We can also plot the performance of the models to get a better idea of how they performed.
+
+```{r}
+#| label: compare-models
+
+# inspect the best performing models
+trained_models |>
+  rank_results(select_best=TRUE) |> 
+  filter(.metric == 'f_meas') |> 
+  select(wflow_id, model, f1 = mean)
+
+# plot performance
+trained_models |> 
+  autoplot()
+
+```
+
+## Finalising Model
+
+```{r}
+#| label: finalise-model
+
+# save best performing model
+best_results <-
+   trained_models |>  
+   extract_workflow_set_result('basic_rf') |>  
+   select_best(metric = 'f_meas')
+
+best_results
+
+```
+
+##  Fitting Model on Test Data
+
+Having selected the best performing model, we can now fit the model to the test data.
+
+```{r}
+#| label: test-model
+
+# fit model on test data
+rf_test_results <-
+   trained_models |>
+   # extract the best performing model
+   extract_workflow('basic_rf') |>
+   finalize_workflow(best_results) |>
+   # fit to test data and evaluate performance
+   last_fit(split = train_test_split, metrics=eval_metrics)
+
+```
+
+## Model Evaluation
+
+Finally, we can inspect the performance of the model on the test data.
+
+```{r}
+#| label: model-evaluation
+
+# inspect model performance on evaluation metrics
+collect_metrics(rf_test_results)
+
+# inspect confusion matrix
+rf_test_results |> 
+  conf_mat_resampled(tidy=FALSE)
+
+# plot confusion matrix
+rf_test_results |>
+  conf_mat_resampled(tidy=FALSE) |> 
+  autoplot(type='heatmap')
+
+```
+
+## Next Steps
+
+In this post, we have covered a simple but robust machine learning workflow. We have have used the `tidymodels` package to fit a logistic regression model, a k-nearest neighbours model, and a random forest model to the heart disease dataset. We used cross-validation to make the results more generalizable, and we used hyperparameter tuning to improve model performance.
+
+The next steps would be to consider what strategies for cross-validation would be most appropriate for the model we are building, what hyperparameter tuning process would produce the best performance, and some more complex algorithms that might outperform the models we've built here.
+
+## Resources
+
+There are lots of great (and free) introductory resources for machine learning:
+
+- [Machine Learning University](https://aws.amazon.com/machine-learning/mlu) (Python)
+- [MLU Explain](https://mlu-explain.github.io/)
+- [Machine Learning for Beginners](https://microsoft.github.io/ML-For-Beginners/?utm_source=substack&utm_medium=email#/) (Python/R)
+
+For a guided video course, Data Talks Club's Machine Learning Zoomcamp (available on [Github](https://github.com/alexeygrigorev/mlbookcamp-code/tree/master/course-zoomcamp) and [Youtube](https://www.youtube.com/watch?v=MqI8vt3-cag&list=PL3MmuxUbc_hIhxl5Ji8t4O6lPAOpHaCLR)) is well-paced and well-presented, covering a variety of machine learning methods and even covering some of the aspects that introductory course often skip over, like deployment and data engineering principles. However, while the ML Zoomcamp course is intended as an introduction to machine learning, it does assume a certain level of familiarity with programming (the course uses Python) and software engineering. The appendix section of the course is definitely helpful for bridging some of the gaps in the course, but it is still worth being aware of the way the course is structured.
+
+If you are keen to learn more about machine learning but are particularly focused on (or already have experience in) R, the ML Zoomcamp may not be the best fit. If you want to learn about machine learning in R, Max Kuhn & Julia Silge's [Tidy Modeling with R](https://www.tmwr.org/) is a great place to start.
+
+If you are looking for something that goes into greater detail about a wide range of machine learning methods, then there is no better resource than [An Introduction to Statistical Learning](https://hastie.su.domains/ISLR2/ISLRv2_website.pdf) (or its accompanying [online course](https://www.statlearning.com/online-course)), by Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani.
+
+Finally, if you are particularly interested in learning the mathematics that underpins machine learning, I would highly recommend [Mathematics of Machine Learning](https://tivadardanka.com/books/mathematics-of-machine-learning), which is admittedly not free but is very, very good. If you want to learn about the mathematics of machine learning but are not comfortable enough tackling the Mathematics of ML book, the [StatQuest](https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw) and [3Blue1Brown](https://www.youtube.com/c/3blue1brown) Youtube channels are both really accessible and well-presented.

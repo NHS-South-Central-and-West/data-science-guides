@@ -1,0 +1,36 @@
+project:
+  output-dir: _book_r
+  execute-dir: file
+
+book:
+  title: "R Data Science Guides"
+  page-footer:
+    center: |
+      <a href="https://python-data-science-guides.netlify.app">
+      Python Data Science Guides</a> {{< fa brands python size=xl >}}
+
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - good_science.qmd
+
+    - part: "Dealing with Data"
+      chapters:
+        - sql.qmd
+        - wrangling_r.qmd
+        - eda_r.qmd
+
+    - part: "Statistical Inference"
+      chapters:
+        - linear_regression_r.qmd
+    - part: "Machine Learning"
+      chapters:
+        - ml_workflow_r.qmd
+    - part: "Deep Learning"
+    - part: "Delivering Data Science"
+
+  appendices:
+    - installing_r.qmd
+    - version_control.qmd
+
+bibliography: references.bib
