@@ -18,8 +18,8 @@ format:
     theme:
       - cosmo
       - theme.scss
-    mainfont: Arial
-    monofont: Fira Code Light
+    # mainfont: Arial
+    # monofont: Fira Code Light
     code-link: true
     code-block-bg: true
     highlight-style: github
