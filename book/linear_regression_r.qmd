@@ -248,7 +248,7 @@ In recent years p-values (and the wider concept of statistical significance) hav
 
 I think the best way to think about p-values is the position prescribed by Gelman, Hill, & Vehtari in [Regression & Other Stories](https://users.aalto.fi/~ave/ROS.pdf). Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will **some** effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.
 
-## Model Interpretation
+### Model Interpretation
 
 Model interpretation is the process of understanding the influence that each explanatory variable has on the outcome. This involves understanding the direction, the magnitude, and the precision of the model coefficients. The coefficients themselves will tell us about direction and magnitude, while the standard errors and confidence intervals will tell us about precision.
 
