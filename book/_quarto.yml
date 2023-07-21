@@ -26,6 +26,7 @@ format:
     callout-appearance: simple
     fig-width: 12
     fig-height: 8
+    dpi: 300
     fig-align: center
     execute:
       cache: true

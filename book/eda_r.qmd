@@ -143,23 +143,23 @@ For continuous variables, we can use histograms to visualise the distribution of
 # age distribution
 df |>
   ggplot(aes(age)) +
-  geom_histogram(binwidth = 5)
+  geom_histogram(binwidth = 5, colour = "#333333", linewidth = 1)
 
 # max hr distribution
 df |>
   ggplot(aes(max_hr)) +
-  geom_histogram(binwidth = 10)
+  geom_histogram(binwidth = 10, colour = "#333333", linewidth = 1)
 
 # cholesterol distribution
 df |>
   ggplot(aes(cholesterol)) +
-  geom_histogram(binwidth = 25)
+  geom_histogram(binwidth = 25, colour = "#333333", linewidth = 1)
 
 # filter zero values
 df |> 
   filter(cholesterol != 0) |> 
   ggplot(aes(cholesterol)) +
-  geom_histogram(binwidth = 25)
+  geom_histogram(binwidth = 25, colour = "#333333", linewidth = 1)
 
 ```
 
@@ -177,17 +177,17 @@ We can use bar plots to visualise the distribution of discrete variables. We can
 # heart disease distribution
 df |>
   ggplot(aes(heart_disease)) +
-  geom_bar()
+  geom_bar(colour = "#333333", linewidth = 1)
 
 # sex distribution
 df |>
   ggplot(aes(sex)) +
-  geom_bar()
+  geom_bar(colour = "#333333", linewidth = 1)
 
 # angina distribution
 df |>
   ggplot(aes(angina)) +
-  geom_bar()
+  geom_bar(colour = "#333333", linewidth = 1)
 
 ```
 
@@ -213,25 +213,25 @@ Finally, the `fill` argument splits the bars by a particular variable and displa
 # heart disease by sex
 df |>
   ggplot(aes(heart_disease, fill = sex)) +
-  geom_bar(position = 'dodge') +
+  geom_bar(position = 'dodge', colour = "#333333", linewidth = 1) +
   scale_fill_qualitative(palette = "scw")
 
 # resting ecg
 df |>
   ggplot(aes(heart_disease, fill = resting_ecg)) +
-  geom_bar(position = 'dodge') +
+  geom_bar(position = 'dodge', colour = "#333333", linewidth = 1) +
   scale_fill_qualitative(palette = "scw")
 
 # angina
 df |>
   ggplot(aes(heart_disease, fill = angina)) +
-  geom_bar(position = 'dodge') +
+  geom_bar(position = 'dodge', colour = "#333333", linewidth = 1) +
   scale_fill_qualitative(palette = "scw")
 
 # fasting bs
 df |>
   ggplot(aes(heart_disease, fill = fasting_bs)) +
-  geom_bar(position = 'dodge') +
+  geom_bar(position = 'dodge', colour = "#333333", linewidth = 1) +
   scale_fill_qualitative(palette = "scw")
 
 ```
@@ -252,20 +252,23 @@ We can use the `geom_histogram()` function to create histograms. The `fill` and 
 # age distribution by heart disease
 df |>
   ggplot(aes(age, fill = heart_disease)) +
-  geom_histogram(binwidth = 5, position = 'dodge') +
+  geom_histogram(binwidth = 5, position = 'dodge', 
+                 colour = "#333333", linewidth = 1) +
   scale_fill_qualitative(palette = "scw")
 
 # cholesterol
 df |>
   ggplot(aes(cholesterol, fill = heart_disease)) +
-  geom_histogram(binwidth = 25, position = 'dodge') +
+  geom_histogram(binwidth = 25, position = 'dodge', 
+                 colour = "#333333", linewidth = 1) +
   scale_fill_qualitative(palette = "scw")
 
 # filter zero values
 df |> 
   filter(cholesterol != 0) |> 
   ggplot(aes(cholesterol, fill = heart_disease)) +
-  geom_histogram(binwidth = 25, position = 'dodge') +
+  geom_histogram(binwidth = 25, position = 'dodge', 
+                 colour = "#333333", linewidth = 1) +
   scale_fill_qualitative(palette = "scw")
 
 ```

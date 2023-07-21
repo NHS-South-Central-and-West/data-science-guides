@@ -255,7 +255,14 @@ trained_models |>
 
 # plot performance
 trained_models |> 
-  autoplot()
+  autoplot() +
+  scwplot::scale_colour_qualitative(palette = "nhs")
+
+# select best models and plot performance
+trained_models |> 
+  autoplot(select_best = TRUE) +
+  scwplot::scale_colour_qualitative(palette = "nhs")
+
 
 ```
 
