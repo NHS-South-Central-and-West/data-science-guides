@@ -1,1 +1,12 @@
+*.html
+*.yml
+*.scss
+*.bib
+
+/.venv
 /data
+
+*_cache/
+*_files/
+.quarto/
+_extenstions/
