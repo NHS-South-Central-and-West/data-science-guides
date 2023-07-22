@@ -11,12 +11,24 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.api as sm
 
+from matplotlib import rc
+
 # data path
 path = '../data/'
 file_name = 'deprivation.csv'
 
 # import data
 df = pd.read_csv(f"{path}{file_name}")
+
+# set plot style
+sns.set_style('whitegrid')
+
+# set plot font
+rc('font',**{'family':'sans-serif','sans-serif':['Arial']})
+
+# set plot colour palette
+colours = ['#1C355E', '#00A499', '#005EB8']
+sns.set_palette(sns.color_palette(colours))
 
 ```
 

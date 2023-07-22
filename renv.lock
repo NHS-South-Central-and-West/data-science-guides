@@ -516,6 +516,18 @@
       ],
       "Hash": "528692344d5a174552e3bf7acdfbaebd"
     },
+    "checkmate": {
+      "Package": "checkmate",
+      "Version": "2.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "backports",
+        "utils"
+      ],
+      "Hash": "ca9c113196136f4a9ca9ce6079c2c99e"
+    },
     "class": {
       "Package": "class",
       "Version": "7.3-22",
@@ -1727,18 +1739,6 @@
       ],
       "Hash": "e25f18436e3efd42c7c590a1c4c15390"
     },
-    "magick": {
-      "Package": "magick",
-      "Version": "2.7.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "Rcpp",
-        "curl",
-        "magrittr"
-      ],
-      "Hash": "92dd08195d2270e188dcac8d4b219e84"
-    },
     "magrittr": {
       "Package": "magrittr",
       "Version": "2.0.3",
@@ -1887,6 +1887,24 @@
         "vctrs"
       ],
       "Hash": "4f50122dc256b1b6996a4703fecea821"
+    },
+    "modelsummary": {
+      "Package": "modelsummary",
+      "Version": "1.4.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "checkmate",
+        "data.table",
+        "generics",
+        "glue",
+        "insight",
+        "parameters",
+        "performance",
+        "tables"
+      ],
+      "Hash": "e46566bc00923e4d038ff1481722fda0"
     },
     "munsell": {
       "Package": "munsell",
@@ -2654,17 +2672,16 @@
       "RemoteUsername": "NHS-South-Central-and-West",
       "RemoteRepo": "scwplot",
       "RemoteRef": "main",
-      "RemoteSha": "e3f373b4fdbcfbfbef85cb367a6966e76903ae22",
+      "RemoteSha": "0854efe6efebff1aaa3ba7af6d8c427f1c38b7bd",
       "Requirements": [
         "R",
         "dplyr",
         "ggplot2",
         "ggpubr",
         "gt",
-        "magick",
         "scales"
       ],
-      "Hash": "a5c850b92e4e4cd36387e9f90febeb56"
+      "Hash": "bfecff299988804776c9450dfc26b7b4"
     },
     "shape": {
       "Package": "shape",
@@ -2935,6 +2952,20 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "3a1be13d68d47a8cd0bfd74739ca1555"
+    },
+    "tables": {
+      "Package": "tables",
+      "Version": "0.9.17",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "htmltools",
+        "knitr",
+        "stats",
+        "utils"
+      ],
+      "Hash": "22af1e94a64cf8713c4f79362eeb0fd6"
     },
     "testthat": {
       "Package": "testthat",

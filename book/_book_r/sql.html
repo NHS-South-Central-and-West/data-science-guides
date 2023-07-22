@@ -268,8 +268,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><p>One of the first tasks you will need to do with any analysis is loading in the data. While you may have data from a variety of sources, the most common will be in a SQL database. Here we will cover how to access a SQL database and extract data in R.</p>
-<p><strong>NOTE: Unlike other notebooks, this notebook won’t run and give you outputs because it does not contain the SQL server connection and database details that it needs to pull data. You need to fill in those blanks if you want to run the code below.</strong></p>
+</header><p>One of the first tasks you will need to do with any analysis is loading in the data. While you may have data from a variety of sources, the most common will be in a SQL database.</p>
+<p>Here we will cover how to access a SQL database and extract data in R.</p>
 <section id="packages" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="packages">
 <span class="header-section-number">3.1</span> Packages</h2>
 <p>The R packages you need to interact with SQL are:</p>
@@ -280,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I won’t import either package here because they are only needed for a handful of functions.</p>
 </section><section id="establish-sql-connection" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="establish-sql-connection">
 <span class="header-section-number">3.2</span> Establish SQL Connection</h2>
-<div class="cell" data-hash="sql_cache/html/r-connection_3ca62d5cf9428f09471cedac84f949f3">
+<div class="cell" data-hash="sql_cache/html/r-connection_fde9ca208322bf076d43e6a241e879a8">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span></span>
 <span>  <span class="fu">odbc</span><span class="fu">::</span><span class="fu"><a href="https://r-dbi.github.io/odbc/reference/odbc.html">odbc</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  driver <span class="op">=</span> <span class="st">'SQL Server'</span>,</span>
@@ -291,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section><section id="running-sql-query" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="running-sql-query">
 <span class="header-section-number">3.3</span> Running SQL Query</h2>
-<div class="cell" data-hash="sql_cache/html/r-query_7b40e657c9902ba064f92d1929fa8633">
+<div class="cell" data-hash="sql_cache/html/r-query_bf53e6fa2a1c0e4edd3f71a96e7e8e18">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery</a></span><span class="op">(</span></span>
 <span>  <span class="va">con</span>,</span>
 <span>  <span class="st">'SELECT col_1,</span></span>
@@ -300,14 +300,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="st">  FROM    db_name.table_name'</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="sql_cache/html/r-check_5119cde2f44980134bdd3a1ec2b8f9ca">
+<div class="cell" data-hash="sql_cache/html/r-check_ce9fdd1c69607ab864b3161408e18354">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="export-to-csv" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="export-to-csv">
 <span class="header-section-number">3.4</span> Export to CSV</h2>
-<div class="cell" data-hash="sql_cache/html/r-export_042a3220ecc5a9f60e0fad386c314f2c">
+<div class="cell" data-hash="sql_cache/html/r-export_ffa1e8394aebcc3ff1fd674d5b6d2d5c">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">'path-to-save-df'</span>, <span class="st">'df.csv'</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 

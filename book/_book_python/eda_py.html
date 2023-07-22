@@ -289,26 +289,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimpy <span class="im">import</span> skim</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'heart_disease.csv'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># get categorical columns</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'sex'</span>, <span class="st">'fasting_bs'</span>, <span class="st">'resting_ecg'</span>, <span class="st">'angina'</span>, <span class="st">'heart_disease'</span>]</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].astype(<span class="st">'category'</span>)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#217CA3'</span>, <span class="st">'#FFC933'</span>, <span class="st">'#C4274C'</span>]</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimpy <span class="im">import</span> skim</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'heart_disease.csv'</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># get categorical columns</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'sex'</span>, <span class="st">'fasting_bs'</span>, <span class="st">'resting_ecg'</span>, <span class="st">'angina'</span>, <span class="st">'heart_disease'</span>]</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].astype(<span class="st">'category'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot font</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>rc(<span class="st">'font'</span>,<span class="op">**</span>{<span class="st">'family'</span>:<span class="st">'sans-serif'</span>,<span class="st">'sans-serif'</span>:[<span class="st">'Arial'</span>]})</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#1C355E'</span>, <span class="st">'#00A499'</span>, <span class="st">'#005EB8'</span>]</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Exploratory data analysis (EDA) is the process of inspecting, visualising, and summarising a dataset. It is the first step in any data science project, and the importance of EDA can often be overlooked. Without exploring the data, it is difficult to know how to construct a piece of analysis or a model, and it is difficult to know if the data is suitable for the task at hand. As a critical step in the data science workflow, it is important to spend time on EDA and to be thorough and methodical in the process. While EDA is often the most time-consuming step in an analysis, taking the time to explore the data can save time in the long run.</p>
@@ -738,7 +742,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="age-dist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-dist-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-dist-output-1.png" width="813" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -751,7 +755,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="max-hr-dist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-dist-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-dist-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -764,7 +768,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="cholesterol-dist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/cholesterol-dist-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/cholesterol-dist-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -777,7 +781,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="filter-zeroes-cholesterol-dist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/filter-zeroes-cholesterol-dist-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/filter-zeroes-cholesterol-dist-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -795,7 +799,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="heart-disease-dist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-dist-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-dist-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -808,7 +812,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="sex-dist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/sex-dist-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/sex-dist-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -821,7 +825,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="angina-dist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/angina-dist-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/angina-dist-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -842,7 +846,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="heart-disease-by-sex" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-by-sex-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-by-sex-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -855,7 +859,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="heart-disease-by-resting-ecg" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-by-resting-ecg-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-by-resting-ecg-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -868,7 +872,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="heart-disease-by-angina" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-by-angina-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-by-angina-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -881,7 +885,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="heart-disease-by-fasting-bs" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-by-fasting-bs-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-by-fasting-bs-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -901,7 +905,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="age-by-heart-disease" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-by-heart-disease-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-by-heart-disease-output-1.png" width="813" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -914,7 +918,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="cholesterol-by-heart-disease" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/cholesterol-by-heart-disease-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/cholesterol-by-heart-disease-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -933,7 +937,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="filtered-zeroes-cholesterol-by-heart-disease" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/filtered-zeroes-cholesterol-by-heart-disease-output-1.png" width="953" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/filtered-zeroes-cholesterol-by-heart-disease-output-1.png" width="805" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -952,7 +956,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="age-by-heart-disease-box" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-by-heart-disease-box-output-1.png" width="953" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-by-heart-disease-box-output-1.png" width="805" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -966,7 +970,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="age-box-split-by-sex" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-box-split-by-sex-output-1.png" width="953" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-box-split-by-sex-output-1.png" width="805" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -979,7 +983,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="max-hr-by-heart-disease-box" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-by-heart-disease-box-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-by-heart-disease-box-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -993,7 +997,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="max-hr-box-split-by-sex" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-box-split-by-sex-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-box-split-by-sex-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1011,7 +1015,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="age-resting-bp-scatter" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-resting-bp-scatter-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-resting-bp-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1024,7 +1028,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="filtered-zeroes-resting-bp-scatter" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/filtered-zeroes-resting-bp-scatter-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/filtered-zeroes-resting-bp-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1036,7 +1040,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="age-cholesterol-scatter" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-cholesterol-scatter-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-cholesterol-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1048,7 +1052,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="age-max-hr-scatter" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-max-hr-scatter-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-max-hr-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1063,7 +1067,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="max-hr-by-age-regression-plot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-by-age-regression-plot-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-by-age-regression-plot-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1078,7 +1082,7 @@ Name: proportion, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="resting-bp-heart-disease-scatter" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/resting-bp-heart-disease-scatter-output-1.png" width="961" height="649" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/resting-bp-heart-disease-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>

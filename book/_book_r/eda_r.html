@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/eda_r.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title"><span id="sec-eda" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></h1>
 </div>
 
@@ -275,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><div class="cell" data-hash="eda_r_cache/html/setup_b3619bb89ef1cd569c516e0db5fb24ef">
+</header><div class="cell">
 <details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="co"># remotes::install_github("NHS-South-Central-and-West/scwplot")</span></span>
 <span></span>
@@ -287,10 +287,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># set plot theme</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/theme_scw.html">theme_scw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/theme_scw.html">theme_scw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># import data</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">'data'</span>, <span class="st">'heart_disease.csv'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">MLDataR</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/MLDataR/man/heartdisease.html">heartdisease</a></span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># convert discrete variables to factor type</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span></span>
@@ -309,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="header-section-number">5.1</span> Inspecting the Data</h2>
 <p>The first step when doing EDA is to inspect the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.</p>
 <p>We can use the <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> and <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> functions to get a sense of the structure of the data. The <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> function returns the first five rows of the data, and <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> returns a summary of the data, including the number of rows, the number of columns, the column names, the data type of each column, and the first few rows of the data. In addition to these two methods, we can use the <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> function to get a list of all unique values of a particular variable. This is useful for discrete variables, such as the outcome variable, which can take on a limited number of values. For continuous variables (or any variables with a large number of unique values) the output of <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> (a tibble) can be difficult to read, so we can use the <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> function to get a list of all unique values, which will be returned as a vector.</p>
-<div class="cell" data-hash="eda_r_cache/html/explore_a2f9e6bbed468b0f7c6769915912bf7f">
+<div class="cell" data-hash="eda_r_cache/html/explore_a59fbd8e7597ee864a04224c27817a3d">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># view first rows in the dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -374,7 +375,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <p>While the base <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function is pretty effective and works right out of the box, the package <code>skimr</code> can provide a more detailed summary of the data, using the <code>skim()</code> function. If you are looking for a single function to capture the entire process of inspecting the data and computing summary statistics, <code>skim()</code> is the function for the job, giving you a wealth of information about the dataset as a whole and each variable in the data.</p>
 <p>If we want to examine a particular variable, the functions <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>, <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, and <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code> will return the same information as the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function. We can also get a sense of dispersion by computing the standard deviation or variance of a variable. The <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code> function returns the standard deviation of a variable, and the <code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code> function returns the variance.</p>
 <p>Finally, we can use the <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> function to get a count of the number of observations in each category of a discrete variable. Proportions can also be computed by dividing the count by the total number of observations. Using the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> function to group the data by a particular variable, and the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> function to add a new column to the data, we can compute the proportion as <code>n/sum(n)</code>.</p>
-<div class="cell" data-hash="eda_r_cache/html/summary-stats_9e923e5c68e35e19c6fb150e51b26fa7">
+<div class="cell" data-hash="eda_r_cache/html/summary-stats_bccb369f57f0b5b0d809a6f57410a4b4">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># summary of the data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -691,269 +692,445 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 6 ST          1               117 0.657</code></pre>
 </div>
 </div>
-</section><section id="data-visualisation" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="data-visualisation">
+</section><section id="data-visualisation" class="level2 page-columns page-full" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="data-visualisation">
 <span class="header-section-number">5.3</span> Data Visualisation</h2>
 <p>While inspecting the data directly and using summary statistics to describe it is a good first step, data visualisation is a more effective way to explore the data. It allows us to quickly identify patterns and relationships in the data, and to identify any data quality issues that might not be immediately obvious without a visual representation of the data.</p>
 <p>When using data visualisation for exploratory purposes, the intent is generally to visualise the way data is distributed, both within and between variables. This can be done using a variety of different types of plots, including histograms, bar charts, box plots, scatter plots, and line plots. How variables are distributed can tell us a lot about the variable itself, and how variables are distributed relative to each other can tell us a lot about the potential relationship between the variables.</p>
 <p>In this tutorial, we will use the <code>ggplot2</code> package to create a series of data visualisations to explore the data in more detail. <code>ggplot2</code> is an incredibly flexible and powerful package for creating data visualisations. While it can be a little difficult to make sense of the syntax at first, it is well worth the effort to learn how to use it. Learning how to use <code>ggplot2</code> is beyond the scope of this tutorial, but there are a number of excellent resources available online, including the <a href="https://ggplot2.tidyverse.org/">ggplot2 documentation</a> and this <a href="https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf">ggplot2 cheatsheet</a>.</p>
-<section id="visualising-data-distributions" class="level3" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="visualising-data-distributions">
+<section id="visualising-data-distributions" class="level3 page-columns page-full" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="visualising-data-distributions">
 <span class="header-section-number">5.3.1</span> Visualising Data Distributions</h3>
 <p>The first step in the exploratory process is to visualise the data distributions of key variables in the dataset. This allows us to get a sense of the typical values and central tendency of the variable, as well as identifying any outliers or other data quality issues.</p>
-<section id="continuous-distributions" class="level4" data-number="5.3.1.1"><h4 data-number="5.3.1.1" class="anchored" data-anchor-id="continuous-distributions">
+<section id="continuous-distributions" class="level4 page-columns page-full" data-number="5.3.1.1"><h4 data-number="5.3.1.1" class="anchored" data-anchor-id="continuous-distributions">
 <span class="header-section-number">5.3.1.1</span> Continuous Distributions</h4>
 <p>For continuous variables, we can use histograms to visualise the distribution of the data. We can use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> function to create a histogram of a continuous variable. The <code>binwidth</code> argument can be used to control the width of the bins in the histogram.</p>
-<div class="cell" data-hash="eda_r_cache/html/continuous-dists_18afdcfad447e397733ad05a48f05602">
+<div class="page-columns page-full">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age distribution</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/continuous-dists-1.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># max hr distribution</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># max hr distribution</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">max_hr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">10</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/continuous-dists-2.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># cholesterol distribution</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">10</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># cholesterol distribution</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cholesterol</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">25</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/continuous-dists-3.png" class="img-fluid" width="1152"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">25</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-continuous-dists" class="cell column-screen-inset quarto-layout-panel" data-hash="eda_r_cache/html/fig-continuous-dists_721eb9f25523a6e62220ff6f906affbe">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-continuous-dists-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-continuous-dists-1.png" class="img-fluid figure-img" data-ref-parent="fig-continuous-dists" width="960"></p>
+<figcaption class="figure-caption">(a) Age</figcaption></figure>
 </div>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># filter zero values</span></span>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-continuous-dists-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-continuous-dists-2.png" class="img-fluid figure-img" data-ref-parent="fig-continuous-dists" width="960"></p>
+<figcaption class="figure-caption">(b) Maximum Heart Rate</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-continuous-dists-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-continuous-dists-3.png" class="img-fluid figure-img" data-ref-parent="fig-continuous-dists" width="960"></p>
+<figcaption class="figure-caption">(c) Cholesterol</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.1: Histograms plotting the distributions of relevant variables from the heart disease dataset.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell" data-hash="eda_r_cache/html/fig-filter-zeroes-cholesterol-dist_94a46484a5e235df48931c3824497434">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># filter zero values</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">cholesterol</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cholesterol</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">25</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">25</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cholesterol"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/continuous-dists-4.png" class="img-fluid" width="1152"></p>
+<div id="fig-filter-zeroes-cholesterol-dist" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-filter-zeroes-cholesterol-dist-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.2: The distribution of cholesterol readings, with zero values filtered out to better visualise the non-zero distribution.</figcaption></figure>
+</div>
 </div>
 </div>
 <p>The inflated zero values in the cholesterol distribution suggests that there may be an issue with data quality that needs addressing.</p>
-</section><section id="discrete-distributions" class="level4" data-number="5.3.1.2"><h4 data-number="5.3.1.2" class="anchored" data-anchor-id="discrete-distributions">
+</section><section id="discrete-distributions" class="level4 page-columns page-full" data-number="5.3.1.2"><h4 data-number="5.3.1.2" class="anchored" data-anchor-id="discrete-distributions">
 <span class="header-section-number">5.3.1.2</span> Discrete Distributions</h4>
-<p>We can use bar plots to visualise the distribution of discrete variables. We can use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> function to create a bar plot of a discrete variable.</p>
-<div class="cell" data-hash="eda_r_cache/html/discrete-dists_21a2e3f712940c4f34ff0deeb3d6a4d7">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># heart disease distribution</span></span>
-<span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/discrete-dists-1.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># sex distribution</span></span>
+<p>We can use bar charts to visualise the distribution of discrete variables. We can use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> function to create a bar chart of a discrete variable.</p>
+<div class="page-columns page-full">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># sex distribution</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/discrete-dists-2.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># angina distribution</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># angina distribution</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">angina</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">angina</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-discrete-dists" class="cell column-page quarto-layout-panel" data-hash="eda_r_cache/html/fig-discrete-dists_6a94a18ce36a2a2c876b985f1a4ad037">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-discrete-dists-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-discrete-dists-1.png" class="img-fluid figure-img" data-ref-parent="fig-discrete-dists" width="960"></p>
+<figcaption class="figure-caption">(a) Patient Sex</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-discrete-dists-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-discrete-dists-2.png" class="img-fluid figure-img" data-ref-parent="fig-discrete-dists" width="960"></p>
+<figcaption class="figure-caption">(b) Angina</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.3: Bar charts plotting discrete variables from the heart disease dataset.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell" data-hash="eda_r_cache/html/fig-heart-disease-dist_6b517657c41eb0f514d0437254fdb7ab">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># heart disease distribution</span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Heart Disease"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/discrete-dists-3.png" class="img-fluid" width="1152"></p>
+<div id="fig-heart-disease-dist" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-heart-disease-dist-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.4: The distribution of the outcome variable, heart disease.</figcaption></figure>
 </div>
 </div>
-</section></section><section id="comparing-distributions" class="level3" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="comparing-distributions">
+</div>
+</section></section><section id="comparing-distributions" class="level3 page-columns page-full" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="comparing-distributions">
 <span class="header-section-number">5.3.2</span> Comparing Distributions</h3>
-<p>There are a number of ways to compare the distributions of multiple variables. Bar plots can be used to visualise two discrete variables, while histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable, and scatter plots are particularly useful for comparing the distribution of two continuous variables.</p>
-<section id="visualising-multiple-discrete-variables" class="level4" data-number="5.3.2.1"><h4 data-number="5.3.2.1" class="anchored" data-anchor-id="visualising-multiple-discrete-variables">
+<p>There are a number of ways to compare the distributions of multiple variables. Bar charts can be used to visualise two discrete variables, while histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable, and scatter plots are particularly useful for comparing the distribution of two continuous variables.</p>
+<section id="visualising-multiple-discrete-variables" class="level4 page-columns page-full" data-number="5.3.2.1"><h4 data-number="5.3.2.1" class="anchored" data-anchor-id="visualising-multiple-discrete-variables">
 <span class="header-section-number">5.3.2.1</span> Visualising Multiple Discrete Variables</h4>
-<p>Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical).</p>
-<p>We can use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> function to create bar plots, but the default behaviour is to display the bars as stacked bars, which is not necessarily ideal for visualising discrete variables (though I’d recommend playing around with this yourself to decide what works in each case)</p>
+<p>Bar charts are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical).</p>
+<p>We can use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> function to create bar charts, but the default behaviour is to display the bars as stacked bars, which is not necessarily ideal for visualising discrete variables (though I’d recommend playing around with this yourself to decide what works in each case)</p>
 <p>The <code>position</code> argument controls how the bars are displayed. The default <code>position = 'stack'</code> argument will display the bars as stacked bars, while the <code>position = 'dodge'</code> argument will display the bars side-by-side, and the <code>position = 'fill'</code> argument will display the bars as a proportion of the total number of observations in each category.</p>
 <p>Finally, the <code>fill</code> argument splits the bars by a particular variable and display them in different colours.</p>
-<div class="cell" data-hash="eda_r_cache/html/bar-plots_9670771a10269f5f9cb68a6e1ea451f6">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># heart disease by sex</span></span>
+<div class="page-columns page-full">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># heart disease by sex</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">heart_disease</span>, fill <span class="op">=</span> <span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/bar-plots-1.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># resting ecg</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Heart Disease"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># resting ecg</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">heart_disease</span>, fill <span class="op">=</span> <span class="va">resting_ecg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/bar-plots-2.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># angina</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Heart Disease"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># angina</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">heart_disease</span>, fill <span class="op">=</span> <span class="va">angina</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/bar-plots-3.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># fasting bs</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Heart Disease"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># fasting bs</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">heart_disease</span>, fill <span class="op">=</span> <span class="va">fasting_bs</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/bar-plots-4.png" class="img-fluid" width="1152"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Heart Disease"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-multi-discrete-dists" class="cell column-page quarto-layout-panel" data-hash="eda_r_cache/html/fig-multi-discrete-dists_83bc5e0d54cdfa4cfad1b869bfbaff2a">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-multi-discrete-dists-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-multi-discrete-dists-1.png" class="img-fluid figure-img" data-ref-parent="fig-multi-discrete-dists" width="960"></p>
+<figcaption class="figure-caption">(a) Patient Sex</figcaption></figure>
 </div>
 </div>
-</section><section id="visualising-a-continuous-variable-across-discrete-groups" class="level4" data-number="5.3.2.2"><h4 data-number="5.3.2.2" class="anchored" data-anchor-id="visualising-a-continuous-variable-across-discrete-groups">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-multi-discrete-dists-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-multi-discrete-dists-2.png" class="img-fluid figure-img" data-ref-parent="fig-multi-discrete-dists" width="960"></p>
+<figcaption class="figure-caption">(b) Resting ECG</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-multi-discrete-dists-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-multi-discrete-dists-3.png" class="img-fluid figure-img" data-ref-parent="fig-multi-discrete-dists" width="960"></p>
+<figcaption class="figure-caption">(c) Angina</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-multi-discrete-dists-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-multi-discrete-dists-4.png" class="img-fluid figure-img" data-ref-parent="fig-multi-discrete-dists" width="960"></p>
+<figcaption class="figure-caption">(d) Fasting Blood Sugar</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.5: Bar charts plotting discrete variables from the heart disease dataset against the outcome variable, heart disease.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section><section id="visualising-a-continuous-variable-across-discrete-groups" class="level4 page-columns page-full" data-number="5.3.2.2"><h4 data-number="5.3.2.2" class="anchored" data-anchor-id="visualising-a-continuous-variable-across-discrete-groups">
 <span class="header-section-number">5.3.2.2</span> Visualising A Continuous Variable Across Discrete Groups</h4>
 <p>Histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable.</p>
-<section id="histogram-plots" class="level5" data-number="5.3.2.2.1"><h5 data-number="5.3.2.2.1" class="anchored" data-anchor-id="histogram-plots">
+<section id="histogram-plots" class="level5 page-columns page-full" data-number="5.3.2.2.1"><h5 data-number="5.3.2.2.1" class="anchored" data-anchor-id="histogram-plots">
 <span class="header-section-number">5.3.2.2.1</span> Histogram Plots</h5>
 <p>We can use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> function to create histograms. The <code>fill</code> and <code>position</code> arguments can be used to split the bars by a particular variable and display them in different colours, as discussed above.</p>
-<div class="cell" data-hash="eda_r_cache/html/hist-comps_fc8425704599ca7a92c2e8e1d18a38a0">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age distribution by heart disease</span></span>
+<div class="page-columns page-full">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age distribution by heart disease</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, fill <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span>, position <span class="op">=</span> <span class="st">'dodge'</span>, </span>
-<span>                 colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/hist-comps-1.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># cholesterol</span></span>
-<span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cholesterol</span>, fill <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">25</span>, position <span class="op">=</span> <span class="st">'dodge'</span>, </span>
-<span>                 colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/hist-comps-2.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># filter zero values</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span></span>
+<span>    binwidth <span class="op">=</span> <span class="fl">5</span>, position <span class="op">=</span> <span class="st">'dodge'</span>, </span>
+<span>    colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># filter zero values</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">cholesterol</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cholesterol</span>, fill <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">25</span>, position <span class="op">=</span> <span class="st">'dodge'</span>, </span>
-<span>                 colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/hist-comps-3.png" class="img-fluid" width="1152"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span></span>
+<span>    binwidth <span class="op">=</span> <span class="fl">25</span>, position <span class="op">=</span> <span class="st">'dodge'</span>, </span>
+<span>    colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-continuous-discrete-dists" class="cell column-page quarto-layout-panel" data-hash="eda_r_cache/html/fig-continuous-discrete-dists_37dc99c18c7e386e931845acf11e17de">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-continuous-discrete-dists-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-continuous-discrete-dists-1.png" class="img-fluid figure-img" data-ref-parent="fig-continuous-discrete-dists" width="960"></p>
+<figcaption class="figure-caption">(a) Patient Age by Heart Disease</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-continuous-discrete-dists-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-continuous-discrete-dists-2.png" class="img-fluid figure-img" data-ref-parent="fig-continuous-discrete-dists" width="960"></p>
+<figcaption class="figure-caption">(b) Cholesterol (Zero Values Filtered) by Heart Disease</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.6: Histograms plotting the distribution of continuous variables from the heart disease dataset against the outcome variable, heart disease.</figcaption><p></p>
+</figure>
 </div>
 </div>
 <p>The fact that there is a significantly larger proportion of positive heart disease cases in the zero cholesterol values further demonstrates the need to address this data quality issue.</p>
-</section><section id="box-plots" class="level5" data-number="5.3.2.2.2"><h5 data-number="5.3.2.2.2" class="anchored" data-anchor-id="box-plots">
+</section><section id="box-plots" class="level5 page-columns page-full" data-number="5.3.2.2.2"><h5 data-number="5.3.2.2.2" class="anchored" data-anchor-id="box-plots">
 <span class="header-section-number">5.3.2.2.2</span> Box Plots</h5>
 <p>Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code> function to create box plots, and the <code>fill()</code> argument to split the box plots by a particular variable and display them in different colours.</p>
 <p>However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained <a href="https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/">here</a> by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.</p>
-<div class="cell" data-hash="eda_r_cache/html/box-plots_a18d16c780ef4bb17bf68ba72df70771">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; heart disease</span></span>
+<div class="page-columns page-full">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; heart disease</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">heart_disease</span>, fill <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/box-plots-1.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; heart disease, split by sex</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Heart Disease"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># age &amp; heart disease, split by sex</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">heart_disease</span>, fill <span class="op">=</span> <span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/box-plots-2.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># max hr &amp; heart disease</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Heart Disease"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># max hr &amp; heart disease</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">max_hr</span>, <span class="va">heart_disease</span>, fill <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">max_hr</span>, <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/box-plots-3.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># max hr &amp; heart disease, split by sex</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Maximum Heart Rate"</span>, y <span class="op">=</span> <span class="st">"Heart Disease"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># max hr &amp; heart disease, split by sex</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">max_hr</span>, <span class="va">heart_disease</span>, fill <span class="op">=</span> <span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/box-plots-4.png" class="img-fluid" width="1152"></p>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Maximum Heart Rate"</span>, y <span class="op">=</span> <span class="st">"Heart Disease"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-box-plots" class="cell column-page quarto-layout-panel" data-hash="eda_r_cache/html/fig-box-plots_dfd2f9d984847f84548f81e478940a7b">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-box-plots-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-box-plots-1.png" class="img-fluid figure-img" data-ref-parent="fig-box-plots" width="960"></p>
+<figcaption class="figure-caption">(a) Patient Age</figcaption></figure>
 </div>
 </div>
-</section></section><section id="visualising-multiple-discrete-variables-1" class="level4" data-number="5.3.2.3"><h4 data-number="5.3.2.3" class="anchored" data-anchor-id="visualising-multiple-discrete-variables-1">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-box-plots-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-box-plots-2.png" class="img-fluid figure-img" data-ref-parent="fig-box-plots" width="960"></p>
+<figcaption class="figure-caption">(b) Patient Age, Split by Sex</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-box-plots-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-box-plots-3.png" class="img-fluid figure-img" data-ref-parent="fig-box-plots" width="960"></p>
+<figcaption class="figure-caption">(c) Maximum Heart Rate</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-box-plots-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-box-plots-4.png" class="img-fluid figure-img" data-ref-parent="fig-box-plots" width="960"></p>
+<figcaption class="figure-caption">(d) Maximum Heart Rate, Split by Sex</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.7: Box plots visualising continuous distributions over the discrete outcome variable, heart disease.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section></section><section id="visualising-multiple-discrete-variables-1" class="level4 page-columns page-full" data-number="5.3.2.3"><h4 data-number="5.3.2.3" class="anchored" data-anchor-id="visualising-multiple-discrete-variables-1">
 <span class="header-section-number">5.3.2.3</span> Visualising Multiple Discrete Variables</h4>
 <p>Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> function to create scatter plots, and the <code>colour</code> argument to split the scatter plots by a particular variable and display them in different colours.</p>
-<div class="cell" data-hash="eda_r_cache/html/scatter-plots_7b55f8922a8189fe45d7f64c5daa47cd">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; resting bp</span></span>
+<div class="page-columns page-full">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; resting bp</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">resting_bp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/scatter-plots-1.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># filter zero values</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Resting Blood Pressure"</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="co"># filter zero values</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">resting_bp</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">resting_bp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/scatter-plots-2.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; cholesterol</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Resting Blood Pressure"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># age &amp; cholesterol</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">cholesterol</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">cholesterol</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/scatter-plots-3.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; max hr</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Cholesterol"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># age &amp; max hr</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">max_hr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/scatter-plots-4.png" class="img-fluid" width="1152"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Maximum Heart Rate"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-scatter-plots" class="cell column-page quarto-layout-panel" data-hash="eda_r_cache/html/fig-scatter-plots_d6474c8d4052bc083fa8d7b22aa3317d">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-scatter-plots-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-scatter-plots-1.png" class="img-fluid figure-img" data-ref-parent="fig-scatter-plots" width="960"></p>
+<figcaption class="figure-caption">(a) Patient Age &amp; Resting Blood Pressure</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-scatter-plots-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-scatter-plots-2.png" class="img-fluid figure-img" data-ref-parent="fig-scatter-plots" width="960"></p>
+<figcaption class="figure-caption">(b) Patient Age &amp; Resting Blood Pressure (Zero Values Filtered)</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-scatter-plots-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-scatter-plots-3.png" class="img-fluid figure-img" data-ref-parent="fig-scatter-plots" width="960"></p>
+<figcaption class="figure-caption">(c) Patient Age &amp; Cholesterol (Zero Values Filtered)</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-scatter-plots-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-scatter-plots-4.png" class="img-fluid figure-img" data-ref-parent="fig-scatter-plots" width="960"></p>
+<figcaption class="figure-caption">(d) Patient Age &amp; Maximum Heart Rate</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.8: Scatter plots visualising two continuous distributions together.</figcaption><p></p>
+</figure>
 </div>
 </div>
 <p>The scatter plot visualising age and resting blood pressure highlights another observation that needs to be removed due to data quality issues.</p>
 <p>If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> function can be used to add a regression line to a scatter plot. The <code>method</code> argument specifies the type of regression line to be added, and the <code>se</code> argument specifies whether or not to display the standard error of the regression line.</p>
-<div class="cell" data-hash="eda_r_cache/html/adding-regression-line_295ffcae0d537b425ebae779658ef363">
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; max hr</span></span>
+<div class="cell" data-hash="eda_r_cache/html/fig-scatter-plot-with-regression-line_17839c56346572efd7ac92a1f76c6ea8">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; max hr</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">max_hr</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, size <span class="op">=</span> <span class="fl">2</span>, colour<span class="op">=</span><span class="st">'#005EB8'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, size <span class="op">=</span> <span class="fl">2</span>, colour<span class="op">=</span><span class="st">'#005EB8'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Maximum Heart Rate"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/adding-regression-line-1.png" class="img-fluid" width="1152"></p>
+<div id="fig-scatter-plot-with-regression-line" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-scatter-plot-with-regression-line-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;5.9: Scatter plot visualising the distribution of patient age and maximum heart rate with a regression line fit to the data.</figcaption></figure>
+</div>
 </div>
 </div>
 <p>You can also include discrete variables by assigning the discrete groups different colours in the scatter plot, and if you add regression lines to these plots, separate regression lines will be fit to the discrete groups. This can be useful for visualising how the association between the two continuous variables varies across the discrete groups.</p>
-<div class="cell" data-hash="eda_r_cache/html/adding-discrete-vars_15074e450eacd2ca67a929de939e9bae">
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; resting bp, split by heart disease</span></span>
+<div class="page-columns page-full">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; resting bp, split by heart disease</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">resting_bp</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">resting_bp</span>, colour <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/adding-discrete-vars-1.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; cholesterol, split by heart disease (with regression line)</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Resting Blood Pressure"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># age &amp; cholesterol, split by heart disease (with regression line)</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">cholesterol</span><span class="op">!=</span><span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">cholesterol</span>, colour <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/adding-discrete-vars-2.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># age &amp; max hr, split by heart disease (with regression line)</span></span>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Resting Blood Pressure"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># age &amp; max hr, split by heart disease (with regression line)</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">max_hr</span>, colour <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span><span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="eda_r_files/figure-html/adding-discrete-vars-3.png" class="img-fluid" width="1152"></p>
+<span>  <span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"scw"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Patient Age"</span>, y <span class="op">=</span> <span class="st">"Maximum Heart Rate"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-scatter-plots-with-discrete-splits" class="cell column-screen-inset quarto-layout-panel" data-hash="eda_r_cache/html/fig-scatter-plots-with-discrete-splits_24cf56c9068f1801e36c68ce12dc8070">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-scatter-plots-with-discrete-splits-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-scatter-plots-with-discrete-splits-1.png" class="img-fluid figure-img" data-ref-parent="fig-scatter-plots-with-discrete-splits" width="960"></p>
+<figcaption class="figure-caption">(a) Patient Age &amp; Resting Blood Pressure</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-scatter-plots-with-discrete-splits-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-scatter-plots-with-discrete-splits-2.png" class="img-fluid figure-img" data-ref-parent="fig-scatter-plots-with-discrete-splits" width="960"></p>
+<figcaption class="figure-caption">(b) Patient Age &amp; Cholesterol (Zero Values Filtered)</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-scatter-plots-with-discrete-splits-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="eda_r_files/figure-html/fig-scatter-plots-with-discrete-splits-3.png" class="img-fluid figure-img" data-ref-parent="fig-scatter-plots-with-discrete-splits" width="960"></p>
+<figcaption class="figure-caption">(c) Patient Age &amp; Maximum Heart Rate</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.10: Scatter plots visualising continuous distributions together, with the data split and coloured by the discrete outcome variable, heart disease.</figcaption><p></p>
+</figure>
 </div>
 </div>
 </section></section></section><section id="next-steps" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="next-steps">
