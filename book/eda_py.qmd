@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from matplotlib import rc
 from skimpy import skim
 
 # data path
@@ -28,8 +29,11 @@ for col in cat_cols:
 # set plot style
 sns.set_style('whitegrid')
 
+# set plot font
+rc('font',**{'family':'sans-serif','sans-serif':['Arial']})
+
 # set plot colour palette
-colours = ['#217CA3', '#FFC933', '#C4274C']
+colours = ['#1C355E', '#00A499', '#005EB8']
 sns.set_palette(sns.color_palette(colours))
 
 ```

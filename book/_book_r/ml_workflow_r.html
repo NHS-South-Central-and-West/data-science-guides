@@ -269,7 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/ml_workflow_r.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title"><span id="sec-ml-workflow" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></h1>
 </div>
 
@@ -283,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><div class="cell" data-hash="ml_workflow_r_cache/html/setup_5b0c6c6599127e9f14f5cbab23794227">
+</header><div class="cell">
 <details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># import packages</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
@@ -292,10 +292,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># set plot theme</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/theme_scw.html">theme_scw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/theme_scw.html">theme_scw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># import data</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">'data'</span>, <span class="st">'heart_disease.csv'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">MLDataR</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/MLDataR/man/heartdisease.html">heartdisease</a></span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># specify categorical features as factors</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span> </span>
@@ -327,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For a more detailed discussion about a simple modeling workflow in R, the <a href="https://www.tmwr.org/workflows.html">Model Workflow</a> section in Tidy Modeling with R is a great resource.</p>
 <section id="data" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="data">
 <span class="header-section-number">7.1</span> Data</h2>
-<div class="cell" data-hash="ml_workflow_r_cache/html/inspect-data_d29534b73736a4ecd7a976e024008c7a">
+<div class="cell" data-hash="ml_workflow_r_cache/html/inspect-data_01f9673dd63292c17222b0236f341106">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect the data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -348,7 +349,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <section id="traintest-split" class="level3" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="traintest-split">
 <span class="header-section-number">7.1.1</span> Train/Test Split</h3>
 <p>One of the central tenets of machine learning is that the model should not be trained on the same data that it is evaluated on. This is because the model could learn spurious/random patterns and correlations in the training data, and this will harm the model’s ability to make good predictions on new, unseen data. There are many way of trying to resolve this, but the most simple approach is to split the data into a training and test set. The training set will be used to train the model, and the test set will be used to evaluate the model.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/train-test-split_891943c278e026582ea1bb8d3bf1be92">
+<div class="cell" data-hash="ml_workflow_r_cache/html/train-test-split_ebc45e1fcbd54c3a842ed2a4a2597043">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># set random seed to ensure reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
@@ -367,7 +368,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <p>On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalisable.</p>
 <p>For more information on cross-validation and how it can be used to train models the <a href="https://www.tmwr.org/resampling.html#resampling-methods">Resampling Methods</a> section in Tidy Modeling with R discusses cross-validation in detail, in the wider context of resampling methods for training machine learning models. This helps to provide context for the purpose of cross-validation, as well as discussing some of the strategies for cross-validation.</p>
 <p>We will use 5-fold stratified cross-validation to train our models. This means that the training data will be split into 5 folds, ensuring that each fold has the same proportion of the target classes. Each fold will be used as a test set once, and the remaining folds will be used as training sets. This will be repeated 5 times, and the average performance will be used to evaluate the model.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/cv-folds_ca28ba41295307839df6f69d775a4671">
+<div class="cell" data-hash="ml_workflow_r_cache/html/cv-folds_e02fe3bcd4a30eaaf488e5a14ea5787b">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># set random seed to ensure reproducibility</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span></span>
@@ -398,7 +399,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <li>Imputing missing values</li>
 </ul>
 <p>We will build two different preprocessing recipes and see which performs better. The first will be a ‘basic’ recipe that one-hot encodes all categorical features, and removes any features that have strong correlation with another feature in the dataset. The second recipe will include both these steps but will also normalize the numeric features so that they have a mean of zero and a standard deviation of one.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/preprocessing_6731bc42901bb8f1453c43a4debdef81">
+<div class="cell" data-hash="ml_workflow_r_cache/html/preprocessing_c4fc65ce670a0b41d0dc6202fe5524a3">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># specify simple preprocessing recipe</span></span>
 <span><span class="va">basic_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">heart_disease</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">train_df</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># one-hot encode categorical variables</span></span>
@@ -460,14 +461,14 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 #   resting_ecg_ST &lt;dbl&gt;, angina_Y &lt;dbl&gt;</code></pre>
 </div>
 </div>
-</section></section><section id="model-training" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="model-training">
+</section></section><section id="model-training" class="level2 page-columns page-full" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="model-training">
 <span class="header-section-number">7.2</span> Model Training</h2>
 <p>There are many different types of models that can be used for classification problems, and selecting the right model for the problem at hand can be difficult when you are first starting out with machine learning.</p>
 <p>Simple models like <a href="https://parsnip.tidymodels.org/reference/linear_reg.html">linear</a> and <a href="https://parsnip.tidymodels.org/reference/logistic_reg.html">logistic</a> regressions are often a good place to start and can be used to get a better understanding of the data and the problem at hand, and can give you a good idea of baseline performance before building more complex models to improve performance. Another example of a simple model is <a href="https://parsnip.tidymodels.org/reference/nearest_neighbor.html">K-Nearest Neighbours</a> (KNN), which is a non-parametric model that can be used for both classification and regression problems.</p>
 <p>We will fit a logistic regression and a KNN, as well as fitting a Random Forest model, which is a good example of a slightly more complex model that will often perform well on structured data.</p>
-<section id="model-selection" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="model-selection">
+<section id="model-selection" class="level3 page-columns page-full" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="model-selection">
 <span class="header-section-number">7.2.1</span> Model Selection</h3>
-<div class="cell" data-hash="ml_workflow_r_cache/html/setup-workflow_8888d36049cc21a6502cfa0975e625e2">
+<div class="cell" data-hash="ml_workflow_r_cache/html/setup-workflow_3958e3f986d44a096478f26affabdc7b">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># create a list of preprocessing recipes</span></span>
 <span><span class="va">preprocessers</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -521,7 +522,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 </div>
 <p>Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the <code>tune_grid()</code> function to tune the models, which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using F1 score and accuracy.</p>
 <p>For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, the <a href="https://www.tmwr.org/tuning.html">Model Tuning and the Dangers of Overfitting</a> section of Tidy Modeling with R is a good place to start. In addition, the AWS overview of <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html">hyperparameter tuning</a> is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan’s <a href="https://www.jeremyjordan.me/hyperparameter-tuning/">Hyperparameter Tuning for Machine Learning Models</a> blogpost is thorough but easy to follow.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/train-models_b6ee306abdde90bd570a1837fb5f7e61">
+<div class="cell" data-hash="ml_workflow_r_cache/html/train-models_70fba009ffa11ca4c6fe53ae7d3cea4a">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># train and tune models</span></span>
 <span><span class="va">trained_models</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">model_workflows</span> <span class="op">|&gt;</span></span>
@@ -543,10 +544,10 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <span>      save_workflow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="comparing-model-performance" class="level4" data-number="7.2.1.1"><h4 data-number="7.2.1.1" class="anchored" data-anchor-id="comparing-model-performance">
+<section id="comparing-model-performance" class="level4 page-columns page-full" data-number="7.2.1.1"><h4 data-number="7.2.1.1" class="anchored" data-anchor-id="comparing-model-performance">
 <span class="header-section-number">7.2.1.1</span> Comparing Model Performance</h4>
 <p>Once the models have been trained we can inspect the results to see which model performed best. We can also plot the performance of the models to get a better idea of how they performed.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/compare-models_ca415e6f0dee08e0dd2e8aea5d213a46">
+<div class="cell" data-hash="ml_workflow_r_cache/html/compare-models_8ed32394aff665a7c20b4b96e736403b">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect the best performing models</span></span>
 <span><span class="va">trained_models</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">rank_results</span><span class="op">(</span>select_best<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -563,25 +564,55 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 5 basic_log  logistic_reg     0.770
 6 scaled_log logistic_reg     0.770</code></pre>
 </div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># plot performance</span></span>
+</div>
+<div class="page-columns page-full">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">metric_labels</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"accuracy"</span> <span class="op">=</span> <span class="st">"Accuracy"</span>, <span class="st">"f_meas"</span> <span class="op">=</span> <span class="st">"F1"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plot performance</span></span>
 <span><span class="va">trained_models</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"nhs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="ml_workflow_r_files/figure-html/compare-models-1.png" class="img-fluid" width="1152"></p>
-</div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># select best models and plot performance</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.metric</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/as_labeller.html">as_labeller</a></span><span class="op">(</span><span class="va">metric_labels</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_shape.html">scale_shape</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span></span>
+<span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Logistic Regression"</span>, <span class="st">"KNN"</span>, <span class="st">"Random Forest"</span><span class="op">)</span>,</span>
+<span>    palette <span class="op">=</span> <span class="st">"scw"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">2</span>, linewidth <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># select best models and plot performance</span></span>
 <span><span class="va">trained_models</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>select_best <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"nhs"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="ml_workflow_r_files/figure-html/compare-models-2.png" class="img-fluid" width="1152"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">.metric</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/as_labeller.html">as_labeller</a></span><span class="op">(</span><span class="va">metric_labels</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_shape.html">scale_shape</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="st">'none'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_colour_qualitative</a></span><span class="op">(</span></span>
+<span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Logistic Regression"</span>, <span class="st">"KNN"</span>, <span class="st">"Random Forest"</span><span class="op">)</span>,</span>
+<span>    palette <span class="op">=</span> <span class="st">"scw"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">2</span>, linewidth <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-model-performance" class="cell column-screen-inset quarto-layout-panel" data-hash="ml_workflow_r_cache/html/fig-model-performance_c655c68c118435384ee8149985ad20ba">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-model-performance-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="ml_workflow_r_files/figure-html/fig-model-performance-1.png" class="img-fluid figure-img" data-ref-parent="fig-model-performance" width="960"></p>
+<figcaption class="figure-caption">(a) All Models</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-model-performance-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="ml_workflow_r_files/figure-html/fig-model-performance-2.png" class="img-fluid figure-img" data-ref-parent="fig-model-performance" width="960"></p>
+<figcaption class="figure-caption">(b) Best Models</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;7.1: Comparing accuracy and f1 score of Random Forest, KNN, and Logistic Regression models</figcaption><p></p>
+</figure>
 </div>
 </div>
 </section></section></section><section id="finalising-model" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="finalising-model">
 <span class="header-section-number">7.3</span> Finalising Model</h2>
-<div class="cell" data-hash="ml_workflow_r_cache/html/finalise-model_75f6e88a86f97a02ea05e0c4ec0545d9">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># save best performing model</span></span>
+<div class="cell" data-hash="ml_workflow_r_cache/html/finalise-model_c7d8e4267a5d0c18a74d0089f3610891">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># save best performing model</span></span>
 <span><span class="va">best_results</span> <span class="op">&lt;-</span></span>
 <span>   <span class="va">trained_models</span> <span class="op">|&gt;</span>  </span>
 <span>   <span class="fu">extract_workflow_set_result</span><span class="op">(</span><span class="st">'basic_rf'</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
@@ -598,8 +629,8 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 </section><section id="fitting-model-on-test-data" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="fitting-model-on-test-data">
 <span class="header-section-number">7.4</span> Fitting Model on Test Data</h2>
 <p>Having selected the best performing model, we can now fit the model to the test data.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/test-model_f4dfc3fc9d89c3841bafc02fafe1f5cc">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># fit model on test data</span></span>
+<div class="cell" data-hash="ml_workflow_r_cache/html/test-model_cc7eabe3de4429c2710edde70244ea21">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># fit model on test data</span></span>
 <span><span class="va">rf_test_results</span> <span class="op">&lt;-</span></span>
 <span>   <span class="va">trained_models</span> <span class="op">|&gt;</span></span>
 <span>   <span class="co"># extract the best performing model</span></span>
@@ -611,8 +642,8 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 </section><section id="model-evaluation" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="model-evaluation">
 <span class="header-section-number">7.5</span> Model Evaluation</h2>
 <p>Finally, we can inspect the performance of the model on the test data.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/model-evaluation_24b523c9c0c4a4085d6aae1850690f37">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect model performance on evaluation metrics</span></span>
+<div class="cell" data-hash="ml_workflow_r_cache/html/model-evaluation_e9004bac1e7b7cf573631061f61af909">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect model performance on evaluation metrics</span></span>
 <span><span class="fu">collect_metrics</span><span class="op">(</span><span class="va">rf_test_results</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
@@ -621,7 +652,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 1 f_meas   binary         0.835 Preprocessor1_Model1
 2 accuracy binary         0.848 Preprocessor1_Model1</code></pre>
 </div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect confusion matrix</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect confusion matrix</span></span>
 <span><span class="va">rf_test_results</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">conf_mat_resampled</span><span class="op">(</span>tidy<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -629,12 +660,17 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 0 106  25
 1  17 128</code></pre>
 </div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># plot confusion matrix</span></span>
+</div>
+<div class="cell" data-hash="ml_workflow_r_cache/html/fig-conf-matrix_a5eae71ee59723fd23f6959096f2b6c5">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># plot confusion matrix</span></span>
 <span><span class="va">rf_test_results</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">conf_mat_resampled</span><span class="op">(</span>tidy<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span>type<span class="op">=</span><span class="st">'heatmap'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="ml_workflow_r_files/figure-html/model-evaluation-1.png" class="img-fluid" width="1152"></p>
+<div id="fig-conf-matrix" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="ml_workflow_r_files/figure-html/fig-conf-matrix-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;7.2: Confusion matrix visualising model performance, comparing predicted and actual values</figcaption></figure>
+</div>
 </div>
 </div>
 </section><section id="next-steps" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="next-steps">

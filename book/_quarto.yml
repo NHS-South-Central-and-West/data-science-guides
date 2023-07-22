@@ -18,14 +18,12 @@ format:
     theme:
       - cosmo
       - theme.scss
-    # mainfont: Arial
-    # monofont: Fira Code Light
     code-link: true
     code-block-bg: true
     highlight-style: github
     callout-appearance: simple
-    fig-width: 12
-    fig-height: 8
+    fig-width: 10
+    fig-height: 6
     dpi: 300
     fig-align: center
     execute:

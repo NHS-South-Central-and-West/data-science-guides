@@ -2,34 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://python-data-science-guides.netlify.app/index.html</loc>
-    <lastmod>2023-07-21T10:10:42.195Z</lastmod>
+    <lastmod>2023-07-22T00:17:39.299Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/intro.html</loc>
-    <lastmod>2023-07-21T10:10:42.214Z</lastmod>
+    <lastmod>2023-07-22T00:17:39.311Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/good_science.html</loc>
-    <lastmod>2023-07-21T10:10:42.236Z</lastmod>
+    <lastmod>2023-07-22T00:17:39.314Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/sql.html</loc>
-    <lastmod>2023-07-21T10:10:42.269Z</lastmod>
+    <lastmod>2023-07-22T00:17:39.344Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/eda_py.html</loc>
-    <lastmod>2023-07-21T10:10:42.379Z</lastmod>
+    <lastmod>2023-07-22T00:17:39.412Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/linear_regression_py.html</loc>
-    <lastmod>2023-07-21T10:10:42.443Z</lastmod>
+    <lastmod>2023-07-22T00:17:39.442Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/installing_python.html</loc>
-    <lastmod>2023-07-21T10:10:42.459Z</lastmod>
+    <lastmod>2023-07-22T00:17:39.442Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/version_control.html</loc>
-    <lastmod>2023-07-21T10:10:42.477Z</lastmod>
+    <lastmod>2023-07-22T00:17:39.442Z</lastmod>
   </url>
 </urlset>

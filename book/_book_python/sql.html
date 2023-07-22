@@ -249,7 +249,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><div class="cell" data-hash="sql_cache/html/py-setup_a8b2de90666194985b4e0b94079c2f00">
+</header><div class="cell" data-hash="sql_cache/html/py-setup_fba28119debd46a968188a8827be3f70">
 <details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyodbc</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sqlalchemy <span class="im">as</span> sa</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -257,11 +257,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sqlalchemy <span class="im">import</span> create_engine</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>One of the first tasks you will need to do with any analysis is loading in the data. While you may have data from a variety of sources, the most common will be in a SQL database. Here we will cover how to access a SQL database and extract data in R.</p>
-<p><strong>NOTE: Unlike other notebooks, this notebook won’t run and give you outputs because it does not contain the SQL server connection and database details that it needs to pull data. You need to fill in those blanks if you want to run the code below.</strong></p>
+<p>One of the first tasks you will need to do with any analysis is loading in the data. While you may have data from a variety of sources, the most common will be in a SQL database.</p>
+<p>Here we will cover how to access a SQL database and extract data in Python.</p>
 <section id="packages" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="packages">
 <span class="header-section-number">3.1</span> Packages</h2>
-<p>The python packages you need to interact with SQL are:</p>
+<p>The Python packages you need to interact with SQL are:</p>
 <ul>
 <li>pyodbc - accessing ODBC databases</li>
 <li>sqlalchemy - establishing a connection and interacts with pandas</li>
@@ -277,17 +277,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Database location</li>
 <li>SQL driver (‘?driver=SQL+Server’)</li>
 </ul>
-<div class="cell" data-hash="sql_cache/html/py-engine_29f724babfd8b31bea8c66aeb84ad7f5">
+<div class="cell" data-hash="sql_cache/html/py-engine_ce467f9c7589d9610b77f9361b25d067">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>engine <span class="op">=</span> sa.create_engine(<span class="st">'mssql+pyodbc://{server-and-db-address}?driver=SQL+Server'</span>,echo <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Having specified a SQL engine, you can establish a connection.</p>
-<div class="cell" data-hash="sql_cache/html/py-connection_51e2f89f808a84b81cf7518cdf783493">
+<div class="cell" data-hash="sql_cache/html/py-connection_750d68f0668b8bc4cc50104d22851ee2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> engine.<span class="ex">connect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="running-sql-query" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="running-sql-query">
 <span class="header-section-number">3.3</span> Running SQL Query</h2>
 <p>You have two ways of going about running a SQL query in a Python script. You can either write your query out explicitly in your Python script, or you can read in an external SQL query. If the query is particularly lengthy, it is better to store is as a .sql file and call it from Python, to make it easier to read your code, and to maintain both components.</p>
-<div class="cell" data-hash="sql_cache/html/py-query_c77df59147e355bc1317befc879c48c2">
+<div class="cell" data-hash="sql_cache/html/py-query_aec7b7183b27a0e546dce26c9bdcf4af">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># open and read sql query</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="bu">open</span>(<span class="st">'path-to-query\query.sql'</span>, <span class="st">'r'</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -298,13 +298,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>query.close()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can check that this process has worked as expected by inspecting your pandas dataframe.</p>
-<div class="cell" data-hash="sql_cache/html/py-check_3ae3efdf554680388918dabad9e8789a">
+<div class="cell" data-hash="sql_cache/html/py-check_7df7bc2c5ce49a96249eaac3fbf41267">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="export-to-csv" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="export-to-csv">
 <span class="header-section-number">3.4</span> Export to CSV</h2>
 <p>Finally, you can export your dataframe using the pandas function <code>to_csv()</code>. If you want to retain the index column that pandas adds to the dataframe, simply change <code>index=False</code> to <code>True</code>.</p>
-<div class="cell" data-hash="sql_cache/html/py-export_491c97d11b648a2d6f59d586c5237d0d">
+<div class="cell" data-hash="sql_cache/html/py-export_d22ed1b220229f151de4a49bdc206d5f">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'path-to-save-df\df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 

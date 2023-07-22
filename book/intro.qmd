@@ -3,6 +3,7 @@
 ```{r}
 #| label: setup
 #| output: false
+#| cache: false
 #| echo: false
 
 # import packages
@@ -13,6 +14,8 @@ suppressPackageStartupMessages({
 
 # ggplot theme
 theme_set(scwplot::theme_scw(base_size = 14))
+# reduce margin
+theme_update(plot.margin = margin(c(t = 1, r = .5, b = 1, l = -.5), unit = "cm"))
 
 pypl_raw <- readr::read_csv(here::here('data', 'pypl.csv'))
 
@@ -40,8 +43,11 @@ Both R & Python are widely used in data science, and both are very popular progr
 Here is how the top ten most popular programming languages looks in 2023 (based on an average PYPL Index in 2023):
 
 ```{r}
-#| label: current-popularity
+#| label: fig-current-popularity
 #| echo: false
+#| fig-cap: |
+#|   The global popularity of programming languages in 2023, according to the 
+#|   PYPL Index 
 
 current_pypl <-
   df |> 
@@ -52,9 +58,9 @@ current_pypl <-
   mutate(
     bar_colour = 
       case_when(
-        language == 'Python' ~ '#FFB81C',
+        language == 'Python' ~ '#FFC649',
         language == 'R' ~ '#005EB8',
-        TRUE ~ 'grey50'
+        TRUE ~ '#D9DDE0'
           )
     ) |>
   arrange(desc(popularity)) |> 
@@ -62,11 +68,17 @@ current_pypl <-
 
 current_pypl |> 
   ggplot(aes(reorder(language, popularity), popularity, fill = bar_colour)) +
-  geom_col() +
+  geom_col(colour = "#333333") +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1.2) +
   coord_flip() +
   scale_fill_identity() +
   labs(x=NULL, y= 'PYPL Index') +
-  scwplot::theme_scw(grid_y = FALSE, grid_x = TRUE)
+  scwplot::theme_scw(grid_y = FALSE) +
+  theme(axis.text.y = element_text(
+    hjust = 0.5, 
+    margin = margin(c(t = 0, r = -.8, b = 0, l = 0), unit = "cm")
+    )
+  )
 
 ```
 
@@ -75,33 +87,42 @@ While Python is way out in front in first, R is also very high on the list in se
 We can also look at how the popularity of R and Python has changed over time, in comparison with other languages that are tracked in the PYPL Index. Here is a plot of the PYPL Index over time, from 2005 to 2023:
 
 ```{r}
-#| label: popularity-over-time
+#| label: fig-popularity-over-time
 #| echo: false
+#| fig-cap: |
+#|   The global popularity of programming languages from 2005 to 2023, according
+#|   to the PYPL Index 
 
 pypl_over_time <-
   df |> 
   mutate(
     line_colour = 
       case_when(
-        language == 'Python' ~ '#FFB81C',
+        language == 'Python' ~ '#FFC649',
         language == 'R' ~ '#005EB8',
           )
     )
 
 pypl_over_time |> 
   ggplot() +
-  ggbump::geom_bump(
-    data = subset(pypl_over_time, !language %in% c('R', 'Python')),
+  geom_line(data = subset(pypl_over_time, !language %in% c('R', 'Python')),
     aes(x = Date, y = popularity, group = language), 
-     colour='grey50', size = 1, smooth = 5, alpha = 0.1
-    ) +
-  ggbump::geom_bump(
-    data = subset(pypl_over_time, language %in% c('R', 'Python')),
-    aes(x = Date, y = popularity, group = language, colour=line_colour),
-    size = 1.4, smooth = 5
-  ) +
+     colour='#D9DDE0', size = 0.8, alpha = 0.4) +
+  geom_line(data = subset(pypl_over_time, language %in% c('R', 'Python')),
+    aes(x = Date, y = popularity, group = language, colour = line_colour),
+    size = 1.4) +
+  # ggbump::geom_bump(
+  #   data = subset(pypl_over_time, !language %in% c('R', 'Python')),
+  #   aes(x = Date, y = popularity, group = language), 
+  #    colour='#D9DDE0', size = 0.8, alpha = 0.4
+  #   ) +
+  # ggbump::geom_bump(
+  #   data = subset(pypl_over_time, language %in% c('R', 'Python')),
+  #   aes(x = Date, y = popularity, group = language, colour = line_colour),
+  #   size = 1.4, smooth = 1
+  # ) +
   scale_colour_identity(guide='legend', labels=c('R', 'Python')) +
-  scale_x_date(date_breaks = "5 years", date_labels =  "%Y") + 
+  scale_x_date(date_breaks = "2 years", date_labels =  "%Y", expand = c(0, 0)) + 
   labs(x= NULL, y = 'PYPL Index')
 
 ```

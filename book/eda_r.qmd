@@ -2,6 +2,7 @@
 
 ```{r}
 #| label: setup
+#| cache: false
 #| output: false
 #| code-fold: true
 #| code-summary: 'Setup Code (Click to Expand)'
@@ -17,10 +18,11 @@ suppressPackageStartupMessages({
 })
 
 # set plot theme
-theme_set(scwplot::theme_scw(base_size = 14))
+theme_set(scwplot::theme_scw(base_size = 16))
 
 # import data
-df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
+df <- MLDataR::heartdisease |>
+  janitor::clean_names()
 
 # convert discrete variables to factor type
 df <- df |>
@@ -136,30 +138,53 @@ The first step in the exploratory process is to visualise the data distributions
 For continuous variables, we can use histograms to visualise the distribution of the data. We can use the `geom_histogram()` function to create a histogram of a continuous variable. The `binwidth` argument can be used to control the width of the bins in the histogram.
 
 ```{r}
-#| label: continuous-dists
-#| message: false
-#| warning: false
+#| label: fig-continuous-dists
+#| layout-ncol: 3
+#| column: screen-inset
+#| fig-cap: |
+#|   Histograms plotting the distributions of relevant variables from the heart
+#|   disease dataset.
+#| fig-subcap: 
+#|   - Age
+#|   - Maximum Heart Rate
+#|   - Cholesterol
 
 # age distribution
 df |>
   ggplot(aes(age)) +
-  geom_histogram(binwidth = 5, colour = "#333333", linewidth = 1)
+  geom_histogram(binwidth = 5, colour = "#333333", linewidth = 1) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  labs(x = NULL, y = NULL)
 
 # max hr distribution
 df |>
   ggplot(aes(max_hr)) +
-  geom_histogram(binwidth = 10, colour = "#333333", linewidth = 1)
+  geom_histogram(binwidth = 10, colour = "#333333", linewidth = 1) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  labs(x = NULL, y = NULL)
 
 # cholesterol distribution
 df |>
   ggplot(aes(cholesterol)) +
-  geom_histogram(binwidth = 25, colour = "#333333", linewidth = 1)
+  geom_histogram(binwidth = 25, colour = "#333333", linewidth = 1) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  labs(x = NULL, y = NULL)
+
+```
+
+```{r}
+#| label: fig-filter-zeroes-cholesterol-dist
+#| fig-cap: |
+#|   The distribution of cholesterol readings, with zero values filtered out to 
+#|   better visualise the non-zero distribution.
 
 # filter zero values
 df |> 
   filter(cholesterol != 0) |> 
   ggplot(aes(cholesterol)) +
-  geom_histogram(binwidth = 25, colour = "#333333", linewidth = 1)
+  geom_histogram(binwidth = 25, colour = "#333333", linewidth = 1) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  labs(x = "Cholesterol", y = NULL)
 
 ```
 
@@ -167,72 +192,109 @@ The inflated zero values in the cholesterol distribution suggests that there may
 
 #### Discrete Distributions
 
-We can use bar plots to visualise the distribution of discrete variables. We can use the `geom_bar()` function to create a bar plot of a discrete variable.
+We can use bar charts to visualise the distribution of discrete variables. We can use the `geom_bar()` function to create a bar chart of a discrete variable.
 
 ```{r}
-#| label: discrete-dists
-#| message: false
-#| warning: false
-
-# heart disease distribution
-df |>
-  ggplot(aes(heart_disease)) +
-  geom_bar(colour = "#333333", linewidth = 1)
+#| label: fig-discrete-dists
+#| column: page
+#| layout-ncol: 2
+#| fig-cap: |
+#|   Bar charts plotting discrete variables from the heart disease dataset.
+#| fig-subcap: 
+#|   - Patient Sex
+#|   - Angina
 
 # sex distribution
 df |>
   ggplot(aes(sex)) +
-  geom_bar(colour = "#333333", linewidth = 1)
+  geom_bar(colour = "#333333", linewidth = 1) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  labs(x = NULL, y = NULL)
+
 
 # angina distribution
 df |>
-  ggplot(aes(angina)) +
-  geom_bar(colour = "#333333", linewidth = 1)
+  ggplot(aes(angina)) + 
+  geom_bar(colour = "#333333", linewidth = 1) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  labs(x = NULL, y = NULL)
 
 ```
 
+```{r}
+#| label: fig-heart-disease-dist
+#| fig-cap: |
+#|   The distribution of the outcome variable, heart disease.
+
+# heart disease distribution
+df |>
+  ggplot(aes(heart_disease)) +
+  geom_bar(colour = "#333333", linewidth = 1) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  labs(x = "Heart Disease", y = NULL)
+
+```
+
+
 ### Comparing Distributions
 
-There are a number of ways to compare the distributions of multiple variables. Bar plots can be used to visualise two discrete variables, while histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable, and scatter plots are particularly useful for comparing the distribution of two continuous variables.
+There are a number of ways to compare the distributions of multiple variables. Bar charts can be used to visualise two discrete variables, while histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable, and scatter plots are particularly useful for comparing the distribution of two continuous variables.
 
 #### Visualising Multiple Discrete Variables
 
-Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical).
+Bar charts are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical).
 
-We can use the `geom_bar()` function to create bar plots, but the default behaviour is to display the bars as stacked bars, which is not necessarily ideal for visualising discrete variables (though I'd recommend playing around with this yourself to decide what works in each case)
+We can use the `geom_bar()` function to create bar charts, but the default behaviour is to display the bars as stacked bars, which is not necessarily ideal for visualising discrete variables (though I'd recommend playing around with this yourself to decide what works in each case)
 
 The `position` argument controls how the bars are displayed. The default `position = 'stack'` argument will display the bars as stacked bars, while the `position = 'dodge'` argument will display the bars side-by-side, and the `position = 'fill'` argument will display the bars as a proportion of the total number of observations in each category.
 
 Finally, the `fill` argument splits the bars by a particular variable and display them in different colours.
 
 ```{r}
-#| label: bar-plots
-#| message: false
-#| warning: false
+#| label: fig-multi-discrete-dists
+#| column: page
+#| layout-ncol: 2
+#| layout-nrow: 2
+#| fig-cap: |
+#|   Bar charts plotting discrete variables from the heart disease dataset 
+#|   against the outcome variable, heart disease.
+#| fig-subcap: 
+#|   - Patient Sex
+#|   - Resting ECG
+#|   - Angina
+#|   - Fasting Blood Sugar
 
 # heart disease by sex
 df |>
   ggplot(aes(heart_disease, fill = sex)) +
   geom_bar(position = 'dodge', colour = "#333333", linewidth = 1) +
-  scale_fill_qualitative(palette = "scw")
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = "Heart Disease", y = NULL)
 
 # resting ecg
 df |>
   ggplot(aes(heart_disease, fill = resting_ecg)) +
   geom_bar(position = 'dodge', colour = "#333333", linewidth = 1) +
-  scale_fill_qualitative(palette = "scw")
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = "Heart Disease", y = NULL)
 
 # angina
 df |>
   ggplot(aes(heart_disease, fill = angina)) +
   geom_bar(position = 'dodge', colour = "#333333", linewidth = 1) +
-  scale_fill_qualitative(palette = "scw")
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = "Heart Disease", y = NULL)
 
 # fasting bs
 df |>
   ggplot(aes(heart_disease, fill = fasting_bs)) +
   geom_bar(position = 'dodge', colour = "#333333", linewidth = 1) +
-  scale_fill_qualitative(palette = "scw")
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = "Heart Disease", y = NULL)
 
 ```
 
@@ -245,31 +307,39 @@ Histograms and box plots are useful for comparing the distribution of a continuo
 We can use the `geom_histogram()` function to create histograms. The `fill` and `position` arguments can be used to split the bars by a particular variable and display them in different colours, as discussed above.
 
 ```{r}
-#| label: hist-comps
-#| message: false
-#| warning: false
+#| label: fig-continuous-discrete-dists
+#| column: page
+#| layout-ncol: 2
+#| fig-cap: |
+#|   Histograms plotting the distribution of continuous variables from the heart
+#|   disease dataset against the outcome variable, heart disease.
+#| fig-subcap: 
+#|   - Patient Age by Heart Disease
+#|   - Cholesterol (Zero Values Filtered) by Heart Disease
+
 
 # age distribution by heart disease
 df |>
   ggplot(aes(age, fill = heart_disease)) +
-  geom_histogram(binwidth = 5, position = 'dodge', 
-                 colour = "#333333", linewidth = 1) +
-  scale_fill_qualitative(palette = "scw")
-
-# cholesterol
-df |>
-  ggplot(aes(cholesterol, fill = heart_disease)) +
-  geom_histogram(binwidth = 25, position = 'dodge', 
-                 colour = "#333333", linewidth = 1) +
-  scale_fill_qualitative(palette = "scw")
+  geom_histogram(
+    binwidth = 5, position = 'dodge', 
+    colour = "#333333", linewidth = 1
+    ) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = NULL, y = NULL)
 
 # filter zero values
 df |> 
   filter(cholesterol != 0) |> 
   ggplot(aes(cholesterol, fill = heart_disease)) +
-  geom_histogram(binwidth = 25, position = 'dodge', 
-                 colour = "#333333", linewidth = 1) +
-  scale_fill_qualitative(palette = "scw")
+  geom_histogram(
+    binwidth = 25, position = 'dodge', 
+    colour = "#333333", linewidth = 1
+    ) +
+  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = NULL, y = NULL)
 
 ```
 
@@ -282,33 +352,46 @@ Box plots visualize the characteristics of a continuous distribution over discre
 However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained [here](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.
 
 ```{r}
-#| label: box-plots
-#| message: false
-#| warning: false
+#| label: fig-box-plots
+#| column: page
+#| layout-ncol: 2
+#| layout-nrow: 2
+#| fig-cap: |
+#|   Box plots visualising continuous distributions over the discrete outcome 
+#|   variable, heart disease.
+#| fig-subcap: 
+#|   - Patient Age
+#|   - Patient Age, Split by Sex
+#|   - Maximum Heart Rate
+#|   - Maximum Heart Rate, Split by Sex
 
 # age & heart disease
 df |>
-  ggplot(aes(age, heart_disease, fill = heart_disease)) +
+  ggplot(aes(age, heart_disease)) +
   geom_boxplot(size=0.8) +
-  scale_fill_qualitative(palette = "scw")
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = "Patient Age", y = "Heart Disease")
 
 # age & heart disease, split by sex
 df |>
   ggplot(aes(age, heart_disease, fill = sex)) +
   geom_boxplot(size=0.8) +
-  scale_fill_qualitative(palette = "scw")
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = "Patient Age", y = "Heart Disease")
 
 # max hr & heart disease
 df |>
-  ggplot(aes(max_hr, heart_disease, fill = heart_disease)) +
+  ggplot(aes(max_hr, heart_disease)) +
   geom_boxplot(size=0.8) +
-  scale_fill_qualitative(palette = "scw")
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = "Maximum Heart Rate", y = "Heart Disease")
 
 # max hr & heart disease, split by sex
 df |>
   ggplot(aes(max_hr, heart_disease, fill = sex)) +
   geom_boxplot(size=0.8) +
-  scale_fill_qualitative(palette = "scw")
+  scale_fill_qualitative(palette = "scw") +
+  labs(x = "Maximum Heart Rate", y = "Heart Disease")
 
 ```
 
@@ -317,31 +400,43 @@ df |>
 Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the `geom_point()` function to create scatter plots, and the `colour` argument to split the scatter plots by a particular variable and display them in different colours.
 
 ```{r}
-#| label: scatter-plots
-#| message: false
-#| warning: false
+#| label: fig-scatter-plots
+#| column: page
+#| layout-ncol: 2
+#| layout-nrow: 2
+#| fig-cap: |
+#|   Scatter plots visualising two continuous distributions together.
+#| fig-subcap: 
+#|   - Patient Age & Resting Blood Pressure
+#|   - Patient Age & Resting Blood Pressure (Zero Values Filtered)
+#|   - Patient Age & Cholesterol (Zero Values Filtered)
+#|   - Patient Age & Maximum Heart Rate
 
 # age & resting bp
 df |> 
   ggplot(aes(age, resting_bp)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'gray30')
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  labs(x = "Patient Age", y = "Resting Blood Pressure")
   
 # filter zero values
 df |>
   filter(resting_bp != 0) |> 
   ggplot(aes(age, resting_bp)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'gray30')
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  labs(x = "Patient Age", y = "Resting Blood Pressure")
 
 # age & cholesterol
 df |>
   filter(cholesterol != 0) |> 
   ggplot(aes(age, cholesterol)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'gray30')
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  labs(x = "Patient Age", y = "Cholesterol")
 
 # age & max hr
 df |>
   ggplot(aes(age, max_hr)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'gray30')
+  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
+  labs(x = "Patient Age", y = "Maximum Heart Rate")
 
 ```
 
@@ -350,31 +445,42 @@ The scatter plot visualising age and resting blood pressure highlights another o
 If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The `geom_smooth()` function can be used to add a regression line to a scatter plot. The `method` argument specifies the type of regression line to be added, and the `se` argument specifies whether or not to display the standard error of the regression line.
 
 ```{r}
-#| label: adding-regression-line
-#| message: false
-#| warning: false
+#| label: fig-scatter-plot-with-regression-line
+#| fig-cap: |
+#|   Scatter plot visualising the distribution of patient age and maximum heart 
+#|   rate with a regression line fit to the data.
 
 # age & max hr
 df |>
   ggplot(aes(age, max_hr)) +
   geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
-  geom_smooth(method = lm, se = FALSE, size = 2, colour='#005EB8')
+  geom_smooth(method = lm, se = FALSE, size = 2, colour='#005EB8') +
+  labs(x = "Patient Age", y = "Maximum Heart Rate")
 
 ```
 
 You can also include discrete variables by assigning the discrete groups different colours in the scatter plot, and if you add regression lines to these plots, separate regression lines will be fit to the discrete groups. This can be useful for visualising how the association between the two continuous variables varies across the discrete groups.
 
 ```{r}
-#| label: adding-discrete-vars
-#| message: false
-#| warning: false
+#| label: fig-scatter-plots-with-discrete-splits
+#| column: screen-inset
+#| layout-ncol: 3
+#| fig-cap: |
+#|   Scatter plots visualising continuous distributions together, with the data
+#|   split and coloured by the discrete outcome variable, heart disease.
+#| fig-subcap: 
+#|   - Patient Age & Resting Blood Pressure
+#|   - Patient Age & Cholesterol (Zero Values Filtered)
+#|   - Patient Age & Maximum Heart Rate
+
 
 # age & resting bp, split by heart disease
 df |>
   filter(resting_bp != 0) |> 
   ggplot(aes(age, resting_bp, colour = heart_disease)) +
   geom_point(alpha = 0.8, size = 3) +
-  scale_colour_qualitative(palette = "scw")
+  scale_colour_qualitative(palette = "scw") +
+  labs(x = "Patient Age", y = "Resting Blood Pressure")
 
 # age & cholesterol, split by heart disease (with regression line)
 df |>
@@ -382,14 +488,16 @@ df |>
   ggplot(aes(age, cholesterol, colour = heart_disease)) +
   geom_point(size = 3, alpha = 0.8) +
   geom_smooth(method = lm, se = FALSE, size = 1.5) +
-  scale_colour_qualitative(palette = "scw")
+  scale_colour_qualitative(palette = "scw") +
+  labs(x = "Patient Age", y = "Resting Blood Pressure")
 
 # age & max hr, split by heart disease (with regression line)
 df |>
   ggplot(aes(age, max_hr, colour = heart_disease)) +
   geom_point(size = 3, alpha = 0.8)+
   geom_smooth(method = lm, se = FALSE, size = 1.5) +
-  scale_colour_qualitative(palette = "scw")
+  scale_colour_qualitative(palette = "scw") +
+  labs(x = "Patient Age", y = "Maximum Heart Rate")
 
 ```
 

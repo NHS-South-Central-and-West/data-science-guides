@@ -2,6 +2,7 @@
 
 ```{r}
 #| label: setup
+#| cache: false
 #| output: false
 #| code-fold: true
 #| code-summary: 'Setup Code (Click to Expand)'
@@ -14,10 +15,11 @@ suppressPackageStartupMessages({
 })
 
 # set plot theme
-theme_set(scwplot::theme_scw(base_size = 14))
+theme_set(scwplot::theme_scw(base_size = 16))
 
 # import data
-df <- readr::read_csv(here::here('data', 'heart_disease.csv'))
+df <- MLDataR::heartdisease |>
+  janitor::clean_names()
 
 # specify categorical features as factors
 df <- df |> 
@@ -253,16 +255,44 @@ trained_models |>
   filter(.metric == 'f_meas') |> 
   select(wflow_id, model, f1 = mean)
 
+```
+
+
+```{r}
+#| label: fig-model-performance
+#| layout-ncol: 2
+#| column: screen-inset
+#| fig-cap: |
+#|   Comparing accuracy and f1 score of Random Forest, KNN, and Logistic 
+#|   Regression models
+#| fig-subcap:
+#|   - All Models
+#|   - Best Models
+
+metric_labels = c("accuracy" = "Accuracy", "f_meas" = "F1")
+
 # plot performance
 trained_models |> 
   autoplot() +
-  scwplot::scale_colour_qualitative(palette = "nhs")
+  facet_wrap(~ .metric, labeller = as_labeller(metric_labels)) +
+  scale_shape(guide = 'none') +
+  scwplot::scale_colour_qualitative(
+    labels = c("Logistic Regression", "KNN", "Random Forest"),
+    palette = "scw"
+    ) +
+  guides(colour = guide_legend(override.aes = list(size=2, linewidth = .8)))
 
 # select best models and plot performance
 trained_models |> 
   autoplot(select_best = TRUE) +
-  scwplot::scale_colour_qualitative(palette = "nhs")
-
+  facet_wrap(~ .metric, labeller = as_labeller(metric_labels)) +
+  labs(y = NULL) +
+  scale_shape(guide = 'none') +
+  scwplot::scale_colour_qualitative(
+    labels = c("Logistic Regression", "KNN", "Random Forest"),
+    palette = "scw"
+    ) +
+  guides(colour = guide_legend(override.aes = list(size=2, linewidth = .8)))
 
 ```
 
@@ -312,6 +342,15 @@ collect_metrics(rf_test_results)
 # inspect confusion matrix
 rf_test_results |> 
   conf_mat_resampled(tidy=FALSE)
+
+```
+
+
+```{r}
+#| label: fig-conf-matrix
+#| fig-cap: |
+#|   Confusion matrix visualising model performance, comparing predicted and 
+#|   actual values
 
 # plot confusion matrix
 rf_test_results |>

@@ -78,5 +78,6 @@ Although the data science guides focus, for the most part, on the implementation
 
 ## Resources
 
+- [Techniques for Problem Solving](https://twitter.com/TivadarDanka/status/1682333102637719552?s=20)
 - [Key Skills for Aspiring Data Scientists: Problem Solving and the Scientific Method](https://faculty.ai/blog/key-skills-for-aspiring-data-scientists-problem-solving-and-the-scientific-method/)
 - [Richard Feynman on the Scientific Method](https://research-training-centre.sps.ed.ac.uk/feynman-scientific-method-and-sociology/)

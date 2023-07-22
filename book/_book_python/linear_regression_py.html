@@ -291,12 +291,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'deprivation.csv'</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'deprivation.csv'</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot font</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>rc(<span class="st">'font'</span>,<span class="op">**</span>{<span class="st">'family'</span>:<span class="st">'sans-serif'</span>,<span class="st">'sans-serif'</span>:[<span class="st">'Arial'</span>]})</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#1C355E'</span>, <span class="st">'#00A499'</span>, <span class="st">'#005EB8'</span>]</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Linear regression is a cornerstone of data science and statistical analysis, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both extremely simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, and then t-tests).</p>
@@ -506,7 +518,7 @@ memory usage: 32.0+ KB</code></pre>
 <div class="cell-output cell-output-display">
 <div id="deprivation-plot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="linear_regression_py_files/figure-html/deprivation-plot-output-1.png" width="957" height="651" class="figure-img"></p>
+<p><img src="linear_regression_py_files/figure-html/deprivation-plot-output-1.png" width="805" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -519,7 +531,7 @@ memory usage: 32.0+ KB</code></pre>
 <div class="cell-output cell-output-display">
 <div id="phsyiological-plot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="linear_regression_py_files/figure-html/phsyiological-plot-output-1.png" width="965" height="651" class="figure-img"></p>
+<p><img src="linear_regression_py_files/figure-html/phsyiological-plot-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -532,7 +544,7 @@ memory usage: 32.0+ KB</code></pre>
 <div class="cell-output cell-output-display">
 <div id="behavioural-plot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="linear_regression_py_files/figure-html/behavioural-plot-output-1.png" width="965" height="651" class="figure-img"></p>
+<p><img src="linear_regression_py_files/figure-html/behavioural-plot-output-1.png" width="812" height="501" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -615,7 +627,7 @@ Name: life_expectancy, dtype: float64</code></pre>
 <div class="cell-output cell-output-display">
 <div id="correlation-plot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="linear_regression_py_files/figure-html/correlation-plot-output-1.png" width="757" height="638" class="figure-img"></p>
+<p><img src="linear_regression_py_files/figure-html/correlation-plot-output-1.png" width="691" height="593" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -641,8 +653,8 @@ Name: life_expectancy, dtype: float64</code></pre>
 Dep. Variable:        life_expectancy   R-squared:                       0.844
 Model:                            OLS   Adj. R-squared:                  0.843
 Method:                 Least Squares   F-statistic:                     1042.
-Date:                Wed, 19 Jul 2023   Prob (F-statistic):          7.23e-233
-Time:                        13:49:48   Log-Likelihood:                -564.29
+Date:                Fri, 21 Jul 2023   Prob (F-statistic):          7.23e-233
+Time:                        14:06:54   Log-Likelihood:                -564.29
 No. Observations:                 583   AIC:                             1137.
 Df Residuals:                     579   BIC:                             1154.
 Df Model:                           3                                         
