@@ -6,4 +6,5 @@
 /.luarc.json
 
 /.quarto/
-/_dev/
+
+/.vscode/
