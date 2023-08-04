@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>R Data Science Guides - 6&nbsp; Hypothesis Testing</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./linear_regression_r.html" rel="next">
+<link href="./eda_r.html" rel="prev">
+<link href="./figures/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hypothesis_testing_r.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./hypothesis_testing_r.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/scw_logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R Data Science Guides</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/NHS-South-Central-and-West/data-science-guides/tree/main/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./good_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Doing Good Science</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Dealing with Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sql.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing Data from SQL</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wrangling_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis_testing_r.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_regression_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ml_workflow_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Deep Learning</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Delivering Data Science</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./installing_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installing R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./version_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Version Control</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#the-purpose-of-hypothesis-testing" id="toc-the-purpose-of-hypothesis-testing" class="nav-link active" data-scroll-target="#the-purpose-of-hypothesis-testing"><span class="header-section-number">6.1</span> The Purpose of Hypothesis Testing</a></li>
+  <li>
+<a href="#how-hypothesis-testing-works" id="toc-how-hypothesis-testing-works" class="nav-link" data-scroll-target="#how-hypothesis-testing-works"><span class="header-section-number">6.2</span> How Hypothesis Testing Works</a>
+  <ul class="collapse">
+<li><a href="#a-general-framework-for-significance-tests" id="toc-a-general-framework-for-significance-tests" class="nav-link" data-scroll-target="#a-general-framework-for-significance-tests"><span class="header-section-number">6.2.1</span> A General Framework for Significance Tests</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#t-tests" id="toc-t-tests" class="nav-link" data-scroll-target="#t-tests"><span class="header-section-number">6.3</span> T-Tests</a>
+  <ul class="collapse">
+<li><a href="#one-sample-t-test" id="toc-one-sample-t-test" class="nav-link" data-scroll-target="#one-sample-t-test"><span class="header-section-number">6.3.1</span> One-Sample T-Test</a></li>
+  <li><a href="#paired-t-test" id="toc-paired-t-test" class="nav-link" data-scroll-target="#paired-t-test"><span class="header-section-number">6.3.2</span> Paired T-Test</a></li>
+  <li><a href="#two-samples-t-test" id="toc-two-samples-t-test" class="nav-link" data-scroll-target="#two-samples-t-test"><span class="header-section-number">6.3.3</span> Two Samples T-Test</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#anova" id="toc-anova" class="nav-link" data-scroll-target="#anova"><span class="header-section-number">6.4</span> ANOVA</a>
+  <ul class="collapse">
+<li><a href="#between-subjects-anova" id="toc-between-subjects-anova" class="nav-link" data-scroll-target="#between-subjects-anova"><span class="header-section-number">6.4.1</span> Between-Subjects ANOVA</a></li>
+  </ul>
+</li>
+  <li><a href="#chi-squared-tests" id="toc-chi-squared-tests" class="nav-link" data-scroll-target="#chi-squared-tests"><span class="header-section-number">6.5</span> Chi-Squared Tests</a></li>
+  <li><a href="#permutation-tests" id="toc-permutation-tests" class="nav-link" data-scroll-target="#permutation-tests"><span class="header-section-number">6.6</span> Permutation Tests</a></li>
+  <li><a href="#measuring-effects" id="toc-measuring-effects" class="nav-link" data-scroll-target="#measuring-effects"><span class="header-section-number">6.7</span> Measuring Effects</a></li>
+  <li><a href="#limitations-of-hypothesis-testing" id="toc-limitations-of-hypothesis-testing" class="nav-link" data-scroll-target="#limitations-of-hypothesis-testing"><span class="header-section-number">6.8</span> Limitations of Hypothesis Testing</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">6.9</span> Next Steps</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">6.10</span> Resources</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/hypothesis_testing_r.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-hypothesis-testing" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header><div class="cell">
+<details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">4321</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/infer">infer</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">stack_overflow</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu">modeldata</span><span class="fu">::</span><span class="va"><a href="https://modeldata.tidymodels.org/reference/stackoverflow.html">stackoverflow</a></span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Making evidence-based inferences about the world is very difficult. Over a thousand years of efforts in the sciences and statistics have sought to address this difficulty, by designing principles for carrying out research that can address the myriad challenges, such as the “fundamental problem of causal inference”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <span class="citation" data-cites="rubin1974 holland1986">(<a href="references.html#ref-rubin1974" role="doc-biblioref">Rubin 1974</a>; <a href="references.html#ref-holland1986" role="doc-biblioref">Holland 1986</a>)</span>, that make inference so difficult. With the benefit of modern technology, we can collect large quantities of data about a phenomenon of interest, and we have the computational power to carry out a vast array of calculations on that data, in order to understand it better. However, this can only take us so far without the general principles of statistical inference. Hypothesis testing is one of the tools in the statistical inference toolbox, that allows us to leverage data and computational power to learn about the world.</p>
+<section id="the-purpose-of-hypothesis-testing" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="the-purpose-of-hypothesis-testing">
+<span class="header-section-number">6.1</span> The Purpose of Hypothesis Testing</h2>
+<p>Hypotheses are statements about the “data generating process” (the real-world processes, both direct and indirect, that are responsible for causing the data we observe). A hypothesis is a claim about that data generating process that we want to test, and the goal of hypothesis testing is to “adjudicate between two complementary hypotheses” <span class="citation" data-cites="blackwell2023">(<a href="references.html#ref-blackwell2023" role="doc-biblioref">Blackwell 2023</a>)</span>. We use two complementary hypotheses because it is not possible to “prove” a theory, but it is possible to falsify or reject one (with a measure of uncertainty) <span class="citation" data-cites="popper1935">(<a href="references.html#ref-popper1935" role="doc-biblioref">Popper 1935</a>)</span>. This is <span class="citation" data-cites="popper1935">Popper (<a href="references.html#ref-popper1935" role="doc-biblioref">1935</a>)</span>’s deductive approach to testing theories, laid out in <em>The Logic of Scientific Discovery</em>. While these are philosophical details, they are meaningful, and can help illustrate why we work the way we do in science.</p>
+<p>Suppose we have a theory that a treatment has a positive effect on a particular medical condition, such as diabetes. We can test this theory by giving a group of diabetics the treatment and observing what happens. We can’t observe the counterfactual, which means we can’t be certain that any positive (or negative) effect occurred as a result of the treatment, or by chance (or some other factor that hasn’t been accounted for), so we would also include a control group of diabetics that don’t receive the treatment. This control group acts as a comparison, and we would randomise the process for selecting the people in both groups, in order to reduce the risk that some other factor is impacting our results, in an attempt to approximate the counterfactual. If we observe that treatment group’s condition improves, while the control group’s condition does not, we might be tempted to conclude that the treatment is responsible for this difference. However, there are all manner of explanations for why this difference might have occurred. Perhaps everyone in our treatment group is actually incredibly lucky, or those in the control group are incredibly unlucky. Demonstrating that there is a difference between the two groups, no matter how large, is not directly proving our theory that the treatment caused it.</p>
+<p>Hypothesis testing seeks to address the fact we are unable to decisively prove a theory, by evaluating competing claims (hypotheses) about a phenomenon <span class="citation" data-cites="cetinkaya2021">(<a href="references.html#ref-cetinkaya2021" role="doc-biblioref">Çetinkaya-Rundel and Hardin 2021</a>)</span>. We can structure our theory as a research hypothesis (<span class="math inline">\(H_1\)</span>), sometimes called the alternative hypothesis, that makes a claim about what we would expect to observe in our data if our theory is correct (for example, the mean difference between the treatment and control groups is greater than zero), and in turn we define a “null” hypothesis (<span class="math inline">\(H_0\)</span>) that specifies what we would observe in our data if our theory is not correct (the mean difference between the treatment and control groups is zero). We can then carry out our experiment and measure the difference between the two groups.</p>
+<p>The final step in the process involves measuring this difference and quantifying our confidence that these differences did not occur by chance. If we are able to show that the difference is extremely unlikely to have occurred by chance, we can reject the null hypothesis that the mean difference between the treatment and control groups is zero, and if we are not able to do this, we are unable to reject the null hypothesis, so we cannot be confident that what we’ve observed was not generated by chance. Rejecting the null doesn’t demonstrate that the difference was caused by the treatment.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Instead, if our theory is a robust, logical explanation of how the treatment might cause a positive response in diabetics, the results lend support to our theory. If we have carried out or experiment under robust, careful conditions (like a randomised controlled trial) that do as much as possible to limit the counterfactual explanations for the difference between the treatment and control group, the result lends strong support to our theory. It is only through multiple independent evaluations that all draw the same conclusion that we can approach a consensus that an effect exists and that the theory is correct.</p>
+</section><section id="how-hypothesis-testing-works" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="how-hypothesis-testing-works">
+<span class="header-section-number">6.2</span> How Hypothesis Testing Works</h2>
+<p>This expression says that the rejection region is the part of the sample space that makes the test statistic sufficiently large. We reject null hypotheses when the observed data is incompatible with those hypotheses, where the test statistic should be a measure of this incompatibility. Note that the test statistic is a random variable and has a distribution—we will exploit this to understand the different properties of a hypothesis test.</p>
+<p>If we have an alternative hypothesis and a null hypothesis, we can carry out a hypothesis test to see if we can reject the null hypothesis. We do this using a test statistic, which measures the difference between the observed data (using some summary measure of the data like the mean value) and our approximation of what we would expect to observe if the null hypothesis was true (the null distribution). Having calculated our test statistic, we are then able to convert this to a p-value, which represents the probability of getting a test statistic at least as large as the one observed if the null hypothesis were actually true.</p>
+<p>There are a wide variety of statistical tests that can compute a test statistic and the corresponding p-value. In this section we will focus on tests of significance, which attempt to measure whether the difference in means between groups is statistically significant (unlikely to have occurred by chance). The differences between the many significance tests tends to be a cause of some confusion for new-learners, but I find it easier to first understand their similarities, and build an understanding about how they differ from there. .</p>
+<p>Constructing a null distribution (whether normal, <span class="math inline">\(t\)</span>, <span class="math inline">\(F\)</span>, or <span class="math inline">\(\chi^2\)</span> distributions) is useful because the shape and size of the distribution is known (given parameters such as mean and standard deviation), which allows us to ask what the data would look like if it was generated by chance. Having done this, we can compare our sample mean against the null distribution and ask how often we would expect to observe this mean value if the data was in fact generated by chance. In a broad sense, test statistics are all trying to measure the ratio of effect size and error in a particular sample <span class="citation" data-cites="crump2019">(<a href="references.html#ref-crump2019" role="doc-biblioref">Crump, Navarro, and Suzuki 2019</a>)</span>.</p>
+<p>Statistical tests can ask this question of data sampled from a single group, comparing it against a null distribution that represents what we would expect if this data was generated by chance; while others may ask this question of two groups of data, computing the mean difference between the groups and comparing this against the null distribution that we would expect to observe if there was no difference between the two groups; and finally, some tests ask this question of data sampled from multiple groups, computing summary statistics of each group and comparing whether the within-group structure varies significantly to the between-group structure of the data.</p>
+<p>Every test statistic is a representation of the data distribution, and the choice of different test statistics is dependent on the type of data you are dealing with. Statistical tests are just the way that you calculate the test statistic and convert that statistic to a p-value.</p>
+<section id="a-general-framework-for-significance-tests" class="level3" data-number="6.2.1"><h3 data-number="6.2.1" class="anchored" data-anchor-id="a-general-framework-for-significance-tests">
+<span class="header-section-number">6.2.1</span> A General Framework for Significance Tests</h3>
+<p>The general framework for hypothesis testing (particularly in the context of tests of significance, though the general principle still applies to other methods like regression) is as follows:</p>
+<ol type="1">
+<li>Specify the null hypothesis (<span class="math inline">\(H_0\)</span>), alternative hypothesis (<span class="math inline">\(H_1\)</span>), and significance level (<span class="math inline">\(\alpha\)</span>).</li>
+<li>Generate the null distribution, given the data being analysed and the type of test that is most appropriate for this data.</li>
+<li>Compute the test statistic that quantifies the difference between the null distribution and the observed data.</li>
+<li>Compute the p-value that represents the probability of observing a test statistic as large or larger than the observed test statistic if the data was generated by chance.</li>
+</ol>
+<p>While there are a myriad of different statistical tests, the general framework is the same. The test statistic is computed from the data, and the p-value is computed from the test statistic. The p-value is then compared to the significance level to determine whether the null hypothesis can be rejected.</p>
+<p>Different tests exist because they are designed to test different types of hypotheses, using different assumptions, and on different data types and distributions.</p>
+</section></section><section id="t-tests" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="t-tests">
+<span class="header-section-number">6.3</span> T-Tests</h2>
+<p>Broadly speaking, t-tests calculate the statistical significance of the difference between two groups. What the groups represent depends on the type of t-test being carried out, whether it be comparing the observed data with a random sample to see if the observed data could be expected if randomly generated, or comparing two observed groups to see if the differences between the two are meaningful.</p>
+<p>The exact method for carrying out a t-test will vary depending on the type of t-test, but the overarching method is computing the sample mean and dividing it by the sample standard error (the details are in the variation in how you compute the mean and standard error).</p>
+<p><span class="math inline">\(t\)</span> is the difference between the sample mean and the population mean (for example a value that suggests random chance, like 0.5), divided by the standard error of the mean.</p>
+<p>There are several broad groups of t-tests:</p>
+<ul>
+<li>One-sample t-test - comparing the sample mean of a single group against a “known mean”, generally testing whether a sample is likely to be generated by chance.</li>
+<li>Paired t-test - comparing means from the same group measured multiple times, like how someone responds to a survey at different points in time.</li>
+<li>Two samples t-test - comparing the means of two groups, such as measuring the difference in blood glucose levels of two different groups.</li>
+</ul>
+<p>There are several variations within these groups, for example a paired t-test generally assumes equal variance between the two groups, but this is often not true, so an unequal variance t-test can be used.</p>
+<p>Finally, when deciding on the nature of a t-test, you must also decide if the test should be one-tailed or two-tailed. A one-tailed t-test is used to test a hypothesis that includes a directional component (such as <span class="math inline">\(x &gt; y\)</span>), while a two-tailed t-test is just testing whether there is a difference between two groups. A one-tailed t-test is appropriate when you believe the difference between two groups should be positive or negative, but if the only belief is that the groups are different, a two-tailed t-test is appropriate.</p>
+<p>A two-tailed t-test compares whether the sample mean(s) is different, whether larger or smaller, while a one-tailed t-test assumes the direction of the difference is known. For example, if it is known that Group A is either the same or bigger than Group B (or that Group A being smaller is not of interest), then a one-tailed t-test would be appropriate.</p>
+<p>While I won’t demonstrate each and every variety of t-tests here, I will do a quick run-through of one of each type, to demonstrate how they work and how to code them in R.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<section id="one-sample-t-test" class="level3" data-number="6.3.1"><h3 data-number="6.3.1" class="anchored" data-anchor-id="one-sample-t-test">
+<span class="header-section-number">6.3.1</span> One-Sample T-Test</h3>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Formula
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>One-sample t-test = <span class="math inline">\(\text{t} = \frac{\bar{X}-u}{SE_{\bar{X}}}\)</span></p>
+</div>
+</div>
+</div>
+<p>Lets first simulate randomly generated data that comes from a normal distribution.</p>
+<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-2_2fc8e679e02aae95bf0a8b8312a65baf">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># create a vector of 100 random numbers from a normal distribution with mean 0 and standard deviation 1</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># compute the mean of the vector</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1250673</code></pre>
+</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute the standard deviation of the vector</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9102601</code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute the t-statistic</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  x
+t = 1.374, df = 99, p-value = 0.1726
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -0.05554801  0.30568268
+sample estimates:
+mean of x 
+0.1250673 </code></pre>
+</div>
+</div>
+<p>We are unable to reject the null hypothesis, which is good, because the null hypothesis (<span class="math inline">\(H_0: \bar{X} = 0\)</span>) is actually true!</p>
+</section><section id="paired-t-test" class="level3" data-number="6.3.2"><h3 data-number="6.3.2" class="anchored" data-anchor-id="paired-t-test">
+<span class="header-section-number">6.3.2</span> Paired T-Test</h3>
+<p>When respondents in surveys are asked to self-report certain details about themselves, this can invite bias. Take, for example, the differences in <a href="https://web.archive.org/web/20160702012345/http://www.hscic.gov.uk/catalogue/PUB13218/HSE2012-Ch10-Adult-BMI.pdf">self-reported and interviewer-measured height among men in the UK</a>. However, these differences, in absolute terms, are not particularly large. It’s very possible that the difference in self-reported and measured heights is actually a product of random variation. We can test this!</p>
+<p>We have the mean values for reported and measured heights, and we have the standard error of both of these values (from which we can calculate standard deviation.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>)</p>
+</section><section id="two-samples-t-test" class="level3" data-number="6.3.3"><h3 data-number="6.3.3" class="anchored" data-anchor-id="two-samples-t-test">
+<span class="header-section-number">6.3.3</span> Two Samples T-Test</h3>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Formula
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Independent samples t-test: <span class="math display">\[\text{t} = \frac{\bar{X}_{A} - \bar{X}_{B}} {\sigma_{p} \times \sqrt{\frac{1}{n_{A}} + \frac{1}{n_{B}}}}\]</span></p>
+<p>where <span class="math inline">\(\sigma_{p}\)</span> is pooled standard deviation of the two samples, calculated as follows:</p>
+<p><span class="math display">\[\sigma_{p} = \sqrt{\frac{(n_{A-1})\sigma_{A^{2}} + (n_{B-1})\sigma^{2}_{B}}{n_{A} +n_{B} - 2}}\]</span></p>
+</div>
+</div>
+</div>
+<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-3_35db3a8c4c26ffe5020f8e7ac3fdd483">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># sample size = 10</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">.5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  x and y
+t = 0.39486, df = 17.515, p-value = 0.6977
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.7048469  1.0303205
+sample estimates:
+mean of x mean of y 
+0.3054233 0.1426865 </code></pre>
+</div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># sample size = 50</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">50</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">50</span>, mean <span class="op">=</span> <span class="fl">.5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  x and y
+t = -2.0199, df = 97.983, p-value = 0.04613
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.783166209 -0.006922546
+sample estimates:
+ mean of x  mean of y 
+0.04808562 0.44313000 </code></pre>
+</div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># sample size = 100</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">.5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  x and y
+t = -1.9138, df = 198, p-value = 0.05708
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.52711547  0.00789135
+sample estimates:
+mean of x mean of y 
+0.1788142 0.4384262 </code></pre>
+</div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># sample size = 10000</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10000</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10000</span>, mean <span class="op">=</span> <span class="fl">.5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  x and y
+t = -34.967, df = 19992, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.5176908 -0.4627326
+sample estimates:
+   mean of x    mean of y 
+0.0003643124 0.4905760173 </code></pre>
+</div>
+</div>
+<p>We can apply this to a real-world example, like male and female heights, to get a better sense of what we are doing. We know that, on average, men tend to be taller than women, and we should expect that these differences are statistically significant.</p>
+<p>Using <a href="https://www.cdc.gov/nchs/data/series/sr_03/sr03-046-508.pdf">figures reported by the National Center for Health Statistics</a>, to define the average height of adult males and females in the US (2015-2018), we can compare the average height of men and women and see if the differences are statistically significant.</p>
+<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-4_ba3471db507d3e988693404e86de261f">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># draw five male heights and female heights from normal distributions with the specified heights and standard deviations from the NCHS report</span></span>
+<span><span class="va">male_heights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, mean <span class="op">=</span> <span class="fl">175.3</span>, sd <span class="op">=</span> <span class="fl">13.56</span><span class="op">)</span></span>
+<span><span class="va">female_heights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, mean <span class="op">=</span> <span class="fl">161.3</span>, sd <span class="op">=</span> <span class="fl">14.10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># compute mean heights</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">male_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 175.0931</code></pre>
+</div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">female_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 154.1704</code></pre>
+</div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute standard deviation in heights</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">male_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.394869</code></pre>
+</div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">female_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 25.04602</code></pre>
+</div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute the t-statistic</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">male_heights</span>, <span class="va">female_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  male_heights and female_heights
+t = 1.7489, df = 5.1038, p-value = 0.1395
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -9.642066 51.487426
+sample estimates:
+mean of x mean of y 
+ 175.0931  154.1704 </code></pre>
+</div>
+</div>
+<p>With only 5 observations in each sample, the differences are not statistically significant.</p>
+<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-5_f9c5291448ec42f1f2227ba42f7c04b1">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># create a vector of 3 random male and female heights that are distributed according to the mean and standard deviations</span></span>
+<span><span class="va">male_heights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">175.3</span>, sd <span class="op">=</span> <span class="fl">13.56</span><span class="op">)</span></span>
+<span><span class="va">female_heights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, mean <span class="op">=</span> <span class="fl">161.3</span>, sd <span class="op">=</span> <span class="fl">14.10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># compute mean heights</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">male_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 175.641</code></pre>
+</div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">female_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 160.3107</code></pre>
+</div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute standard deviation in heights</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">male_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14.02503</code></pre>
+</div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">female_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 14.45286</code></pre>
+</div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute the t-statistic</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">male_heights</span>, <span class="va">female_heights</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  male_heights and female_heights
+t = 7.6121, df = 197.82, p-value = 1.079e-12
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 11.35873 19.30174
+sample estimates:
+mean of x mean of y 
+ 175.6410  160.3107 </code></pre>
+</div>
+</div>
+<p>However, with 100 observations in each sample, the differences are statistically significant.</p>
+</section></section><section id="anova" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="anova">
+<span class="header-section-number">6.4</span> ANOVA</h2>
+<p>All of the previous examples have focused on comparing either a single group against a “known” value or comparing two groups. What if we have more than two groups? This is where Analysis of Variance (ANOVA) comes in! ANOVA is designed to compare multiple groups by testing that the outcome variance between groups is no larger than the outcome variance within group. In an ANOVA, the null hypothesis is that all groups have equal means, and the alternative hypothesis is that the groups do not have equal means.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>While the focus of a t-test is the <span class="math inline">\(t\)</span> statistic, ANOVA’s use the <span class="math inline">\(F\)</span> statistic. As with other test statistics, <span class="math inline">\(F\)</span> can be understood as the ratio of an effect and error. We won’t worry too much about the process for calculating <span class="math inline">\(F\)</span> here,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> because knowing how to do this isn’t strictly necessary for computing an ANOVA in R. However, as with any of these methods, it is definitely wise to spend time understanding exactly how they work.</p>
+<p>For a detailed but very accessible discussion about the calculation of the <span class="math inline">\(F\)</span> statistic, and the components that go into it, I would recommend reading the <em>Answering Questions With Data</em> section on the <a href="https://crumplab.com/statistics/07-ANOVA.html#one-factor-anova">One-Factor ANOVA</a>.</p>
+<p>Instead, we will look at the application of ANOVAs in practice, and their computation using R. There are multiple kinds of ANOVA-based methods, including between-subjects, repeated measures, and factorial ANOVA, and the related method Analysis of Covariance (ANCOVA), however, I will give a simple introduction to ANOVAs using the between-subjects ANOVA.</p>
+<section id="between-subjects-anova" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="between-subjects-anova">
+<span class="header-section-number">6.4.1</span> Between-Subjects ANOVA</h3>
+<p>A between-subjects ANOVA (sometimes referred to as a one-way ANOVA) involves a single variable with multiple (at least two, but generally more than two) levels. We will use a dataset from the {modeldata} package which takes a sample of responses to Stack Overflow’s Developer Survey.</p>
+<p>In order to put together an ANOVA, we need a categorical variable that can serve as the explanatory variable in the analysis, and a numerical variable that can serve as the outcome. Luckily, there are several options in this dataset. However, I will start with what looks, to me at least, like the most obvious question when you first look at the dataset. Does average salary significantly differ by country?</p>
+<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-6_134541bc25da1d7b8e1ac2b78092105b">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">between_subjects_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">salary</span> <span class="op">~</span> <span class="va">country</span>, data <span class="op">=</span> <span class="va">stack_overflow</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">between_subjects_anova</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Df    Sum Sq   Mean Sq F value Pr(&gt;F)    
+country        4 4.552e+12 1.138e+12    1446 &lt;2e-16 ***
+Residuals   5589 4.398e+12 7.870e+08                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Unsurprisingly, the answer is yes. In reality, we could have just looked at the mean values for average salary, split by country, and immediately seen the significant variance. The ANOVA confirms for us that the probability that these differences occur by chance is vanishingly small, but in reality our understanding of the context and a quick glance at the numbers would have been enough too.</p>
+<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-7_54a5f36a6b541395c3dd131be0008040">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">stack_overflow</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">salary</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  country        `mean(salary)`
+  &lt;fct&gt;                   &lt;dbl&gt;
+1 Canada                 57369.
+2 Germany                52255.
+3 India                  11386.
+4 United Kingdom         54658.
+5 United States          97877.</code></pre>
+</div>
+</div>
+<p>It is immediately clear that the average salary in India and the United States, according to the Stack Overflow survey, is significant and substantively meaningful. However, if we filter these two countries out of our data, and compare Canada, Germany, and the United Kingdom, we can use ANOVA to answer a question that is not so obvious from just looking at the average salary.</p>
+<p>Is the average salary in Canada, Germany, and the United Kingdom approximately the same?</p>
+<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-8_848391f66e6195691fc66673024a403b">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">country_subset</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">stack_overflow</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"India"</span>, <span class="st">"United States"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">subset_between_subjects_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">salary</span> <span class="op">~</span> <span class="va">country</span>, data <span class="op">=</span> <span class="va">country_subset</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">subset_between_subjects_anova</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Df    Sum Sq   Mean Sq F value   Pr(&gt;F)    
+country        2 7.824e+09 3.912e+09   7.926 0.000371 ***
+Residuals   2262 1.117e+12 4.936e+08                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>It turns out these differences are still significant. I wouldn’t have been confident about concluding this just from eyeballing the average values for each country, so the ANOVA has been able to tell me something that I wouldn’t have been able to otherwise.</p>
+<p>Finally, our degrees of freedom are pretty large. We’ve got plenty of data. So it’s not entirely surprising that the ANOVA is able to find a difference.</p>
+<p>Lets filter for data scientists, and see if the difference in average salary in those three countries is significant.</p>
+<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-9_847b2ee0961777683b2791036707b3bd">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_scientists</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">country_subset</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">data_scientist</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># dplyr::glimpse(data_scientists)</span></span>
+<span></span>
+<span><span class="va">data_scientists</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">salary</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  country        `mean(salary)`
+  &lt;fct&gt;                   &lt;dbl&gt;
+1 Canada                 66124.
+2 Germany                57476.
+3 United Kingdom         58962.</code></pre>
+</div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data_science_anova</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aov.html">aov</a></span><span class="op">(</span><span class="va">salary</span> <span class="op">~</span> <span class="va">country</span>, data <span class="op">=</span> <span class="va">data_scientists</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">data_science_anova</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Df    Sum Sq   Mean Sq F value Pr(&gt;F)
+country       2 1.559e+09 779288179   1.028   0.36
+Residuals   150 1.137e+11 758120985               </code></pre>
+</div>
+</div>
+<p>There we go. The differences between average salaries for data scientists in Canada, Germany, and the United Kingdom is not statistically significant.</p>
+<p>That doesn’t mean the difference doesn’t exist. When we compute the mean salary, we see that there’s an almost $10k difference between Canada and Germany. However, we cannot confidently conclude, based on the result of our ANOVA, that this difference has not occurred by chance. In fact, there is a 36% probability of observing an F-value as large or large than we observe here (1.028), if the salary differences were actually generated by chance.</p>
+</section></section><section id="chi-squared-tests" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="chi-squared-tests">
+<span class="header-section-number">6.5</span> Chi-Squared Tests</h2>
+</section><section id="permutation-tests" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="permutation-tests">
+<span class="header-section-number">6.6</span> Permutation Tests</h2>
+</section><section id="measuring-effects" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="measuring-effects">
+<span class="header-section-number">6.7</span> Measuring Effects</h2>
+<p>There are many more considerations than have been covered in the previous sections. The main two are statistical power and measuring effect sizes.</p>
+<p>A good way of measuring effect size (when “effect” is too abstract to use mean differences), is using Cohen’s <span class="math inline">\(d\)</span>, which is effectively a standardised measure of effect size.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Formula
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[ d = \frac{\mu_1 - \mu_2}{\sigma} \]</span></p>
+</div>
+</div>
+</div>
+<p>You can calculate Cohen’s <span class="math inline">\(d\)</span> by measuring the difference between the two conditions and dividing this by the population (or sample) standard deviation. This captures the effect size in terms of the overall variability of the data.</p>
+</section><section id="limitations-of-hypothesis-testing" class="level2" data-number="6.8"><h2 data-number="6.8" class="anchored" data-anchor-id="limitations-of-hypothesis-testing">
+<span class="header-section-number">6.8</span> Limitations of Hypothesis Testing</h2>
+<p>There are lots of issues with hypothesis testing, both in terms of significance tests and with the wider framework…</p>
+</section><section id="next-steps" class="level2" data-number="6.9"><h2 data-number="6.9" class="anchored" data-anchor-id="next-steps">
+<span class="header-section-number">6.9</span> Next Steps</h2>
+<p>There are an almost infinite number of significance tests that can be applied to all manner of weird and wonderful data distributions. However, if you are comfortable using t-tests, ANOVAs, and chi-squared tests, this will serve you well in the majority of cases. Further, the permutation testing framework gives you greater flexibility in the face of the various ways that data can violate assumptions and ruin all your fun.</p>
+</section><section id="resources" class="level2" data-number="6.10"><h2 data-number="6.10" class="anchored" data-anchor-id="resources">
+<span class="header-section-number">6.10</span> Resources</h2>
+<ul>
+<li><a href="https://infer.tidymodels.org/">{infer} - An R Package for Tidyverse-Friendly Statistical Inference</a></li>
+<li><a href="https://seeing-theory.brown.edu/">Seeing Theory</a></li>
+<li><a href="https://www.jwilber.me/permutationtest/">The Permutation Test</a></li>
+<li><a href="http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html">There is Only One Test</a></li>
+<li><a href="http://allendowney.blogspot.com/2011/06/more-hypotheses-less-trivia.html">More Hypotheses, Less Trivia</a></li>
+<li><a href="https://thomasleeper.com/Rcourse/Tutorials/permutationtests.html">Permutation Tests</a></li>
+<li><a href="https://medium.com/analytics-vidhya/permutation-test-as-an-alternative-to-two-sample-t-test-using-r-9f5da921bc95">Permutation Test as an Alternative to Two-Sample T-Test Using R</a></li>
+<li><a href="https://deliveroo.engineering/2018/12/07/monte-carlo-power-analysis.html">Power Analysis</a></li>
+<li><a href="https://hookedondata.org/posts/2023-04-19-recommended-resources-for-ab-testing">Recommended Resources for A/B Testing</a></li>
+<li><a href="https://elevanth.org/blog/2023/07/17/none-of-the-above/">McElreath - None of the Above</a></li>
+<li><a href="https://nyu-cdsc.github.io/learningr/assets/simulation.pdf">Introduction to Scientific Programming and Simulations in R</a></li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-blackwell2023" class="csl-entry" role="listitem">
+Blackwell, Matthew. 2023. <span>“A User’s Guide to Statistical Inference and Regression.”</span> <a href="https://mattblackwell.github.io/gov2002-book/">https://mattblackwell.github.io/gov2002-book/</a>.
+</div>
+<div id="ref-cetinkaya2021" class="csl-entry" role="listitem">
+Çetinkaya-Rundel, Mine, and Johanna Hardin. 2021. <em>Introduction to Modern Statistics</em>. OpenIntro. <a href="https://openintro-ims.netlify.app/">https://openintro-ims.netlify.app/</a>.
+</div>
+<div id="ref-crump2019" class="csl-entry" role="listitem">
+Crump, Matthew, Danielle Navarro, and Jeffrey Suzuki. 2019. <em>Answering Questions with Data: Introductory Statistics for Psychology Students</em>. <a href="https://doi.org/10.17605/OSF.IO/JZE52">https://doi.org/10.17605/OSF.IO/JZE52</a>.
+</div>
+<div id="ref-holland1986" class="csl-entry" role="listitem">
+Holland, Paul. 1986. <span>“Statistics and Causal Inference.”</span> <em>Journal of the American Statistical Association</em> 81 (396): 945–60.
+</div>
+<div id="ref-popper1935" class="csl-entry" role="listitem">
+Popper, Karl. 1935. <em>The Logic of Scientific Discovery</em>. Routledge.
+</div>
+<div id="ref-rubin1974" class="csl-entry" role="listitem">
+Rubin, Donald. 1974. <span>“Estimating Causal Effects of Treatments in Randomized and Nonrandomized Studies.”</span> <em>Journal of Educational Psychology</em> 66 (5): 688.
+</div>
+</div>
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>The fundamental problem of causal inference refers to the fact that we can only observe the factual outcome - the outcome that actually occurred - and not the counterfactual outcome - potential outcomes that would have occurred if the conditions had been different. For example, we can observe how a patient responds to a given treatment, but we cannot observe how that same patient would have responded to a different treatment (or no treatment), given at the same time and same conditions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2">
+<p>Rejecting a null hypothesis is not sufficient support for a particular alternative hypothesis. First of all, rejecting the null hypothesis is a probabilistic statement, meaning there is a degree of uncertainty in that rejection. But more importantly (in this context at least), rejecting the null is not a direct assertion that the alternative is true. There will be multiple different explanations for a phenomenon, and the stated alternative hypothesis is just one. Demonstrating that something probably did not occur by chance does not mean that the stated alternative hypothesis is therefore true.</p>
+<p>When thinking about what it is a hypothesis test is trying to achieve, I particularly like the framing used by <span class="citation" data-cites="crump2019">Crump, Navarro, and Suzuki (<a href="references.html#ref-crump2019" role="doc-biblioref">2019</a>)</span>. They refer to the idea of “confidence”. A hypothesis test helps the practitioner to quantify the amount of confidence they can have in what they observe. I like this framing because it acknowledges the inherent uncertainty that underpins hypothesis testing. We cannot be absolutely certain about what we observe, but we might be lucky enough to be relatively confident about it.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p>
+</li>
+<li id="fn3"><p>If you are unclear on some of the foundations that underpin what I’m discussing here, I’d recommend trying <a href="https://crumplab.com/statistics"><em>Answering Questions With Data</em></a> and/or StatQuest’s YouTube playlist, <a href="https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9"><em>Statistics Fundamentals</em></a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Standard deviation can be computed from standard error by multiplying the standard error by the square root of the sample size. The formula for this is as follows: <span class="math display">\[\sigma = SE \times \sqrt{n}\]</span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This points to one of the major limitations of ANOVA. It can only identify differences between groups. It doesn’t tell you which groups are different, nor does it give you a sense of what is causing those differences or anything beyond just the existence of a statistically significant difference. There are lots of use cases where just knowing there is a difference is meaningful, and if an analysis is designed well, you can make really good use of an ANOVA. However, it is important to understand what it can and cannot tell you.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6">
+<p>But here is a brief explanation:</p>
+<p>Calculating the variance explained by the effect and the error are done using their “sum of squares”. The sum of squares is a rare case of a statistics concept with a name that perfectly explains what it is doing. The sum of squares is the sum of the squared differences from some midpoint. For example, the total sum of squares <span class="math inline">\(SS_{total}\)</span> is the sum of squared differences from the grand mean (the mean value of all observations from all groups).</p>
+<p>The total sum of squares is also the sum of the effect and error sum of squares: <span class="math inline">\(SS_{total} = SS_{effect} + SS_{error}\)</span></p>
+<p>In an ANOVA, <span class="math inline">\(SS_{effect}\)</span> is the variation caused by the differences between the group means. In order to calculate <span class="math inline">\(SS_{effect}\)</span> in the setting of an ANOVA, you calculate the mean value of each group, and calculate the difference between each group mean and the grand mean, and sum the squared value of these differences.</p>
+<p>We can calculate <span class="math inline">\(SS_{error}\)</span> by subtracting <span class="math inline">\(SS_{effect}\)</span> from <span class="math inline">\(SS_{total}\)</span>, or we can calculate it directly by calculating the squared differences of observations from their group mean, and summing these values. While the <span class="math inline">\(SS_{effect}\)</span> is the variation between groups, the <span class="math inline">\(SS_{error}\)</span> is variation within groups.</p>
+<p>In order to turn these values into the <span class="math inline">\(F\)</span> statistic, we also need the degrees of freedom for the effect (<span class="math inline">\(df_{effect}\)</span>) and error (<span class="math inline">\(df_{error}\)</span>) components. <span class="math inline">\(df_{effect}\)</span> is calculated by taking the total number of groups minus one (because calculating the grand mean takes away a single degree of freedom), and <span class="math inline">\(df_{error}\)</span> is calculated by taking the total number of observations and subtracting the total number of groups (because calculating the group means takes away a single degree of freedom for each group).</p>
+<p>With the <span class="math inline">\(SS_{effect}\)</span> and <span class="math inline">\(SS_{error}\)</span>, we can calculate the mean squared error for both by dividing their value by the degrees of freedom for the effect and the error components, and from this we calculate <span class="math inline">\(F\)</span> by dividing <span class="math inline">\(MSE_{effect}\)</span> by <span class="math inline">\(MSE_{error}\)</span>.</p>
+<p>Finally, just as is the case with the <span class="math inline">\(t\)</span> statistic, calculating a p-value from <span class="math inline">\(F\)</span> involves generating the a null distribution and identifying where the <span class="math inline">\(F\)</span>-value would sit in this distribution. The p-value is the probability of observing a value at least as large as the observed <span class="math inline">\(F\)</span>-value if there is no effect, and this means that (<span class="math inline">\(p x 100\)</span>)% of values are equal or greater than <span class="math inline">\(F\)</span> in the null distribution.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p>
+</li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./eda_r.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./linear_regression_r.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center"><a href="https://python-data-science-guides.netlify.app"> Python Data Science Guides</a> <i class="fa-brands fa-python fa-xl" aria-label="python"></i></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>
