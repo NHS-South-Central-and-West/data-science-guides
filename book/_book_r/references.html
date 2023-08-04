@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R Data Science Guides - Version Control</title>
+<title>R Data Science Guides - References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,7 +49,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./installing_r.html" rel="prev">
+<link href="./installing_r.html" rel="next">
+<link href="./ml_workflow_r.html" rel="prev">
 <link href="./figures/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -76,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./installing_r.html">Appendices</a></li><li class="breadcrumb-item"><a href="./version_control.html">Version Control</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -204,7 +224,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -225,7 +245,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./version_control.html" class="sidebar-item-text sidebar-link active">
+  <a href="./version_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Version Control</span></a>
   </div>
 </li>
@@ -244,7 +264,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-version-control" class="quarto-section-identifier">Version Control</span></h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -259,9 +279,35 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Version control systems like Git are vital for the management of any codebase. Version control means that changes to the code (and anything else in the repository) can be tracked over time. This is a software engineering best-practice that has also been adopted in data science. It is an excellent ‘habit’ to learn when working with code, because it allows you to track changes, and therefore, revert to previous versions of the code if necessary. It also makes collaboration significantly easier, as it allows multiple people to work on the same codebase without creating conflicts.</p>
-<p>If you are new to Git, a good place to start is the <a href="https://github.com/nhs-r-community/git_training/">NHS-R Git Training</a>. Their <a href="https://github.com/nhs-r-community/git_training/blob/main/guides/introduction_to_git.md">Introduction to Git</a> will help you understand why version control is necessary, what Git &amp; GitHub can offer, and how to navigate these tools.</p>
-<p>These data science guides are designed to be used with Git because this is a very important skill for data science, and while it can be a bit challenging at first, it is incredibly valuable to learn, and everyone who wants to do some of the tasks in these guides should also be using Git to manage their work.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-blackwell2023" class="csl-entry" role="listitem">
+Blackwell, Matthew. 2023. <span>“A User’s Guide to Statistical Inference
+and Regression.”</span> <a href="https://mattblackwell.github.io/gov2002-book/">https://mattblackwell.github.io/gov2002-book/</a>.
+</div>
+<div id="ref-cetinkaya2021" class="csl-entry" role="listitem">
+Çetinkaya-Rundel, Mine, and Johanna Hardin. 2021. <em>Introduction to
+Modern Statistics</em>. OpenIntro. <a href="https://openintro-ims.netlify.app/">https://openintro-ims.netlify.app/</a>.
+</div>
+<div id="ref-crump2019" class="csl-entry" role="listitem">
+Crump, Matthew, Danielle Navarro, and Jeffrey Suzuki. 2019.
+<em>Answering Questions with Data: Introductory Statistics for
+Psychology Students</em>. <a href="https://doi.org/10.17605/OSF.IO/JZE52">https://doi.org/10.17605/OSF.IO/JZE52</a>.
+</div>
+<div id="ref-holland1986" class="csl-entry" role="listitem">
+Holland, Paul. 1986. <span>“Statistics and Causal Inference.”</span>
+<em>Journal of the American Statistical Association</em> 81 (396):
+945–60.
+</div>
+<div id="ref-popper1935" class="csl-entry" role="listitem">
+Popper, Karl. 1935. <em>The Logic of Scientific Discovery</em>.
+Routledge.
+</div>
+<div id="ref-rubin1974" class="csl-entry" role="listitem">
+Rubin, Donald. 1974. <span>“Estimating Causal Effects of Treatments in
+Randomized and Nonrandomized Studies.”</span> <em>Journal of Educational
+Psychology</em> 66 (5): 688.
+</div>
+</div>
 
 
 
@@ -501,11 +547,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./installing_r.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Installing R</span>
+      <a href="./ml_workflow_r.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./installing_r.html" class="pagination-link">
+        <span class="nav-page-text">Installing R</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -514,7 +563,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center"><a href="https://python-data-science-guides.netlify.app"> Python Data Science Guides</a> <i class="fa-brands fa-python fa-xl" aria-label="python"></i><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/version_control.qmd" class="toc-action">View source</a></p></div></div></div>
+    <div class="nav-footer-center"><a href="https://python-data-science-guides.netlify.app"> Python Data Science Guides</a> <i class="fa-brands fa-python fa-xl" aria-label="python"></i><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/references.qmd" class="toc-action">View source</a></p></div></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

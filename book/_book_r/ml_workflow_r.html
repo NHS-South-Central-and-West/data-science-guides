@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.433">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>R Data Science Guides - 7&nbsp; End-to-End Machine Learning Workflow</title>
+<title>R Data Science Guides - 8&nbsp; End-to-End Machine Learning Workflow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,7 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./installing_r.html" rel="next">
+<link href="./references.html" rel="next">
 <link href="./linear_regression_r.html" rel="prev">
 <link href="./figures/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -101,7 +101,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ml_workflow_r.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="./ml_workflow_r.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ml_workflow_r.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="./ml_workflow_r.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -185,8 +185,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./hypothesis_testing_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_regression_r.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -203,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ml_workflow_r.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
   </div>
 </li>
       </ul>
@@ -216,6 +222,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Delivering Data Science</span></span>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
@@ -248,29 +260,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
 <li>
-<a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="header-section-number">7.1</span> Data</a>
+<a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="header-section-number">8.1</span> Data</a>
   <ul class="collapse">
-<li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split"><span class="header-section-number">7.1.1</span> Train/Test Split</a></li>
-  <li><a href="#cross-validation-folds" id="toc-cross-validation-folds" class="nav-link" data-scroll-target="#cross-validation-folds"><span class="header-section-number">7.1.2</span> Cross-Validation Folds</a></li>
-  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">7.1.3</span> Preprocessing</a></li>
+<li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split"><span class="header-section-number">8.1.1</span> Train/Test Split</a></li>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">8.1.2</span> Cross-Validation</a></li>
+  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">8.1.3</span> Preprocessing</a></li>
   </ul>
 </li>
   <li>
-<a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training"><span class="header-section-number">7.2</span> Model Training</a>
+<a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training"><span class="header-section-number">8.2</span> Model Training</a>
   <ul class="collapse">
-<li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">7.2.1</span> Model Selection</a></li>
+<li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">8.2.1</span> Model Selection</a></li>
   </ul>
 </li>
-  <li><a href="#finalising-model" id="toc-finalising-model" class="nav-link" data-scroll-target="#finalising-model"><span class="header-section-number">7.3</span> Finalising Model</a></li>
-  <li><a href="#fitting-model-on-test-data" id="toc-fitting-model-on-test-data" class="nav-link" data-scroll-target="#fitting-model-on-test-data"><span class="header-section-number">7.4</span> Fitting Model on Test Data</a></li>
-  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">7.5</span> Model Evaluation</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">7.6</span> Next Steps</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">7.7</span> Resources</a></li>
+  <li><a href="#finalising-model" id="toc-finalising-model" class="nav-link" data-scroll-target="#finalising-model"><span class="header-section-number">8.3</span> Finalising Model</a></li>
+  <li><a href="#fitting-model-on-test-data" id="toc-fitting-model-on-test-data" class="nav-link" data-scroll-target="#fitting-model-on-test-data"><span class="header-section-number">8.4</span> Fitting Model on Test Data</a></li>
+  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">8.5</span> Model Evaluation</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">8.6</span> Next Steps</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">8.7</span> Resources</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/ml_workflow_r.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title"><span id="sec-ml-workflow" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></h1>
+<h1 class="title"><span id="sec-ml-workflow" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></h1>
 </div>
 
 
@@ -295,8 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/theme_scw.html">theme_scw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># import data</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">MLDataR</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/MLDataR/man/heartdisease.html">heartdisease</a></span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"heart_disease.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># specify categorical features as factors</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span> </span>
@@ -306,14 +317,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    resting_ecg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">resting_ecg</span><span class="op">)</span>,</span>
 <span>    angina <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">angina</span><span class="op">)</span>,</span>
 <span>    heart_disease <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">heart_disease</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># set random seed to ensure reproducibility</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>An end-to-end machine learning workflow can be broken down into many steps, and there are an extensive number of layers of complexity that can be added, serving a variety of purposes. However, in this guide we will work through a bare bones workflow, using a simple dataset, in order to get a better understanding of the process.</p>
 <p>A simple end-to-end ML solution will typically include the following steps:</p>
 <ol type="1">
 <li>Importing &amp; Cleaning Data</li>
-<li>Exploratory Data Analysis (which will be skipped in this guide because it has been carried out in an earlier guide which can be found <a href="https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/eda.html">here</a>)</li>
+<li>Exploratory Data Analysis (See <a href="eda_r.html"><span>Chapter&nbsp;5</span></a>)</li>
 <li>Data Preprocessing</li>
 <li>Model Training
 <ul>
@@ -326,8 +340,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Model Evaluation</li>
 </ol>
 <p>For a more detailed discussion about a simple modeling workflow in R, the <a href="https://www.tmwr.org/workflows.html">Model Workflow</a> section in Tidy Modeling with R is a great resource.</p>
-<section id="data" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="data">
-<span class="header-section-number">7.1</span> Data</h2>
+<section id="data" class="level2" data-number="8.1"><h2 data-number="8.1" class="anchored" data-anchor-id="data">
+<span class="header-section-number">8.1</span> Data</h2>
 <div class="cell" data-hash="ml_workflow_r_cache/html/inspect-data_01f9673dd63292c17222b0236f341106">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect the data</span></span>
 <span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -346,14 +360,11 @@ $ heart_peak_reading &lt;dbl&gt; 0.0, 1.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.5, 0.
 $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, …</code></pre>
 </div>
 </div>
-<section id="traintest-split" class="level3" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="traintest-split">
-<span class="header-section-number">7.1.1</span> Train/Test Split</h3>
+<section id="traintest-split" class="level3" data-number="8.1.1"><h3 data-number="8.1.1" class="anchored" data-anchor-id="traintest-split">
+<span class="header-section-number">8.1.1</span> Train/Test Split</h3>
 <p>One of the central tenets of machine learning is that the model should not be trained on the same data that it is evaluated on. This is because the model could learn spurious/random patterns and correlations in the training data, and this will harm the model’s ability to make good predictions on new, unseen data. There are many way of trying to resolve this, but the most simple approach is to split the data into a training and test set. The training set will be used to train the model, and the test set will be used to evaluate the model.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/train-test-split_ebc45e1fcbd54c3a842ed2a4a2597043">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># set random seed to ensure reproducibility</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># split data into train/test sets</span></span>
+<div class="cell" data-hash="ml_workflow_r_cache/html/train-test-split_55d465c7e28e4d5a985db9f8d4f306c8">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># split data into train/test sets</span></span>
 <span><span class="va">train_test_split</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">rsample</span><span class="fu">::</span><span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">initial_split</a></span><span class="op">(</span><span class="va">df</span>,</span>
 <span>                         strata <span class="op">=</span> <span class="va">heart_disease</span>,</span>
@@ -363,16 +374,13 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <span><span class="va">train_df</span> <span class="op">&lt;-</span> <span class="fu">rsample</span><span class="fu">::</span><span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">training</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></span>
 <span><span class="va">test_df</span> <span class="op">&lt;-</span> <span class="fu">rsample</span><span class="fu">::</span><span class="fu"><a href="https://rsample.tidymodels.org/reference/initial_split.html">testing</a></span><span class="op">(</span><span class="va">train_test_split</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="cross-validation-folds" class="level3" data-number="7.1.2"><h3 data-number="7.1.2" class="anchored" data-anchor-id="cross-validation-folds">
-<span class="header-section-number">7.1.2</span> Cross-Validation Folds</h3>
+</section><section id="cross-validation" class="level3" data-number="8.1.2"><h3 data-number="8.1.2" class="anchored" data-anchor-id="cross-validation">
+<span class="header-section-number">8.1.2</span> Cross-Validation</h3>
 <p>On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalisable.</p>
 <p>For more information on cross-validation and how it can be used to train models the <a href="https://www.tmwr.org/resampling.html#resampling-methods">Resampling Methods</a> section in Tidy Modeling with R discusses cross-validation in detail, in the wider context of resampling methods for training machine learning models. This helps to provide context for the purpose of cross-validation, as well as discussing some of the strategies for cross-validation.</p>
 <p>We will use 5-fold stratified cross-validation to train our models. This means that the training data will be split into 5 folds, ensuring that each fold has the same proportion of the target classes. Each fold will be used as a test set once, and the remaining folds will be used as training sets. This will be repeated 5 times, and the average performance will be used to evaluate the model.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/cv-folds_e02fe3bcd4a30eaaf488e5a14ea5787b">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># set random seed to ensure reproducibility</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># create cross-validation folds</span></span>
+<div class="cell" data-hash="ml_workflow_r_cache/html/cv-folds_24c4d3ac45d953daadbe7a3e04d76bad">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># create cross-validation folds</span></span>
 <span><span class="va">train_folds</span> <span class="op">&lt;-</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">train_df</span>, v <span class="op">=</span> <span class="fl">5</span>, strata <span class="op">=</span> <span class="va">heart_disease</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># inspect the folds</span></span>
@@ -389,17 +397,17 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 5 &lt;split [514/128]&gt; Fold5</code></pre>
 </div>
 </div>
-</section><section id="preprocessing" class="level3" data-number="7.1.3"><h3 data-number="7.1.3" class="anchored" data-anchor-id="preprocessing">
-<span class="header-section-number">7.1.3</span> Preprocessing</h3>
+</section><section id="preprocessing" class="level3" data-number="8.1.3"><h3 data-number="8.1.3" class="anchored" data-anchor-id="preprocessing">
+<span class="header-section-number">8.1.3</span> Preprocessing</h3>
 <p>The purpose of preprocessing is to prepare the data for model fitting. This can take a number of different forms, but some of the most common preprocessing steps include:</p>
 <ul>
-<li>Normalizing/Standardizing data</li>
+<li>Normalising/Standardising data</li>
 <li>One-hot encoding categorical variables</li>
 <li>Removing outliers</li>
 <li>Imputing missing values</li>
 </ul>
-<p>We will build two different preprocessing recipes and see which performs better. The first will be a ‘basic’ recipe that one-hot encodes all categorical features, and removes any features that have strong correlation with another feature in the dataset. The second recipe will include both these steps but will also normalize the numeric features so that they have a mean of zero and a standard deviation of one.</p>
-<div class="cell" data-hash="ml_workflow_r_cache/html/preprocessing_c4fc65ce670a0b41d0dc6202fe5524a3">
+<p>We will build two different preprocessing recipes and see which performs better. The first will be a ‘basic’ recipe that one-hot encodes all categorical features, and removes any features that have strong correlation with another feature in the dataset. The second recipe will include both these steps but will also normalise the numeric features so that they have a mean of zero and a standard deviation of one.</p>
+<div class="cell" data-hash="ml_workflow_r_cache/html/preprocessing_84e5cd78beb8f49a3600faa0d2544cdf">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># specify simple preprocessing recipe</span></span>
 <span><span class="va">basic_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">heart_disease</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">train_df</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># one-hot encode categorical variables</span></span>
@@ -409,7 +417,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <span></span>
 <span><span class="co"># specify scaled preprocessing recipe</span></span>
 <span><span class="va">scaled_recipe</span> <span class="op">&lt;-</span> <span class="fu">recipe</span><span class="op">(</span><span class="va">heart_disease</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">train_df</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="co"># normalize data so that it has mean zero and sd one</span></span>
+<span>  <span class="co"># normalise data so that it has mean zero and sd one</span></span>
 <span>  <span class="fu">step_normalize</span><span class="op">(</span><span class="fu">all_numeric_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="co"># one-hot encode categorical variables</span></span>
 <span>  <span class="fu">step_dummy</span><span class="op">(</span><span class="fu">all_nominal_predictors</span><span class="op">(</span><span class="op">)</span>, one_hot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -461,14 +469,14 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 #   resting_ecg_ST &lt;dbl&gt;, angina_Y &lt;dbl&gt;</code></pre>
 </div>
 </div>
-</section></section><section id="model-training" class="level2 page-columns page-full" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="model-training">
-<span class="header-section-number">7.2</span> Model Training</h2>
+</section></section><section id="model-training" class="level2 page-columns page-full" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="model-training">
+<span class="header-section-number">8.2</span> Model Training</h2>
 <p>There are many different types of models that can be used for classification problems, and selecting the right model for the problem at hand can be difficult when you are first starting out with machine learning.</p>
 <p>Simple models like <a href="https://parsnip.tidymodels.org/reference/linear_reg.html">linear</a> and <a href="https://parsnip.tidymodels.org/reference/logistic_reg.html">logistic</a> regressions are often a good place to start and can be used to get a better understanding of the data and the problem at hand, and can give you a good idea of baseline performance before building more complex models to improve performance. Another example of a simple model is <a href="https://parsnip.tidymodels.org/reference/nearest_neighbor.html">K-Nearest Neighbours</a> (KNN), which is a non-parametric model that can be used for both classification and regression problems.</p>
 <p>We will fit a logistic regression and a KNN, as well as fitting a Random Forest model, which is a good example of a slightly more complex model that will often perform well on structured data.</p>
-<section id="model-selection" class="level3 page-columns page-full" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="model-selection">
-<span class="header-section-number">7.2.1</span> Model Selection</h3>
-<div class="cell" data-hash="ml_workflow_r_cache/html/setup-workflow_3958e3f986d44a096478f26affabdc7b">
+<section id="model-selection" class="level3 page-columns page-full" data-number="8.2.1"><h3 data-number="8.2.1" class="anchored" data-anchor-id="model-selection">
+<span class="header-section-number">8.2.1</span> Model Selection</h3>
+<div class="cell" data-hash="ml_workflow_r_cache/html/setup-workflow_12743d960a9673ca71dd37945a9412bc">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># create a list of preprocessing recipes</span></span>
 <span><span class="va">preprocessers</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
@@ -481,7 +489,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <span>  <span class="co"># logistic regression</span></span>
 <span>  log <span class="op">=</span> </span>
 <span>    <span class="fu">logistic_reg</span><span class="op">(</span></span>
-<span>      <span class="co"># tune regularization parameters</span></span>
+<span>      <span class="co"># tune regularisation parameters</span></span>
 <span>      penalty <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>      mixture <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -520,8 +528,7 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <span><span class="co"># specify the metrics on which the models will be evaluated</span></span>
 <span><span class="va">eval_metrics</span> <span class="op">&lt;-</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">f_meas</span>, <span class="va">accuracy</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the <code>tune_grid()</code> function to tune the models, which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using F1 score and accuracy.</p>
-<p>For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, the <a href="https://www.tmwr.org/tuning.html">Model Tuning and the Dangers of Overfitting</a> section of Tidy Modeling with R is a good place to start. In addition, the AWS overview of <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html">hyperparameter tuning</a> is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan’s <a href="https://www.jeremyjordan.me/hyperparameter-tuning/">Hyperparameter Tuning for Machine Learning Models</a> blogpost is thorough but easy to follow.</p>
+<p>Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the <code>tune_grid()</code> function to carry out hyperparameter tuning<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using F1 score and accuracy.</p>
 <div class="cell" data-hash="ml_workflow_r_cache/html/train-models_70fba009ffa11ca4c6fe53ae7d3cea4a">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># train and tune models</span></span>
 <span><span class="va">trained_models</span> <span class="op">&lt;-</span> </span>
@@ -544,8 +551,8 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <span>      save_workflow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="comparing-model-performance" class="level4 page-columns page-full" data-number="7.2.1.1"><h4 data-number="7.2.1.1" class="anchored" data-anchor-id="comparing-model-performance">
-<span class="header-section-number">7.2.1.1</span> Comparing Model Performance</h4>
+<section id="comparing-model-performance" class="level4 page-columns page-full" data-number="8.2.1.1"><h4 data-number="8.2.1.1" class="anchored" data-anchor-id="comparing-model-performance">
+<span class="header-section-number">8.2.1.1</span> Comparing Model Performance</h4>
 <p>Once the models have been trained we can inspect the results to see which model performed best. We can also plot the performance of the models to get a better idea of how they performed.</p>
 <div class="cell" data-hash="ml_workflow_r_cache/html/compare-models_8ed32394aff665a7c20b4b96e736403b">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect the best performing models</span></span>
@@ -605,12 +612,12 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;7.1: Comparing accuracy and f1 score of Random Forest, KNN, and Logistic Regression models</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;8.1: Comparing accuracy and f1 score of Random Forest, KNN, and Logistic Regression models</figcaption><p></p>
 </figure>
 </div>
 </div>
-</section></section></section><section id="finalising-model" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="finalising-model">
-<span class="header-section-number">7.3</span> Finalising Model</h2>
+</section></section></section><section id="finalising-model" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="finalising-model">
+<span class="header-section-number">8.3</span> Finalising Model</h2>
 <div class="cell" data-hash="ml_workflow_r_cache/html/finalise-model_c7d8e4267a5d0c18a74d0089f3610891">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># save best performing model</span></span>
 <span><span class="va">best_results</span> <span class="op">&lt;-</span></span>
@@ -626,8 +633,8 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 1     3    30 Preprocessor1_Model01</code></pre>
 </div>
 </div>
-</section><section id="fitting-model-on-test-data" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="fitting-model-on-test-data">
-<span class="header-section-number">7.4</span> Fitting Model on Test Data</h2>
+</section><section id="fitting-model-on-test-data" class="level2" data-number="8.4"><h2 data-number="8.4" class="anchored" data-anchor-id="fitting-model-on-test-data">
+<span class="header-section-number">8.4</span> Fitting Model on Test Data</h2>
 <p>Having selected the best performing model, we can now fit the model to the test data.</p>
 <div class="cell" data-hash="ml_workflow_r_cache/html/test-model_cc7eabe3de4429c2710edde70244ea21">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># fit model on test data</span></span>
@@ -639,8 +646,8 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <span>   <span class="co"># fit to test data and evaluate performance</span></span>
 <span>   <span class="fu">last_fit</span><span class="op">(</span>split <span class="op">=</span> <span class="va">train_test_split</span>, metrics<span class="op">=</span><span class="va">eval_metrics</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="model-evaluation" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="model-evaluation">
-<span class="header-section-number">7.5</span> Model Evaluation</h2>
+</section><section id="model-evaluation" class="level2" data-number="8.5"><h2 data-number="8.5" class="anchored" data-anchor-id="model-evaluation">
+<span class="header-section-number">8.5</span> Model Evaluation</h2>
 <p>Finally, we can inspect the performance of the model on the test data.</p>
 <div class="cell" data-hash="ml_workflow_r_cache/html/model-evaluation_e9004bac1e7b7cf573631061f61af909">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># inspect model performance on evaluation metrics</span></span>
@@ -669,16 +676,16 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <div class="cell-output-display">
 <div id="fig-conf-matrix" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="ml_workflow_r_files/figure-html/fig-conf-matrix-1.png" class="img-fluid figure-img" width="960"></p>
-<figcaption class="figure-caption">Figure&nbsp;7.2: Confusion matrix visualising model performance, comparing predicted and actual values</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;8.2: Confusion matrix visualising model performance, comparing predicted and actual values</figcaption></figure>
 </div>
 </div>
 </div>
-</section><section id="next-steps" class="level2" data-number="7.6"><h2 data-number="7.6" class="anchored" data-anchor-id="next-steps">
-<span class="header-section-number">7.6</span> Next Steps</h2>
-<p>In this post, we have covered a simple but robust machine learning workflow. We have have used the <code>tidymodels</code> package to fit a logistic regression model, a k-nearest neighbours model, and a random forest model to the heart disease dataset. We used cross-validation to make the results more generalizable, and we used hyperparameter tuning to improve model performance.</p>
+</section><section id="next-steps" class="level2" data-number="8.6"><h2 data-number="8.6" class="anchored" data-anchor-id="next-steps">
+<span class="header-section-number">8.6</span> Next Steps</h2>
+<p>In this post, we have covered a simple but robust machine learning workflow. We have have used the <code>tidymodels</code> package to fit a logistic regression model, a k-nearest neighbours model, and a random forest model to the heart disease dataset. We used cross-validation to make the results more generalisable, and we used hyperparameter tuning to improve model performance.</p>
 <p>The next steps would be to consider what strategies for cross-validation would be most appropriate for the model we are building, what hyperparameter tuning process would produce the best performance, and some more complex algorithms that might outperform the models we’ve built here.</p>
-</section><section id="resources" class="level2" data-number="7.7"><h2 data-number="7.7" class="anchored" data-anchor-id="resources">
-<span class="header-section-number">7.7</span> Resources</h2>
+</section><section id="resources" class="level2" data-number="8.7"><h2 data-number="8.7" class="anchored" data-anchor-id="resources">
+<span class="header-section-number">8.7</span> Resources</h2>
 <p>There are lots of great (and free) introductory resources for machine learning:</p>
 <ul>
 <li>
@@ -693,7 +700,10 @@ $ heart_disease      &lt;fct&gt; 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
 <p>Finally, if you are particularly interested in learning the mathematics that underpins machine learning, I would highly recommend <a href="https://tivadardanka.com/books/mathematics-of-machine-learning">Mathematics of Machine Learning</a>, which is admittedly not free but is very, very good. If you want to learn about the mathematics of machine learning but are not comfortable enough tackling the Mathematics of ML book, the <a href="https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw">StatQuest</a> and <a href="https://www.youtube.com/c/3blue1brown">3Blue1Brown</a> Youtube channels are both really accessible and well-presented.</p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, the <a href="https://www.tmwr.org/tuning.html">Model Tuning and the Dangers of Overfitting</a> section of Tidy Modeling with R is a good place to start. In addition, the AWS overview of <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html">hyperparameter tuning</a> is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan’s <a href="https://www.jeremyjordan.me/hyperparameter-tuning/">Hyperparameter Tuning for Machine Learning Models</a> blogpost is thorough but easy to follow.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -927,12 +937,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./linear_regression_r.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./installing_r.html" class="pagination-link">
-        <span class="nav-page-text">Installing R</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
