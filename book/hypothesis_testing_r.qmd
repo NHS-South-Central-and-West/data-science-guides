@@ -1,0 +1,375 @@
+# Hypothesis Testing {#sec-hypothesis-testing}
+
+```{r}
+#| label: setup
+#| cache: false
+#| output: false
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
+
+set.seed(4321)
+
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(infer)
+})
+
+stack_overflow <- 
+  modeldata::stackoverflow |> 
+  janitor::clean_names()
+
+```
+
+Making evidence-based inferences about the world is very difficult. Over a thousand years of efforts in the sciences and statistics have sought to address this difficulty, by designing principles for carrying out research that can address the myriad challenges, such as the "fundamental problem of causal inference"^[The fundamental problem of causal inference refers to the fact that we can only observe the factual outcome - the outcome that actually occurred - and not the counterfactual outcome - potential outcomes that would have occurred if the conditions had been different. For example, we can observe how a patient responds to a given treatment, but we cannot observe how that same patient would have responded to a different treatment (or no treatment), given at the same time and same conditions.] [@rubin1974; @holland1986], that make inference so difficult. With the benefit of modern technology, we can collect large quantities of data about a phenomenon of interest, and we have the computational power to carry out a vast array of calculations on that data, in order to understand it better. However, this can only take us so far without the general principles of statistical inference. Hypothesis testing is one of the tools in the statistical inference toolbox, that allows us to leverage data and computational power to learn about the world.
+
+## The Purpose of Hypothesis Testing
+
+Hypotheses are statements about the "data generating process" (the real-world processes, both direct and indirect, that are responsible for causing the data we observe). A hypothesis is a claim about that data generating process that we want to test, and the goal of hypothesis testing is to "adjudicate between two complementary hypotheses" [@blackwell2023]. We use two complementary hypotheses because it is not possible to "prove" a theory, but it is possible to falsify or reject one (with a measure of uncertainty) [@popper1935]. This is @popper1935's deductive approach to testing theories, laid out in _The Logic of Scientific Discovery_. While these are philosophical details, they are meaningful, and can help illustrate why we work the way we do in science.
+
+Suppose we have a theory that a treatment has a positive effect on a particular medical condition, such as diabetes. We can test this theory by giving a group of diabetics the treatment and observing what happens. We can't observe the counterfactual, which means we can't be certain that any positive (or negative) effect occurred as a result of the treatment, or by chance (or some other factor that hasn't been accounted for), so we would also include a control group of diabetics that don't receive the treatment. This control group acts as a comparison, and we would randomise the process for selecting the people in both groups, in order to reduce the risk that some other factor is impacting our results, in an attempt to approximate the counterfactual. If we observe that treatment group's condition improves, while the control group's condition does not, we might be tempted to conclude that the treatment is responsible for this difference. However, there are all manner of explanations for why this difference might have occurred. Perhaps everyone in our treatment group is actually incredibly lucky, or those in the control group are incredibly unlucky. Demonstrating that there is a difference between the two groups, no matter how large, is not directly proving our theory that the treatment caused it. 
+
+Hypothesis testing seeks to address the fact we are unable to decisively prove a theory, by evaluating competing claims (hypotheses) about a phenomenon [@cetinkaya2021]. We can structure our theory as a research hypothesis ($H_1$), sometimes called the alternative hypothesis, that makes a claim about what we would expect to observe in our data if our theory is correct (for example, the mean difference between the treatment and control groups is greater than zero), and in turn we define a "null" hypothesis ($H_0$) that  specifies what we would observe in our data if our theory is not correct (the mean difference between the treatment and control groups is zero). We can then carry out our experiment and measure the difference between the two groups. 
+
+The final step in the process involves measuring this difference and quantifying our confidence that these differences did not occur by chance. If we are able to show that the difference is extremely unlikely to have occurred by chance, we can reject the null hypothesis that the mean difference between the treatment and control groups is zero, and if we are not able to do this, we are unable to reject the null hypothesis, so we cannot be confident that what we've observed was not generated by chance. Rejecting the null doesn't demonstrate that the difference was caused by the treatment.[^Null] Instead, if our theory is a robust, logical explanation of how the treatment might cause a positive response in diabetics, the results lend support to our theory. If we have carried out or experiment under robust, careful conditions (like a randomised controlled trial) that do as much as possible to limit the counterfactual explanations for the difference between the treatment and control group, the result lends strong support to our theory. It is only through multiple independent evaluations that all draw the same conclusion that we can approach a consensus that an effect exists and that the theory is correct.
+
+[^Null]: 
+
+    Rejecting a null hypothesis is not sufficient support for a particular alternative hypothesis. First
+    of all, rejecting the null hypothesis is a probabilistic statement, meaning there is a degree of
+    uncertainty in that rejection. But more importantly (in this context at least), rejecting the null
+    is not a direct assertion that the alternative is true. There will be multiple different
+    explanations for a phenomenon, and the stated alternative hypothesis is just one. Demonstrating that
+    something probably did not occur by chance does not mean that the stated alternative hypothesis is
+    therefore true.
+
+    When thinking about what it is a hypothesis test is trying to achieve, I particularly like the
+    framing used by @crump2019. They refer to the idea of "confidence". A hypothesis test helps the
+    practitioner to quantify the amount of confidence they can have in what they observe. I like this
+    framing because it acknowledges the inherent uncertainty that underpins hypothesis testing. We
+    cannot be absolutely certain about what we observe, but we might be lucky enough to be relatively
+    confident about it.
+
+
+## How Hypothesis Testing Works
+
+This expression says that the rejection region is the part of the sample space that makes the test statistic sufficiently large. We reject null hypotheses when the observed data is incompatible with those hypotheses, where the test statistic should be a measure of this incompatibility. Note that the test statistic is a random variable and has a distribution—we will exploit this to understand the different properties of a hypothesis test.
+
+If we have an alternative hypothesis and a null hypothesis, we can carry out a hypothesis test to see if we can reject the null hypothesis. We do this using a test statistic, which measures the difference between the observed data (using some summary measure of the data like the mean value) and our approximation of what we would expect to observe if the null hypothesis was true (the null distribution). Having calculated our test statistic, we are then able to convert this to a p-value, which represents the probability of getting a test statistic at least as large as the one observed if the null hypothesis were actually true.
+
+There are a wide variety of statistical tests that can compute a test statistic and the corresponding p-value. In this section we will focus on tests of significance, which attempt to measure whether the difference in means between groups is statistically significant (unlikely to have occurred by chance). The differences between the many significance tests tends to be a cause of some confusion for new-learners, but I find it easier to first understand their similarities, and build an understanding about how they differ from there. . 
+
+Constructing a null distribution (whether normal, $t$, $F$, or $\chi^2$ distributions) is useful because the shape and size of the distribution is known (given parameters such as mean and standard deviation), which allows us to ask what the data would look like if it was generated by chance. Having done this, we can compare our sample mean against the null distribution and ask how often we would expect to observe this mean value if the data was in fact generated by chance. In a broad sense, test statistics are all trying to measure the ratio of effect size and error in a particular sample [@crump2019]. 
+
+Statistical tests can ask this question of data sampled from a single group, comparing it against a null distribution that represents what we would expect if this data was generated by chance; while others may ask this question of two groups of data, computing the mean difference between the groups and comparing this against the null distribution that we would expect to observe if there was no difference between the two groups; and finally, some tests ask this question of data sampled from multiple groups, computing summary statistics of each group and comparing whether the within-group structure varies significantly to the between-group structure of the data.
+
+Every test statistic is a representation of the data distribution, and the choice of different test statistics is dependent on the type of data you are dealing with. Statistical tests are just the way that you calculate the test statistic and convert that statistic to a p-value.
+
+### A General Framework for Significance Tests
+
+The general framework for hypothesis testing (particularly in the context of tests of significance, though the general principle still applies to other methods like regression) is as follows:
+
+1. Specify the null hypothesis ($H_0$), alternative hypothesis ($H_1$), and significance level ($\alpha$).
+2. Generate the null distribution, given the data being analysed and the type of test that is most appropriate for this data.
+3. Compute the test statistic that quantifies the difference between the null distribution and the observed data.
+4. Compute the p-value that represents the probability of observing a test statistic as large or larger than the observed test statistic if the data was generated by chance.
+
+While there are a myriad of different statistical tests, the general framework is the same. The test statistic is computed from the data, and the p-value is computed from the test statistic. The p-value is then compared to the significance level to determine whether the null hypothesis can be rejected.
+
+Different tests exist because they are designed to test different types of hypotheses, using different assumptions, and on different data types and distributions.
+
+## T-Tests
+
+Broadly speaking, t-tests calculate the statistical significance of the difference between two groups. What the groups represent depends on the type of t-test being carried out, whether it be comparing the observed data with a random sample to see if the observed data could be expected if randomly generated, or comparing two observed groups to see if the differences between the two are meaningful.
+
+The exact method for carrying out a t-test will vary depending on the type of t-test, but the overarching method is computing the sample mean and dividing it by the sample standard error (the details are in the variation in how you compute the mean and standard error).
+
+$t$ is the difference between the sample mean and the population mean (for example a value that suggests random chance, like 0.5), divided by the standard error of the mean.
+
+There are several broad groups of t-tests:
+
+-   One-sample t-test - comparing the sample mean of a single group against a "known mean", generally testing whether a sample is likely to be generated by chance.
+-   Paired t-test - comparing means from the same group measured multiple times, like how someone responds to a survey at different points in time.
+-   Two samples t-test - comparing the means of two groups, such as measuring the difference in blood glucose levels of two different groups.
+
+There are several variations within these groups, for example a paired t-test generally assumes equal variance between the two groups, but this is often not true, so an unequal variance t-test can be used. 
+
+Finally, when deciding on the nature of a t-test, you must also decide if the test should be one-tailed or two-tailed. A one-tailed t-test is used to test a hypothesis that includes a directional component (such as $x > y$), while a two-tailed t-test is just testing whether there is a difference between two groups. A one-tailed t-test is appropriate when you believe the difference between two groups should be positive or negative, but if the only belief is that the groups are different, a two-tailed t-test is appropriate.
+
+A two-tailed t-test compares whether the sample mean(s) is different, whether larger or smaller, while a one-tailed t-test assumes the direction of the difference is known. For example, if it is known that Group A is either the same or bigger than Group B (or that Group A being smaller is not of interest), then a one-tailed t-test would be appropriate.
+
+While I won't demonstrate each and every variety of t-tests here, I will do a quick run-through of one of each type, to demonstrate how they work and how to code them in R.^[If you are unclear on some of the foundations that underpin what I'm discussing here, I'd recommend trying [_Answering Questions With Data_](https://crumplab.com/statistics) and/or StatQuest's YouTube playlist, [_Statistics Fundamentals_](https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9).]
+
+### One-Sample T-Test
+
+:::{.callout-note collapse="true"}
+## Formula
+One-sample t-test = $\text{t} = \frac{\bar{X}-u}{SE_{\bar{X}}}$
+:::
+
+Lets first simulate randomly generated data that comes from a normal distribution.
+
+```{r}
+
+# create a vector of 100 random numbers from a normal distribution with mean 0 and standard deviation 1
+x <- rnorm(100, mean = 0, sd = 1)
+
+# compute the mean of the vector
+mean(x)
+
+# compute the standard deviation of the vector
+sd(x)
+
+# compute the t-statistic
+t.test(x)
+
+```
+
+We are unable to reject the null hypothesis, which is good, because the null hypothesis ($H_0: \bar{X} = 0$) is actually true!
+
+### Paired T-Test
+
+When respondents in surveys are asked to self-report certain details about themselves, this can invite bias. Take, for example, the differences in [self-reported and interviewer-measured height among men in the UK](https://web.archive.org/web/20160702012345/http://www.hscic.gov.uk/catalogue/PUB13218/HSE2012-Ch10-Adult-BMI.pdf). However, these differences, in absolute terms, are not particularly large. It's very possible that the difference in self-reported and measured heights is actually a product of random variation. We can test this!
+
+We have the mean values for reported and measured heights, and we have the standard error of both of these values (from which we can calculate standard deviation.^[Standard deviation can be computed from standard error by multiplying the standard error by the square root of the sample size. The formula for this is as follows: $$\sigma = SE \times \sqrt{n}$$])
+
+### Two Samples T-Test
+
+:::{.callout-note collapse="true"}
+## Formula
+Independent samples t-test: 
+$$\text{t} = \frac{\bar{X}_{A} - \bar{X}_{B}} {\sigma_{p} \times \sqrt{\frac{1}{n_{A}} + \frac{1}{n_{B}}}}$$
+
+where $\sigma_{p}$ is pooled standard deviation of the two samples, calculated as follows:
+
+$$\sigma_{p} = \sqrt{\frac{(n_{A-1})\sigma_{A^{2}} + (n_{B-1})\sigma^{2}_{B}}{n_{A} +n_{B} - 2}}$$
+:::
+
+```{r}
+
+# sample size = 10
+x <- rnorm(10, mean = 0, sd = 1)
+y <- rnorm(10, mean = .5, sd = 1)
+
+t.test(x, y)
+
+# sample size = 50
+x <- rnorm(50, mean = 0, sd = 1)
+y <- rnorm(50, mean = .5, sd = 1)
+
+t.test(x, y)
+
+# sample size = 100
+x <- rnorm(100, mean = 0, sd = 1)
+y <- rnorm(100, mean = .5, sd = 1)
+
+t.test(x, y)
+
+# sample size = 10000
+x <- rnorm(10000, mean = 0, sd = 1)
+y <- rnorm(10000, mean = .5, sd = 1)
+
+t.test(x, y)
+
+```
+
+We can apply this to a real-world example, like male and female heights, to get a better sense of what we are doing. We know that, on average, men tend to be taller than women, and we should expect that these differences are statistically significant. 
+
+Using [figures reported by the National Center for Health Statistics](https://www.cdc.gov/nchs/data/series/sr_03/sr03-046-508.pdf), to define the average height of adult males and females in the US (2015-2018), we can compare the average height of men and women and see if the differences are statistically significant.
+
+```{r}
+
+# draw five male heights and female heights from normal distributions with the specified heights and standard deviations from the NCHS report
+male_heights <- rnorm(5, mean = 175.3, sd = 13.56)
+female_heights <- rnorm(5, mean = 161.3, sd = 14.10)
+
+# compute mean heights
+mean(male_heights)
+mean(female_heights)
+
+# compute standard deviation in heights
+sd(male_heights)
+sd(female_heights)
+
+# compute the t-statistic
+t.test(male_heights, female_heights)
+
+```
+
+With only 5 observations in each sample, the differences are not statistically significant.
+
+```{r}
+
+# create a vector of 3 random male and female heights that are distributed according to the mean and standard deviations
+male_heights <- rnorm(100, mean = 175.3, sd = 13.56)
+female_heights <- rnorm(100, mean = 161.3, sd = 14.10)
+
+# compute mean heights
+mean(male_heights)
+mean(female_heights)
+
+# compute standard deviation in heights
+sd(male_heights)
+sd(female_heights)
+
+# compute the t-statistic
+t.test(male_heights, female_heights)
+
+```
+
+However, with 100 observations in each sample, the differences are statistically significant. 
+
+## ANOVA
+
+All of the previous examples have focused on comparing either a single group against a "known" value or comparing two groups. What if we have more than two groups? This is where Analysis of Variance (ANOVA) comes in! ANOVA is designed to compare multiple groups by testing that the outcome variance between groups is no larger than the outcome variance within group. In an ANOVA, the null hypothesis is that all groups have equal means, and the alternative hypothesis is that the groups do not have equal means.^[This points to one of the major limitations of ANOVA. It can only identify differences between groups. It doesn't tell you which groups are different, nor does it give you a sense of what is causing those differences or anything beyond just the existence of a statistically significant difference. There are lots of use cases where just knowing there is a difference is meaningful, and if an analysis is designed well, you can make really good use of an ANOVA. However, it is important to understand what it can and cannot tell you.]
+
+While the focus of a t-test is the $t$ statistic, ANOVA's use the $F$ statistic. As with other test statistics, $F$ can be understood as the ratio of an effect and error. We won't worry too much about the process for calculating $F$ here,[^F] because knowing how to do this isn't strictly necessary for computing an ANOVA in R. However, as with any of these methods, it is definitely wise to spend time understanding exactly how they work.
+
+For a detailed but very accessible discussion about the calculation of the $F$ statistic, and the components that go into it, I would recommend reading the _Answering Questions With Data_ section on the [One-Factor ANOVA](https://crumplab.com/statistics/07-ANOVA.html#one-factor-anova).
+
+Instead, we will look at the application of ANOVAs in practice, and their computation using R. There are multiple kinds of ANOVA-based methods, including between-subjects, repeated measures, and factorial ANOVA, and the related method Analysis of Covariance (ANCOVA), however, I will give a simple introduction to ANOVAs using the between-subjects ANOVA.
+
+[^F]: But here is a brief explanation:
+
+    Calculating the variance explained by the effect and the error are done using their "sum of
+    squares". The sum of squares is a rare case of a statistics concept with a name that perfectly
+    explains what it is doing. The sum of squares is the sum of the squared differences from some
+    midpoint. For example, the total sum of squares $SS_{total}$ is the sum of squared differences
+    from the grand mean (the mean value of all observations from all groups).
+
+    The total sum of squares is also the sum of the effect and error sum of squares: $SS_{total} =
+    SS_{effect} + SS_{error}$
+    
+    In an ANOVA, $SS_{effect}$ is the variation caused by the differences between the group means.
+    In order to calculate $SS_{effect}$ in the setting of an ANOVA, you calculate the mean value
+    of each group, and calculate the difference between each group mean and the grand mean, and
+    sum the squared value of these differences.
+    
+    We can calculate $SS_{error}$ by subtracting $SS_{effect}$ from $SS_{total}$, or we can
+    calculate it directly by calculating the squared differences of observations from their group
+    mean, and summing these values. While the $SS_{effect}$ is the variation between groups, the
+    $SS_{error}$ is variation within groups.
+  
+    In order to turn these values into the $F$ statistic, we also need the degrees of freedom for
+    the effect ($df_{effect}$) and error ($df_{error}$) components. $df_{effect}$ is calculated by
+    taking the total number of groups minus one (because calculating the grand mean takes away a
+    single degree of freedom), and $df_{error}$ is calculated by taking the total number of
+    observations and subtracting the total number of groups (because calculating the group means
+    takes away a single degree of freedom for each group).
+  
+    With the $SS_{effect}$ and $SS_{error}$, we can calculate the mean squared error for both by
+    dividing their value by the degrees of freedom for the effect and the error components, and
+    from this we calculate $F$ by dividing $MSE_{effect}$ by $MSE_{error}$.
+    
+    Finally, just as is the case with the $t$ statistic, calculating a p-value from $F$ involves 
+    generating the a null distribution and identifying where the $F$-value would sit in this 
+    distribution. The p-value is the probability of observing a value at least as large as the 
+    observed $F$-value if there is no effect, and this means that ($p x 100$)% of values are equal
+    or greater than $F$ in the null distribution.
+
+### Between-Subjects ANOVA
+
+A between-subjects ANOVA (sometimes referred to as a one-way ANOVA) involves a single variable with multiple (at least two, but generally more than two) levels. We will use a dataset from the {modeldata} package which takes a sample of responses to Stack Overflow's Developer Survey.
+
+In order to put together an ANOVA, we need a categorical variable that can serve as the explanatory variable in the analysis, and a numerical variable that can serve as the outcome. Luckily, there are several options in this dataset. However, I will start with what looks, to me at least, like the most obvious question when you first look at the dataset. Does average salary significantly differ by country?
+
+```{r}
+
+between_subjects_anova <- aov(salary ~ country, data = stack_overflow)
+
+summary(between_subjects_anova)
+
+```
+
+Unsurprisingly, the answer is yes. In reality, we could have just looked at the mean values for average salary, split by country, and immediately seen the significant variance. The ANOVA confirms for us that the probability that these differences occur by chance is vanishingly small, but in reality our understanding of the context and a quick glance at the numbers would have been enough too. 
+
+```{r}
+
+stack_overflow |> 
+  dplyr::group_by(country) |> 
+  dplyr::summarise(mean(salary))
+
+```
+
+It is immediately clear that the average salary in India and the United States, according to the Stack Overflow survey, is significant and substantively meaningful. However, if we filter these two countries out of our data, and compare Canada, Germany, and the United Kingdom, we can use ANOVA to answer a question that is not so obvious from just looking at the average salary.
+
+Is the average salary in Canada, Germany, and the United Kingdom approximately the same?
+
+```{r}
+
+country_subset <- 
+  stack_overflow |> 
+  dplyr::filter(!country %in% c("India", "United States"))
+
+subset_between_subjects_anova <- aov(salary ~ country, data = country_subset)
+
+summary(subset_between_subjects_anova)
+
+```
+
+It turns out these differences are still significant. I wouldn't have been confident about concluding this just from eyeballing the average values for each country, so the ANOVA has been able to tell me something that I wouldn't have been able to otherwise.
+
+Finally, our degrees of freedom are pretty large. We've got plenty of data. So it's not entirely surprising that the ANOVA is able to find a difference.
+
+Lets filter for data scientists, and see if the difference in average salary in those three countries is significant.
+
+```{r}
+
+data_scientists <- 
+  country_subset |> 
+  dplyr::filter(data_scientist == 1)
+
+# dplyr::glimpse(data_scientists)
+
+data_scientists |> 
+  dplyr::group_by(country) |> 
+  dplyr::summarise(mean(salary))
+
+data_science_anova <- aov(salary ~ country, data = data_scientists)
+
+summary(data_science_anova)
+
+```
+
+There we go. The differences between average salaries for data scientists in Canada, Germany, and the United Kingdom is not statistically significant. 
+
+That doesn't mean the difference doesn't exist. When we compute the mean salary, we see that there's an almost $10k difference between Canada and Germany. However, we cannot confidently conclude, based on the result of our ANOVA, that this difference has not occurred by chance. In fact, there is a 36% probability of observing an F-value as large or large than we observe here (1.028), if the salary differences were actually generated by chance. 
+
+## Chi-Squared Tests
+
+## Permutation Tests
+
+## Measuring Effects
+
+There are many more considerations than have been covered in the previous sections. The main two are statistical power and measuring effect sizes.
+
+A good way of measuring effect size (when "effect" is too abstract to use mean differences), is using Cohen's $d$, which is effectively a standardised measure of effect size.
+
+:::{.callout-note collapse="true"}
+## Formula
+$$ d = \frac{\mu_1 - \mu_2}{\sigma} $$
+:::
+
+You can calculate Cohen's $d$ by measuring the difference between the two conditions and dividing this by the population (or sample) standard deviation. This captures the effect size in terms of the overall variability of the data.
+
+## Limitations of Hypothesis Testing
+
+There are lots of issues with hypothesis testing, both in terms of significance tests and with the wider framework... 
+
+## Next Steps
+
+There are an almost infinite number of significance tests that can be applied to all manner of weird and wonderful data distributions. However, if you are comfortable using t-tests, ANOVAs, and chi-squared tests, this will serve you well in the majority of cases. Further, the permutation testing framework gives you greater flexibility in the face of the various ways that data can violate assumptions and ruin all your fun.
+
+## Resources
+
+- [{infer} - An R Package for Tidyverse-Friendly Statistical Inference](https://infer.tidymodels.org/)
+- [Seeing Theory](https://seeing-theory.brown.edu/)
+- [The Permutation Test](https://www.jwilber.me/permutationtest/)
+- [There is Only One Test](http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html)
+- [More Hypotheses, Less Trivia](http://allendowney.blogspot.com/2011/06/more-hypotheses-less-trivia.html)
+- [Permutation Tests](https://thomasleeper.com/Rcourse/Tutorials/permutationtests.html)
+- [Permutation Test as an Alternative to Two-Sample T-Test Using R](https://medium.com/analytics-vidhya/permutation-test-as-an-alternative-to-two-sample-t-test-using-r-9f5da921bc95)
+- [Power Analysis](https://deliveroo.engineering/2018/12/07/monte-carlo-power-analysis.html)
+- [Recommended Resources for A/B Testing](https://hookedondata.org/posts/2023-04-19-recommended-resources-for-ab-testing)
+- [McElreath - None of the Above](https://elevanth.org/blog/2023/07/17/none-of-the-above/)
+- [Introduction to Scientific Programming and Simulations in R](https://nyu-cdsc.github.io/learningr/assets/simulation.pdf)
