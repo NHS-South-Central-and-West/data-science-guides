@@ -18,8 +18,7 @@ suppressPackageStartupMessages({
 theme_set(scwplot::theme_scw(base_size = 16))
 
 # import data
-df <- MLDataR::heartdisease |>
-  janitor::clean_names()
+df <- readr::read_csv(here::here("data", "heart_disease.csv"))
 
 # specify categorical features as factors
 df <- df |> 
@@ -31,6 +30,9 @@ df <- df |>
     heart_disease = as.factor(heart_disease)
   )
 
+# set random seed to ensure reproducibility
+set.seed(123)
+
 ```
 
 An end-to-end machine learning workflow can be broken down into many steps, and there are an extensive number of layers of complexity that can be added, serving a variety of purposes. However, in this guide we will work through a bare bones workflow, using a simple dataset, in order to get a better understanding of the process.
@@ -38,14 +40,14 @@ An end-to-end machine learning workflow can be broken down into many steps, and 
 A simple end-to-end ML solution will typically include the following steps:
 
 1. Importing & Cleaning Data
-2. Exploratory Data Analysis (which will be skipped in this guide because it has been carried out in an earlier guide which can be found [here](https://htmlpreview.github.io/?https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/guides/R/eda.html))
-2. Data Preprocessing
-3. Model Training
+2. Exploratory Data Analysis (See @sec-eda)
+3. Data Preprocessing
+4. Model Training
     - Selecting from Candidate Models
     - Hyperparameter Tuning
     - Identifying Best Model
-4. Fitting Model on Test Data
-5. Model Evaluation
+5. Fitting Model on Test Data
+6. Model Evaluation
 
 For a more detailed discussion about a simple modeling workflow in R, the [Model Workflow](https://www.tmwr.org/workflows.html) section in Tidy Modeling with R is a great resource.
 
@@ -66,9 +68,6 @@ One of the central tenets of machine learning is that the model should not be tr
 ```{r}
 #| label: train-test-split
 
-# set random seed to ensure reproducibility
-set.seed(123)
-
 # split data into train/test sets
 train_test_split <-
   rsample::initial_split(df,
@@ -81,8 +80,7 @@ test_df <- rsample::testing(train_test_split)
 
 ```
 
-
-### Cross-Validation Folds
+### Cross-Validation
 
 On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalisable.
 
@@ -92,9 +90,6 @@ We will use 5-fold stratified cross-validation to train our models. This means t
 
 ```{r}
 #| label: cv-folds
-
-# set random seed to ensure reproducibility
-set.seed(123)
 
 # create cross-validation folds
 train_folds <- vfold_cv(train_df, v = 5, strata = heart_disease)
@@ -108,12 +103,12 @@ train_folds
 
 The purpose of preprocessing is to prepare the data for model fitting. This can take a number of different forms, but some of the most common preprocessing steps include:
 
-- Normalizing/Standardizing data
+- Normalising/Standardising data
 - One-hot encoding categorical variables
 - Removing outliers
 - Imputing missing values
 
-We will build two different preprocessing recipes and see which performs better. The first will be a 'basic' recipe that one-hot encodes all categorical features, and removes any features that have strong correlation with another feature in the dataset. The second recipe will include both these steps but will also normalize the numeric features so that they have a mean of zero and a standard deviation of one.
+We will build two different preprocessing recipes and see which performs better. The first will be a 'basic' recipe that one-hot encodes all categorical features, and removes any features that have strong correlation with another feature in the dataset. The second recipe will include both these steps but will also normalise the numeric features so that they have a mean of zero and a standard deviation of one.
 
 ```{r}
 #| label: preprocessing
@@ -127,7 +122,7 @@ basic_recipe <- recipe(heart_disease ~ ., data = train_df) |>
 
 # specify scaled preprocessing recipe
 scaled_recipe <- recipe(heart_disease ~ ., data = train_df) |>
-  # normalize data so that it has mean zero and sd one
+  # normalise data so that it has mean zero and sd one
   step_normalize(all_numeric_predictors()) |> 
   # one-hot encode categorical variables
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
@@ -171,7 +166,7 @@ models <- list(
   # logistic regression
   log = 
     logistic_reg(
-      # tune regularization parameters
+      # tune regularisation parameters
       penalty = tune(),
       mixture = tune()
     ) |>
@@ -212,9 +207,9 @@ eval_metrics <- metric_set(f_meas, accuracy)
 
 ```
 
-Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the `tune_grid()` function to tune the models, which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using  F1 score and accuracy.
+Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the `tune_grid()` function to carry out hyperparameter tuning[^tuning], which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using  F1 score and accuracy.
 
-For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, the [Model Tuning and the Dangers of Overfitting](https://www.tmwr.org/tuning.html) section of Tidy Modeling with R is a good place to start. In addition, the AWS overview of [hyperparameter tuning](https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html) is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan's [Hyperparameter Tuning for Machine Learning Models](https://www.jeremyjordan.me/hyperparameter-tuning/) blogpost is thorough but easy to follow.
+[^tuning]: For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, the [Model Tuning and the Dangers of Overfitting](https://www.tmwr.org/tuning.html) section of Tidy Modeling with R is a good place to start. In addition, the AWS overview of [hyperparameter tuning](https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html) is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan's [Hyperparameter Tuning for Machine Learning Models](https://www.jeremyjordan.me/hyperparameter-tuning/) blogpost is thorough but easy to follow.
 
 ```{r}
 #| label: train-models
@@ -361,7 +356,7 @@ rf_test_results |>
 
 ## Next Steps
 
-In this post, we have covered a simple but robust machine learning workflow. We have have used the `tidymodels` package to fit a logistic regression model, a k-nearest neighbours model, and a random forest model to the heart disease dataset. We used cross-validation to make the results more generalizable, and we used hyperparameter tuning to improve model performance.
+In this post, we have covered a simple but robust machine learning workflow. We have have used the `tidymodels` package to fit a logistic regression model, a k-nearest neighbours model, and a random forest model to the heart disease dataset. We used cross-validation to make the results more generalisable, and we used hyperparameter tuning to improve model performance.
 
 The next steps would be to consider what strategies for cross-validation would be most appropriate for the model we are building, what hyperparameter tuning process would produce the best performance, and some more complex algorithms that might outperform the models we've built here.
 
