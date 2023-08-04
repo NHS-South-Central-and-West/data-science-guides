@@ -23,12 +23,18 @@ book:
 
     - part: "Statistical Inference"
       chapters:
+        - hypothesis_testing_r.qmd
         - linear_regression_r.qmd
+        
     - part: "Machine Learning"
       chapters:
         - ml_workflow_r.qmd
+        # - clustering_r.qmd
+        
     - part: "Deep Learning"
     - part: "Delivering Data Science"
+
+    - references.qmd
 
   appendices:
     - installing_r.qmd
