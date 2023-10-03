@@ -1,5 +1,7 @@
 # Wrangling Data {#sec-wrangling}
 
+{{< include _links.qmd >}}
+
 ```{r}
 #| label: setup
 #| code-fold: true
@@ -7,6 +9,8 @@
 
 # install.packages("remotes")
 # remotes::install_github("rOpenSci/fingertipsR")
+# install.packages("here")
+# install.packages("janitor")
 
 ```
 
@@ -39,12 +43,14 @@ Although the tidyverse packages are very popular, they are not required to work 
 
 ## Fingertips Data
 
-We will use Public Health England's Fingertips API as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it.
+We will use Public Health England's [Fingertips API] (for which there are packages available in [R][fingertipsR] and [Python][fingertips_py]) as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it. Fingertips is a repository of public health data on a wide range of topics. The data included in this tutorial relates to the wider determinants of health. 
 
 First, we can look at what is available. The `fingertipsR::indicators_unique()` function returns a list of all unique indicators from the Fingerips API, as well as their indicator IDs. We can use the `View()` function to open the data in a new window and take a closer look at what is available.
 
 ```{r}
 #| label: fingertips-indicators
+
+library(fingertipsR)
 
 inds <- fingertipsR::indicators_unique()
 
@@ -87,7 +93,7 @@ fingertipsR::indicator_areatypes(IndicatorID=phof_inds$IndicatorID[1])
 
 The list of area types is quite long, but from the `indicator_area_types()` function, we can see that there are six area types available for the first indicator in the list of profile indicators. The area types ending in 2 are all upper tier local authorities (the different types being different local authority boundaries from different points in time), while the other two area types refer to Government Office Regions and England as a whole.
 
-We will use the most recent upper tier local authority boundaries, which have the `AreaTypeID`, 402.
+We will use the most recent upper tier local authority boundaries, which have the `AreaTypeID`, 502.
 
 Having identified the profile and area type we are interested in, we can now pull the data from the Fingertips API using the `fingertipsR::fingertips_data()` function.
 
@@ -98,9 +104,8 @@ Having identified the profile and area type we are interested in, we can now pul
 phof_raw <-
   fingertipsR::fingertips_data(
     ProfileID = 19,
-    AreaTypeID = 302
+    AreaTypeID = 502
   )
-
 
 ```
 
@@ -229,10 +234,10 @@ We could save the data to a CSV file at this point, using the `readr::write_csv(
 
 ## Resources
 
-- [Hadley Wickham - Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf)
-- [Data Transformation with {dplyr}](https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf)
-- [Data Tidying with {tidyr}](https://posit.co/wp-content/uploads/2022/10/tidyr.pdf)
-- [Top 10 Must-Know {dplyr} Commands for Data Wrangling in R!](https://yuzar-blog.netlify.app/posts/2023-01-31-datawrangling1/)
-- [Data Wrangling with R](https://cengel.github.io/R-data-wrangling/)
-- [Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel](https://observablehq.com/@observablehq/data-wrangling-translations?utm_campaign=Data_Elixir&utm_source=Data_Elixir_430)
-- [R to Python: Data Wrangling Snippets](https://gist.github.com/conormm/fd8b1980c28dd21cfaf6975c86c74d07?permalink_comment_id=3726652)
+- [Hadley Wickham - Tidy Data]
+- [Data Transformation with {dplyr}]
+- [Data Tidying with {tidyr}]
+- [Top 10 Must-Know {dplyr} Commands for Data Wrangling in R!]
+- [Data Wrangling with R]
+- [Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel]
+- [R to Python: Data Wrangling Snippets]

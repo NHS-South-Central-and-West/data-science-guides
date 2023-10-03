@@ -20,7 +20,7 @@ The Python ecosystem for data wrangling is not quite as rich as in R, but there 
 
 ## Fingertips Data
 
-We will use Public Health England's Fingertips API as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it.
+We will use Public Health England's [Fingertips API] (for which there are packages available in [R][fingertipsR] and [Python][fingertips_py]) as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it. Fingertips is a repository of public health data on a wide range of topics. The data included in this tutorial relates to the wider determinants of health. 
 
 First, we can look at what is available.
 

@@ -1028,6 +1028,22 @@
       "Repository": "CRAN",
       "Hash": "f7736a18de97dea803bde0a2daaafb27"
     },
+    "faux": {
+      "Package": "faux",
+      "Version": "1.2.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "ggplot2",
+        "jsonlite",
+        "lme4",
+        "rlang",
+        "truncnorm"
+      ],
+      "Hash": "273d0eafdca86e59a70a7c2f2bfe192d"
+    },
     "fingertipsR": {
       "Package": "fingertipsR",
       "Version": "1.0.10.9001",
@@ -1179,6 +1195,19 @@
         "methods"
       ],
       "Hash": "15e9634c0fcd294799e9b2e929ed1b86"
+    },
+    "ggcorrplot": {
+      "Package": "ggcorrplot",
+      "Version": "0.1.4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "ggplot2",
+        "reshape2",
+        "stats"
+      ],
+      "Hash": "463c9147c97479678b40bbf621a10635"
     },
     "ggforce": {
       "Package": "ggforce",
@@ -2815,11 +2844,11 @@
       "Version": "0.0.0.9004",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "NHS-South-Central-and-West",
       "RemoteRepo": "scwplot",
       "RemoteRef": "main",
       "RemoteSha": "dc0f5264fdda84558edbc8dbc6c956273870467f",
+      "RemoteHost": "api.github.com",
       "Requirements": [
         "R",
         "dplyr",
@@ -3211,6 +3240,16 @@
         "xfun"
       ],
       "Hash": "e4e357f28c2edff493936b6cb30c3d65"
+    },
+    "truncnorm": {
+      "Package": "truncnorm",
+      "Version": "1.0-9",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "ef5b32c5194351ff409dfb37ca9468f1"
     },
     "tune": {
       "Package": "tune",

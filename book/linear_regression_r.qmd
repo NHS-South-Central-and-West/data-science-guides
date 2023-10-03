@@ -1,5 +1,7 @@
 # Linear Regression {#sec-linear-regression}
 
+{{< include _links.qmd >}}
+
 ```{r}
 #| label: setup
 #| cache: false
@@ -29,20 +31,24 @@ tbl_theme <- function(x, ...) {
 
 # set model summary options
 options(
-  modelsummary_factory_html = 'gt',
+  modelsummary_factory_html = "gt",
   "modelsummary_theme_gt" = tbl_theme
 )
 
 # import data
-df <- readr::read_csv(here::here("data", "deprivation.csv"))
+deprivation <- readr::read_csv(here::here("data", "deprivation.csv"))
 
 ```
 
-Linear regression is a cornerstone of data science and statistical analysis, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both extremely simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, and then t-tests).
+Linear regression is a cornerstone of data science and statistical inference, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, which is closely related).
 
-Not only is linear regression a phenomenally useful tool in a data scientist's arsenal, but it is also a fantastic way to learn about the fundamentals of statistical analysis. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because all regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.
+Not only is linear regression a phenomenally useful tool in a data scientist's arsenal, but it is also a fantastic way to learn about the fundamentals of statistical inference. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because so many regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.
 
-This tutorial will introduce you to linear regression in R, using data pulled from two different sources. The first data source is the Public Health England's [Fingertips API](https://fingertips.phe.org.uk/) (for which there are packages available in [R](https://github.com/ropensci/fingertipsR) and [Python](https://github.com/publichealthengland/PHDS_fingertips_py)), which is a repository of public health data on a wide range of topics. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics' [Health Index](https://www.ons.gov.uk/releases/healthindexforengland2015to2020), which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.
+For a really good, accessible introduction to linear regression, I'd highly recommend Josh Starmer's StatQuest video on the topic:
+
+{{< video https://www.youtube.com/watch?v=7ArmBVF2dCs >}}
+
+This tutorial will introduce you to linear regression in R, using data pulled from two different sources. The first data source is the Public Health England's [Fingertips API]. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics' [Health Index], which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.
 
 ## Exploratory Data Analysis
 
@@ -56,7 +62,7 @@ The `knitr` package's `kable()` function is used to format the table output to m
 #| label: df-glimpse
 
 # get a quick overview of the data
-glimpse(df)
+glimpse(deprivation)
 
 ```
 
@@ -64,7 +70,7 @@ glimpse(df)
 #| label: tbl-summary-stats
 #| tbl-cap: Summary statistics
 
-df |> 
+deprivation |> 
   select(!year) |>
   janitor::clean_names(case = "title", abbreviations = c("IMD")) |> 
   modelsummary::datasummary_skim(align = "lccddddd", output = "gt")
@@ -78,10 +84,10 @@ Having taken a quick look at the data, we can now start to explore how life expe
 #| fig-cap: |
 #|   Plotting the relationship between life expectancy and IMD scores
 
-df |>
+deprivation |>
   ggplot(aes(life_expectancy, imd_score)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'gray30') +
-  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#005EB8') +
+  geom_point(alpha = 0.8, size = 3, colour = "grey50") +
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour="#005EB8") +
   labs(x = "Life Expectancy", y = "IMD Score")
 
 ```
@@ -101,17 +107,17 @@ We can also plot the distribution of life expectancy by the Health Index scores 
 #|   - Physiological Risk Factor Score
 #|   - Behavioural Risk Factor Score
 
-df |>
+deprivation |>
   ggplot(aes(life_expectancy, physiological_score)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'grey50') +
-  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#005EB8') +
+  geom_point(alpha = 0.8, size = 3, colour = "grey50") +
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour = "#005EB8") +
   labs(x = "Life Expectancy", y = "Physiological Index")
   
 
-df |>
+deprivation |>
   ggplot(aes(life_expectancy, behavioural_score)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'grey50') +
-  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#005EB8') +
+  geom_point(alpha = 0.8, size = 3, colour = "grey50") +
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour = "#005EB8") +
   labs(x = "Life Expectancy", y = "Behavioural Index")
 
 ```
@@ -126,10 +132,15 @@ The above plots suggest there are strong correlations between life expectancy an
 #|   Correlations between life expectancy, deprivation, and socioeconomic 
 #|   factors
 
-df |> 
+deprivation |> 
   group_by(area_code) |>
   summarise_all(.funs = "mean") |> 
-  select(life_expectancy, imd_score, behavioural_score, physiological_score) |>
+  select(
+    life_expectancy, 
+    imd_score, 
+    behavioural_score, 
+    physiological_score
+    ) |>
   janitor::clean_names(case = "title", abbreviations = c("IMD")) |> 
   modelsummary::datasummary_correlation(output = "gt")
 
@@ -153,25 +164,25 @@ We can also visualise the correlation between our explanatory variables, to get 
 #|   - IMD Decile & Physiological Score
 #|   - IMD Decile & Behavioural Score
 
-df |>
+deprivation |>
   ggplot(aes(imd_score, physiological_score)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'grey50') +
-  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#005EB8') +
+  geom_point(alpha = 0.8, size = 3, colour = "grey50") +
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour = "#005EB8") +
   labs(x = "IMD Score", y = "Physiological Index")
 
-df |>
+deprivation |>
   ggplot(aes(imd_score, behavioural_score)) +
-  geom_point(alpha = 0.8, size = 3, colour = 'grey50') +
-  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour='#005EB8') +
+  geom_point(alpha = 0.8, size = 3, colour = "grey50") +
+  geom_smooth(method = lm, se = FALSE, linewidth = 2, colour = "#005EB8") +
   labs(x = "IMD Score", y = "Behavioural Index")
 
-df |>
+deprivation |>
   mutate(imd_decile = as.factor(imd_decile)) |>
   ggplot(aes(physiological_score, imd_decile)) +
   ggridges::geom_density_ridges() +
   labs(x = "IMD Decile", y = "Physiological Index")
 
-df |>
+deprivation |>
   mutate(imd_decile = as.factor(imd_decile)) |>
   ggplot(aes(behavioural_score, imd_decile)) +
   ggridges::geom_density_ridges() +
@@ -190,29 +201,16 @@ These transformations won't impact the regression results, but will just make th
 ```{r}
 #| label: transforms
 
-# calculate the imd score mean and standard deviation
-imd_centre <- mean(df$imd_score)
-imd_scale <- sd(df$imd_score)
-
-# use 100 as the centre for the risk factors and calculate the standard deviation
-physiological_centre <- 100
-physiological_scale <- sd(df$physiological_score)
-behavioural_centre <- 100
-behavioural_scale <- sd(df$physiological_score)
-
-# transform the variables
-df <-
-  df |>
+# normalise independent variables
+normalised_data <- 
+  deprivation |> 
   mutate(
-    imd_transformed = (imd_score - imd_centre)/imd_scale,
-    physiological_transformed = 
-      (physiological_score - physiological_centre)/physiological_scale,
-    behavioural_transformed = 
-      (behavioural_score - behavioural_centre)/behavioural_scale
-  )
+    # subtract mean and divide by standard deviation
+    across(ends_with("_score"), ~ (.x - mean(.x))/sd(.x))
+    )
 
 # check the transformations
-glimpse(df)
+glimpse(normalised_data)
 
 ```
 
@@ -229,31 +227,29 @@ After fitting the regression model, we can call the `summary()` function to get 
 # fit linear regression
 models <- list(
   "OLS (Raw)" = 
-    lm(life_expectancy ~ imd_score + physiological_score + 
-         behavioural_score, data = df),
+    lm(life_expectancy ~ imd_score + physiological_score +
+         behavioural_score, data = deprivation),
   "OLS (Normalised)" =
-    lm(life_expectancy ~ imd_transformed +
-         physiological_transformed + behavioural_transformed, data = df)
+    lm(life_expectancy ~ imd_score + physiological_score + 
+         behavioural_score, data = normalised_data)
   )
 
 # get model results table
 models |> 
   modelsummary::modelsummary(
-    estimate = "estimate",
-    statistic = "conf.int", 
-    stars = TRUE,
+    estimate = "{estimate} [{conf.low}, {conf.high}]",
+    statistic = "p = {p.value}",
     coef_rename = c(
-      "imd_score" = "IMD Score",
-      "imd_transformed" = "IMD Score",
-      "physiological_score" = "Physiological Score",
-      "physiological_transformed" = "Physiological Score",
-      "behavioural_score" = "Behavioural Score",
-      "behavioural_transformed" = "Behavioural Score"
+      imd_score = "IMD Score",
+      physiological_score = "Physiological Score",
+      behavioural_score = "Behavioural Score"
       ),
     gof_map = c("nobs", "r.squared",  "rmse"),
     output = "gt"
   ) |> 
-  gt::tab_source_note(source_note = "Source: PHE Fingertips/ONS Health Index")
+  gt::tab_source_note(
+    source_note = "Source: PHE Fingertips/ONS Health Index"
+    )
 
 ```
 
@@ -283,7 +279,7 @@ P-values are used to test the statistical significance of the coefficients. If t
 
 In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practitioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.
 
-I think the best way to think about p-values is the position prescribed by Gelman, Hill, & Vehtari in [Regression & Other Stories](https://users.aalto.fi/~ave/ROS.pdf). Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will **some** effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.
+I think the best way to think about p-values is the position prescribed by Gelman, Hill, & Vehtari in [Regression & Other Stories]. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will **some** effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.
 
 ### Model Interpretation
 
@@ -305,7 +301,8 @@ It is important to recognise that a precise coefficient alone cannot be treated 
 
 ## Resources
 
-- [StatQuest: Linear Regression](https://www.youtube.com/watch?v=7ArmBVF2dCs)
-- [Regression & Other Stories](https://avehtari.github.io/ROS-Examples/)
-- [Statistical Inference via Data Science](https://moderndive.com)
-- [A User's Guide to Statistical Inference and Regression](https://mattblackwell.github.io/gov2002-book/)
+- [MLU Explain: Linear Regression]
+- [StatQuest: Linear Regression]
+- [Regression & Other Stories]
+- [ModernDive: Statistical Inference via Data Science]
+- [A User's Guide to Statistical Inference and Regression]
