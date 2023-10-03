@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><div class="cell">
+</header><!-- links used throughout the book --><!-- hypothesis testing --><!-- simulations --><div class="cell">
 <details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># import packages</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
@@ -310,25 +310,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span></span>
 <span><span class="co"># set model summary options</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span></span>
-<span>  modelsummary_factory_html <span class="op">=</span> <span class="st">'gt'</span>,</span>
+<span>  modelsummary_factory_html <span class="op">=</span> <span class="st">"gt"</span>,</span>
 <span>  <span class="st">"modelsummary_theme_gt"</span> <span class="op">=</span> <span class="va">tbl_theme</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># import data</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"deprivation.csv"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">deprivation</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"deprivation.csv"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Linear regression is a cornerstone of data science and statistical analysis, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both extremely simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, and then t-tests).</p>
-<p>Not only is linear regression a phenomenally useful tool in a data scientist’s arsenal, but it is also a fantastic way to learn about the fundamentals of statistical analysis. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because all regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.</p>
-<p>This tutorial will introduce you to linear regression in R, using data pulled from two different sources. The first data source is the Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a> (for which there are packages available in <a href="https://github.com/ropensci/fingertipsR">R</a> and <a href="https://github.com/publichealthengland/PHDS_fingertips_py">Python</a>), which is a repository of public health data on a wide range of topics. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics’ <a href="https://www.ons.gov.uk/releases/healthindexforengland2015to2020">Health Index</a>, which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.</p>
+<p>Linear regression is a cornerstone of data science and statistical inference, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, which is closely related).</p>
+<p>Not only is linear regression a phenomenally useful tool in a data scientist’s arsenal, but it is also a fantastic way to learn about the fundamentals of statistical inference. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because so many regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.</p>
+<p>For a really good, accessible introduction to linear regression, I’d highly recommend Josh Starmer’s StatQuest video on the topic:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/7ArmBVF2dCs" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>This tutorial will introduce you to linear regression in R, using data pulled from two different sources. The first data source is the Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a>. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics’ <a href="https://www.ons.gov.uk/releases/healthindexforengland2015to2020">Health Index</a>, which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.</p>
 <section id="exploratory-data-analysis" class="level2 page-columns page-full" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="exploratory-data-analysis">
 <span class="header-section-number">7.1</span> Exploratory Data Analysis</h2>
 <p>First we will carry out some exploratory data analysis (EDA) to get a feel for the data, and to see if there are any obvious relationships between the variables that we can use to inform our model.</p>
 <p>We will use the <code>dplyr</code> package’s <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> function to get a quick overview of the data, before using the <code>psych</code> package’s <code>describe()</code> function to calculate summary statistics. The <code>describe()</code> function can compute a wide range of summary statistics, but we will only use a few of them here (the <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> function below indicates the summary statistics that will be removed).</p>
 <p>The <code>knitr</code> package’s <code>kable()</code> function is used to format the table output to make it easier to read in HTML format.</p>
-<div class="cell" data-hash="linear_regression_r_cache/html/df-glimpse_5298b43c35b20e8c2e7dd8e6af4caf6b">
+<div class="cell" data-hash="linear_regression_r_cache/html/df-glimpse_9a46ecc6a99d9a4996e253554da8c561">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># get a quick overview of the data</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">deprivation</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 583
 Columns: 7
@@ -341,31 +343,31 @@ $ physiological_score &lt;dbl&gt; 89.9, 88.8, 84.8, 84.6, 96.4, 95.8, 96.7, 96.2
 $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2, 96…</code></pre>
 </div>
 </div>
-<div class="cell" data-hash="linear_regression_r_cache/html/tbl-summary-stats_a3fc2c517b24fe17335717ccc2462b0f">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span> </span>
+<div class="cell" data-hash="linear_regression_r_cache/html/tbl-summary-stats_214ebdea9c155d41a58305a4ff0763f9">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">deprivation</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">!</span><span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span>case <span class="op">=</span> <span class="st">"title"</span>, abbreviations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IMD"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/modelsummary/reference/datasummary_skim.html">datasummary_skim</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"lccddddd"</span>, output <span class="op">=</span> <span class="st">"gt"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://modelsummary.com/reference/datasummary_skim.html">datasummary_skim</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"lccddddd"</span>, output <span class="op">=</span> <span class="st">"gt"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="tbl-summary-stats" class="anchored">
 
-<div id="ivewvcpftk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ivewvcpftk table {
+<div id="bxajnaszgi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bxajnaszgi table {
   font-family: Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ivewvcpftk thead, #ivewvcpftk tbody, #ivewvcpftk tfoot, #ivewvcpftk tr, #ivewvcpftk td, #ivewvcpftk th {
+#bxajnaszgi thead, #bxajnaszgi tbody, #bxajnaszgi tfoot, #bxajnaszgi tr, #bxajnaszgi td, #bxajnaszgi th {
   border-style: none;
 }
 
-#ivewvcpftk p {
+#bxajnaszgi p {
   margin: 0;
   padding: 0;
 }
 
-#ivewvcpftk .gt_table {
+#bxajnaszgi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -391,12 +393,12 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-left-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_caption {
+#bxajnaszgi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ivewvcpftk .gt_title {
+#bxajnaszgi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -408,7 +410,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-bottom-width: 0;
 }
 
-#ivewvcpftk .gt_subtitle {
+#bxajnaszgi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -420,7 +422,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-top-width: 0;
 }
 
-#ivewvcpftk .gt_heading {
+#bxajnaszgi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -432,13 +434,13 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-right-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_bottom_border {
+#bxajnaszgi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_col_headings {
+#bxajnaszgi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -453,7 +455,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-right-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_col_heading {
+#bxajnaszgi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -473,7 +475,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   overflow-x: hidden;
 }
 
-#ivewvcpftk .gt_column_spanner_outer {
+#bxajnaszgi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -485,15 +487,15 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 4px;
 }
 
-#ivewvcpftk .gt_column_spanner_outer:first-child {
+#bxajnaszgi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ivewvcpftk .gt_column_spanner_outer:last-child {
+#bxajnaszgi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ivewvcpftk .gt_column_spanner {
+#bxajnaszgi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -505,11 +507,11 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   width: 100%;
 }
 
-#ivewvcpftk .gt_spanner_row {
+#bxajnaszgi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ivewvcpftk .gt_group_heading {
+#bxajnaszgi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -535,7 +537,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   text-align: left;
 }
 
-#ivewvcpftk .gt_empty_group_heading {
+#bxajnaszgi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -550,15 +552,15 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   vertical-align: middle;
 }
 
-#ivewvcpftk .gt_from_md > :first-child {
+#bxajnaszgi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ivewvcpftk .gt_from_md > :last-child {
+#bxajnaszgi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ivewvcpftk .gt_row {
+#bxajnaszgi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -577,7 +579,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   overflow-x: hidden;
 }
 
-#ivewvcpftk .gt_stub {
+#bxajnaszgi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -590,7 +592,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#ivewvcpftk .gt_stub_row_group {
+#bxajnaszgi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -604,15 +606,15 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   vertical-align: top;
 }
 
-#ivewvcpftk .gt_row_group_first td {
+#bxajnaszgi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ivewvcpftk .gt_row_group_first th {
+#bxajnaszgi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ivewvcpftk .gt_summary_row {
+#bxajnaszgi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -622,16 +624,16 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#ivewvcpftk .gt_first_summary_row {
+#bxajnaszgi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_first_summary_row.thick {
+#bxajnaszgi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ivewvcpftk .gt_last_summary_row {
+#bxajnaszgi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -641,7 +643,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-bottom-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_grand_summary_row {
+#bxajnaszgi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -651,7 +653,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#ivewvcpftk .gt_first_grand_summary_row {
+#bxajnaszgi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -661,7 +663,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-top-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_last_grand_summary_row_top {
+#bxajnaszgi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -671,11 +673,11 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-bottom-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_striped {
+#bxajnaszgi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ivewvcpftk .gt_table_body {
+#bxajnaszgi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -684,7 +686,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-bottom-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_footnotes {
+#bxajnaszgi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -698,7 +700,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-right-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_footnote {
+#bxajnaszgi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -707,7 +709,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#ivewvcpftk .gt_sourcenotes {
+#bxajnaszgi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -721,7 +723,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-right-color: #D3D3D3;
 }
 
-#ivewvcpftk .gt_sourcenote {
+#bxajnaszgi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -729,63 +731,63 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#ivewvcpftk .gt_left {
+#bxajnaszgi .gt_left {
   text-align: left;
 }
 
-#ivewvcpftk .gt_center {
+#bxajnaszgi .gt_center {
   text-align: center;
 }
 
-#ivewvcpftk .gt_right {
+#bxajnaszgi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ivewvcpftk .gt_font_normal {
+#bxajnaszgi .gt_font_normal {
   font-weight: normal;
 }
 
-#ivewvcpftk .gt_font_bold {
+#bxajnaszgi .gt_font_bold {
   font-weight: bold;
 }
 
-#ivewvcpftk .gt_font_italic {
+#bxajnaszgi .gt_font_italic {
   font-style: italic;
 }
 
-#ivewvcpftk .gt_super {
+#bxajnaszgi .gt_super {
   font-size: 65%;
 }
 
-#ivewvcpftk .gt_footnote_marks {
+#bxajnaszgi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ivewvcpftk .gt_asterisk {
+#bxajnaszgi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ivewvcpftk .gt_indent_1 {
+#bxajnaszgi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ivewvcpftk .gt_indent_2 {
+#bxajnaszgi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ivewvcpftk .gt_indent_3 {
+#bxajnaszgi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ivewvcpftk .gt_indent_4 {
+#bxajnaszgi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ivewvcpftk .gt_indent_5 {
+#bxajnaszgi .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -859,11 +861,11 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
 </div>
 </div>
 <p>Having taken a quick look at the data, we can now start to explore how life expectancy, our outcome variable (the variable that we are trying to explain), varies with the other variables in our dataset (the explanatory variables). We will start by plotting how life expectancy is distributed by IMD score, which is a measure of deprivation. The expectation is that there will be a negative association between the two variables, which means that areas with higher levels of deprivation (i.e.&nbsp;lower IMD scores) will have lower life expectancies.</p>
-<div class="cell" data-hash="linear_regression_r_cache/html/fig-imd-plot_480e57bbed5bc820a94cb051d72e582d">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="cell" data-hash="linear_regression_r_cache/html/fig-imd-plot_fe19ec32c4c3fd159c5886ec66c51daf">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">deprivation</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">life_expectancy</span>, <span class="va">imd_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'gray30'</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour<span class="op">=</span><span class="st">'#005EB8'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour<span class="op">=</span><span class="st">"#005EB8"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Life Expectancy"</span>, y <span class="op">=</span> <span class="st">"IMD Score"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-imd-plot" class="quarto-figure quarto-figure-center anchored">
@@ -875,19 +877,19 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
 <p>There is a clear negative association between life expectancy and IMD score, which is what we would expect. However, there are some outliers where life expectancy seems to be higher than would be expected given the level of deprivation. The plot seems to suggest that deprivation may have a ‘floor effect’ on life expectancy, i.e.&nbsp;that higher deprivation raises the floor of life expectancy, but that there are other factors that can raise life expectancy above the floor.</p>
 <p>We can also plot the distribution of life expectancy by the Health Index scores for physiological and behavioural risk factors. These scores are index values that measure the prevalence of physiological and behavioural risk factors that are associated with poor health outcomes, against a baseline value of the national average for each risk factor in 2015. This baseline score is 100, and higher scores mean that an area has a higher prevalence of that risk factor than the national average in 2015, and lower scores mean that the area has lower prevalence. The expectation is that when the risk factor index scores increase, meaning that the risk factors are less prevalent compared against the national average, life expectancy will increase, while a decrease in the scores will be associated with a decrease in life expectancy.</p>
 <div class="page-columns page-full">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">deprivation</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">life_expectancy</span>, <span class="va">physiological_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'grey50'</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour<span class="op">=</span><span class="st">'#005EB8'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"#005EB8"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Life Expectancy"</span>, y <span class="op">=</span> <span class="st">"Physiological Index"</span><span class="op">)</span></span>
 <span>  </span>
 <span></span>
-<span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span><span class="va">deprivation</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">life_expectancy</span>, <span class="va">behavioural_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'grey50'</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour<span class="op">=</span><span class="st">'#005EB8'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"#005EB8"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Life Expectancy"</span>, y <span class="op">=</span> <span class="st">"Behavioural Index"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-health-index-plots" class="cell column-page quarto-layout-panel" data-hash="linear_regression_r_cache/html/fig-health-index-plots_ed4881a54bcbcd83485541268fa15a27">
+<div id="fig-health-index-plots" class="cell column-page quarto-layout-panel" data-hash="linear_regression_r_cache/html/fig-health-index-plots_a55ba95a274cfbbfd73fd577312eb7c3">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
 <div id="fig-health-index-plots-1" class="quarto-figure quarto-figure-center anchored">
@@ -908,33 +910,38 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
 </div>
 <p>The plots show that there is a clear negative association between life expectancy and both the physiological and behavioural risk factor scores, which is what we would expect. However, the plots also show that there are some outliers where life expectancy seems to be higher than would be expected given the level of risk factors. The plots seem to suggest that risk factors may have a ‘floor effect’ on life expectancy, i.e.&nbsp;that higher risk factors raise the floor of life expectancy, but that there are other factors that can raise life expectancy above the floor.</p>
 <p>The above plots suggest there are strong correlations between life expectancy and the three independent variables. We can confirm this by calculating a correlation matrix for the variables in our dataset, using the <code>correlation</code> package.</p>
-<div class="cell" data-hash="linear_regression_r_cache/html/tbl-correlations_4735400a6d86723185a319de4aa7baab">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span> </span>
+<div class="cell" data-hash="linear_regression_r_cache/html/tbl-correlations_eb9b3af150cbd1e766095785d4a3e800">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">deprivation</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">area_code</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span><span class="op">(</span>.funs <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">life_expectancy</span>, <span class="va">imd_score</span>, <span class="va">behavioural_score</span>, <span class="va">physiological_score</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">life_expectancy</span>, </span>
+<span>    <span class="va">imd_score</span>, </span>
+<span>    <span class="va">behavioural_score</span>, </span>
+<span>    <span class="va">physiological_score</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span>case <span class="op">=</span> <span class="st">"title"</span>, abbreviations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IMD"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/modelsummary/reference/datasummary_correlation.html">datasummary_correlation</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"gt"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://modelsummary.com/reference/datasummary_correlation.html">datasummary_correlation</a></span><span class="op">(</span>output <span class="op">=</span> <span class="st">"gt"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="tbl-correlations" class="anchored">
 
-<div id="zwyjkxfvfm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zwyjkxfvfm table {
+<div id="uddjvemwvg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uddjvemwvg table {
   font-family: Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zwyjkxfvfm thead, #zwyjkxfvfm tbody, #zwyjkxfvfm tfoot, #zwyjkxfvfm tr, #zwyjkxfvfm td, #zwyjkxfvfm th {
+#uddjvemwvg thead, #uddjvemwvg tbody, #uddjvemwvg tfoot, #uddjvemwvg tr, #uddjvemwvg td, #uddjvemwvg th {
   border-style: none;
 }
 
-#zwyjkxfvfm p {
+#uddjvemwvg p {
   margin: 0;
   padding: 0;
 }
 
-#zwyjkxfvfm .gt_table {
+#uddjvemwvg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -960,12 +967,12 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-left-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_caption {
+#uddjvemwvg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zwyjkxfvfm .gt_title {
+#uddjvemwvg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -977,7 +984,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-bottom-width: 0;
 }
 
-#zwyjkxfvfm .gt_subtitle {
+#uddjvemwvg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -989,7 +996,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-top-width: 0;
 }
 
-#zwyjkxfvfm .gt_heading {
+#uddjvemwvg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1001,13 +1008,13 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-right-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_bottom_border {
+#uddjvemwvg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_col_headings {
+#uddjvemwvg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1022,7 +1029,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-right-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_col_heading {
+#uddjvemwvg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1042,7 +1049,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   overflow-x: hidden;
 }
 
-#zwyjkxfvfm .gt_column_spanner_outer {
+#uddjvemwvg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1054,15 +1061,15 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 4px;
 }
 
-#zwyjkxfvfm .gt_column_spanner_outer:first-child {
+#uddjvemwvg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zwyjkxfvfm .gt_column_spanner_outer:last-child {
+#uddjvemwvg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zwyjkxfvfm .gt_column_spanner {
+#uddjvemwvg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1074,11 +1081,11 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   width: 100%;
 }
 
-#zwyjkxfvfm .gt_spanner_row {
+#uddjvemwvg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zwyjkxfvfm .gt_group_heading {
+#uddjvemwvg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1104,7 +1111,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   text-align: left;
 }
 
-#zwyjkxfvfm .gt_empty_group_heading {
+#uddjvemwvg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1119,15 +1126,15 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   vertical-align: middle;
 }
 
-#zwyjkxfvfm .gt_from_md > :first-child {
+#uddjvemwvg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zwyjkxfvfm .gt_from_md > :last-child {
+#uddjvemwvg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zwyjkxfvfm .gt_row {
+#uddjvemwvg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1146,7 +1153,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   overflow-x: hidden;
 }
 
-#zwyjkxfvfm .gt_stub {
+#uddjvemwvg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1159,7 +1166,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#zwyjkxfvfm .gt_stub_row_group {
+#uddjvemwvg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1173,15 +1180,15 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   vertical-align: top;
 }
 
-#zwyjkxfvfm .gt_row_group_first td {
+#uddjvemwvg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zwyjkxfvfm .gt_row_group_first th {
+#uddjvemwvg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zwyjkxfvfm .gt_summary_row {
+#uddjvemwvg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1191,16 +1198,16 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#zwyjkxfvfm .gt_first_summary_row {
+#uddjvemwvg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_first_summary_row.thick {
+#uddjvemwvg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zwyjkxfvfm .gt_last_summary_row {
+#uddjvemwvg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1210,7 +1217,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-bottom-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_grand_summary_row {
+#uddjvemwvg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1220,7 +1227,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#zwyjkxfvfm .gt_first_grand_summary_row {
+#uddjvemwvg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1230,7 +1237,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-top-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_last_grand_summary_row_top {
+#uddjvemwvg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1240,11 +1247,11 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-bottom-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_striped {
+#uddjvemwvg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zwyjkxfvfm .gt_table_body {
+#uddjvemwvg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1253,7 +1260,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-bottom-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_footnotes {
+#uddjvemwvg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1267,7 +1274,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-right-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_footnote {
+#uddjvemwvg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1276,7 +1283,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#zwyjkxfvfm .gt_sourcenotes {
+#uddjvemwvg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1290,7 +1297,7 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   border-right-color: #D3D3D3;
 }
 
-#zwyjkxfvfm .gt_sourcenote {
+#uddjvemwvg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1298,63 +1305,63 @@ $ behavioural_score   &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82.2
   padding-right: 5px;
 }
 
-#zwyjkxfvfm .gt_left {
+#uddjvemwvg .gt_left {
   text-align: left;
 }
 
-#zwyjkxfvfm .gt_center {
+#uddjvemwvg .gt_center {
   text-align: center;
 }
 
-#zwyjkxfvfm .gt_right {
+#uddjvemwvg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zwyjkxfvfm .gt_font_normal {
+#uddjvemwvg .gt_font_normal {
   font-weight: normal;
 }
 
-#zwyjkxfvfm .gt_font_bold {
+#uddjvemwvg .gt_font_bold {
   font-weight: bold;
 }
 
-#zwyjkxfvfm .gt_font_italic {
+#uddjvemwvg .gt_font_italic {
   font-style: italic;
 }
 
-#zwyjkxfvfm .gt_super {
+#uddjvemwvg .gt_super {
   font-size: 65%;
 }
 
-#zwyjkxfvfm .gt_footnote_marks {
+#uddjvemwvg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zwyjkxfvfm .gt_asterisk {
+#uddjvemwvg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zwyjkxfvfm .gt_indent_1 {
+#uddjvemwvg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zwyjkxfvfm .gt_indent_2 {
+#uddjvemwvg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zwyjkxfvfm .gt_indent_3 {
+#uddjvemwvg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zwyjkxfvfm .gt_indent_4 {
+#uddjvemwvg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zwyjkxfvfm .gt_indent_5 {
+#uddjvemwvg .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1406,30 +1413,30 @@ factors</p> </caption>
 <p>There are strong correlations between life expectancy and the three explanatory variables, however, the correlation between IMD score and the two Health Index scores is also relatively strong, and in the case of behavioural risk factors, it is very strong. This could be an issue, as it could mean that the model is not able to distinguish between the effects of deprivation and the effects of risk factors on life expectancy. This is known as multicollinearity, and it can cause problems when interpreting the results of a regression model.</p>
 <p>We can also visualise the correlation between our explanatory variables, to get a better sense of how they might be related to each other. We will start by plotting IMD score against the two Health Index scores, using scatter plots, before plotting the distributions of the scores by IMD decile, using density plots. We can use the <code>ggridges</code> package to plot the density plots, which can be useful for plotting how continuous variables are distributed across discrete groups.</p>
 <div class="page-columns page-full">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">deprivation</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">imd_score</span>, <span class="va">physiological_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'grey50'</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour<span class="op">=</span><span class="st">'#005EB8'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"#005EB8"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"IMD Score"</span>, y <span class="op">=</span> <span class="st">"Physiological Index"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span><span class="va">deprivation</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">imd_score</span>, <span class="va">behavioural_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">'grey50'</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour<span class="op">=</span><span class="st">'#005EB8'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.8</span>, size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="va">lm</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"#005EB8"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"IMD Score"</span>, y <span class="op">=</span> <span class="st">"Behavioural Index"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span><span class="va">deprivation</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>imd_decile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">imd_decile</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">physiological_score</span>, <span class="va">imd_decile</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggridges</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggridges/reference/geom_density_ridges.html">geom_density_ridges</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"IMD Decile"</span>, y <span class="op">=</span> <span class="st">"Physiological Index"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span><span class="va">deprivation</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>imd_decile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">imd_decile</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">behavioural_score</span>, <span class="va">imd_decile</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggridges</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggridges/reference/geom_density_ridges.html">geom_density_ridges</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"IMD Decile"</span>, y <span class="op">=</span> <span class="st">"Behavioural Index"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-correlations" class="cell column-page quarto-layout-panel" data-layout-row="2" data-hash="linear_regression_r_cache/html/fig-correlations_1bd5312a91ec956c34eaf83583fa77b8">
+<div id="fig-correlations" class="cell column-page quarto-layout-panel" data-layout-row="2" data-hash="linear_regression_r_cache/html/fig-correlations_2aefc441b2b753b463ac5e347e7947a0">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
 <div id="fig-correlations-1" class="quarto-figure quarto-figure-center anchored">
@@ -1467,96 +1474,78 @@ factors</p> </caption>
 <span class="header-section-number">7.2</span> Linear Regression</h2>
 <p>First we will transform each of the explanatory variables to make them a little easier to interpret (particularly with regard to the intercept). If we don’t transform the variables, the intercept will be based on zero values of each explanatory variable, which is not very meaningful. For example, a zero value of either risk factors variable is effectively meaningless because the ONS Health Index is centred around a baseline value of 100 (which is the average value for England in 2015, the first year for which the Health Index was calculated).</p>
 <p>These transformations won’t impact the regression results, but will just make the results easier to interpret and explain, as the intercept is no longer based on zero values of each explanatory variable.</p>
-<div class="cell" data-hash="linear_regression_r_cache/html/transforms_e93ccb090ae562a8615e08cc9728cd8a">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># calculate the imd score mean and standard deviation</span></span>
-<span><span class="va">imd_centre</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">imd_score</span><span class="op">)</span></span>
-<span><span class="va">imd_scale</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">imd_score</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># use 100 as the centre for the risk factors and calculate the standard deviation</span></span>
-<span><span class="va">physiological_centre</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
-<span><span class="va">physiological_scale</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">physiological_score</span><span class="op">)</span></span>
-<span><span class="va">behavioural_centre</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
-<span><span class="va">behavioural_scale</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">physiological_score</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># transform the variables</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="cell" data-hash="linear_regression_r_cache/html/transforms_366aba148a0df110b564a594b8f0459d">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># normalise independent variables</span></span>
+<span><span class="va">normalised_data</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">deprivation</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    imd_transformed <span class="op">=</span> <span class="op">(</span><span class="va">imd_score</span> <span class="op">-</span> <span class="va">imd_centre</span><span class="op">)</span><span class="op">/</span><span class="va">imd_scale</span>,</span>
-<span>    physiological_transformed <span class="op">=</span> </span>
-<span>      <span class="op">(</span><span class="va">physiological_score</span> <span class="op">-</span> <span class="va">physiological_centre</span><span class="op">)</span><span class="op">/</span><span class="va">physiological_scale</span>,</span>
-<span>    behavioural_transformed <span class="op">=</span> </span>
-<span>      <span class="op">(</span><span class="va">behavioural_score</span> <span class="op">-</span> <span class="va">behavioural_centre</span><span class="op">)</span><span class="op">/</span><span class="va">behavioural_scale</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="co"># subtract mean and divide by standard deviation</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"_score"</span><span class="op">)</span>, <span class="op">~</span> <span class="op">(</span><span class="va">.x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># check the transformations</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">normalised_data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 583
-Columns: 10
-$ area_code                 &lt;chr&gt; "E06000001", "E06000001", "E06000001", "E060…
-$ year                      &lt;dbl&gt; 2015, 2016, 2017, 2018, 2015, 2016, 2017, 20…
-$ life_expectancy           &lt;dbl&gt; 78.73839, 79.07321, 79.08000, 78.81000, 77.7…
-$ imd_score                 &lt;dbl&gt; 35.037, 35.037, 35.037, 35.037, 40.460, 40.4…
-$ imd_decile                &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 4, 4, 4,…
-$ physiological_score       &lt;dbl&gt; 89.9, 88.8, 84.8, 84.6, 96.4, 95.8, 96.7, 96…
-$ behavioural_score         &lt;dbl&gt; 84.9, 84.4, 82.7, 81.0, 80.3, 82.6, 84.5, 82…
-$ imd_transformed           &lt;dbl&gt; 1.4739156, 1.4739156, 1.4739156, 1.4739156, …
-$ physiological_transformed &lt;dbl&gt; -1.0087421, -1.1186051, -1.5181069, -1.53808…
-$ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.89763…</code></pre>
+Columns: 7
+$ area_code           &lt;chr&gt; "E06000001", "E06000001", "E06000001", "E06000001"…
+$ year                &lt;dbl&gt; 2015, 2016, 2017, 2018, 2015, 2016, 2017, 2018, 20…
+$ life_expectancy     &lt;dbl&gt; 78.73839, 79.07321, 79.08000, 78.81000, 77.78726, …
+$ imd_score           &lt;dbl&gt; 1.4739156, 1.4739156, 1.4739156, 1.4739156, 2.1481…
+$ imd_decile          &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 4, 4, 4, 4, 4,…
+$ physiological_score &lt;dbl&gt; -0.9104599, -1.0203229, -1.4198247, -1.4397998, -0…
+$ behavioural_score   &lt;dbl&gt; -1.6664775, -1.7239620, -1.9194091, -2.1148563, -2…</code></pre>
 </div>
 </div>
 <p>Having transformed the variables, we can now fit a linear regression model to the data. We will use the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function from the Base R <code>stats</code> package. Constructing a linear regression in R is very simple, and the syntax is relatively intuitive. The first argument in the function is the formula, which is the dependent variable on the left-hand side, and the independent variables on the right-hand side, separated by a <code>~</code> symbol. The second required argument is the <code>data</code> argument, which gives the <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> function a dataset to fit the regression to. There are a number of optional arguments that can be passed to the function to control the model fitting process, but we will use the default values for now.</p>
 <p>After fitting the regression model, we can call the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function to get a summary of the model results. This will give us the model coefficients, standard errors, t-statistics, p-values, and <span class="math inline">\(R^2\)</span> value. However, in this instance we will use the <code><a href="https://strengejacke.github.io/sjPlot/reference/tab_model.html">sjPlot::tab_model()</a></code> function to get a nice table of the model results which renders better in HTML.</p>
-<div class="cell" data-hash="linear_regression_r_cache/html/tbl-life-expectancy-ols_7e8477db546a683fa7f38b5228845cba">
+<div class="cell" data-hash="linear_regression_r_cache/html/tbl-life-expectancy-ols_08f647ac9e5815deb3d53e3d89545b99">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># fit linear regression</span></span>
 <span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"OLS (Raw)"</span> <span class="op">=</span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">life_expectancy</span> <span class="op">~</span> <span class="va">imd_score</span> <span class="op">+</span> <span class="va">physiological_score</span> <span class="op">+</span> </span>
-<span>         <span class="va">behavioural_score</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">life_expectancy</span> <span class="op">~</span> <span class="va">imd_score</span> <span class="op">+</span> <span class="va">physiological_score</span> <span class="op">+</span></span>
+<span>         <span class="va">behavioural_score</span>, data <span class="op">=</span> <span class="va">deprivation</span><span class="op">)</span>,</span>
 <span>  <span class="st">"OLS (Normalised)"</span> <span class="op">=</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">life_expectancy</span> <span class="op">~</span> <span class="va">imd_transformed</span> <span class="op">+</span></span>
-<span>         <span class="va">physiological_transformed</span> <span class="op">+</span> <span class="va">behavioural_transformed</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">life_expectancy</span> <span class="op">~</span> <span class="va">imd_score</span> <span class="op">+</span> <span class="va">physiological_score</span> <span class="op">+</span> </span>
+<span>         <span class="va">behavioural_score</span>, data <span class="op">=</span> <span class="va">normalised_data</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="co"># get model results table</span></span>
 <span><span class="va">models</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://vincentarelbundock.github.io/modelsummary/reference/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
-<span>    estimate <span class="op">=</span> <span class="st">"estimate"</span>,</span>
-<span>    statistic <span class="op">=</span> <span class="st">"conf.int"</span>, </span>
-<span>    stars <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="fu">modelsummary</span><span class="fu">::</span><span class="fu"><a href="https://modelsummary.com/reference/modelsummary.html">modelsummary</a></span><span class="op">(</span></span>
+<span>    estimate <span class="op">=</span> <span class="st">"{estimate} [{conf.low}, {conf.high}]"</span>,</span>
+<span>    statistic <span class="op">=</span> <span class="st">"p = {p.value}"</span>,</span>
 <span>    coef_rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
-<span>      <span class="st">"imd_score"</span> <span class="op">=</span> <span class="st">"IMD Score"</span>,</span>
-<span>      <span class="st">"imd_transformed"</span> <span class="op">=</span> <span class="st">"IMD Score"</span>,</span>
-<span>      <span class="st">"physiological_score"</span> <span class="op">=</span> <span class="st">"Physiological Score"</span>,</span>
-<span>      <span class="st">"physiological_transformed"</span> <span class="op">=</span> <span class="st">"Physiological Score"</span>,</span>
-<span>      <span class="st">"behavioural_score"</span> <span class="op">=</span> <span class="st">"Behavioural Score"</span>,</span>
-<span>      <span class="st">"behavioural_transformed"</span> <span class="op">=</span> <span class="st">"Behavioural Score"</span></span>
+<span>      imd_score <span class="op">=</span> <span class="st">"IMD Score"</span>,</span>
+<span>      physiological_score <span class="op">=</span> <span class="st">"Physiological Score"</span>,</span>
+<span>      behavioural_score <span class="op">=</span> <span class="st">"Behavioural Score"</span></span>
 <span>      <span class="op">)</span>,</span>
 <span>    gof_map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"nobs"</span>, <span class="st">"r.squared"</span>,  <span class="st">"rmse"</span><span class="op">)</span>,</span>
 <span>    output <span class="op">=</span> <span class="st">"gt"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/tab_source_note.html">tab_source_note</a></span><span class="op">(</span>source_note <span class="op">=</span> <span class="st">"Source: PHE Fingertips/ONS Health Index"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/tab_source_note.html">tab_source_note</a></span><span class="op">(</span></span>
+<span>    source_note <span class="op">=</span> <span class="st">"Source: PHE Fingertips/ONS Health Index"</span></span>
+<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="tbl-life-expectancy-ols" class="anchored">
 
-<div id="coylskwgux" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#coylskwgux table {
+<div id="hpsjqiczoe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hpsjqiczoe table {
   font-family: Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#coylskwgux thead, #coylskwgux tbody, #coylskwgux tfoot, #coylskwgux tr, #coylskwgux td, #coylskwgux th {
+#hpsjqiczoe thead, #hpsjqiczoe tbody, #hpsjqiczoe tfoot, #hpsjqiczoe tr, #hpsjqiczoe td, #hpsjqiczoe th {
   border-style: none;
 }
 
-#coylskwgux p {
+#hpsjqiczoe p {
   margin: 0;
   padding: 0;
 }
 
-#coylskwgux .gt_table {
+#hpsjqiczoe .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1582,12 +1571,12 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-left-color: #D3D3D3;
 }
 
-#coylskwgux .gt_caption {
+#hpsjqiczoe .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#coylskwgux .gt_title {
+#hpsjqiczoe .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1599,7 +1588,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-bottom-width: 0;
 }
 
-#coylskwgux .gt_subtitle {
+#hpsjqiczoe .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1611,7 +1600,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-top-width: 0;
 }
 
-#coylskwgux .gt_heading {
+#hpsjqiczoe .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1623,13 +1612,13 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-right-color: #D3D3D3;
 }
 
-#coylskwgux .gt_bottom_border {
+#hpsjqiczoe .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#coylskwgux .gt_col_headings {
+#hpsjqiczoe .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1644,7 +1633,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-right-color: #D3D3D3;
 }
 
-#coylskwgux .gt_col_heading {
+#hpsjqiczoe .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1664,7 +1653,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   overflow-x: hidden;
 }
 
-#coylskwgux .gt_column_spanner_outer {
+#hpsjqiczoe .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1676,15 +1665,15 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   padding-right: 4px;
 }
 
-#coylskwgux .gt_column_spanner_outer:first-child {
+#hpsjqiczoe .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#coylskwgux .gt_column_spanner_outer:last-child {
+#hpsjqiczoe .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#coylskwgux .gt_column_spanner {
+#hpsjqiczoe .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1696,11 +1685,11 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   width: 100%;
 }
 
-#coylskwgux .gt_spanner_row {
+#hpsjqiczoe .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#coylskwgux .gt_group_heading {
+#hpsjqiczoe .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1726,7 +1715,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   text-align: left;
 }
 
-#coylskwgux .gt_empty_group_heading {
+#hpsjqiczoe .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1741,15 +1730,15 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   vertical-align: middle;
 }
 
-#coylskwgux .gt_from_md > :first-child {
+#hpsjqiczoe .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#coylskwgux .gt_from_md > :last-child {
+#hpsjqiczoe .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#coylskwgux .gt_row {
+#hpsjqiczoe .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1768,7 +1757,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   overflow-x: hidden;
 }
 
-#coylskwgux .gt_stub {
+#hpsjqiczoe .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1781,7 +1770,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   padding-right: 5px;
 }
 
-#coylskwgux .gt_stub_row_group {
+#hpsjqiczoe .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1795,15 +1784,15 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   vertical-align: top;
 }
 
-#coylskwgux .gt_row_group_first td {
+#hpsjqiczoe .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#coylskwgux .gt_row_group_first th {
+#hpsjqiczoe .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#coylskwgux .gt_summary_row {
+#hpsjqiczoe .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1813,16 +1802,16 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   padding-right: 5px;
 }
 
-#coylskwgux .gt_first_summary_row {
+#hpsjqiczoe .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#coylskwgux .gt_first_summary_row.thick {
+#hpsjqiczoe .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#coylskwgux .gt_last_summary_row {
+#hpsjqiczoe .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1832,7 +1821,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-bottom-color: #D3D3D3;
 }
 
-#coylskwgux .gt_grand_summary_row {
+#hpsjqiczoe .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1842,7 +1831,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   padding-right: 5px;
 }
 
-#coylskwgux .gt_first_grand_summary_row {
+#hpsjqiczoe .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1852,7 +1841,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-top-color: #D3D3D3;
 }
 
-#coylskwgux .gt_last_grand_summary_row_top {
+#hpsjqiczoe .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1862,11 +1851,11 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-bottom-color: #D3D3D3;
 }
 
-#coylskwgux .gt_striped {
+#hpsjqiczoe .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#coylskwgux .gt_table_body {
+#hpsjqiczoe .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1875,7 +1864,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-bottom-color: #D3D3D3;
 }
 
-#coylskwgux .gt_footnotes {
+#hpsjqiczoe .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1889,7 +1878,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-right-color: #D3D3D3;
 }
 
-#coylskwgux .gt_footnote {
+#hpsjqiczoe .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1898,7 +1887,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   padding-right: 5px;
 }
 
-#coylskwgux .gt_sourcenotes {
+#hpsjqiczoe .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1912,7 +1901,7 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   border-right-color: #D3D3D3;
 }
 
-#coylskwgux .gt_sourcenote {
+#hpsjqiczoe .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1920,63 +1909,63 @@ $ behavioural_transformed   &lt;dbl&gt; -1.5081194, -1.5580571, -1.7278454, -1.8
   padding-right: 5px;
 }
 
-#coylskwgux .gt_left {
+#hpsjqiczoe .gt_left {
   text-align: left;
 }
 
-#coylskwgux .gt_center {
+#hpsjqiczoe .gt_center {
   text-align: center;
 }
 
-#coylskwgux .gt_right {
+#hpsjqiczoe .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#coylskwgux .gt_font_normal {
+#hpsjqiczoe .gt_font_normal {
   font-weight: normal;
 }
 
-#coylskwgux .gt_font_bold {
+#hpsjqiczoe .gt_font_bold {
   font-weight: bold;
 }
 
-#coylskwgux .gt_font_italic {
+#hpsjqiczoe .gt_font_italic {
   font-style: italic;
 }
 
-#coylskwgux .gt_super {
+#hpsjqiczoe .gt_super {
   font-size: 65%;
 }
 
-#coylskwgux .gt_footnote_marks {
+#hpsjqiczoe .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#coylskwgux .gt_asterisk {
+#hpsjqiczoe .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#coylskwgux .gt_indent_1 {
+#hpsjqiczoe .gt_indent_1 {
   text-indent: 5px;
 }
 
-#coylskwgux .gt_indent_2 {
+#hpsjqiczoe .gt_indent_2 {
   text-indent: 10px;
 }
 
-#coylskwgux .gt_indent_3 {
+#hpsjqiczoe .gt_indent_3 {
   text-indent: 15px;
 }
 
-#coylskwgux .gt_indent_4 {
+#hpsjqiczoe .gt_indent_4 {
   text-indent: 20px;
 }
 
-#coylskwgux .gt_indent_5 {
+#hpsjqiczoe .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1991,43 +1980,43 @@ life expectancy</p> </caption>
 <tbody class="gt_table_body">
 <tr>
 <td headers="" class="gt_row gt_left">(Intercept)</td>
-<td headers="OLS (Raw)" class="gt_row gt_center">71.592***</td>
-<td headers="OLS (Normalised)" class="gt_row gt_center">81.245***</td>
+<td headers="OLS (Raw)" class="gt_row gt_center">71.592 [70.367, 72.816]</td>
+<td headers="OLS (Normalised)" class="gt_row gt_center">81.167 [81.115, 81.219]</td>
 </tr>
 <tr>
 <td headers="" class="gt_row gt_left"></td>
-<td headers="OLS (Raw)" class="gt_row gt_center">[70.367, 72.816]</td>
-<td headers="OLS (Normalised)" class="gt_row gt_center">[81.193, 81.298]</td>
+<td headers="OLS (Raw)" class="gt_row gt_center">p = &lt;0.001</td>
+<td headers="OLS (Normalised)" class="gt_row gt_center">p = &lt;0.001</td>
 </tr>
 <tr>
 <td headers="" class="gt_row gt_left">IMD Score</td>
-<td headers="OLS (Raw)" class="gt_row gt_center">-0.077***</td>
-<td headers="OLS (Normalised)" class="gt_row gt_center">-0.623***</td>
+<td headers="OLS (Raw)" class="gt_row gt_center">-0.077 [-0.089, -0.066]</td>
+<td headers="OLS (Normalised)" class="gt_row gt_center">-0.623 [-0.713, -0.533]</td>
 </tr>
 <tr>
 <td headers="" class="gt_row gt_left"></td>
-<td headers="OLS (Raw)" class="gt_row gt_center">[-0.089, -0.066]</td>
-<td headers="OLS (Normalised)" class="gt_row gt_center">[-0.713, -0.533]</td>
+<td headers="OLS (Raw)" class="gt_row gt_center">p = &lt;0.001</td>
+<td headers="OLS (Normalised)" class="gt_row gt_center">p = &lt;0.001</td>
 </tr>
 <tr>
 <td headers="" class="gt_row gt_left">Physiological Score</td>
-<td headers="OLS (Raw)" class="gt_row gt_center">0.024***</td>
-<td headers="OLS (Normalised)" class="gt_row gt_center">0.239***</td>
+<td headers="OLS (Raw)" class="gt_row gt_center">0.024 [0.017, 0.030]</td>
+<td headers="OLS (Normalised)" class="gt_row gt_center">0.239 [0.173, 0.304]</td>
 </tr>
 <tr>
 <td headers="" class="gt_row gt_left"></td>
-<td headers="OLS (Raw)" class="gt_row gt_center">[0.017, 0.030]</td>
-<td headers="OLS (Normalised)" class="gt_row gt_center">[0.173, 0.304]</td>
+<td headers="OLS (Raw)" class="gt_row gt_center">p = &lt;0.001</td>
+<td headers="OLS (Normalised)" class="gt_row gt_center">p = &lt;0.001</td>
 </tr>
 <tr>
 <td headers="" class="gt_row gt_left">Behavioural Score</td>
-<td headers="OLS (Raw)" class="gt_row gt_center">0.091***</td>
-<td headers="OLS (Normalised)" class="gt_row gt_center">0.908***</td>
+<td headers="OLS (Raw)" class="gt_row gt_center">0.091 [0.079, 0.103]</td>
+<td headers="OLS (Normalised)" class="gt_row gt_center">0.788 [0.685, 0.892]</td>
 </tr>
 <tr>
 <td headers="" class="gt_row gt_left"></td>
-<td headers="OLS (Raw)" class="gt_row gt_center">[0.079, 0.103]</td>
-<td headers="OLS (Normalised)" class="gt_row gt_center">[0.789, 1.026]</td>
+<td headers="OLS (Raw)" class="gt_row gt_center">p = &lt;0.001</td>
+<td headers="OLS (Normalised)" class="gt_row gt_center">p = &lt;0.001</td>
 </tr>
 <tr>
 <td headers="" class="gt_row gt_left">Num.Obs.</td>
@@ -2045,14 +2034,9 @@ life expectancy</p> </caption>
 <td headers="OLS (Normalised)" class="gt_row gt_center">0.64</td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes">
-<tr>
-<td class="gt_sourcenote" colspan="3">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td>
-    </tr>
-<tr>
+<tfoot class="gt_sourcenotes"><tr>
 <td class="gt_sourcenote" colspan="3">Source: PHE Fingertips/ONS Health Index</td>
-    </tr>
-</tfoot>
+    </tr></tfoot>
 </table>
 </div>
 </div>
@@ -2076,7 +2060,7 @@ life expectancy</p> </caption>
 <p>P-values are the probability of observing a coefficient as large as the estimated coefficient for a particular explanatory variable, given that the null hypothesis is true (i.e.&nbsp;that the coefficient is equal to zero), indicating that no effect is present. This can be a little tricky to understand at first, but a slightly crude way of thinking about this is that p-values are an estimate of the probability that the model coefficient you observe is actually distinguishable from zero.</p>
 <p>P-values are used to test the statistical significance of the coefficients. If the p-value is less than the significance level then the coefficient is statistically significant, and we can reject the null hypothesis that the coefficient is equal to zero. If the p-value is greater than the significance level, then the coefficient is not statistically significant, and we cannot reject the null hypothesis that the coefficient is equal to zero. The significance level is often set at 0.05, which means that we are willing to accept a 5% chance of incorrectly rejecting the null hypothesis. This means that if the p-value is less than 0.05, then there is a greater than 95% probability that the coefficient is not equal to zero. However, the significance level is a subjective decision, and can be set at any value. For example, if the significance level is set at 0.01, then we are willing to accept a 1% chance of incorrectly rejecting the null hypothesis.</p>
 <p>In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practitioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.</p>
-<p>I think the best way to think about p-values is the position prescribed by Gelman, Hill, &amp; Vehtari in <a href="https://users.aalto.fi/~ave/ROS.pdf">Regression &amp; Other Stories</a>. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will <strong>some</strong> effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.</p>
+<p>I think the best way to think about p-values is the position prescribed by Gelman, Hill, &amp; Vehtari in <a href="https://avehtari.github.io/ROS-Examples/">Regression &amp; Other Stories</a>. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will <strong>some</strong> effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.</p>
 </section></section><section id="model-interpretation" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="model-interpretation">
 <span class="header-section-number">7.3.2</span> Model Interpretation</h3>
 <p>Model interpretation is the process of understanding the influence that each explanatory variable has on the outcome. This involves understanding the direction, the magnitude, and the precision of the model coefficients. The coefficients themselves will tell us about direction and magnitude, while the standard errors and confidence intervals will tell us about precision.</p>
@@ -2093,9 +2077,10 @@ life expectancy</p> </caption>
 </section><section id="resources" class="level2" data-number="7.5"><h2 data-number="7.5" class="anchored" data-anchor-id="resources">
 <span class="header-section-number">7.5</span> Resources</h2>
 <ul>
+<li><a href="https://mlu-explain.github.io/linear-regression/">MLU Explain: Linear Regression</a></li>
 <li><a href="https://www.youtube.com/watch?v=7ArmBVF2dCs">StatQuest: Linear Regression</a></li>
 <li><a href="https://avehtari.github.io/ROS-Examples/">Regression &amp; Other Stories</a></li>
-<li><a href="https://moderndive.com">Statistical Inference via Data Science</a></li>
+<li><a href="https://moderndive.com">ModernDive: Statistical Inference via Data Science</a></li>
 <li><a href="https://mattblackwell.github.io/gov2002-book/">A User’s Guide to Statistical Inference and Regression</a></li>
 </ul>
 

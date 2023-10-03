@@ -281,9 +281,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><div class="cell" data-hash="wrangling_r_cache/html/setup_ad10eee9dbb954167e9674915f8d071f">
+</header><!-- links used throughout the book --><!-- hypothesis testing --><!-- simulations --><div class="cell" data-hash="wrangling_r_cache/html/setup_4951577da3200578f0a6f55c437954b4">
 <details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="co"># remotes::install_github("rOpenSci/fingertipsR")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="co"># remotes::install_github("rOpenSci/fingertipsR")</span></span>
+<span><span class="co"># install.packages("here")</span></span>
+<span><span class="co"># install.packages("janitor")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The first step in any analysis is to find the right data for the problem at hand, and to transform that data so that it is structured appropriately for the method of analysis. Finding the right data can be challenging, sometimes requiring getting data from multiple sources, and even then, the data might be a mess, with missing values, duplicates, formatting that makes it difficult to work with in R or Python, and a myriad of other problems. The process of transforming data to make it suitable for analysis is often referred to as data wrangling, or data munging. The data wrangling process can take many forms, from simple data cleaning to more complex transformations like combining multiple data sets, or creating new variables to enrich the data.</p>
@@ -325,10 +327,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Although the tidyverse packages are very popular, they are not required to work with data in R. There will be equivalent ways to do things using only base R functions too. However, I think the tidyverse is particularly user-friendly, especially for those that are coming to R from SQL, so I will focus on data wrangling using a tidyverse workflow in this guide.</p>
 </section><section id="fingertips-data" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="fingertips-data">
 <span class="header-section-number">4.2</span> Fingertips Data</h2>
-<p>We will use Public Health England’s Fingertips API as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it.</p>
+<p>We will use Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a> (for which there are packages available in <a href="https://github.com/ropensci/fingertipsR">R</a> and <a href="https://github.com/publichealthengland/PHDS_fingertips_py">Python</a>) as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it. Fingertips is a repository of public health data on a wide range of topics. The data included in this tutorial relates to the wider determinants of health.</p>
 <p>First, we can look at what is available. The <code><a href="https://docs.ropensci.org/fingertipsR/reference/indicators_unique.html">fingertipsR::indicators_unique()</a></code> function returns a list of all unique indicators from the Fingerips API, as well as their indicator IDs. We can use the <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> function to open the data in a new window and take a closer look at what is available.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/fingertips-indicators_7b85eef754a9997e75555d6e6bd2ed60">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">inds</span> <span class="op">&lt;-</span> <span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/indicators_unique.html">indicators_unique</a></span><span class="op">(</span><span class="op">)</span></span>
+<div class="cell" data-hash="wrangling_r_cache/html/fingertips-indicators_f2389430099a41aace5a71fc53bd6abe">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fingertips.phe.org.uk">fingertipsR</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">inds</span> <span class="op">&lt;-</span> <span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/indicators_unique.html">indicators_unique</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># View(inds)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -388,14 +392,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The list of area types is quite long, but from the <code>indicator_area_types()</code> function, we can see that there are six area types available for the first indicator in the list of profile indicators. The area types ending in 2 are all upper tier local authorities (the different types being different local authority boundaries from different points in time), while the other two area types refer to Government Office Regions and England as a whole.</p>
-<p>We will use the most recent upper tier local authority boundaries, which have the <code>AreaTypeID</code>, 402.</p>
+<p>We will use the most recent upper tier local authority boundaries, which have the <code>AreaTypeID</code>, 502.</p>
 <p>Having identified the profile and area type we are interested in, we can now pull the data from the Fingertips API using the <code><a href="https://docs.ropensci.org/fingertipsR/reference/fingertips_data.html">fingertipsR::fingertips_data()</a></code> function.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/import_318ca379caf9cd3c9c205f8dbf964353">
+<div class="cell" data-hash="wrangling_r_cache/html/import_07f89fac46c85edd73b094bb16b87630">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># pull wider determinants raw data from fingertips</span></span>
 <span><span class="va">phof_raw</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/fingertips_data.html">fingertips_data</a></span><span class="op">(</span></span>
 <span>    ProfileID <span class="op">=</span> <span class="fl">19</span>,</span>
-<span>    AreaTypeID <span class="op">=</span> <span class="fl">302</span></span>
+<span>    AreaTypeID <span class="op">=</span> <span class="fl">502</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-hash="wrangling_r_cache/html/check_791960983e97e2fe55a40887937a5b1f">
@@ -578,7 +582,7 @@ $ Timeperiodrange                     &lt;chr&gt; "3y", "3y", "3y", "3y", "3y", 
 <li><a href="https://posit.co/wp-content/uploads/2022/10/tidyr.pdf">Data Tidying with {tidyr}</a></li>
 <li><a href="https://yuzar-blog.netlify.app/posts/2023-01-31-datawrangling1/">Top 10 Must-Know {dplyr} Commands for Data Wrangling in R!</a></li>
 <li><a href="https://cengel.github.io/R-data-wrangling/">Data Wrangling with R</a></li>
-<li><a href="https://observablehq.com/@observablehq/data-wrangling-translations?utm_campaign=Data_Elixir&amp;utm_source=Data_Elixir_430">Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel</a></li>
+<li><a href="https://observablehq.com/@observablehq/data-wrangling-translations">Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel</a></li>
 <li><a href="https://gist.github.com/conormm/fd8b1980c28dd21cfaf6975c86c74d07?permalink_comment_id=3726652">R to Python: Data Wrangling Snippets</a></li>
 </ul>
 
