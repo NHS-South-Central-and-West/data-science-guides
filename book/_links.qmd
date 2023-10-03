@@ -1,0 +1,74 @@
+<!-- links used throughout the book -->
+ 
+[R Data Science Guides]: https://r-data-science-guides.netlify.app
+[Python Data Science Guides]: https://python-data-science-guides.netlify.app
+ 
+[CC BY-NC-SA 4.0]: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+[Learning Statistics with R]: https://learningstatisticswithr.com/
+[Beyond Multiple Linear Regression]: https://bookdown.org/roback/bookdown-BeyondMLR/
+[Statistical Rethinking]: https://xcelab.net/rm/statistical-rethinking/
+[Telling Stories with Data]: https://tellingstorieswithdata.com/
+[StatQuest]: https://www.youtube.com/@statquest
+
+[MLU Explain: Linear Regression]: https://mlu-explain.github.io/linear-regression/
+[StatQuest: Linear Regression]: https://www.youtube.com/watch?v=7ArmBVF2dCs
+[Regression & Other Stories]: https://avehtari.github.io/ROS-Examples/
+[ModernDive: Statistical Inference via Data Science]: https://moderndive.com
+[A User's Guide to Statistical Inference and Regression]: https://mattblackwell.github.io/gov2002-book/
+[Fingertips API]: https://fingertips.phe.org.uk/
+[fingertipsR]: https://github.com/ropensci/fingertipsR
+[fingertips_py]: https://github.com/publichealthengland/PHDS_fingertips_py
+[Health Index]: https://www.ons.gov.uk/releases/healthindexforengland2015to2020
+
+
+[Hadley Wickham - Tidy Data]: https://vita.had.co.nz/papers/tidy-data.pdf
+[Data Transformation with {dplyr}]: https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf
+[Data Tidying with {tidyr}]: https://posit.co/wp-content/uploads/2022/10/tidyr.pdf
+[Top 10 Must-Know {dplyr} Commands for Data Wrangling in R!]: https://yuzar-blog.netlify.app/posts/2023-01-31-datawrangling1/
+[Data Wrangling with R]: https://cengel.github.io/R-data-wrangling/
+[Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel]: https://observablehq.com/@observablehq/data-wrangling-translations
+[R to Python: Data Wrangling Snippets]: https://gist.github.com/conormm/fd8b1980c28dd21cfaf6975c86c74d07?permalink_comment_id=3726652
+
+[Statistics Fundamentals]: https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9
+[_Answering Questions With Data_]: https://crumplab.com/statistics 
+[Male Heights]: https://digital.nhs.uk/data-and-information/areas-of-interest/public-health/health-survey-for-england-predicting-height-weight-and-body-mass-index-from-self-reported-data/differences-between-self-reported-and-interviewer-measured-height-weight-and-bmi-using-hse-2011-2016-data
+[One-Factor ANOVA]: https://crumplab.com/statistics/07-ANOVA.html#one-factor-anova
+[NCHS]: https://www.cdc.gov/nchs/data/series/sr_03/sr03-046-508.pdf
+[{infer}]: https://infer.tidymodels.org/
+[Seeing Theory]: https://seeing-theory.brown.edu/
+[The Permutation Test]: https://www.jwilber.me/permutationtest/
+[There is Only One Test]: http://allendowney.blogspot.com/2016/06/there-is-still-only-one-test.html
+[More Hypotheses, Less Trivia]: http://allendowney.blogspot.com/2011/06/more-hypotheses-less-trivia.html
+[Permutation Tests]: https://thomasleeper.com/Rcourse/Tutorials/permutationtests.html
+[Permutation Test as an Alternative to Two-Sample T-Test Using R]: https://medium.com/analytics-vidhya/permutation-test-as-an-alternative-to-two-sample-t-test-using-r-9f5da921bc95
+[Power Analysis]: https://deliveroo.engineering/2018/12/07/monte-carlo-power-analysis.html
+[Recommended Resources for A/B Testing]: https://hookedondata.org/posts/2023-04-19-recommended-resources-for-ab-testing
+[McElreath - None of the Above]: https://elevanth.org/blog/2023/07/17/none-of-the-above/
+[Introduction to Scientific Programming and Simulations in R]: https://nyu-cdsc.github.io/learningr/assets/simulation.pdf
+
+<!-- hypothesis testing -->
+
+[Regression Analysis Course]: https://sta210-s22.github.io/website/
+[Stats Review: The Most Dangerous Equation]: https://matheusfacure.github.io/python-causality-handbook/03-Stats-Review-The-Most-Dangerous-Equation.html
+[Scientists Rise Up Against Statistical Significance]: https://www.nature.com/articles/d41586-019-00857-9
+[A Dirty Dozen: Twelve P-Value Misconceptions]: https://sixsigmadsi.com/wp-content/uploads/2020/10/A-Dirty-Dozen-Twelve-P-Value-Misconceptions.pdf
+[What is the Meaning of P-Values and T-Values in Statistical Tests]: https://stats.stackexchange.com/questions/31/what-is-the-meaning-of-p-values-and-t-values-in-statistical-tests
+[Why Can't We Accept the Null Hypothesis?]: https://stats.stackexchange.com/questions/587383/why-cant-we-accept-the-null-hypothesis-but-we-can-accept-the-alternative-hypot
+[A/B Testing]: https://inferentialthinking.com/chapters/12/1/AB_Testing.html
+[{infer} Examples]: https://infer.tidymodels.org/articles/observed_stat_examples.html
+[t-table]: https://www.sjsu.edu/faculty/gerstman/StatPrimer/t-table.pdf
+[Lakens' Power App]: http://shiny.ieis.tue.nl/d_p_power
+
+<!-- simulations -->
+
+[Basic Simulations]: https://bookdown.org/hneth/i2ds/sims.html
+[Simulations in R]: https://web.stanford.edu/class/bios221/labs/simulation/Lab_3_simulation.html
+[Creating Simulated Datasets in R]: https://stirlingcodingclub.github.io/simulating_data/index.html
+[Learning Statistical Models Through Simulation in R]: https://psyteachr.github.io/stat-models-v1/index.html
+[Simulating Data in R: Examples in Writing Modular Code]: https://www.markhw.com/blog/modular-sims
+[Efficient Simulations in R]: https://grantmcdermott.com/efficient-simulations-in-r/
+[Simulation and Modelling to Understand Change]: https://bookdown.org/manuele_leonelli/SimBook/
+[{faux}]: https://debruine.github.io/faux/
+[Fake Data Packages]: https://r-vogg-blog.netlify.app/posts/2020-12-03-useful-packages-for-data-composition/
+[Fake Data with R]: https://rviews.rstudio.com/2020/09/09/fake-data-with-r/
