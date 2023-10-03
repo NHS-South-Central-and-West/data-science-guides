@@ -2,50 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://r-data-science-guides.netlify.app/index.html</loc>
-    <lastmod>2023-10-03T19:09:38.150Z</lastmod>
+    <lastmod>2023-10-03T19:41:45.702Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/intro.html</loc>
-    <lastmod>2023-10-03T19:09:38.168Z</lastmod>
+    <lastmod>2023-10-03T19:41:45.723Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/good_science.html</loc>
-    <lastmod>2023-10-03T19:09:38.244Z</lastmod>
+    <lastmod>2023-10-03T19:41:45.736Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/sql.html</loc>
-    <lastmod>2023-10-03T19:09:38.264Z</lastmod>
+    <lastmod>2023-10-03T19:41:45.753Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/wrangling_r.html</loc>
-    <lastmod>2023-10-03T19:09:38.312Z</lastmod>
+    <lastmod>2023-10-03T19:41:45.802Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/eda_r.html</loc>
-    <lastmod>2023-10-03T19:09:38.472Z</lastmod>
+    <lastmod>2023-10-03T19:41:45.886Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/hypothesis_testing_r.html</loc>
-    <lastmod>2023-10-03T19:09:38.571Z</lastmod>
+    <lastmod>2023-10-03T19:41:45.953Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/linear_regression_r.html</loc>
-    <lastmod>2023-10-03T19:09:38.665Z</lastmod>
+    <lastmod>2023-10-03T19:41:46.003Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/ml_workflow_r.html</loc>
-    <lastmod>2023-10-03T19:09:38.744Z</lastmod>
+    <lastmod>2023-10-03T19:41:46.051Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/references.html</loc>
-    <lastmod>2023-10-03T19:09:38.763Z</lastmod>
+    <lastmod>2023-10-03T19:41:46.061Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/installing_r.html</loc>
-    <lastmod>2023-10-03T19:09:38.780Z</lastmod>
+    <lastmod>2023-10-03T19:41:46.075Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/version_control.html</loc>
-    <lastmod>2023-10-03T19:09:38.794Z</lastmod>
+    <lastmod>2023-10-03T19:41:46.087Z</lastmod>
   </url>
 </urlset>
