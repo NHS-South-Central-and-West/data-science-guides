@@ -29,7 +29,7 @@ book:
     - part: "Machine Learning"
       chapters:
         - ml_workflow_r.qmd
-        # - clustering_r.qmd
+        - clustering_r.qmd
         
     - part: "Deep Learning"
     - part: "Delivering Data Science"
