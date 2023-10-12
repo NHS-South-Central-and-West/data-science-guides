@@ -497,7 +497,7 @@ When classical significance testing methods were developed, simulation wasn't po
 
 Downey visualises how this simulation-based workflow for hypothesis testing works using the following diagram:
 
-![](figures/hypothesis_testing.png)
+![](figures/hypothesis_testing_black.png)
 
 The `{infer}` workflow for carrying out simulation-based hypothesis tests is designed based on the same principles (`specify()`, `hypothesize()`, `generate()`, `calculate()`, & `visualize()`). This all-in-one process for hypothesis testing is a little more involved than the humble t-test, and the code for computing hypothesis tests using this approach is definitely more verbose. However, the power that this process gives you is that you can easily carry out any hypothesis test once you've learned Downey's framework, and the consistency of the `{infer}` workflow makes it easier to learn how to do this. The `{infer}` documentation also provides a [pretty exhaustive list][{infer} Examples] of how to compute hypothesis tests under a variety of conditions.
 
