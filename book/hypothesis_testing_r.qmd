@@ -157,7 +157,9 @@ I think this principle is easier to follow in academia, where extensive reportin
 
 ##### Build Scientific Models {.unnumbered}
 
-Finally, it is important to think carefully about the implications of any hypothesis, and to understand that there is a difference between a scientific hypothesis and a statistical hypothesis. There are often many different statistical hypotheses that would be consistent with a particular scientific hypothesis. This is well explained and multiple examples are given by @gelman2021.
+Finally, it is important to think carefully about the implications of any hypothesis, and to understand that there is a difference between a scientific hypothesis and a statistical hypothesis^[A scientific hypothesis reflects a theory about the world (for example, Drug $X$ decreases the risk of Disease $Y$) while a statistical hypothesis reflect what is observed in the data (A one-unit increase in $x$ will correspond with a one-unit decrease in $y$).]. Statistical models do not, on their own, allow scientific hypotheses
+
+There are often many different statistical hypotheses that would be consistent with a particular scientific hypothesis. This is well explained and multiple examples are given by @gelman2021.
 
 The garden of forking paths may be a particularly big issue in hypothesis testing, but it doesn't go away if we scrap NHST. It is important to think about the ways that any scientific hypothesis can be explained by multiple statistical hypotheses, and it's also very important to think about the many choices made when building any statistical model, and what this might mean for our work. There are so many different assumptions that go into the process of building a statistical model, and when we fail to consider the breadth of assumptions that underpin our work, we can easily invalidate our findings. As discussed earlier in this chapter, we have to remember that p-values are assuming that **all** of our assumptions are true, and if any of them are not true, we are in hot water. 
 
@@ -169,7 +171,15 @@ Building scientific models doesn't necessarily address all concerns around the "
 
 ### Moving Beyond Testing
 
-If a p-value of 0.01 tells us that our results are pretty surprising given our expectations of what the data would have looked like if it was randomly generated (or if we assume that the null hypothesis is true), what should we make of this? Sometimes this is enough, but there's lots of cases where we should seek to do much more.
+Simple statistical tests of difference between groups or differences from a hypothesised value have plenty of utility, especially in industry, where getting reasonably reliable results quickly can often be more valuable than taking more time to get more precision.
+
+However, where more precision is needed, a different approach may be necessary. Simply testing a test hypothesis can only give us some sense of the degree to which our data is consistent with the hypothesis. This may move us closer to being able to make inferences, especially if the testing approach is robust, and sound scientific models have been developed for which the hypothesis test is a reasonable statistical representation, but answering meaningful questions usually involves trying to make some assertions not just about the existence of an effect or a difference, but also quantifying it too. 
+
+In order to do this, estimation is necessary. The estimation approach to statistical inference does not rely on a hypothesis, and instead focuses on a "quantity of interest", for which we will use the data to estimate [@prytherch2022].
+
+Testing tries to give us a sense of whether or not what we observe in our sample is likely to exist in the population. A p-value of 0.01 tells us that the observed data is pretty surprising, given our expectations under the statistical test. However, this only gives us a bit of a picture of whether what we observe is meaningfully different from some hypothesised value. In those cases, the goal shouldn't be to test a null hypothesis, but to estimate effect sizes as robustly as possible. Framing analyses in terms of estimating effect sizes is a significant improvement on just testing if there is a meaningful difference. 
+
+While estimating an effect size is a good start, the reality is that estimating the size of the effect, as a point estimate, is inherently uncertain. This uncertainty can be a strength, rather than a weakness. Estimating any population parameter or test statistic is done with a degree of uncertainty. By incorporating that uncertainty in to the estimates themselves and the way findings are framed and presented, we can say a lot more about what our sample data is telling us, and we are better able to make inferences about the population.
 
 :::{.callout-note collapse='true'}
 
@@ -225,6 +235,9 @@ A generalised framework for hypothesis testing, that discards of NHST's problema
 4. Compute the p-value, representing the probability of observing a test statistic as large or larger than the observed test statistic if all of the assumptions of the statistical model, including the test hypothesis, are true.
 
 The intuition behind hypothesis testing may not be entirely clear from this. The important takeaway is that our test statistic is our measure of the observed/sample data, our test/null distribution is our measure of what we would expect to observe if the test/null hypothesis, and all other model assumptions, are true, and our statistical test is simply quantifying how compatible our observed data would be with the generated distribution.
+
+The hypothesis being tested doesn't have to be a null hypothesis. It could be a hypothesis that captures a consequence of a scientific hypothesis being true (as opposed to false, in the case of the null hypothesis), or it can test two scientific hypotheses against each other (instead of one against the possibility of nothing going on) [@prytherch2022].
+ific hypotheses against each other, rather than one scientific hypothesis again “nothing”.
 
 While there are many different statistical tests that are designed to test different data distributions, using different assumptions, the general framework is the same. Below are some examples of statistical tests that are commonly used.
 
@@ -497,7 +510,7 @@ When classical significance testing methods were developed, simulation wasn't po
 
 Downey visualises how this simulation-based workflow for hypothesis testing works using the following diagram:
 
-![](figures/hypothesis_testing_black.png)
+![](figures/hypothesis_testing.png)
 
 The `{infer}` workflow for carrying out simulation-based hypothesis tests is designed based on the same principles (`specify()`, `hypothesize()`, `generate()`, `calculate()`, & `visualize()`). This all-in-one process for hypothesis testing is a little more involved than the humble t-test, and the code for computing hypothesis tests using this approach is definitely more verbose. However, the power that this process gives you is that you can easily carry out any hypothesis test once you've learned Downey's framework, and the consistency of the `{infer}` workflow makes it easier to learn how to do this. The `{infer}` documentation also provides a [pretty exhaustive list][{infer} Examples] of how to compute hypothesis tests under a variety of conditions.
 
