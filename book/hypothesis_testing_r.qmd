@@ -27,7 +27,8 @@ set.seed(123)
 
 ```
 
-This chapter will cover a topic that is well known to many practitioners - hypothesis testing. Hypothesis testing remains widely used, despite the dominant strain of this method, Null Hypothesis Significance Testing (NHST), facing growing (though not new) criticisms regarding it's external validity. If you have ever come across discussions about the "replication crisis" in science, you will have read about the many issues concerning the use of statistical significance as a measure of evidence in science and the misunderstanding and misuse of p-values. The null hypothesis significance testing framework is another of the central culprits in this crisis.
+This chapter will cover a topic that is well known to many practitioners - hypothesis testing.
+Hypothesis testing is a popular approach for attempting to make inferences about data without being led astray by noise. Although hypothesis testing remains very popular, it has been much criticised because the most common framework for testing, Null Hypothesis Significance Testing (NHST), has faced increasing criticisms regarding it's external validity. If you have ever come across discussions about the "replication crisis" in science, you will have read about the many issues concerning the use of statistical significance as a measure of evidence in science and the misunderstanding and misuse of p-values. The null hypothesis significance testing framework is another of the central culprits in this crisis.
 
 Hypothesis testing may be one of the most prominent tools for statistical inference, but there is plenty of debate about how we should be doing it, and whether the method should be consigned to the history books of statistics, only to be remembered as that silly time in our lives when we used to do science really badly. Here I hope to be able to give readers a clear understanding of how hypothesis testing works, it's biggest drawbacks, and some advice about how to carry out robust tests of hypotheses.
 
@@ -107,10 +108,6 @@ If we are more precise about how we think about p-values, this should help us av
 
 There has been plenty of debate among statisticians about the issues around hypothesis testing and p-values, and while there is no detail too minor for two academics to throw hands over, there is a general consensus that our approach to p-values is a problem. What has not been settled, however, is what the right approach is. That makes this section of this chapter a little trickier. However, I will attempt to give some sensible advice about how to avoid the greatest dangers pose by hypothesis testing and the use of p-values more broadly.
 
-The advice here will focus on meeting the needs of carrying out hypothesis tests, and alternatives to hypothesis testing. The advice here will address these two approaches, though I think the advice for building better tests also applies broadly to how we approach p-values, even when using alternative methods.
-
-### Improving Hypothesis Testing
-
 A more general approach to hypothesis testing would frame things in terms of a test hypothesis, which is a hypothesised effect (including but not limited to zero effect -- the null hypothesis) that is assumed to be true, and a statistical test is carried out that considers how well the observed date conforms to our expectations given that the test's assumptions, including the test hypothesis, are true.
 
 Perhaps unsurprisingly, the primary way to improve how we do hypothesis testing is to approach p-values differently. The simplest solution is not to use statistical significance at all. This is an arbitrary threshold that gives us very little good information, and allows researchers to avoid thinking critically about their findings. Instead, we should report the p-value itself, and be clear about what it is that p-values actually tell us! 
@@ -121,9 +118,9 @@ Ultimately, hypothesis testing requires a careful, critical approach, and this a
 
 :::{.callout-note collapse='true'}
 
-#### Further Details
+### Further Details
 
-##### Rethink P-Values {.unnumbered}
+#### Rethink P-Values {.unnumbered}
 
 The p-value is not a magic number. It does not give the probability that your research hypothesis is true, nor does it give the probability that the observed association is a product of random chance [@wasserstein2019]. One of the biggest issues I have with p-values is that they feel, given the way we use them in NHST, like they **should** be the probability that our hypothesis is true. However, it is important to never let those urges win - the p-value is not a hypothesis probability.
 
@@ -135,7 +132,7 @@ The point is that none of these definitions (or more precisely, intuitive explan
 
 Framing p-values appropriately is one part of the necessary rethink about p-values. The other is the need to place less weight in what p-values tell us. Having acknowledged all the things that p-values are not, this part should be easy to understand. Given that p-values are not a hypothesis probability, and they are really a statement about our data, they are far from sufficient (though I would argue they are at least necessary) for our understanding of our data. Instead, they are part of a wider toolkit. A toolkit that contains even more important tools, like effect sizes!
 
-##### Stop Using Statistical Significance {.unnumbered}
+#### Stop Using Statistical Significance {.unnumbered}
 
 In addition to the common misuse of p-values, the null hypothesis significance testing framework also defines an arbitrary threshold for what is considered a sufficiently "meaningful" result - statistical significance.
 
@@ -147,7 +144,7 @@ If you need further evidence of the problems with how we have been using statist
 
 Where possible, do not use terms like statistical significance, and do not use a threshold (the $\alpha$ level) for significance. Report p-values instead. P-values should be "viewed as a continuous measure of the compatibility between the data and the entire model used to compute it, ranging from 0 for complete incompatibility to 1 for perfect compatibility, and in this sense may be viewed as measuring the fit of the model to the data." [@greenland2016, pp. 339]
 
-##### Report All Findings {.unnumbered}
+#### Report All Findings {.unnumbered}
 
 This suggestion ties in closely with the previous two. If p-values are treated like a continuous measure of compatibility, and we are no longer using thresholds to define whether a result is good or bad, this should reduce the urge to report findings selectively, based only on those that say the right thing.
 
@@ -155,7 +152,7 @@ Do not carry out multiple tests and only show the significant results. Be open a
 
 I think this principle is easier to follow in academia, where extensive reporting of findings is encouraged. I don't think there is a downside to open and transparent reporting in academia (ignoring the potential risks posed to publication). However, in industry, there is often a need to be as clear and concise as possible. Reporting all results could potentially cause confusion, and make statistical findings much harder for non-technical audiences to understand. Therefore I think the advice for industry should be that reporting results should not be defined by the statistical significance of the results. We should report the results that matter, that contribute the most to our understanding of a quantity of interest, and that help others understand the findings. Communication of findings in industry should focus on communicating the key results from the analysis, and that should not be defined by significance.
 
-##### Build Scientific Models {.unnumbered}
+#### Build Scientific Models {.unnumbered}
 
 Finally, it is important to think carefully about the implications of any hypothesis, and to understand that there is a difference between a scientific hypothesis and a statistical hypothesis^[A scientific hypothesis reflects a theory about the world (for example, Drug $X$ decreases the risk of Disease $Y$) while a statistical hypothesis reflect what is observed in the data (A one-unit increase in $x$ will correspond with a one-unit decrease in $y$).]. Statistical models do not, on their own, allow scientific hypotheses
 
@@ -169,59 +166,50 @@ Building scientific models doesn't necessarily address all concerns around the "
 
 :::
 
-### Moving Beyond Testing
 
-Simple statistical tests of difference between groups or differences from a hypothesised value have plenty of utility, especially in industry, where getting reasonably reliable results quickly can often be more valuable than taking more time to get more precision.
+## Moving Beyond Testing
 
-However, where more precision is needed, a different approach may be necessary. Simply testing a test hypothesis can only give us some sense of the degree to which our data is consistent with the hypothesis. This may move us closer to being able to make inferences, especially if the testing approach is robust, and sound scientific models have been developed for which the hypothesis test is a reasonable statistical representation, but answering meaningful questions usually involves trying to make some assertions not just about the existence of an effect or a difference, but also quantifying it too. 
+Hypothesis testing is still a useful tool when we are looking to make conclusions about data without overinterpreting noise [@gelman2020]. Simple statistical tests of difference between groups or differences from a hypothesised value have plenty of utility, especially in industry, where getting reasonably reliable results quickly can often be more valuable than taking more time to get more precision.
 
-In order to do this, estimation is necessary. The estimation approach to statistical inference does not rely on a hypothesis, and instead focuses on a "quantity of interest", for which we will use the data to estimate [@prytherch2022].
+However, where more precision is needed, a different approach may be necessary. Testing a test hypothesis can only give us some sense of the degree to which our data is consistent with the hypothesis. This may move us closer to being able to make inferences, especially if the testing approach is robust, and sound scientific models have been developed for which the hypothesis test is a reasonable statistical representation, but answering meaningful questions usually involves trying to make some assertions not just about the existence of an effect or a difference, but also quantifying it too. Where this is the goal, estimation is a better choice. The estimation approach to statistical inference does not rely on a hypothesis, and instead focuses on a "quantity of interest", for which we use the data to estimate [@prytherch2022]. While testing tries to give us a sense of whether or not what we observe in our sample is likely to exist in the population, the estimation approach tries to measure the effect size itself.
 
-Testing tries to give us a sense of whether or not what we observe in our sample is likely to exist in the population. A p-value of 0.01 tells us that the observed data is pretty surprising, given our expectations under the statistical test. However, this only gives us a bit of a picture of whether what we observe is meaningfully different from some hypothesised value. In those cases, the goal shouldn't be to test a null hypothesis, but to estimate effect sizes as robustly as possible. Framing analyses in terms of estimating effect sizes is a significant improvement on just testing if there is a meaningful difference. 
+Although estimating an effect size is a good start, it is also important to quantify the precision of that estimate as well. Estimating the size of an effect, a point estimate, is inherently uncertain. This uncertainty can be a strength, rather than a weakness. By incorporating uncertainty in to our estimates, we can say more about what our sample data is telling us, and we are better able to make inferences about the population. 
 
-While estimating an effect size is a good start, the reality is that estimating the size of the effect, as a point estimate, is inherently uncertain. This uncertainty can be a strength, rather than a weakness. Estimating any population parameter or test statistic is done with a degree of uncertainty. By incorporating that uncertainty in to the estimates themselves and the way findings are framed and presented, we can say a lot more about what our sample data is telling us, and we are better able to make inferences about the population.
+Further, by acknowledging the uncertainty in the statistical modelling process, not just about the model's point estimates, the process should become a more honest representation of the quantity of interest. @greenland2016 argue that the goal of statistical analysis is to evaluate the certainty of an effect size, and acknowledging and embracing that uncertainty should include every aspect of the process, including the conclusions we draw and the way we present our findings.
 
 :::{.callout-note collapse='true'}
 
-#### Further Details
+### Further Details
 
-##### Estimate Meaningful Quantities {.unnumbered}
+#### Estimate Meaningful Quantities {.unnumbered}
 
-This is, I believe, the most important suggestion that is made in this entire chapter. I am borrowing a phrase used by the UNC Epidemiologist, Charles Poole, in a talk he gave about the value of p-values - "stop testing null hypotheses, start estimating meaningful quantities" [@poole2022].
+This is, I believe, the most important suggestion made in this chapter. I am borrowing a phrase used by the UNC Epidemiologist, Charles Poole, in a talk he gave about the value of p-values. He states that we should "stop testing null hypotheses, start estimating meaningful quantities" [@poole2022]. His (very firmly-held) position is that there is no reforming null hypothesis significance testing. Instead, our focus should be on estimation. @poole2022 argues that wherever significance testing is of some utility, we should instead frame the results in terms of substantive results and estimation of effect size. This would still do what hypothesis testing is attempting to do, but it should be more robust (if done properly), and the framing itself offers a lot more.
 
-His (very firmly-held) position is that there is no reforming null hypothesis significance testing. Instead, our focus should be on estimation. Where significance testing is of some utility, frame the results in terms of substantive results and estimation of effect size, instead of statistical significance.
+@gelman2020 argue that we are generally capable of being interested in issues where effects exist, and that the presence of an effect is therefore not entirely interesting, in and of itself. Therefore, we should concern ourselves with the things that do matter, like the size of the effect, not the existence of the effect itself.
 
-I am of the view that hypothesis testing is generally a sub-optimal approach when trying to better understand phenomenon using data. Hypothesis testing cannot tell us what we really need to know, and our confidence in the results of even seemingly well-constructed hypothesis tests is pretty shaky by now, so where possible I would generally focus on trying to estimate the effects.
-
-This doesn't necessarily alter the statistical methods we will use (though more on this at the end of this chapter), but it does require our adjusting how we approach these methods and what we look to get out of them.
-
-Build statistical models that are more ambitious than simply attempting to identify the existence of an effect. We should care enough to try and measure things that matter more than that. We should seek to know what that effect is, and we should have the confidence in our ability to care about things that are, at a minimum, doing something. @gelman2020 argue that we are generally capable of being interested in issues where effects exist, and that the presence an effect is therefore not entirely interesting, in and of itself. Therefore, we should concern ourselves with the things that do matter, like the size of the effect, not the existence of the effect itself.
+Although I'm not going to take quite as strong a position as @poole2022 or @gelman2020, I do think his position is pretty much correct. I am of the view that hypothesis testing is generally a sub-optimal approach when trying to better understand phenomena using data. I think there are still plenty of situations where a hypothesis test is sufficient, and in industry where there is often value to providing functionally useful (if relatively imprecise) conclusions quickly, it is reasonable to turn to testing. However, there are lots of situations where an estimate of the effect size, and the precision of that estimate, are both very valuable!
 
 It is rare that we should only care that the effect exists. Generally speaking, this should be a prerequisite to the more important question of what the magnitude and direction of that effect is. Even where the knowledge of the existence of an effect is sufficient, it is hard for me to imagine a situation where knowing the magnitude and direction of the effect wouldn't be useful, and wouldn't allow us to estimate our confidence in that effect more effectively.
 
-##### Embrace Uncertainty {.unnumbered}
+Taking an estimation approach to statistical inference doesn't necessarily alter the statistical methods used (though more on this at the end of this chapter), but it does require our adjusting how we approach these methods and what we look to get out of them.
 
-When we move away from testing null hypotheses and focus instead on the estimation of effect sizes, we go from testing for the existence of an effect to estimating the magnitude and the direction of the effect. However, a key part of this that is missing is the precision with which we are able to estimate the effect. It's important to remember, in any statistical modelling, that we are estimating quantities, and therefore any point estimate is just our best effort at quantifying an unknown population parameter. The point estimate is probably wrong! It is important that we acknowledge the uncertainty in our estimations and account for them in the way we present model outputs.
+Estimation is not specifically about method. If statistical tests are used, then it requires taking the estimate of the effect size, or calculating it if the context means that any output does not offer an intuitive interpretation of effect. Other methods, like regression, can give a more direct measure of effect size (though there are plenty of regression models that also require work to produce more interpretable effect estimates).
+
+The important change in approach is to focus on the importance of the estimated effect size, not on the p-value, or statistical significance!
+
+#### Embrace Uncertainty {.unnumbered}
+
+When we move away from testing null hypotheses and focus instead on the estimation of effect sizes, we go from testing for the existence of an effect to estimating the magnitude (effect size) and the direction (whether the effect is positive or negative). However, a key part of this that is missing is the precision with which we are able to estimate the effect. It's important to remember, in any statistical modelling, that we are estimating quantities, and therefore any point estimate is just our best effort at quantifying an unknown population parameter. The point estimate is probably wrong! It is important that we acknowledge the uncertainty in our estimations and account for them in the way we present model outputs^[It is also worth noting that while the guidance here is about the estimation approach to statistical inference, it can also be applied to hypothesis testing too.].
 
 However, the embrace of uncertainty is not limited to our uncertainty in our estimates. It is a wider issue. We have to accept that every part of the process of estimating meaningful quantities is done with a degree of uncertainty, and as such the way we think about statistical modelling and the way we present our results should account for the existence of variance. Uncertainty exists everywhere in statistical analysis and inference [@wasserstein2019].
 
-@wasserstein2019 describe the use of "significance tests and dichotomized p-values" as an attempt by some practitioners to avoid dealing with uncertainty, by escaping to a more simplistic world where results are either statistically significant or not.
+@wasserstein2019 describe the use of "significance tests and dichotomized p-values" as an attempt by some practitioners to avoid dealing with uncertainty by escaping to a more simplistic world where results are either statistically significant or not. Perhaps a little uncharitable (though in an academic context I am more inclined to agree), but we've already discussed the importance of moving away from significance testing, so we should complete the journey and confront uncertainty head-on! We have to accept that findings are more uncertain than is often acknowledged. Our embrace of uncertainty should help us to seek out better methods, apply the necessary amount of care and critical thinking to our work, and draw inferences with the appropriate amount of confidence.
 
-@greenland2016 argue that the goal of a statistical analysis is to provide an evaluation of our certainty (or uncertainty) of an effect size. Embracing uncertainty means recognising that it is fundamental to every aspect of what we do, and the way we talk about our work, how we present it, and the conclusions we draw from it, must accept this fact. 
+One way of acknowledging and working with this uncertainty is the use of confidence intervals when estimating effect sizes. Confidence intervals estimate a range of values that would be compatible with the data, given all of the statistical model's assumptions are met. While confidence intervals are ultimately estimated from the p-value, and the typical 95% confidence interval corresponds to the p > .05 threshold that I have warned against, they are useful because they frame results in terms of effect sizes, and they incorporate uncertainty in our estimates, helping to quantify the precision with which we are able to estimate effect size. 
 
-In order to achieve this we have to accept that findings are more uncertain than is often acknowledged.
+Confidence intervals are a step in the right direction, because point estimates, while they are our best shot at the quantity of interest, are highly likely to be wrong. Estimating the interval within which we would expect the quantity of interest to fall, acknowledges that uncertainty, and there's a better chance that the population parameter falls within the estimated range than bang on the point estimate. However, it's important that we don't treat confidence intervals as the fix for all uncertainty! @gelman2016 states that "the solution is not to reform p-values or to replace them with some other statistical summary or threshold, but rather to move toward a greater acceptance of uncertainty and embracing of variation".
 
-Our embrace of uncertainty should help us to seek out better methods, apply the necessary amount of care and critical thinking to our work, and draw inferences with the appropriate amount of confidence.
-
-One way of acknowledging and working with this uncertainty is the use of confidence intervals when estimating effect sizes. Confidence intervals estimate a range of values that would be compatible with the data, given all of the statistical model's assumptions are met. While confidence intervals are ultimately estimated from the p-value, and the typical 95% confidence interval corresponds to the p > .05 threshold that I have warned against, they are useful because they frame results in terms of effect sizes, and they incorporate uncertainty in our estimates.
-
-Further, confidence intervals give us some sense of the precision with which we are able to estimate effect size. 
-
-Consider using confidence intervals - though they won't fix issues with testing, they are useful for testing the precision of the estimation process when estimating meaningful quantities.
-
-@gelman2016 states that "the solution is not to reform p-values or to replace them with some other statistical summary or threshold, but rather to move toward a greater acceptance of uncertainty and embracing of variation".
-
-Ultimately, using confidence intervals with a hypothesis test doesn't get you much further than p-values. So embracing uncertainty in the results of a hypothesis test isn't as simple as estimating intervals instead of point values. But acknowledging the uncertainty in our estimation of an effect size frames our statistical modelling approach in more robust terms.
+Ultimately, confidence intervals are valuable when estimating meaningful quantities, but there are very far from sufficient when it comes to embracing uncertainty. We have to acknowledge the uncertainty in the entire statistical modelling process, both when we are making decisions about that modelling process and when we present our findings to others.
 
 :::
 
@@ -602,11 +590,9 @@ As discussed above, the simulation-based approach to hypothesis testing involves
 
 ## Next Steps
 
-The goal for this chapter is that readers come away with an understanding of the significant limitations of null hypothesis significance testing and the more robust approaches to testing hypotheses, and, more importantly, estimating meaningful effects.
+The goal for this chapter is that readers come away with an understanding of the significant limitations of null hypothesis significance testing and the more robust approaches to testing hypotheses, and the alternative approach of estimating meaningful effects. I hope that this chapter has helped set people up reasonably well when carrying out tests. Equally, I hope that they will consider the alternatives, recognising when it is defensible to carry out a statistical test and when estimating the effect size is necessary. 
 
-I hope that this chapter has helped set people up reasonably well when carrying out tests. Equally, I hope that they will consider the alternatives, perhaps gradually weaning themselves off this bad habit and moving towards the big, wide world of estimation.
-
-That big wide world is, I believe, better served by regression models than statistical tests. While regression modelling is far from sufficient for robust estimation, it is a better starting point than statistical tests, because the structure of regression modelling places more emphasis on the effect size. Further, estimating effect sizes does not rule out the use of statistical tests, but it does require redirecting our focus and making sure to treat the magnitude and direction of effect size as the most important part of the analysis. The premise of statistical tests is that they test for the existence of an effect, and while packages like {infer} frame test outputs in a way that makes using statistical tests for these purposes, it does still require a little work to think about about the results of statistical tests in these terms. Further, I think that regression modelling gives a lot more flexibility when we are attempting to estimate an effect as precisely as possible, and the process and resulting outputs of a regression model lend themselves more naturally to a focus that steers away from hypothesis testing and towards estimating effects.
+The big wide world of estimation is, I believe, better served by regression models than statistical tests. I think regression modelling is a better starting point than statistical tests because the structure of regression modelling places more emphasis on the effect size. Further, estimating effect sizes does not rule out the use of statistical tests, but it does require redirecting our focus and making sure to treat the magnitude and direction of effect size as the most important part of the analysis. The premise of statistical tests is that they test for the existence of an effect, and while packages like {infer} frame test outputs in a way that makes using statistical tests for these purposes, it does still require a little work to think about about the results of statistical tests in these terms. Further, I think that regression modelling gives a lot more flexibility when we are attempting to estimate an effect as precisely as possible, and the process and resulting outputs of a regression model lend themselves more naturally to a focus that steers away from hypothesis testing and towards estimating effects.
 
 I think it is important to stress the distinction here between the null hypothesis testing framework and the statistical tests used to carry them out. The tests themselves are not really the problem. However, they are closely tied to null hypothesis testing. Ultimately, the statistical tests discussed in this chapter (and many more) are just special cases of linear models [@lindelov2019], and the results in both will be identical [@zablotski2019] (if not the way the outputs are presented), so the same things can be achieved with either approach, but regression modelling offers more flexibility, allows for the layering of complexity/precision in estimates, and the way regression outputs are framed are generally a little more balanced. Treating regressions as the first point of call for inferential statistics is not a necessary prerequisite for "doing things the right way", but doing things the right way becomes easier, because it is easier frame everything in terms of the magnitude and direction of effects.
 
