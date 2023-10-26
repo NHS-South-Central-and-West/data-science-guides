@@ -217,15 +217,12 @@ Ultimately, confidence intervals are valuable when estimating meaningful quantit
 
 A generalised framework for hypothesis testing, that discards of NHST's problematic baggage (instead following a Fisherian approach [@fisher1956]), would take the following steps:
 
-1. Specify the test hypothesis ($H_0$) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything.
+1. Specify the test hypothesis ($H_0$) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything^[It could be a hypothesis that captures a consequence of a scientific hypothesis being true (as opposed to false, in the case of the null hypothesis), or it can test two scientific hypotheses against each other (instead of one against the possibility of nothing going on) [@prytherch2022].].
 2. Generate the test distribution, defined by the data being analysed and the test being carried out, which represents our expectation of what we would observe if the statistical model's assumptions, which include the test hypothesis, are all true.
 3. Compute the test statistic, which quantifies how extreme the observed data is, given the test distribution.
 4. Compute the p-value, representing the probability of observing a test statistic as large or larger than the observed test statistic if all of the assumptions of the statistical model, including the test hypothesis, are true.
 
-The intuition behind hypothesis testing may not be entirely clear from this. The important takeaway is that our test statistic is our measure of the observed/sample data, our test/null distribution is our measure of what we would expect to observe if the test/null hypothesis, and all other model assumptions, are true, and our statistical test is simply quantifying how compatible our observed data would be with the generated distribution.
-
-The hypothesis being tested doesn't have to be a null hypothesis. It could be a hypothesis that captures a consequence of a scientific hypothesis being true (as opposed to false, in the case of the null hypothesis), or it can test two scientific hypotheses against each other (instead of one against the possibility of nothing going on) [@prytherch2022].
-ific hypotheses against each other, rather than one scientific hypothesis again “nothing”.
+The important takeaway is that the test statistic is a measure of the sample data, the test distribution is a measure of what we would expect to observe if the test hypothesis, and all other model assumptions, are true, and the statistical test is simply quantifying how compatible the observed data would be with the generated distribution.
 
 While there are many different statistical tests that are designed to test different data distributions, using different assumptions, the general framework is the same. Below are some examples of statistical tests that are commonly used.
 
@@ -304,7 +301,7 @@ t_test(high_achievers, response = score, mu = 100, alternative = "greater")
 
 The p-value of our one-sample t-test is 0.105. This means that we would expect to observe a sample mean at least as extreme as our observed mean (106), if the null that there is no difference between the high achiever group's mean IQ score and the population mean IQ score is true, a little more than 10% of the time, or 1 in 10 times. That's quite high, so I wouldn't be confident that we are observing a meaningful difference.
 
-However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person^[The Neyman-Pearson approach to interpreting p-values in significance tests would conclude that a p-value less than a certain threshold, often p < 0.05, is not statistically significant, and would therefore fail to reject the null hypothesis. We are refraining from using this framing here because I think this approach does more harm than good.], this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).
+However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person, this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).
 
 If we increase our sample size, maybe we will have more luck!
  
@@ -358,7 +355,7 @@ t_test(short_kings, response = height_diff, mu = 0, direction = "greater")
 
 The difference between the self-reported and measured heights has a p-value of 0.00719, suggesting there is a 0.7% probability of observing a t-statistic at least as extreme as we observe here, if the data was generated by chance and if the assumptions of our statistical model are valid.
 
-More importantly, we observe an estimated difference between self-reported height and measured height of 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I'll leave that up to you to decide.
+The estimated difference between self-reported height and measured height is 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I'll leave that up to you to decide.
 
 #### Two Samples T-Test
 

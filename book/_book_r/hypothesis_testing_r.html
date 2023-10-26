@@ -484,13 +484,12 @@ Further Details
 <span class="header-section-number">6.5</span> Building Statistical Tests</h2>
 <p>A generalised framework for hypothesis testing, that discards of NHST’s problematic baggage (instead following a Fisherian approach <span class="citation" data-cites="fisher1956">(<a href="references.html#ref-fisher1956" role="doc-biblioref">Fisher 1956</a>)</span>), would take the following steps:</p>
 <ol type="1">
-<li>Specify the test hypothesis (<span class="math inline">\(H_0\)</span>) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything.</li>
+<li>Specify the test hypothesis (<span class="math inline">\(H_0\)</span>) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</li>
 <li>Generate the test distribution, defined by the data being analysed and the test being carried out, which represents our expectation of what we would observe if the statistical model’s assumptions, which include the test hypothesis, are all true.</li>
 <li>Compute the test statistic, which quantifies how extreme the observed data is, given the test distribution.</li>
 <li>Compute the p-value, representing the probability of observing a test statistic as large or larger than the observed test statistic if all of the assumptions of the statistical model, including the test hypothesis, are true.</li>
 </ol>
-<p>The intuition behind hypothesis testing may not be entirely clear from this. The important takeaway is that our test statistic is our measure of the observed/sample data, our test/null distribution is our measure of what we would expect to observe if the test/null hypothesis, and all other model assumptions, are true, and our statistical test is simply quantifying how compatible our observed data would be with the generated distribution.</p>
-<p>The hypothesis being tested doesn’t have to be a null hypothesis. It could be a hypothesis that captures a consequence of a scientific hypothesis being true (as opposed to false, in the case of the null hypothesis), or it can test two scientific hypotheses against each other (instead of one against the possibility of nothing going on) <span class="citation" data-cites="prytherch2022">(<a href="references.html#ref-prytherch2022" role="doc-biblioref">Prytherch 2022</a>)</span>. ific hypotheses against each other, rather than one scientific hypothesis again “nothing”.</p>
+<p>The important takeaway is that the test statistic is a measure of the sample data, the test distribution is a measure of what we would expect to observe if the test hypothesis, and all other model assumptions, are true, and the statistical test is simply quantifying how compatible the observed data would be with the generated distribution.</p>
 <p>While there are many different statistical tests that are designed to test different data distributions, using different assumptions, the general framework is the same. Below are some examples of statistical tests that are commonly used.</p>
 <section id="t-tests" class="level3" data-number="6.5.1"><h3 data-number="6.5.1" class="anchored" data-anchor-id="t-tests">
 <span class="header-section-number">6.5.1</span> T-Tests</h3>
@@ -504,7 +503,7 @@ Further Details
 <p>There are several variations within these groups, for example a paired t-test generally assumes equal variance between the two groups, but this is often not true, so an unequal variance t-test can be used.</p>
 <p>Finally, when deciding on the nature of a t-test, you must also decide if the test should be one-tailed or two-tailed. A one-tailed t-test is used to test a hypothesis that includes a directional component (such as <span class="math inline">\(x &gt; y\)</span>), while a two-tailed t-test is just testing whether there is a difference between two groups. A one-tailed t-test is appropriate when you believe the difference between two groups should be positive or negative, but if the only belief is that the groups are different, a two-tailed t-test is appropriate.</p>
 <p>A two-tailed t-test compares whether the sample mean(s) is different, whether larger or smaller, while a one-tailed t-test assumes the direction of the difference is known. For example, if it is known that Group A is either the same or bigger than Group B (or that Group A being smaller is not of interest), then a one-tailed t-test would be appropriate.</p>
-<p>I will simulate data from real-world examples to demonstrate one-sample, paired, and two-sample t-tests, however, these examples are not exhaustive, and there are many variations on t-test implementations.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>I will simulate data from real-world examples to demonstrate one-sample, paired, and two-sample t-tests, however, these examples are not exhaustive, and there are many variations on t-test implementations.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
 <section id="one-sample-t-test" class="level4" data-number="6.5.1.1"><h4 data-number="6.5.1.1" class="anchored" data-anchor-id="one-sample-t-test">
 <span class="header-section-number">6.5.1.1</span> One-Sample T-Test</h4>
 <p>We can carry out a one-sample t-test using IQ scores as our example, because there is plenty of data out there about IQ scores that we can base our simulations on. The average IQ score is said to be around 100, and scores are normally distributed with a standard deviation of 15, meaning that the majority of people have an IQ in the range of 85-115.</p>
@@ -554,7 +553,7 @@ Further Details
 </div>
 </div>
 <p>The p-value of our one-sample t-test is 0.105. This means that we would expect to observe a sample mean at least as extreme as our observed mean (106), if the null that there is no difference between the high achiever group’s mean IQ score and the population mean IQ score is true, a little more than 10% of the time, or 1 in 10 times. That’s quite high, so I wouldn’t be confident that we are observing a meaningful difference.</p>
-<p>However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).</p>
+<p>However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person, this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).</p>
 <p>If we increase our sample size, maybe we will have more luck!</p>
 <div class="cell" data-hash="hypothesis_testing_r_cache/html/increase-sample-size_ee972975443be3e7c8f39a4da0410f01">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">larger_sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">105</span>, sd <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
@@ -598,7 +597,7 @@ Further Details
 </div>
 </div>
 <p>The difference between the self-reported and measured heights has a p-value of 0.00719, suggesting there is a 0.7% probability of observing a t-statistic at least as extreme as we observe here, if the data was generated by chance and if the assumptions of our statistical model are valid.</p>
-<p>More importantly, we observe an estimated difference between self-reported height and measured height of 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I’ll leave that up to you to decide.</p>
+<p>The estimated difference between self-reported height and measured height is 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I’ll leave that up to you to decide.</p>
 </section><section id="two-samples-t-test" class="level4" data-number="6.5.1.3"><h4 data-number="6.5.1.3" class="anchored" data-anchor-id="two-samples-t-test">
 <span class="header-section-number">6.5.1.3</span> Two Samples T-Test</h4>
 <p>So we’ve established a very real, totally scientific over-reporting of male height across the UK, and some clever, entrepreneurial, and not at all exploitative pharmaceutical company has had the good sense to develop a medication that gives you an extra couple of inches in height.</p>
@@ -889,8 +888,8 @@ Zablotski, Yury. 2019. <span>“Statistical Tests Vs. Linear Regression.”</spa
 <li id="fn5"><p>I’m assuming that anyone following this advice has good intentions, and is not looking to cheat their way to the results they want. Someone wanting to achieve this is going to find a way to do it regardless.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>A scientific hypothesis reflects a theory about the world (for example, Drug <span class="math inline">\(X\)</span> decreases the risk of Disease <span class="math inline">\(Y\)</span>) while a statistical hypothesis reflect what is observed in the data (A one-unit increase in <span class="math inline">\(x\)</span> will correspond with a one-unit decrease in <span class="math inline">\(y\)</span>).<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>It is also worth noting that while the guidance here is about the estimation approach to statistical inference, it can also be applied to hypothesis testing too.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>If you are unclear on some of the foundations that underpin what I’m discussing here, I’d recommend starting with StatQuest’s <a href="https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9">Statistics Fundamentals</a> YouTube playlist, and for a more detailed introduction, I would give <a href="https://crumplab.com/statistics"><em>Answering Questions With Data</em></a> a try.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>The Neyman-Pearson approach to interpreting p-values in significance tests would conclude that a p-value less than a certain threshold, often p &lt; 0.05, is not statistically significant, and would therefore fail to reject the null hypothesis. We are refraining from using this framing here because I think this approach does more harm than good.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>It could be a hypothesis that captures a consequence of a scientific hypothesis being true (as opposed to false, in the case of the null hypothesis), or it can test two scientific hypotheses against each other (instead of one against the possibility of nothing going on) <span class="citation" data-cites="prytherch2022">(<a href="references.html#ref-prytherch2022" role="doc-biblioref">Prytherch 2022</a>)</span>.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>If you are unclear on some of the foundations that underpin what I’m discussing here, I’d recommend starting with StatQuest’s <a href="https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9">Statistics Fundamentals</a> YouTube playlist, and for a more detailed introduction, I would give <a href="https://crumplab.com/statistics"><em>Answering Questions With Data</em></a> a try.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>Standard deviation can be computed from standard error by multiplying the standard error by the square root of the sample size. The formula for this is as follows: <span class="math display">\[\sigma = SE \times \sqrt{n}\]</span><a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>Using only five observations is less than ideal, but given that what we are doing is just illustrative, this will work fine.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>We have used the <a href="https://debruine.github.io/faux/"><code>{faux}</code></a> package to simulate this data because simulating two variables that are related to each other is a little more involved.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -1407,402 +1406,399 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-219"><a href="#cb24-219" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-220"><a href="#cb24-220" aria-hidden="true" tabindex="-1"></a>A generalised framework for hypothesis testing, that discards of NHST's problematic baggage (instead following a Fisherian approach <span class="co">[</span><span class="ot">@fisher1956</span><span class="co">]</span>), would take the following steps:</span>
 <span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Specify the test hypothesis ($H_0$) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything.</span>
+<span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Specify the test hypothesis ($H_0$) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything^<span class="co">[</span><span class="ot">It could be a hypothesis that captures a consequence of a scientific hypothesis being true (as opposed to false, in the case of the null hypothesis), or it can test two scientific hypotheses against each other (instead of one against the possibility of nothing going on) [@prytherch2022].</span><span class="co">]</span>.</span>
 <span id="cb24-223"><a href="#cb24-223" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Generate the test distribution, defined by the data being analysed and the test being carried out, which represents our expectation of what we would observe if the statistical model's assumptions, which include the test hypothesis, are all true.</span>
 <span id="cb24-224"><a href="#cb24-224" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Compute the test statistic, which quantifies how extreme the observed data is, given the test distribution.</span>
 <span id="cb24-225"><a href="#cb24-225" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Compute the p-value, representing the probability of observing a test statistic as large or larger than the observed test statistic if all of the assumptions of the statistical model, including the test hypothesis, are true.</span>
 <span id="cb24-226"><a href="#cb24-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-227"><a href="#cb24-227" aria-hidden="true" tabindex="-1"></a>The intuition behind hypothesis testing may not be entirely clear from this. The important takeaway is that our test statistic is our measure of the observed/sample data, our test/null distribution is our measure of what we would expect to observe if the test/null hypothesis, and all other model assumptions, are true, and our statistical test is simply quantifying how compatible our observed data would be with the generated distribution.</span>
+<span id="cb24-227"><a href="#cb24-227" aria-hidden="true" tabindex="-1"></a>The important takeaway is that the test statistic is a measure of the sample data, the test distribution is a measure of what we would expect to observe if the test hypothesis, and all other model assumptions, are true, and the statistical test is simply quantifying how compatible the observed data would be with the generated distribution.</span>
 <span id="cb24-228"><a href="#cb24-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-229"><a href="#cb24-229" aria-hidden="true" tabindex="-1"></a>The hypothesis being tested doesn't have to be a null hypothesis. It could be a hypothesis that captures a consequence of a scientific hypothesis being true (as opposed to false, in the case of the null hypothesis), or it can test two scientific hypotheses against each other (instead of one against the possibility of nothing going on) <span class="co">[</span><span class="ot">@prytherch2022</span><span class="co">]</span>.</span>
-<span id="cb24-230"><a href="#cb24-230" aria-hidden="true" tabindex="-1"></a>ific hypotheses against each other, rather than one scientific hypothesis again “nothing”.</span>
-<span id="cb24-231"><a href="#cb24-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-232"><a href="#cb24-232" aria-hidden="true" tabindex="-1"></a>While there are many different statistical tests that are designed to test different data distributions, using different assumptions, the general framework is the same. Below are some examples of statistical tests that are commonly used.</span>
-<span id="cb24-233"><a href="#cb24-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-234"><a href="#cb24-234" aria-hidden="true" tabindex="-1"></a><span class="fu">### T-Tests</span></span>
-<span id="cb24-235"><a href="#cb24-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-236"><a href="#cb24-236" aria-hidden="true" tabindex="-1"></a>The general idea of a t-test is to calculate the statistical significance of the difference between two groups. What the groups represent depends on the type of t-test being carried out, whether it be comparing a single group of observed data against a null distribution that assumes the data was generated by chance, or comparing the difference between two observed groups against a null distribution that assumes the difference is zero.</span>
-<span id="cb24-237"><a href="#cb24-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-238"><a href="#cb24-238" aria-hidden="true" tabindex="-1"></a>There are several broad groups of t-tests:</span>
-<span id="cb24-239"><a href="#cb24-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-240"><a href="#cb24-240" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>One-sample t-test - comparing the sample mean of a single group against a "known mean", generally testing whether a sample is likely to be generated by chance.</span>
-<span id="cb24-241"><a href="#cb24-241" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Paired t-test - comparing means from the same group measured multiple times, like how someone responds to a survey at different points in time.</span>
-<span id="cb24-242"><a href="#cb24-242" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Two samples t-test - comparing the means of two groups, such as measuring the difference in blood glucose levels of two different groups.</span>
-<span id="cb24-243"><a href="#cb24-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-244"><a href="#cb24-244" aria-hidden="true" tabindex="-1"></a>There are several variations within these groups, for example a paired t-test generally assumes equal variance between the two groups, but this is often not true, so an unequal variance t-test can be used. </span>
-<span id="cb24-245"><a href="#cb24-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-246"><a href="#cb24-246" aria-hidden="true" tabindex="-1"></a>Finally, when deciding on the nature of a t-test, you must also decide if the test should be one-tailed or two-tailed. A one-tailed t-test is used to test a hypothesis that includes a directional component (such as $x &gt; y$), while a two-tailed t-test is just testing whether there is a difference between two groups. A one-tailed t-test is appropriate when you believe the difference between two groups should be positive or negative, but if the only belief is that the groups are different, a two-tailed t-test is appropriate.</span>
-<span id="cb24-247"><a href="#cb24-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-248"><a href="#cb24-248" aria-hidden="true" tabindex="-1"></a>A two-tailed t-test compares whether the sample mean(s) is different, whether larger or smaller, while a one-tailed t-test assumes the direction of the difference is known. For example, if it is known that Group A is either the same or bigger than Group B (or that Group A being smaller is not of interest), then a one-tailed t-test would be appropriate.</span>
-<span id="cb24-249"><a href="#cb24-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-250"><a href="#cb24-250" aria-hidden="true" tabindex="-1"></a>I will simulate data from real-world examples to demonstrate one-sample, paired, and two-sample t-tests, however, these examples are not exhaustive, and there are many variations on t-test implementations.^<span class="co">[</span><span class="ot">If you are unclear on some of the foundations that underpin what I'm discussing here, I'd recommend starting with StatQuest's [Statistics Fundamentals] YouTube playlist, and for a more detailed introduction, I would give [_Answering Questions With Data_] a try.</span><span class="co">]</span></span>
-<span id="cb24-251"><a href="#cb24-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-252"><a href="#cb24-252" aria-hidden="true" tabindex="-1"></a><span class="fu">#### One-Sample T-Test</span></span>
-<span id="cb24-253"><a href="#cb24-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-254"><a href="#cb24-254" aria-hidden="true" tabindex="-1"></a>We can carry out a one-sample t-test using IQ scores as our example, because there is plenty of data out there about IQ scores that we can base our simulations on. The average IQ score is said to be around 100, and scores are normally distributed with a standard deviation of 15, meaning that the majority of people have an IQ in the range of 85-115.</span>
-<span id="cb24-255"><a href="#cb24-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-256"><a href="#cb24-256" aria-hidden="true" tabindex="-1"></a>In a one-sample t-test we are interested in testing a sample mean against an "expected" mean. For example, perhaps we have a group of individuals that are viewed as "high achievers", and we want to use IQ scores to test whether this group is meaningfully different to the rest of the population (despite being aware that IQ is not a particularly good test of either an individual's intelligence or their potential).</span>
-<span id="cb24-257"><a href="#cb24-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-258"><a href="#cb24-258" aria-hidden="true" tabindex="-1"></a>A one-sample t-test would allow us to do this because we are able to test the mean IQ score for our high achievers against the expected mean value if there was no real difference between them and the population, which would just be the mean IQ score in the population (100).</span>
-<span id="cb24-259"><a href="#cb24-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-260"><a href="#cb24-260" aria-hidden="true" tabindex="-1"></a>Lets first start by simulating our high achievers' IQ scores, assuming that their mean score is 105 (perhaps some of the group studied IQ tests extensively and are now able to ace the test), with a standard deviation of 15.</span>
-<span id="cb24-261"><a href="#cb24-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-264"><a href="#cb24-264" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-265"><a href="#cb24-265" aria-hidden="true" tabindex="-1"></a><span class="co"># label: simulate-high-achievers</span></span>
-<span id="cb24-266"><a href="#cb24-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-267"><a href="#cb24-267" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">score =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>))</span>
-<span id="cb24-268"><a href="#cb24-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-269"><a href="#cb24-269" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-270"><a href="#cb24-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-271"><a href="#cb24-271" aria-hidden="true" tabindex="-1"></a>We can take a look at the sample data we have simulated, to see how close it is to the true mean and standard deviation (because we are simulating the data it won't be a perfect match).</span>
-<span id="cb24-272"><a href="#cb24-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-275"><a href="#cb24-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-276"><a href="#cb24-276" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summarise-sample</span></span>
-<span id="cb24-277"><a href="#cb24-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-278"><a href="#cb24-278" aria-hidden="true" tabindex="-1"></a><span class="co"># compute summary statistics for our sample</span></span>
-<span id="cb24-279"><a href="#cb24-279" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="sc">|&gt;</span> </span>
-<span id="cb24-280"><a href="#cb24-280" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb24-281"><a href="#cb24-281" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(score),</span>
-<span id="cb24-282"><a href="#cb24-282" aria-hidden="true" tabindex="-1"></a>    <span class="at">std_dev =</span> <span class="fu">sd</span>(score)</span>
-<span id="cb24-283"><a href="#cb24-283" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb24-284"><a href="#cb24-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-285"><a href="#cb24-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-286"><a href="#cb24-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-287"><a href="#cb24-287" aria-hidden="true" tabindex="-1"></a>And we can visualise the data to get a better sense of what the group looks like.</span>
-<span id="cb24-288"><a href="#cb24-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-291"><a href="#cb24-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-292"><a href="#cb24-292" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: visualise-sample</span></span>
-<span id="cb24-293"><a href="#cb24-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-294"><a href="#cb24-294" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="sc">|&gt;</span> </span>
-<span id="cb24-295"><a href="#cb24-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(score)) <span class="sc">+</span></span>
-<span id="cb24-296"><a href="#cb24-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">colour =</span> <span class="st">"#FFFFFF"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb24-297"><a href="#cb24-297" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb24-298"><a href="#cb24-298" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">80</span>, <span class="dv">130</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb24-299"><a href="#cb24-299" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"IQ Score"</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span>
-<span id="cb24-300"><a href="#cb24-300" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb24-301"><a href="#cb24-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-302"><a href="#cb24-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-303"><a href="#cb24-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-304"><a href="#cb24-304" aria-hidden="true" tabindex="-1"></a>It is not clear what the underlying distribution of our sample data is here. We already know that the data was drawn from a normal distribution, but if we did not, we would need more observations to confirm this.</span>
-<span id="cb24-305"><a href="#cb24-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-308"><a href="#cb24-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-309"><a href="#cb24-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: one-sample-test</span></span>
-<span id="cb24-310"><a href="#cb24-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-311"><a href="#cb24-311" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(high_achievers, <span class="at">response =</span> score, <span class="at">mu =</span> <span class="dv">100</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
-<span id="cb24-312"><a href="#cb24-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-313"><a href="#cb24-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-314"><a href="#cb24-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-315"><a href="#cb24-315" aria-hidden="true" tabindex="-1"></a>The p-value of our one-sample t-test is 0.105. This means that we would expect to observe a sample mean at least as extreme as our observed mean (106), if the null that there is no difference between the high achiever group's mean IQ score and the population mean IQ score is true, a little more than 10% of the time, or 1 in 10 times. That's quite high, so I wouldn't be confident that we are observing a meaningful difference.</span>
-<span id="cb24-316"><a href="#cb24-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-317"><a href="#cb24-317" aria-hidden="true" tabindex="-1"></a>However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person^<span class="co">[</span><span class="ot">The Neyman-Pearson approach to interpreting p-values in significance tests would conclude that a p-value less than a certain threshold, often p &lt; 0.05, is not statistically significant, and would therefore fail to reject the null hypothesis. We are refraining from using this framing here because I think this approach does more harm than good.</span><span class="co">]</span>, this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).</span>
-<span id="cb24-318"><a href="#cb24-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-319"><a href="#cb24-319" aria-hidden="true" tabindex="-1"></a>If we increase our sample size, maybe we will have more luck!</span>
-<span id="cb24-320"><a href="#cb24-320" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb24-323"><a href="#cb24-323" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-324"><a href="#cb24-324" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: increase-sample-size</span></span>
-<span id="cb24-325"><a href="#cb24-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-326"><a href="#cb24-326" aria-hidden="true" tabindex="-1"></a>larger_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">score =</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>))</span>
-<span id="cb24-327"><a href="#cb24-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-328"><a href="#cb24-328" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(larger_sample, <span class="at">response =</span> score, <span class="at">mu =</span> <span class="dv">100</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
-<span id="cb24-329"><a href="#cb24-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-330"><a href="#cb24-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-331"><a href="#cb24-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-332"><a href="#cb24-332" aria-hidden="true" tabindex="-1"></a>Increasing the sample size from 10 to 30 has decreased the probability of observing a test statistic at least as extreme as our sample mean if our data was generated by chance (and the assumptions of our statistical model are all met) from around 10% to just over 1.5%. That seems a lot more reasonable, and at this point I'd be more comfortable concluding that the high achiever's IQ scores are meaningfully different to the average score in the population.</span>
-<span id="cb24-333"><a href="#cb24-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-334"><a href="#cb24-334" aria-hidden="true" tabindex="-1"></a>Of course, our p-value doesn't tell us anything about the substantive importance of the difference in IQ scores. We might be willing to conclude that there **is** a difference, but does it matter? Well, the answer is no because it's IQ scores and IQ scores don't matter. </span>
-<span id="cb24-335"><a href="#cb24-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-336"><a href="#cb24-336" aria-hidden="true" tabindex="-1"></a>But what if, for some truly baffling reason, we had reason to believe IQ scores are not nonsense? In that case, how do we know if the difference between the mean value in the high achievers group and the population is large enough to be of scientific and substantive relevance? This is not a question that significance tests can answer, and is instead something that our domain expertise should answer.</span>
-<span id="cb24-337"><a href="#cb24-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-338"><a href="#cb24-338" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Paired T-Test</span></span>
-<span id="cb24-339"><a href="#cb24-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-340"><a href="#cb24-340" aria-hidden="true" tabindex="-1"></a>When respondents in surveys are asked to self-report certain details about themselves, this can invite bias. Take, for example, the difference in <span class="co">[</span><span class="ot">self-reported and interviewer-measured height among men in the UK</span><span class="co">][Male Heights]</span>. Although there are many proud short kings out there that will confidently declare their height, safe in the knowledge that good things come in small packages, there are plenty of men that wish they were a little bit taller (someone should write a song about that), and for whom a self-reported survey is an opportunity to dream big (literally). Any time that respondents are given the opportunity to report details about themselves that have any social baggage attached, there is a possibility that the responses will be subject to social desirability bias.</span>
-<span id="cb24-341"><a href="#cb24-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-342"><a href="#cb24-342" aria-hidden="true" tabindex="-1"></a>In the case of self-reported and measured male heights, the differences are not particularly large in absolute terms. It's very possible that the difference is actually a product of some random variation, or measurement error. We can test this! </span>
-<span id="cb24-343"><a href="#cb24-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-344"><a href="#cb24-344" aria-hidden="true" tabindex="-1"></a>Using the mean values for reported and measured heights in 2016, calculating the standard deviation from the reported standard error^<span class="co">[</span><span class="ot">Standard deviation can be computed from standard error by multiplying the standard error by the square root of the sample size. The formula for this is as follows: $$\sigma = SE \times \sqrt{n}$$</span><span class="co">]</span>, and calculating the correlation between the two variables using the value for each variable from 2011-2016^<span class="co">[</span><span class="ot">Using only five observations is less than ideal, but given that what we are doing is just illustrative, this will work fine.</span><span class="co">]</span>, we can simulate our sample data.</span>
-<span id="cb24-345"><a href="#cb24-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-348"><a href="#cb24-348" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-349"><a href="#cb24-349" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: simulate-male-heights</span></span>
-<span id="cb24-350"><a href="#cb24-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-351"><a href="#cb24-351" aria-hidden="true" tabindex="-1"></a>short_kings <span class="ot">&lt;-</span></span>
-<span id="cb24-352"><a href="#cb24-352" aria-hidden="true" tabindex="-1"></a>  faux<span class="sc">::</span><span class="fu">rnorm_multi</span>(</span>
-<span id="cb24-353"><a href="#cb24-353" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="dv">100</span>,</span>
-<span id="cb24-354"><a href="#cb24-354" aria-hidden="true" tabindex="-1"></a>    <span class="at">vars =</span> <span class="dv">2</span>,</span>
-<span id="cb24-355"><a href="#cb24-355" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> <span class="fu">c</span>(<span class="fl">177.23</span>, <span class="fl">175.71</span>),</span>
-<span id="cb24-356"><a href="#cb24-356" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">9.02</span>, <span class="fl">8.99</span>),</span>
-<span id="cb24-357"><a href="#cb24-357" aria-hidden="true" tabindex="-1"></a>    <span class="at">r =</span> <span class="fl">0.83</span>,</span>
-<span id="cb24-358"><a href="#cb24-358" aria-hidden="true" tabindex="-1"></a>    <span class="at">varnames =</span> <span class="fu">c</span>(<span class="st">"self_reported_height"</span>, <span class="st">"measured_height"</span>)</span>
-<span id="cb24-359"><a href="#cb24-359" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
-<span id="cb24-360"><a href="#cb24-360" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">height_diff =</span> self_reported_height <span class="sc">-</span> measured_height)</span>
-<span id="cb24-361"><a href="#cb24-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-362"><a href="#cb24-362" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-363"><a href="#cb24-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-364"><a href="#cb24-364" aria-hidden="true" tabindex="-1"></a>We have simulated the self-reported and measured height for 100 men, given the mean, standard deviation, and correlation as detailed in Table 1 of the above analysis^<span class="co">[</span><span class="ot">We have used the [`{faux}`][{faux}] package to simulate this data because simulating two variables that are related to each other is a little more involved.</span><span class="co">]</span>. Using these two simulated variables, we are then able to calculate the difference between the two, and carry out a simple one-sample t-test that compares that difference against a null hypothesis with mean zero.</span>
-<span id="cb24-365"><a href="#cb24-365" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-368"><a href="#cb24-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-369"><a href="#cb24-369" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: male-heights-test</span></span>
-<span id="cb24-370"><a href="#cb24-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-371"><a href="#cb24-371" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(short_kings, <span class="at">response =</span> height_diff, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
-<span id="cb24-372"><a href="#cb24-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-373"><a href="#cb24-373" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-374"><a href="#cb24-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-375"><a href="#cb24-375" aria-hidden="true" tabindex="-1"></a>The difference between the self-reported and measured heights has a p-value of 0.00719, suggesting there is a 0.7% probability of observing a t-statistic at least as extreme as we observe here, if the data was generated by chance and if the assumptions of our statistical model are valid.</span>
-<span id="cb24-376"><a href="#cb24-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-377"><a href="#cb24-377" aria-hidden="true" tabindex="-1"></a>More importantly, we observe an estimated difference between self-reported height and measured height of 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I'll leave that up to you to decide.</span>
-<span id="cb24-378"><a href="#cb24-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-379"><a href="#cb24-379" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Two Samples T-Test</span></span>
-<span id="cb24-380"><a href="#cb24-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-381"><a href="#cb24-381" aria-hidden="true" tabindex="-1"></a>So we've established a very real, totally scientific over-reporting of male height across the UK, and some clever, entrepreneurial, and not at all exploitative pharmaceutical company has had the good sense to develop a medication that gives you an extra couple of inches in height. </span>
-<span id="cb24-382"><a href="#cb24-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-383"><a href="#cb24-383" aria-hidden="true" tabindex="-1"></a>In order to prove that it works it needs to go through testing (because we are particularly reckless, we don't really care if it is safe in this example). An experiment is designed, with a treatment and control group that is representative of the wider male population, and the wonder drug is given to the treatment group.</span>
-<span id="cb24-384"><a href="#cb24-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-385"><a href="#cb24-385" aria-hidden="true" tabindex="-1"></a>We can compare the change in height for the two groups in the 6 months after the treatment group have taken the medication, hypothesising that the drug has had a positive effect on the treatment group, helping them grow by a whopping 1.5cm! This is compared against the average increase in height for the control group that is approximately zero, with a very small standard deviation. A two-sample t-test can help us shed some light on whether we can be confident that this difference did not occur by chance.</span>
-<span id="cb24-386"><a href="#cb24-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-387"><a href="#cb24-387" aria-hidden="true" tabindex="-1"></a>We simulate our treatment and control groups, with 20 observations in each, with the treatment group having a mean growth of 3cm and standard deviation of 3cm, and the control group having a mean growth of 0cm and a standard deviation of 0.5cm.</span>
-<span id="cb24-388"><a href="#cb24-388" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-391"><a href="#cb24-391" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-392"><a href="#cb24-392" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: simulate-height-experiment</span></span>
-<span id="cb24-393"><a href="#cb24-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-394"><a href="#cb24-394" aria-hidden="true" tabindex="-1"></a>growers <span class="ot">&lt;-</span></span>
-<span id="cb24-395"><a href="#cb24-395" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb24-396"><a href="#cb24-396" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"control"</span>), <span class="at">times =</span> <span class="dv">20</span>),</span>
-<span id="cb24-397"><a href="#cb24-397" aria-hidden="true" tabindex="-1"></a>    <span class="at">growth =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>), <span class="at">sd =</span> <span class="fu">c</span>(<span class="dv">3</span>, .<span class="dv">5</span>))</span>
-<span id="cb24-398"><a href="#cb24-398" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-229"><a href="#cb24-229" aria-hidden="true" tabindex="-1"></a>While there are many different statistical tests that are designed to test different data distributions, using different assumptions, the general framework is the same. Below are some examples of statistical tests that are commonly used.</span>
+<span id="cb24-230"><a href="#cb24-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-231"><a href="#cb24-231" aria-hidden="true" tabindex="-1"></a><span class="fu">### T-Tests</span></span>
+<span id="cb24-232"><a href="#cb24-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-233"><a href="#cb24-233" aria-hidden="true" tabindex="-1"></a>The general idea of a t-test is to calculate the statistical significance of the difference between two groups. What the groups represent depends on the type of t-test being carried out, whether it be comparing a single group of observed data against a null distribution that assumes the data was generated by chance, or comparing the difference between two observed groups against a null distribution that assumes the difference is zero.</span>
+<span id="cb24-234"><a href="#cb24-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-235"><a href="#cb24-235" aria-hidden="true" tabindex="-1"></a>There are several broad groups of t-tests:</span>
+<span id="cb24-236"><a href="#cb24-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-237"><a href="#cb24-237" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>One-sample t-test - comparing the sample mean of a single group against a "known mean", generally testing whether a sample is likely to be generated by chance.</span>
+<span id="cb24-238"><a href="#cb24-238" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Paired t-test - comparing means from the same group measured multiple times, like how someone responds to a survey at different points in time.</span>
+<span id="cb24-239"><a href="#cb24-239" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Two samples t-test - comparing the means of two groups, such as measuring the difference in blood glucose levels of two different groups.</span>
+<span id="cb24-240"><a href="#cb24-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-241"><a href="#cb24-241" aria-hidden="true" tabindex="-1"></a>There are several variations within these groups, for example a paired t-test generally assumes equal variance between the two groups, but this is often not true, so an unequal variance t-test can be used. </span>
+<span id="cb24-242"><a href="#cb24-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-243"><a href="#cb24-243" aria-hidden="true" tabindex="-1"></a>Finally, when deciding on the nature of a t-test, you must also decide if the test should be one-tailed or two-tailed. A one-tailed t-test is used to test a hypothesis that includes a directional component (such as $x &gt; y$), while a two-tailed t-test is just testing whether there is a difference between two groups. A one-tailed t-test is appropriate when you believe the difference between two groups should be positive or negative, but if the only belief is that the groups are different, a two-tailed t-test is appropriate.</span>
+<span id="cb24-244"><a href="#cb24-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-245"><a href="#cb24-245" aria-hidden="true" tabindex="-1"></a>A two-tailed t-test compares whether the sample mean(s) is different, whether larger or smaller, while a one-tailed t-test assumes the direction of the difference is known. For example, if it is known that Group A is either the same or bigger than Group B (or that Group A being smaller is not of interest), then a one-tailed t-test would be appropriate.</span>
+<span id="cb24-246"><a href="#cb24-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-247"><a href="#cb24-247" aria-hidden="true" tabindex="-1"></a>I will simulate data from real-world examples to demonstrate one-sample, paired, and two-sample t-tests, however, these examples are not exhaustive, and there are many variations on t-test implementations.^<span class="co">[</span><span class="ot">If you are unclear on some of the foundations that underpin what I'm discussing here, I'd recommend starting with StatQuest's [Statistics Fundamentals] YouTube playlist, and for a more detailed introduction, I would give [_Answering Questions With Data_] a try.</span><span class="co">]</span></span>
+<span id="cb24-248"><a href="#cb24-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-249"><a href="#cb24-249" aria-hidden="true" tabindex="-1"></a><span class="fu">#### One-Sample T-Test</span></span>
+<span id="cb24-250"><a href="#cb24-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-251"><a href="#cb24-251" aria-hidden="true" tabindex="-1"></a>We can carry out a one-sample t-test using IQ scores as our example, because there is plenty of data out there about IQ scores that we can base our simulations on. The average IQ score is said to be around 100, and scores are normally distributed with a standard deviation of 15, meaning that the majority of people have an IQ in the range of 85-115.</span>
+<span id="cb24-252"><a href="#cb24-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-253"><a href="#cb24-253" aria-hidden="true" tabindex="-1"></a>In a one-sample t-test we are interested in testing a sample mean against an "expected" mean. For example, perhaps we have a group of individuals that are viewed as "high achievers", and we want to use IQ scores to test whether this group is meaningfully different to the rest of the population (despite being aware that IQ is not a particularly good test of either an individual's intelligence or their potential).</span>
+<span id="cb24-254"><a href="#cb24-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-255"><a href="#cb24-255" aria-hidden="true" tabindex="-1"></a>A one-sample t-test would allow us to do this because we are able to test the mean IQ score for our high achievers against the expected mean value if there was no real difference between them and the population, which would just be the mean IQ score in the population (100).</span>
+<span id="cb24-256"><a href="#cb24-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-257"><a href="#cb24-257" aria-hidden="true" tabindex="-1"></a>Lets first start by simulating our high achievers' IQ scores, assuming that their mean score is 105 (perhaps some of the group studied IQ tests extensively and are now able to ace the test), with a standard deviation of 15.</span>
+<span id="cb24-258"><a href="#cb24-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-261"><a href="#cb24-261" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-262"><a href="#cb24-262" aria-hidden="true" tabindex="-1"></a><span class="co"># label: simulate-high-achievers</span></span>
+<span id="cb24-263"><a href="#cb24-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-264"><a href="#cb24-264" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">score =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>))</span>
+<span id="cb24-265"><a href="#cb24-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-266"><a href="#cb24-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-267"><a href="#cb24-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-268"><a href="#cb24-268" aria-hidden="true" tabindex="-1"></a>We can take a look at the sample data we have simulated, to see how close it is to the true mean and standard deviation (because we are simulating the data it won't be a perfect match).</span>
+<span id="cb24-269"><a href="#cb24-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-272"><a href="#cb24-272" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-273"><a href="#cb24-273" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summarise-sample</span></span>
+<span id="cb24-274"><a href="#cb24-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-275"><a href="#cb24-275" aria-hidden="true" tabindex="-1"></a><span class="co"># compute summary statistics for our sample</span></span>
+<span id="cb24-276"><a href="#cb24-276" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="sc">|&gt;</span> </span>
+<span id="cb24-277"><a href="#cb24-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb24-278"><a href="#cb24-278" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(score),</span>
+<span id="cb24-279"><a href="#cb24-279" aria-hidden="true" tabindex="-1"></a>    <span class="at">std_dev =</span> <span class="fu">sd</span>(score)</span>
+<span id="cb24-280"><a href="#cb24-280" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-281"><a href="#cb24-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-282"><a href="#cb24-282" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-283"><a href="#cb24-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-284"><a href="#cb24-284" aria-hidden="true" tabindex="-1"></a>And we can visualise the data to get a better sense of what the group looks like.</span>
+<span id="cb24-285"><a href="#cb24-285" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-288"><a href="#cb24-288" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-289"><a href="#cb24-289" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: visualise-sample</span></span>
+<span id="cb24-290"><a href="#cb24-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-291"><a href="#cb24-291" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="sc">|&gt;</span> </span>
+<span id="cb24-292"><a href="#cb24-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(score)) <span class="sc">+</span></span>
+<span id="cb24-293"><a href="#cb24-293" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">colour =</span> <span class="st">"#FFFFFF"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb24-294"><a href="#cb24-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb24-295"><a href="#cb24-295" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">80</span>, <span class="dv">130</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb24-296"><a href="#cb24-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"IQ Score"</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span>
+<span id="cb24-297"><a href="#cb24-297" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb24-298"><a href="#cb24-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-299"><a href="#cb24-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-300"><a href="#cb24-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-301"><a href="#cb24-301" aria-hidden="true" tabindex="-1"></a>It is not clear what the underlying distribution of our sample data is here. We already know that the data was drawn from a normal distribution, but if we did not, we would need more observations to confirm this.</span>
+<span id="cb24-302"><a href="#cb24-302" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-305"><a href="#cb24-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-306"><a href="#cb24-306" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: one-sample-test</span></span>
+<span id="cb24-307"><a href="#cb24-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-308"><a href="#cb24-308" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(high_achievers, <span class="at">response =</span> score, <span class="at">mu =</span> <span class="dv">100</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
+<span id="cb24-309"><a href="#cb24-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-310"><a href="#cb24-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-311"><a href="#cb24-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-312"><a href="#cb24-312" aria-hidden="true" tabindex="-1"></a>The p-value of our one-sample t-test is 0.105. This means that we would expect to observe a sample mean at least as extreme as our observed mean (106), if the null that there is no difference between the high achiever group's mean IQ score and the population mean IQ score is true, a little more than 10% of the time, or 1 in 10 times. That's quite high, so I wouldn't be confident that we are observing a meaningful difference.</span>
+<span id="cb24-313"><a href="#cb24-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-314"><a href="#cb24-314" aria-hidden="true" tabindex="-1"></a>However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person, this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).</span>
+<span id="cb24-315"><a href="#cb24-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-316"><a href="#cb24-316" aria-hidden="true" tabindex="-1"></a>If we increase our sample size, maybe we will have more luck!</span>
+<span id="cb24-317"><a href="#cb24-317" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb24-320"><a href="#cb24-320" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-321"><a href="#cb24-321" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: increase-sample-size</span></span>
+<span id="cb24-322"><a href="#cb24-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-323"><a href="#cb24-323" aria-hidden="true" tabindex="-1"></a>larger_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">score =</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>))</span>
+<span id="cb24-324"><a href="#cb24-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-325"><a href="#cb24-325" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(larger_sample, <span class="at">response =</span> score, <span class="at">mu =</span> <span class="dv">100</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
+<span id="cb24-326"><a href="#cb24-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-327"><a href="#cb24-327" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-328"><a href="#cb24-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-329"><a href="#cb24-329" aria-hidden="true" tabindex="-1"></a>Increasing the sample size from 10 to 30 has decreased the probability of observing a test statistic at least as extreme as our sample mean if our data was generated by chance (and the assumptions of our statistical model are all met) from around 10% to just over 1.5%. That seems a lot more reasonable, and at this point I'd be more comfortable concluding that the high achiever's IQ scores are meaningfully different to the average score in the population.</span>
+<span id="cb24-330"><a href="#cb24-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-331"><a href="#cb24-331" aria-hidden="true" tabindex="-1"></a>Of course, our p-value doesn't tell us anything about the substantive importance of the difference in IQ scores. We might be willing to conclude that there **is** a difference, but does it matter? Well, the answer is no because it's IQ scores and IQ scores don't matter. </span>
+<span id="cb24-332"><a href="#cb24-332" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-333"><a href="#cb24-333" aria-hidden="true" tabindex="-1"></a>But what if, for some truly baffling reason, we had reason to believe IQ scores are not nonsense? In that case, how do we know if the difference between the mean value in the high achievers group and the population is large enough to be of scientific and substantive relevance? This is not a question that significance tests can answer, and is instead something that our domain expertise should answer.</span>
+<span id="cb24-334"><a href="#cb24-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-335"><a href="#cb24-335" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Paired T-Test</span></span>
+<span id="cb24-336"><a href="#cb24-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-337"><a href="#cb24-337" aria-hidden="true" tabindex="-1"></a>When respondents in surveys are asked to self-report certain details about themselves, this can invite bias. Take, for example, the difference in <span class="co">[</span><span class="ot">self-reported and interviewer-measured height among men in the UK</span><span class="co">][Male Heights]</span>. Although there are many proud short kings out there that will confidently declare their height, safe in the knowledge that good things come in small packages, there are plenty of men that wish they were a little bit taller (someone should write a song about that), and for whom a self-reported survey is an opportunity to dream big (literally). Any time that respondents are given the opportunity to report details about themselves that have any social baggage attached, there is a possibility that the responses will be subject to social desirability bias.</span>
+<span id="cb24-338"><a href="#cb24-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-339"><a href="#cb24-339" aria-hidden="true" tabindex="-1"></a>In the case of self-reported and measured male heights, the differences are not particularly large in absolute terms. It's very possible that the difference is actually a product of some random variation, or measurement error. We can test this! </span>
+<span id="cb24-340"><a href="#cb24-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-341"><a href="#cb24-341" aria-hidden="true" tabindex="-1"></a>Using the mean values for reported and measured heights in 2016, calculating the standard deviation from the reported standard error^<span class="co">[</span><span class="ot">Standard deviation can be computed from standard error by multiplying the standard error by the square root of the sample size. The formula for this is as follows: $$\sigma = SE \times \sqrt{n}$$</span><span class="co">]</span>, and calculating the correlation between the two variables using the value for each variable from 2011-2016^<span class="co">[</span><span class="ot">Using only five observations is less than ideal, but given that what we are doing is just illustrative, this will work fine.</span><span class="co">]</span>, we can simulate our sample data.</span>
+<span id="cb24-342"><a href="#cb24-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-345"><a href="#cb24-345" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-346"><a href="#cb24-346" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: simulate-male-heights</span></span>
+<span id="cb24-347"><a href="#cb24-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-348"><a href="#cb24-348" aria-hidden="true" tabindex="-1"></a>short_kings <span class="ot">&lt;-</span></span>
+<span id="cb24-349"><a href="#cb24-349" aria-hidden="true" tabindex="-1"></a>  faux<span class="sc">::</span><span class="fu">rnorm_multi</span>(</span>
+<span id="cb24-350"><a href="#cb24-350" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="dv">100</span>,</span>
+<span id="cb24-351"><a href="#cb24-351" aria-hidden="true" tabindex="-1"></a>    <span class="at">vars =</span> <span class="dv">2</span>,</span>
+<span id="cb24-352"><a href="#cb24-352" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> <span class="fu">c</span>(<span class="fl">177.23</span>, <span class="fl">175.71</span>),</span>
+<span id="cb24-353"><a href="#cb24-353" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">9.02</span>, <span class="fl">8.99</span>),</span>
+<span id="cb24-354"><a href="#cb24-354" aria-hidden="true" tabindex="-1"></a>    <span class="at">r =</span> <span class="fl">0.83</span>,</span>
+<span id="cb24-355"><a href="#cb24-355" aria-hidden="true" tabindex="-1"></a>    <span class="at">varnames =</span> <span class="fu">c</span>(<span class="st">"self_reported_height"</span>, <span class="st">"measured_height"</span>)</span>
+<span id="cb24-356"><a href="#cb24-356" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb24-357"><a href="#cb24-357" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">height_diff =</span> self_reported_height <span class="sc">-</span> measured_height)</span>
+<span id="cb24-358"><a href="#cb24-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-359"><a href="#cb24-359" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-360"><a href="#cb24-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-361"><a href="#cb24-361" aria-hidden="true" tabindex="-1"></a>We have simulated the self-reported and measured height for 100 men, given the mean, standard deviation, and correlation as detailed in Table 1 of the above analysis^<span class="co">[</span><span class="ot">We have used the [`{faux}`][{faux}] package to simulate this data because simulating two variables that are related to each other is a little more involved.</span><span class="co">]</span>. Using these two simulated variables, we are then able to calculate the difference between the two, and carry out a simple one-sample t-test that compares that difference against a null hypothesis with mean zero.</span>
+<span id="cb24-362"><a href="#cb24-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-365"><a href="#cb24-365" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-366"><a href="#cb24-366" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: male-heights-test</span></span>
+<span id="cb24-367"><a href="#cb24-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-368"><a href="#cb24-368" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(short_kings, <span class="at">response =</span> height_diff, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
+<span id="cb24-369"><a href="#cb24-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-370"><a href="#cb24-370" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-371"><a href="#cb24-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-372"><a href="#cb24-372" aria-hidden="true" tabindex="-1"></a>The difference between the self-reported and measured heights has a p-value of 0.00719, suggesting there is a 0.7% probability of observing a t-statistic at least as extreme as we observe here, if the data was generated by chance and if the assumptions of our statistical model are valid.</span>
+<span id="cb24-373"><a href="#cb24-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-374"><a href="#cb24-374" aria-hidden="true" tabindex="-1"></a>The estimated difference between self-reported height and measured height is 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I'll leave that up to you to decide.</span>
+<span id="cb24-375"><a href="#cb24-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-376"><a href="#cb24-376" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Two Samples T-Test</span></span>
+<span id="cb24-377"><a href="#cb24-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-378"><a href="#cb24-378" aria-hidden="true" tabindex="-1"></a>So we've established a very real, totally scientific over-reporting of male height across the UK, and some clever, entrepreneurial, and not at all exploitative pharmaceutical company has had the good sense to develop a medication that gives you an extra couple of inches in height. </span>
+<span id="cb24-379"><a href="#cb24-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-380"><a href="#cb24-380" aria-hidden="true" tabindex="-1"></a>In order to prove that it works it needs to go through testing (because we are particularly reckless, we don't really care if it is safe in this example). An experiment is designed, with a treatment and control group that is representative of the wider male population, and the wonder drug is given to the treatment group.</span>
+<span id="cb24-381"><a href="#cb24-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-382"><a href="#cb24-382" aria-hidden="true" tabindex="-1"></a>We can compare the change in height for the two groups in the 6 months after the treatment group have taken the medication, hypothesising that the drug has had a positive effect on the treatment group, helping them grow by a whopping 1.5cm! This is compared against the average increase in height for the control group that is approximately zero, with a very small standard deviation. A two-sample t-test can help us shed some light on whether we can be confident that this difference did not occur by chance.</span>
+<span id="cb24-383"><a href="#cb24-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-384"><a href="#cb24-384" aria-hidden="true" tabindex="-1"></a>We simulate our treatment and control groups, with 20 observations in each, with the treatment group having a mean growth of 3cm and standard deviation of 3cm, and the control group having a mean growth of 0cm and a standard deviation of 0.5cm.</span>
+<span id="cb24-385"><a href="#cb24-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-388"><a href="#cb24-388" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-389"><a href="#cb24-389" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: simulate-height-experiment</span></span>
+<span id="cb24-390"><a href="#cb24-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-391"><a href="#cb24-391" aria-hidden="true" tabindex="-1"></a>growers <span class="ot">&lt;-</span></span>
+<span id="cb24-392"><a href="#cb24-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb24-393"><a href="#cb24-393" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"control"</span>), <span class="at">times =</span> <span class="dv">20</span>),</span>
+<span id="cb24-394"><a href="#cb24-394" aria-hidden="true" tabindex="-1"></a>    <span class="at">growth =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>), <span class="at">sd =</span> <span class="fu">c</span>(<span class="dv">3</span>, .<span class="dv">5</span>))</span>
+<span id="cb24-395"><a href="#cb24-395" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-396"><a href="#cb24-396" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-397"><a href="#cb24-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-398"><a href="#cb24-398" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-399"><a href="#cb24-399" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-400"><a href="#cb24-400" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-401"><a href="#cb24-401" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-402"><a href="#cb24-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-403"><a href="#cb24-403" aria-hidden="true" tabindex="-1"></a>Having simulated our treatment and control groups, we can compute a t-test to see if there is a difference in how much each group has grown, on average.</span>
-<span id="cb24-404"><a href="#cb24-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-407"><a href="#cb24-407" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-408"><a href="#cb24-408" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: height-experiment</span></span>
-<span id="cb24-409"><a href="#cb24-409" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-410"><a href="#cb24-410" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(growers, <span class="at">formula =</span> growth <span class="sc">~</span> group,</span>
-<span id="cb24-411"><a href="#cb24-411" aria-hidden="true" tabindex="-1"></a>       <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"control"</span>),</span>
-<span id="cb24-412"><a href="#cb24-412" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
-<span id="cb24-413"><a href="#cb24-413" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-414"><a href="#cb24-414" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-415"><a href="#cb24-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-416"><a href="#cb24-416" aria-hidden="true" tabindex="-1"></a>The probability that we would observe a test statistic as large or larger than observed here is very, very small, and the results of the t-test estimate that the difference between the two groups is a little bit less than 4cm, with a lower confidence interval of just under 3cm, suggesting that this medication is having a positive difference on height in the treatment group!</span>
-<span id="cb24-417"><a href="#cb24-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-418"><a href="#cb24-418" aria-hidden="true" tabindex="-1"></a><span class="fu">### Chi-Squared Tests</span></span>
-<span id="cb24-419"><a href="#cb24-419" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-420"><a href="#cb24-420" aria-hidden="true" tabindex="-1"></a>Although there are many ways that you may encounter chi-squared ($\chi^2$) tests, the two most common are tests of independence and a goodness of fit tests. The chi-squared test of independence is a test of the association between two categorical variables, meaning whether the variables are related or not. It is testing whether they vary independently of each other. A chi-squared goodness of fit test is used to examine how well a theoretical distribution fits the distribution of a categorical variable. We will focus on the test of independence here, because I think this is the most common use case.</span>
-<span id="cb24-421"><a href="#cb24-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-422"><a href="#cb24-422" aria-hidden="true" tabindex="-1"></a>A common use-case for chi-squared tests of independence is survey data, where individuals from different groups respond to a survey question that offers a finite number of discrete answers, like a scale from good to bad. A good example of categorical variables used in survey data is the impact of male baldness on 46 year old men, carried out by @sinikumpu2021. In this survey they grouped men by levels of baldness, and asked them various questions about their lives, from education to sex-life, to consider the impact that being bald has on men's lives and well-being. </span>
-<span id="cb24-423"><a href="#cb24-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-424"><a href="#cb24-424" aria-hidden="true" tabindex="-1"></a>We will use the education question as the basis for simulating the data for our chi-squared test. The survey splits education-level in to three groups - basic, secondary, and tertiary - while I have simplified the question by turning the levels of baldness into a binary categorical variable.</span>
-<span id="cb24-425"><a href="#cb24-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-428"><a href="#cb24-428" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-429"><a href="#cb24-429" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: simulate-survey</span></span>
-<span id="cb24-430"><a href="#cb24-430" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-431"><a href="#cb24-431" aria-hidden="true" tabindex="-1"></a>not_bald <span class="ot">&lt;-</span></span>
-<span id="cb24-432"><a href="#cb24-432" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb24-433"><a href="#cb24-433" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Not Bald"</span>, <span class="at">times =</span> <span class="dv">300</span>),</span>
-<span id="cb24-434"><a href="#cb24-434" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
-<span id="cb24-435"><a href="#cb24-435" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
-<span id="cb24-436"><a href="#cb24-436" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">300</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb24-437"><a href="#cb24-437" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.039</span>, <span class="fl">0.594</span>, <span class="fl">0.367</span>))</span>
-<span id="cb24-438"><a href="#cb24-438" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-439"><a href="#cb24-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-440"><a href="#cb24-440" aria-hidden="true" tabindex="-1"></a>bald <span class="ot">&lt;-</span></span>
-<span id="cb24-441"><a href="#cb24-441" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb24-442"><a href="#cb24-442" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Bald"</span>, <span class="at">times =</span> <span class="dv">600</span>),</span>
-<span id="cb24-443"><a href="#cb24-443" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
-<span id="cb24-444"><a href="#cb24-444" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
-<span id="cb24-445"><a href="#cb24-445" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">600</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb24-446"><a href="#cb24-446" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.603</span>, <span class="fl">0.367</span>))</span>
-<span id="cb24-447"><a href="#cb24-447" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-400"><a href="#cb24-400" aria-hidden="true" tabindex="-1"></a>Having simulated our treatment and control groups, we can compute a t-test to see if there is a difference in how much each group has grown, on average.</span>
+<span id="cb24-401"><a href="#cb24-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-404"><a href="#cb24-404" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-405"><a href="#cb24-405" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: height-experiment</span></span>
+<span id="cb24-406"><a href="#cb24-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-407"><a href="#cb24-407" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(growers, <span class="at">formula =</span> growth <span class="sc">~</span> group,</span>
+<span id="cb24-408"><a href="#cb24-408" aria-hidden="true" tabindex="-1"></a>       <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"control"</span>),</span>
+<span id="cb24-409"><a href="#cb24-409" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>)</span>
+<span id="cb24-410"><a href="#cb24-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-411"><a href="#cb24-411" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-412"><a href="#cb24-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-413"><a href="#cb24-413" aria-hidden="true" tabindex="-1"></a>The probability that we would observe a test statistic as large or larger than observed here is very, very small, and the results of the t-test estimate that the difference between the two groups is a little bit less than 4cm, with a lower confidence interval of just under 3cm, suggesting that this medication is having a positive difference on height in the treatment group!</span>
+<span id="cb24-414"><a href="#cb24-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-415"><a href="#cb24-415" aria-hidden="true" tabindex="-1"></a><span class="fu">### Chi-Squared Tests</span></span>
+<span id="cb24-416"><a href="#cb24-416" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-417"><a href="#cb24-417" aria-hidden="true" tabindex="-1"></a>Although there are many ways that you may encounter chi-squared ($\chi^2$) tests, the two most common are tests of independence and a goodness of fit tests. The chi-squared test of independence is a test of the association between two categorical variables, meaning whether the variables are related or not. It is testing whether they vary independently of each other. A chi-squared goodness of fit test is used to examine how well a theoretical distribution fits the distribution of a categorical variable. We will focus on the test of independence here, because I think this is the most common use case.</span>
+<span id="cb24-418"><a href="#cb24-418" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-419"><a href="#cb24-419" aria-hidden="true" tabindex="-1"></a>A common use-case for chi-squared tests of independence is survey data, where individuals from different groups respond to a survey question that offers a finite number of discrete answers, like a scale from good to bad. A good example of categorical variables used in survey data is the impact of male baldness on 46 year old men, carried out by @sinikumpu2021. In this survey they grouped men by levels of baldness, and asked them various questions about their lives, from education to sex-life, to consider the impact that being bald has on men's lives and well-being. </span>
+<span id="cb24-420"><a href="#cb24-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-421"><a href="#cb24-421" aria-hidden="true" tabindex="-1"></a>We will use the education question as the basis for simulating the data for our chi-squared test. The survey splits education-level in to three groups - basic, secondary, and tertiary - while I have simplified the question by turning the levels of baldness into a binary categorical variable.</span>
+<span id="cb24-422"><a href="#cb24-422" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-425"><a href="#cb24-425" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-426"><a href="#cb24-426" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: simulate-survey</span></span>
+<span id="cb24-427"><a href="#cb24-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-428"><a href="#cb24-428" aria-hidden="true" tabindex="-1"></a>not_bald <span class="ot">&lt;-</span></span>
+<span id="cb24-429"><a href="#cb24-429" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb24-430"><a href="#cb24-430" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Not Bald"</span>, <span class="at">times =</span> <span class="dv">300</span>),</span>
+<span id="cb24-431"><a href="#cb24-431" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
+<span id="cb24-432"><a href="#cb24-432" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
+<span id="cb24-433"><a href="#cb24-433" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">300</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb24-434"><a href="#cb24-434" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.039</span>, <span class="fl">0.594</span>, <span class="fl">0.367</span>))</span>
+<span id="cb24-435"><a href="#cb24-435" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-436"><a href="#cb24-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-437"><a href="#cb24-437" aria-hidden="true" tabindex="-1"></a>bald <span class="ot">&lt;-</span></span>
+<span id="cb24-438"><a href="#cb24-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb24-439"><a href="#cb24-439" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Bald"</span>, <span class="at">times =</span> <span class="dv">600</span>),</span>
+<span id="cb24-440"><a href="#cb24-440" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
+<span id="cb24-441"><a href="#cb24-441" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
+<span id="cb24-442"><a href="#cb24-442" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">600</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb24-443"><a href="#cb24-443" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.603</span>, <span class="fl">0.367</span>))</span>
+<span id="cb24-444"><a href="#cb24-444" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-445"><a href="#cb24-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-446"><a href="#cb24-446" aria-hidden="true" tabindex="-1"></a>baldness_survey <span class="ot">&lt;-</span></span>
+<span id="cb24-447"><a href="#cb24-447" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(not_bald, bald)</span>
 <span id="cb24-448"><a href="#cb24-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-449"><a href="#cb24-449" aria-hidden="true" tabindex="-1"></a>baldness_survey <span class="ot">&lt;-</span></span>
-<span id="cb24-450"><a href="#cb24-450" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(not_bald, bald)</span>
-<span id="cb24-451"><a href="#cb24-451" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-452"><a href="#cb24-452" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-453"><a href="#cb24-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-454"><a href="#cb24-454" aria-hidden="true" tabindex="-1"></a>We have simulated each of the different baldness categories individually, before combining them into a single dataset. I think there should be a more concise way of doing this, but I haven't wrapped my head round how I should do that yet.</span>
-<span id="cb24-455"><a href="#cb24-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-456"><a href="#cb24-456" aria-hidden="true" tabindex="-1"></a>We can visualise the difference between the three education-levels in terms of proportion of baldness, to see if there is an obvious difference.</span>
-<span id="cb24-457"><a href="#cb24-457" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-460"><a href="#cb24-460" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-461"><a href="#cb24-461" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: visualise-survey</span></span>
-<span id="cb24-462"><a href="#cb24-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-463"><a href="#cb24-463" aria-hidden="true" tabindex="-1"></a>baldness_survey <span class="sc">|&gt;</span> </span>
-<span id="cb24-464"><a href="#cb24-464" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(education, <span class="at">fill =</span> hair_status)) <span class="sc">+</span></span>
-<span id="cb24-465"><a href="#cb24-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">colour =</span> <span class="st">"#FFFFFF"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb24-466"><a href="#cb24-466" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb24-467"><a href="#cb24-467" aria-hidden="true" tabindex="-1"></a>  scwplot<span class="sc">::</span><span class="fu">scale_fill_qualitative</span>(<span class="st">"nhs"</span>) <span class="sc">+</span></span>
-<span id="cb24-468"><a href="#cb24-468" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Education Level"</span>, <span class="at">y =</span> <span class="st">"Proportion"</span>)</span>
-<span id="cb24-469"><a href="#cb24-469" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-470"><a href="#cb24-470" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-471"><a href="#cb24-471" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-472"><a href="#cb24-472" aria-hidden="true" tabindex="-1"></a>There's a small difference between people with a basic education, but for secondary and tertiary education it seems to be pretty evenly split. Our chi-squared test can test this empirically.</span>
-<span id="cb24-473"><a href="#cb24-473" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-476"><a href="#cb24-476" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-477"><a href="#cb24-477" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: chi-sq-test</span></span>
-<span id="cb24-478"><a href="#cb24-478" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-479"><a href="#cb24-479" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq_test</span>(baldness_survey, education <span class="sc">~</span> hair_status)</span>
-<span id="cb24-480"><a href="#cb24-480" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-481"><a href="#cb24-481" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-482"><a href="#cb24-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-483"><a href="#cb24-483" aria-hidden="true" tabindex="-1"></a>So our p-value tells us that we should expect to observe data at least extreme as our simulated survey data a little less than 20% of the time, if the null hypothesis that there is no difference in education levels across levels of hair loss is true. This is a smaller p-value than @sinikumpu2021 observe (0.299), but that will be a consequence of the fact we are simulating the data using probabilistic samples, not replicating their results exactly.</span>
-<span id="cb24-484"><a href="#cb24-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-485"><a href="#cb24-485" aria-hidden="true" tabindex="-1"></a>If we were to fudge the numbers a little bit, so as to artificially increase the difference in education levels based on the amount of hair a 46 year old man has, what would our results look like?</span>
-<span id="cb24-486"><a href="#cb24-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-489"><a href="#cb24-489" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-490"><a href="#cb24-490" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: add-effect</span></span>
-<span id="cb24-491"><a href="#cb24-491" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-492"><a href="#cb24-492" aria-hidden="true" tabindex="-1"></a>not_bald <span class="ot">&lt;-</span></span>
-<span id="cb24-493"><a href="#cb24-493" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb24-494"><a href="#cb24-494" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Not Bald"</span>, <span class="at">times =</span> <span class="dv">300</span>),</span>
-<span id="cb24-495"><a href="#cb24-495" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
-<span id="cb24-496"><a href="#cb24-496" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
-<span id="cb24-497"><a href="#cb24-497" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">300</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb24-498"><a href="#cb24-498" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.55</span>, <span class="fl">0.3</span>))</span>
-<span id="cb24-499"><a href="#cb24-499" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-500"><a href="#cb24-500" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-501"><a href="#cb24-501" aria-hidden="true" tabindex="-1"></a>bald <span class="ot">&lt;-</span></span>
-<span id="cb24-502"><a href="#cb24-502" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb24-503"><a href="#cb24-503" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Bald"</span>, <span class="at">times =</span> <span class="dv">600</span>),</span>
-<span id="cb24-504"><a href="#cb24-504" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
-<span id="cb24-505"><a href="#cb24-505" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
-<span id="cb24-506"><a href="#cb24-506" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">600</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb24-507"><a href="#cb24-507" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.6</span>, <span class="fl">0.35</span>))</span>
-<span id="cb24-508"><a href="#cb24-508" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-449"><a href="#cb24-449" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-450"><a href="#cb24-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-451"><a href="#cb24-451" aria-hidden="true" tabindex="-1"></a>We have simulated each of the different baldness categories individually, before combining them into a single dataset. I think there should be a more concise way of doing this, but I haven't wrapped my head round how I should do that yet.</span>
+<span id="cb24-452"><a href="#cb24-452" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-453"><a href="#cb24-453" aria-hidden="true" tabindex="-1"></a>We can visualise the difference between the three education-levels in terms of proportion of baldness, to see if there is an obvious difference.</span>
+<span id="cb24-454"><a href="#cb24-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-457"><a href="#cb24-457" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-458"><a href="#cb24-458" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: visualise-survey</span></span>
+<span id="cb24-459"><a href="#cb24-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-460"><a href="#cb24-460" aria-hidden="true" tabindex="-1"></a>baldness_survey <span class="sc">|&gt;</span> </span>
+<span id="cb24-461"><a href="#cb24-461" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(education, <span class="at">fill =</span> hair_status)) <span class="sc">+</span></span>
+<span id="cb24-462"><a href="#cb24-462" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">colour =</span> <span class="st">"#FFFFFF"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb24-463"><a href="#cb24-463" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb24-464"><a href="#cb24-464" aria-hidden="true" tabindex="-1"></a>  scwplot<span class="sc">::</span><span class="fu">scale_fill_qualitative</span>(<span class="st">"nhs"</span>) <span class="sc">+</span></span>
+<span id="cb24-465"><a href="#cb24-465" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Education Level"</span>, <span class="at">y =</span> <span class="st">"Proportion"</span>)</span>
+<span id="cb24-466"><a href="#cb24-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-467"><a href="#cb24-467" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-468"><a href="#cb24-468" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-469"><a href="#cb24-469" aria-hidden="true" tabindex="-1"></a>There's a small difference between people with a basic education, but for secondary and tertiary education it seems to be pretty evenly split. Our chi-squared test can test this empirically.</span>
+<span id="cb24-470"><a href="#cb24-470" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-473"><a href="#cb24-473" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-474"><a href="#cb24-474" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: chi-sq-test</span></span>
+<span id="cb24-475"><a href="#cb24-475" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-476"><a href="#cb24-476" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq_test</span>(baldness_survey, education <span class="sc">~</span> hair_status)</span>
+<span id="cb24-477"><a href="#cb24-477" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-478"><a href="#cb24-478" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-479"><a href="#cb24-479" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-480"><a href="#cb24-480" aria-hidden="true" tabindex="-1"></a>So our p-value tells us that we should expect to observe data at least extreme as our simulated survey data a little less than 20% of the time, if the null hypothesis that there is no difference in education levels across levels of hair loss is true. This is a smaller p-value than @sinikumpu2021 observe (0.299), but that will be a consequence of the fact we are simulating the data using probabilistic samples, not replicating their results exactly.</span>
+<span id="cb24-481"><a href="#cb24-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-482"><a href="#cb24-482" aria-hidden="true" tabindex="-1"></a>If we were to fudge the numbers a little bit, so as to artificially increase the difference in education levels based on the amount of hair a 46 year old man has, what would our results look like?</span>
+<span id="cb24-483"><a href="#cb24-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-486"><a href="#cb24-486" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-487"><a href="#cb24-487" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: add-effect</span></span>
+<span id="cb24-488"><a href="#cb24-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-489"><a href="#cb24-489" aria-hidden="true" tabindex="-1"></a>not_bald <span class="ot">&lt;-</span></span>
+<span id="cb24-490"><a href="#cb24-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb24-491"><a href="#cb24-491" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Not Bald"</span>, <span class="at">times =</span> <span class="dv">300</span>),</span>
+<span id="cb24-492"><a href="#cb24-492" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
+<span id="cb24-493"><a href="#cb24-493" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
+<span id="cb24-494"><a href="#cb24-494" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">300</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb24-495"><a href="#cb24-495" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.55</span>, <span class="fl">0.3</span>))</span>
+<span id="cb24-496"><a href="#cb24-496" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-497"><a href="#cb24-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-498"><a href="#cb24-498" aria-hidden="true" tabindex="-1"></a>bald <span class="ot">&lt;-</span></span>
+<span id="cb24-499"><a href="#cb24-499" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb24-500"><a href="#cb24-500" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Bald"</span>, <span class="at">times =</span> <span class="dv">600</span>),</span>
+<span id="cb24-501"><a href="#cb24-501" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
+<span id="cb24-502"><a href="#cb24-502" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
+<span id="cb24-503"><a href="#cb24-503" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">600</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb24-504"><a href="#cb24-504" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.6</span>, <span class="fl">0.35</span>))</span>
+<span id="cb24-505"><a href="#cb24-505" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb24-506"><a href="#cb24-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-507"><a href="#cb24-507" aria-hidden="true" tabindex="-1"></a>baldness_survey_with_effect <span class="ot">&lt;-</span></span>
+<span id="cb24-508"><a href="#cb24-508" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(not_bald, bald)</span>
 <span id="cb24-509"><a href="#cb24-509" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-510"><a href="#cb24-510" aria-hidden="true" tabindex="-1"></a>baldness_survey_with_effect <span class="ot">&lt;-</span></span>
-<span id="cb24-511"><a href="#cb24-511" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(not_bald, bald)</span>
-<span id="cb24-512"><a href="#cb24-512" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-513"><a href="#cb24-513" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq_test</span>(baldness_survey_with_effect, education <span class="sc">~</span> hair_status)</span>
-<span id="cb24-514"><a href="#cb24-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-515"><a href="#cb24-515" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-516"><a href="#cb24-516" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-517"><a href="#cb24-517" aria-hidden="true" tabindex="-1"></a>Having increased the number of respondents with a basic education (and in turn decreasing those with secondary and tertiary educations) for the not bald group, our chi-squared test results suggest the data we observe is much more extreme. The p-value for this test is extremely small, but that's not totally surprising. We did fake our data, after all.</span>
-<span id="cb24-518"><a href="#cb24-518" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-519"><a href="#cb24-519" aria-hidden="true" tabindex="-1"></a><span class="fu">### Simulation-Based Statistical Tests</span></span>
-<span id="cb24-520"><a href="#cb24-520" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-521"><a href="#cb24-521" aria-hidden="true" tabindex="-1"></a>One of the reasons I always struggled with hypothesis testing when first learning about them is the seemingly endless variations of tests, each suited to a slightly different data distribution or context. While you could take on the arduous task of learning as many different tests as possible, it is probably (definitely) better to think in terms of the framework for carrying out a hypothesis test that was detailed earlier, and understanding all tests as generalisations of this framework.</span>
-<span id="cb24-522"><a href="#cb24-522" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-523"><a href="#cb24-523" aria-hidden="true" tabindex="-1"></a>This was an idea pitched by the computer scientist Allen Downey, when he wrote that "there is only one test". He's right. This framework for understanding all hypothesis tests as variations on the same basic method uses simulated data from permutation or bootstrapping methods to generate the null distribution against which observed data can be evaluated. </span>
-<span id="cb24-524"><a href="#cb24-524" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-525"><a href="#cb24-525" aria-hidden="true" tabindex="-1"></a>When classical significance testing methods were developed, simulation wasn't possible, due to the absence of computational power. Now that we have high-powered machines that will do everything for us, we don't have to worry about this so much, which makes simulation much more viable.</span>
-<span id="cb24-526"><a href="#cb24-526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-527"><a href="#cb24-527" aria-hidden="true" tabindex="-1"></a>Downey visualises how this simulation-based workflow for hypothesis testing works using the following diagram:</span>
-<span id="cb24-528"><a href="#cb24-528" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-529"><a href="#cb24-529" aria-hidden="true" tabindex="-1"></a><span class="al">![](figures/hypothesis_testing.png)</span></span>
-<span id="cb24-530"><a href="#cb24-530" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-531"><a href="#cb24-531" aria-hidden="true" tabindex="-1"></a>The <span class="in">`{infer}`</span> workflow for carrying out simulation-based hypothesis tests is designed based on the same principles (<span class="in">`specify()`</span>, <span class="in">`hypothesize()`</span>, <span class="in">`generate()`</span>, <span class="in">`calculate()`</span>, &amp; <span class="in">`visualize()`</span>). This all-in-one process for hypothesis testing is a little more involved than the humble t-test, and the code for computing hypothesis tests using this approach is definitely more verbose. However, the power that this process gives you is that you can easily carry out any hypothesis test once you've learned Downey's framework, and the consistency of the <span class="in">`{infer}`</span> workflow makes it easier to learn how to do this. The <span class="in">`{infer}`</span> documentation also provides a <span class="co">[</span><span class="ot">pretty exhaustive list</span><span class="co">][{infer} Examples]</span> of how to compute hypothesis tests under a variety of conditions.</span>
-<span id="cb24-532"><a href="#cb24-532" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-533"><a href="#cb24-533" aria-hidden="true" tabindex="-1"></a>We can see <span class="in">`{infer}`</span> in action by recalculating our IQ scores t-test that we carried out earlier on. Here is what that looks like using simulation-based methods.</span>
-<span id="cb24-534"><a href="#cb24-534" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-537"><a href="#cb24-537" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-538"><a href="#cb24-538" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: high-achievers-sim-test</span></span>
-<span id="cb24-539"><a href="#cb24-539" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-540"><a href="#cb24-540" aria-hidden="true" tabindex="-1"></a><span class="co"># compute test statistic</span></span>
-<span id="cb24-541"><a href="#cb24-541" aria-hidden="true" tabindex="-1"></a>test_statistic <span class="ot">&lt;-</span> </span>
-<span id="cb24-542"><a href="#cb24-542" aria-hidden="true" tabindex="-1"></a>  larger_sample <span class="sc">|&gt;</span> </span>
-<span id="cb24-543"><a href="#cb24-543" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> score) <span class="sc">|&gt;</span> </span>
-<span id="cb24-544"><a href="#cb24-544" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)</span>
-<span id="cb24-545"><a href="#cb24-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-546"><a href="#cb24-546" aria-hidden="true" tabindex="-1"></a><span class="co"># generate null distribution</span></span>
-<span id="cb24-547"><a href="#cb24-547" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> </span>
-<span id="cb24-548"><a href="#cb24-548" aria-hidden="true" tabindex="-1"></a>  larger_sample <span class="sc">|&gt;</span></span>
-<span id="cb24-549"><a href="#cb24-549" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> score) <span class="sc">|&gt;</span> </span>
-<span id="cb24-550"><a href="#cb24-550" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb24-551"><a href="#cb24-551" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb24-552"><a href="#cb24-552" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)</span>
-<span id="cb24-553"><a href="#cb24-553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-554"><a href="#cb24-554" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p-value of observing a test statistic at least as extreme as </span></span>
-<span id="cb24-555"><a href="#cb24-555" aria-hidden="true" tabindex="-1"></a><span class="co"># our observed statistic if the data was generated by chance</span></span>
-<span id="cb24-556"><a href="#cb24-556" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> </span>
-<span id="cb24-557"><a href="#cb24-557" aria-hidden="true" tabindex="-1"></a>  null_distribution <span class="sc">|&gt;</span></span>
-<span id="cb24-558"><a href="#cb24-558" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> test_statistic, <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
-<span id="cb24-559"><a href="#cb24-559" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-560"><a href="#cb24-560" aria-hidden="true" tabindex="-1"></a><span class="co"># visualise the test statistic against the null</span></span>
-<span id="cb24-561"><a href="#cb24-561" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="sc">|&gt;</span></span>
-<span id="cb24-562"><a href="#cb24-562" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span> </span>
-<span id="cb24-563"><a href="#cb24-563" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(test_statistic, <span class="at">direction =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"#00A499"</span>) <span class="sc">+</span></span>
-<span id="cb24-564"><a href="#cb24-564" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb24-565"><a href="#cb24-565" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
-<span id="cb24-566"><a href="#cb24-566" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">95</span>, <span class="at">y =</span> <span class="dv">125</span>,</span>
-<span id="cb24-567"><a href="#cb24-567" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"t = "</span>, <span class="fu">round</span>(test_statistic, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st"> p = "</span>, p_value),</span>
-<span id="cb24-568"><a href="#cb24-568" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">8</span>), <span class="at">color=</span><span class="st">"grey30"</span></span>
-<span id="cb24-569"><a href="#cb24-569" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb24-570"><a href="#cb24-570" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"IQ Score"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="cn">NULL</span>)</span>
-<span id="cb24-571"><a href="#cb24-571" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-572"><a href="#cb24-572" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-573"><a href="#cb24-573" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-574"><a href="#cb24-574" aria-hidden="true" tabindex="-1"></a>I think that one of the main strengths of this approach is the intuition it gives us for how hypothesis testing really works. By going through the process step-by-step, we can see what we are doing more easily. We compute our test statistic, which is some summary measure of the data (in this case the mean value), before simulating a null distribution under the assumption that there is no difference between our high achievers and the population. We do this by specifying the data we are testing (the response variable), stating our null hypothesis (that we are carrying out a test using a point estimate, and that the mean of the null is 100), and generating a distribution by taking 1000 bootstrap samples (where sample size is equal to our input and samples are drawn from our data with replacement). </span>
-<span id="cb24-575"><a href="#cb24-575" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-576"><a href="#cb24-576" aria-hidden="true" tabindex="-1"></a>Having built a null distribution, we can compare our test statistic against that null and see how extreme it appears to be if the assumption that the null hypothesis is true is correct. We can quantify this by computing a p-value, which is just a measure of the proportion of values in our null distribution that are at least as extreme as the test statistic. In the above example, because we are carrying out a one-tailed test (<span class="in">`direction = "greater"`</span>), we would just need to filter the null distribution for values equal to or greater than our sample mean. If we were carrying out a two-tailed test, we would have to calculate the absolute distance of all values from the null mean, and then filter for all values equal to or greater than the difference between our sample mean and the null mean.</span>
-<span id="cb24-577"><a href="#cb24-577" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-578"><a href="#cb24-578" aria-hidden="true" tabindex="-1"></a>To further illustrate this workflow, below is the chi-squared test equivalent.</span>
-<span id="cb24-579"><a href="#cb24-579" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-582"><a href="#cb24-582" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-583"><a href="#cb24-583" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: chi-squared-sim-test</span></span>
-<span id="cb24-584"><a href="#cb24-584" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-585"><a href="#cb24-585" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate test statistic</span></span>
-<span id="cb24-586"><a href="#cb24-586" aria-hidden="true" tabindex="-1"></a>chisq_statistic <span class="ot">&lt;-</span> </span>
-<span id="cb24-587"><a href="#cb24-587" aria-hidden="true" tabindex="-1"></a>  baldness_survey <span class="sc">|&gt;</span> </span>
-<span id="cb24-588"><a href="#cb24-588" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(education <span class="sc">~</span> hair_status) <span class="sc">|&gt;</span> </span>
-<span id="cb24-589"><a href="#cb24-589" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb24-590"><a href="#cb24-590" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"Chisq"</span>)</span>
-<span id="cb24-591"><a href="#cb24-591" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-592"><a href="#cb24-592" aria-hidden="true" tabindex="-1"></a><span class="co"># generate null distribution</span></span>
-<span id="cb24-593"><a href="#cb24-593" aria-hidden="true" tabindex="-1"></a>chisq_null <span class="ot">&lt;-</span> </span>
-<span id="cb24-594"><a href="#cb24-594" aria-hidden="true" tabindex="-1"></a>  baldness_survey <span class="sc">|&gt;</span> </span>
-<span id="cb24-595"><a href="#cb24-595" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(education <span class="sc">~</span> hair_status) <span class="sc">|&gt;</span> </span>
-<span id="cb24-596"><a href="#cb24-596" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb24-597"><a href="#cb24-597" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb24-598"><a href="#cb24-598" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"Chisq"</span>)</span>
-<span id="cb24-599"><a href="#cb24-599" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-600"><a href="#cb24-600" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p value from the test statistic and null distribution</span></span>
-<span id="cb24-601"><a href="#cb24-601" aria-hidden="true" tabindex="-1"></a>chisq_p <span class="ot">&lt;-</span></span>
-<span id="cb24-602"><a href="#cb24-602" aria-hidden="true" tabindex="-1"></a>  chisq_null <span class="sc">|&gt;</span> </span>
-<span id="cb24-603"><a href="#cb24-603" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(chisq_statistic, <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
-<span id="cb24-604"><a href="#cb24-604" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-605"><a href="#cb24-605" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize the null distribution and test statistic</span></span>
-<span id="cb24-606"><a href="#cb24-606" aria-hidden="true" tabindex="-1"></a>chisq_null <span class="sc">|&gt;</span> </span>
-<span id="cb24-607"><a href="#cb24-607" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span> </span>
-<span id="cb24-608"><a href="#cb24-608" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(chisq_statistic, <span class="at">direction =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"#00A499"</span>) <span class="sc">+</span></span>
-<span id="cb24-609"><a href="#cb24-609" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb24-610"><a href="#cb24-610" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
-<span id="cb24-611"><a href="#cb24-611" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">7.5</span>, <span class="at">y =</span> <span class="dv">250</span>,</span>
-<span id="cb24-612"><a href="#cb24-612" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> </span>
-<span id="cb24-613"><a href="#cb24-613" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="st">"χ2 = "</span>, <span class="fu">round</span>(chisq_statistic<span class="sc">$</span>stat, <span class="dv">2</span>),</span>
-<span id="cb24-614"><a href="#cb24-614" aria-hidden="true" tabindex="-1"></a>             <span class="st">"</span><span class="sc">\n</span><span class="st"> p = "</span>, chisq_p),</span>
-<span id="cb24-615"><a href="#cb24-615" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">8</span>), <span class="at">color=</span><span class="st">"grey30"</span></span>
-<span id="cb24-616"><a href="#cb24-616" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb24-617"><a href="#cb24-617" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Chi-Squared Statistic"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="cn">NULL</span>)</span>
-<span id="cb24-618"><a href="#cb24-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-619"><a href="#cb24-619" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-620"><a href="#cb24-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-621"><a href="#cb24-621" aria-hidden="true" tabindex="-1"></a>As discussed above, the simulation-based approach to hypothesis testing involves carrying out the processes in the hypothesis test more explicitly, and this helps us gain intuition for what we are doing. This also forces us to think about how we specify and compute our test. It's pretty easy to build a t-test without really getting as far as actually checking if it is the right approach, and you don't need to think long and hard about exactly what is going on when you run a t-test. Downey's "There is only one test" framework, and the <span class="in">`{infer}`</span> implementation, forces you to think about what you are doing and to be a little more deliberate about your choices.</span>
-<span id="cb24-622"><a href="#cb24-622" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-623"><a href="#cb24-623" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
-<span id="cb24-624"><a href="#cb24-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-625"><a href="#cb24-625" aria-hidden="true" tabindex="-1"></a>The goal for this chapter is that readers come away with an understanding of the significant limitations of null hypothesis significance testing and the more robust approaches to testing hypotheses, and the alternative approach of estimating meaningful effects. I hope that this chapter has helped set people up reasonably well when carrying out tests. Equally, I hope that they will consider the alternatives, recognising when it is defensible to carry out a statistical test and when estimating the effect size is necessary. </span>
-<span id="cb24-626"><a href="#cb24-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-627"><a href="#cb24-627" aria-hidden="true" tabindex="-1"></a>I have taken a slightly more forgiving position than many of the statisticians that I respect, and from which I have learned so much, but I have deliberately done so because I think industry has slightly different incentives, and therefore slightly different requirements. I think that there are situations where the use of hypothesis testing is sufficient and defensible, and those situations are much more common in industry. The criticisms remain perfectly valid, but I hope I have given readers the tools to carry out more robust testing, and a good understanding of when to choose estimation instead, where necessary.</span>
-<span id="cb24-628"><a href="#cb24-628" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-629"><a href="#cb24-629" aria-hidden="true" tabindex="-1"></a>While it is possible to use statistical tests for estimation, I also believe that the big wide world of estimation is better served by regression models. I think regression modelling is a better starting point than statistical tests because the structure of regression modelling places more emphasis on the effect size. Further, estimating effect sizes does not rule out the use of statistical tests, but it does require redirecting our focus and making sure to treat the magnitude and direction of effect size as the most important part of the analysis. The premise of statistical tests is that they test for the existence of an effect, and while packages like {infer} frame test outputs in a way that makes using statistical tests for these purposes, it does still require a little work to think about about the results of statistical tests in these terms. Further, I think that regression modelling gives a lot more flexibility when we are attempting to estimate an effect as precisely as possible, and the process and resulting outputs of a regression model lend themselves more naturally to a focus that steers away from hypothesis testing and towards estimating effects.</span>
-<span id="cb24-630"><a href="#cb24-630" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-631"><a href="#cb24-631" aria-hidden="true" tabindex="-1"></a>If it hasn't been made clear before, I think it is important to stress the distinction between the null hypothesis testing framework and the statistical tests used to carry them out. The tests themselves are not really the problem. However, they are closely tied to null hypothesis testing. Ultimately, the statistical tests discussed in this chapter (and many more) are just special cases of linear models <span class="co">[</span><span class="ot">@lindelov2019</span><span class="co">]</span>, and the results in both will be identical <span class="co">[</span><span class="ot">@zablotski2019</span><span class="co">]</span> (if not the way the outputs are presented), so the same things can be achieved with either approach, but regression modelling offers more flexibility, allows for the layering of complexity/precision in estimates, and the way regression outputs are framed are generally a little more balanced. Treating regressions as the first point of call for inferential statistics is not a necessary prerequisite for "doing things the right way", but doing things the right way becomes easier, because it is easier to frame everything in terms of the magnitude and direction of effects.</span>
-<span id="cb24-632"><a href="#cb24-632" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-633"><a href="#cb24-633" aria-hidden="true" tabindex="-1"></a>The good news? The next chapter is about modelling linear effects using regression!</span>
-<span id="cb24-634"><a href="#cb24-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-635"><a href="#cb24-635" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
-<span id="cb24-636"><a href="#cb24-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-637"><a href="#cb24-637" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">{infer}</span><span class="co">]</span></span>
-<span id="cb24-638"><a href="#cb24-638" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Seeing Theory</span><span class="co">]</span></span>
-<span id="cb24-639"><a href="#cb24-639" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">The Permutation Test</span><span class="co">]</span></span>
-<span id="cb24-640"><a href="#cb24-640" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">There is Only One Test</span><span class="co">]</span></span>
-<span id="cb24-641"><a href="#cb24-641" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">More Hypotheses, Less Trivia</span><span class="co">]</span></span>
-<span id="cb24-642"><a href="#cb24-642" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Permutation Tests</span><span class="co">]</span></span>
-<span id="cb24-643"><a href="#cb24-643" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Permutation Test as an Alternative to Two-Sample T-Test Using R</span><span class="co">]</span></span>
-<span id="cb24-644"><a href="#cb24-644" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Power Analysis</span><span class="co">]</span></span>
-<span id="cb24-645"><a href="#cb24-645" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Recommended Resources for A/B Testing</span><span class="co">]</span></span>
-<span id="cb24-646"><a href="#cb24-646" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">McElreath - None of the Above</span><span class="co">]</span></span>
-<span id="cb24-647"><a href="#cb24-647" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Introduction to Scientific Programming and Simulations in R</span><span class="co">]</span></span>
+<span id="cb24-510"><a href="#cb24-510" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq_test</span>(baldness_survey_with_effect, education <span class="sc">~</span> hair_status)</span>
+<span id="cb24-511"><a href="#cb24-511" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-512"><a href="#cb24-512" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-513"><a href="#cb24-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-514"><a href="#cb24-514" aria-hidden="true" tabindex="-1"></a>Having increased the number of respondents with a basic education (and in turn decreasing those with secondary and tertiary educations) for the not bald group, our chi-squared test results suggest the data we observe is much more extreme. The p-value for this test is extremely small, but that's not totally surprising. We did fake our data, after all.</span>
+<span id="cb24-515"><a href="#cb24-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-516"><a href="#cb24-516" aria-hidden="true" tabindex="-1"></a><span class="fu">### Simulation-Based Statistical Tests</span></span>
+<span id="cb24-517"><a href="#cb24-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-518"><a href="#cb24-518" aria-hidden="true" tabindex="-1"></a>One of the reasons I always struggled with hypothesis testing when first learning about them is the seemingly endless variations of tests, each suited to a slightly different data distribution or context. While you could take on the arduous task of learning as many different tests as possible, it is probably (definitely) better to think in terms of the framework for carrying out a hypothesis test that was detailed earlier, and understanding all tests as generalisations of this framework.</span>
+<span id="cb24-519"><a href="#cb24-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-520"><a href="#cb24-520" aria-hidden="true" tabindex="-1"></a>This was an idea pitched by the computer scientist Allen Downey, when he wrote that "there is only one test". He's right. This framework for understanding all hypothesis tests as variations on the same basic method uses simulated data from permutation or bootstrapping methods to generate the null distribution against which observed data can be evaluated. </span>
+<span id="cb24-521"><a href="#cb24-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-522"><a href="#cb24-522" aria-hidden="true" tabindex="-1"></a>When classical significance testing methods were developed, simulation wasn't possible, due to the absence of computational power. Now that we have high-powered machines that will do everything for us, we don't have to worry about this so much, which makes simulation much more viable.</span>
+<span id="cb24-523"><a href="#cb24-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-524"><a href="#cb24-524" aria-hidden="true" tabindex="-1"></a>Downey visualises how this simulation-based workflow for hypothesis testing works using the following diagram:</span>
+<span id="cb24-525"><a href="#cb24-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-526"><a href="#cb24-526" aria-hidden="true" tabindex="-1"></a><span class="al">![](figures/hypothesis_testing.png)</span></span>
+<span id="cb24-527"><a href="#cb24-527" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-528"><a href="#cb24-528" aria-hidden="true" tabindex="-1"></a>The <span class="in">`{infer}`</span> workflow for carrying out simulation-based hypothesis tests is designed based on the same principles (<span class="in">`specify()`</span>, <span class="in">`hypothesize()`</span>, <span class="in">`generate()`</span>, <span class="in">`calculate()`</span>, &amp; <span class="in">`visualize()`</span>). This all-in-one process for hypothesis testing is a little more involved than the humble t-test, and the code for computing hypothesis tests using this approach is definitely more verbose. However, the power that this process gives you is that you can easily carry out any hypothesis test once you've learned Downey's framework, and the consistency of the <span class="in">`{infer}`</span> workflow makes it easier to learn how to do this. The <span class="in">`{infer}`</span> documentation also provides a <span class="co">[</span><span class="ot">pretty exhaustive list</span><span class="co">][{infer} Examples]</span> of how to compute hypothesis tests under a variety of conditions.</span>
+<span id="cb24-529"><a href="#cb24-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-530"><a href="#cb24-530" aria-hidden="true" tabindex="-1"></a>We can see <span class="in">`{infer}`</span> in action by recalculating our IQ scores t-test that we carried out earlier on. Here is what that looks like using simulation-based methods.</span>
+<span id="cb24-531"><a href="#cb24-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-534"><a href="#cb24-534" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-535"><a href="#cb24-535" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: high-achievers-sim-test</span></span>
+<span id="cb24-536"><a href="#cb24-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-537"><a href="#cb24-537" aria-hidden="true" tabindex="-1"></a><span class="co"># compute test statistic</span></span>
+<span id="cb24-538"><a href="#cb24-538" aria-hidden="true" tabindex="-1"></a>test_statistic <span class="ot">&lt;-</span> </span>
+<span id="cb24-539"><a href="#cb24-539" aria-hidden="true" tabindex="-1"></a>  larger_sample <span class="sc">|&gt;</span> </span>
+<span id="cb24-540"><a href="#cb24-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> score) <span class="sc">|&gt;</span> </span>
+<span id="cb24-541"><a href="#cb24-541" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)</span>
+<span id="cb24-542"><a href="#cb24-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-543"><a href="#cb24-543" aria-hidden="true" tabindex="-1"></a><span class="co"># generate null distribution</span></span>
+<span id="cb24-544"><a href="#cb24-544" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> </span>
+<span id="cb24-545"><a href="#cb24-545" aria-hidden="true" tabindex="-1"></a>  larger_sample <span class="sc">|&gt;</span></span>
+<span id="cb24-546"><a href="#cb24-546" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> score) <span class="sc">|&gt;</span> </span>
+<span id="cb24-547"><a href="#cb24-547" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-548"><a href="#cb24-548" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-549"><a href="#cb24-549" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)</span>
+<span id="cb24-550"><a href="#cb24-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-551"><a href="#cb24-551" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p-value of observing a test statistic at least as extreme as </span></span>
+<span id="cb24-552"><a href="#cb24-552" aria-hidden="true" tabindex="-1"></a><span class="co"># our observed statistic if the data was generated by chance</span></span>
+<span id="cb24-553"><a href="#cb24-553" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> </span>
+<span id="cb24-554"><a href="#cb24-554" aria-hidden="true" tabindex="-1"></a>  null_distribution <span class="sc">|&gt;</span></span>
+<span id="cb24-555"><a href="#cb24-555" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> test_statistic, <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
+<span id="cb24-556"><a href="#cb24-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-557"><a href="#cb24-557" aria-hidden="true" tabindex="-1"></a><span class="co"># visualise the test statistic against the null</span></span>
+<span id="cb24-558"><a href="#cb24-558" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="sc">|&gt;</span></span>
+<span id="cb24-559"><a href="#cb24-559" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span> </span>
+<span id="cb24-560"><a href="#cb24-560" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(test_statistic, <span class="at">direction =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"#00A499"</span>) <span class="sc">+</span></span>
+<span id="cb24-561"><a href="#cb24-561" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb24-562"><a href="#cb24-562" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb24-563"><a href="#cb24-563" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">95</span>, <span class="at">y =</span> <span class="dv">125</span>,</span>
+<span id="cb24-564"><a href="#cb24-564" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"t = "</span>, <span class="fu">round</span>(test_statistic, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st"> p = "</span>, p_value),</span>
+<span id="cb24-565"><a href="#cb24-565" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">8</span>), <span class="at">color=</span><span class="st">"grey30"</span></span>
+<span id="cb24-566"><a href="#cb24-566" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb24-567"><a href="#cb24-567" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"IQ Score"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="cn">NULL</span>)</span>
+<span id="cb24-568"><a href="#cb24-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-569"><a href="#cb24-569" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-570"><a href="#cb24-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-571"><a href="#cb24-571" aria-hidden="true" tabindex="-1"></a>I think that one of the main strengths of this approach is the intuition it gives us for how hypothesis testing really works. By going through the process step-by-step, we can see what we are doing more easily. We compute our test statistic, which is some summary measure of the data (in this case the mean value), before simulating a null distribution under the assumption that there is no difference between our high achievers and the population. We do this by specifying the data we are testing (the response variable), stating our null hypothesis (that we are carrying out a test using a point estimate, and that the mean of the null is 100), and generating a distribution by taking 1000 bootstrap samples (where sample size is equal to our input and samples are drawn from our data with replacement). </span>
+<span id="cb24-572"><a href="#cb24-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-573"><a href="#cb24-573" aria-hidden="true" tabindex="-1"></a>Having built a null distribution, we can compare our test statistic against that null and see how extreme it appears to be if the assumption that the null hypothesis is true is correct. We can quantify this by computing a p-value, which is just a measure of the proportion of values in our null distribution that are at least as extreme as the test statistic. In the above example, because we are carrying out a one-tailed test (<span class="in">`direction = "greater"`</span>), we would just need to filter the null distribution for values equal to or greater than our sample mean. If we were carrying out a two-tailed test, we would have to calculate the absolute distance of all values from the null mean, and then filter for all values equal to or greater than the difference between our sample mean and the null mean.</span>
+<span id="cb24-574"><a href="#cb24-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-575"><a href="#cb24-575" aria-hidden="true" tabindex="-1"></a>To further illustrate this workflow, below is the chi-squared test equivalent.</span>
+<span id="cb24-576"><a href="#cb24-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-579"><a href="#cb24-579" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-580"><a href="#cb24-580" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: chi-squared-sim-test</span></span>
+<span id="cb24-581"><a href="#cb24-581" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-582"><a href="#cb24-582" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate test statistic</span></span>
+<span id="cb24-583"><a href="#cb24-583" aria-hidden="true" tabindex="-1"></a>chisq_statistic <span class="ot">&lt;-</span> </span>
+<span id="cb24-584"><a href="#cb24-584" aria-hidden="true" tabindex="-1"></a>  baldness_survey <span class="sc">|&gt;</span> </span>
+<span id="cb24-585"><a href="#cb24-585" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(education <span class="sc">~</span> hair_status) <span class="sc">|&gt;</span> </span>
+<span id="cb24-586"><a href="#cb24-586" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-587"><a href="#cb24-587" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"Chisq"</span>)</span>
+<span id="cb24-588"><a href="#cb24-588" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-589"><a href="#cb24-589" aria-hidden="true" tabindex="-1"></a><span class="co"># generate null distribution</span></span>
+<span id="cb24-590"><a href="#cb24-590" aria-hidden="true" tabindex="-1"></a>chisq_null <span class="ot">&lt;-</span> </span>
+<span id="cb24-591"><a href="#cb24-591" aria-hidden="true" tabindex="-1"></a>  baldness_survey <span class="sc">|&gt;</span> </span>
+<span id="cb24-592"><a href="#cb24-592" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(education <span class="sc">~</span> hair_status) <span class="sc">|&gt;</span> </span>
+<span id="cb24-593"><a href="#cb24-593" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-594"><a href="#cb24-594" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-595"><a href="#cb24-595" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"Chisq"</span>)</span>
+<span id="cb24-596"><a href="#cb24-596" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-597"><a href="#cb24-597" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p value from the test statistic and null distribution</span></span>
+<span id="cb24-598"><a href="#cb24-598" aria-hidden="true" tabindex="-1"></a>chisq_p <span class="ot">&lt;-</span></span>
+<span id="cb24-599"><a href="#cb24-599" aria-hidden="true" tabindex="-1"></a>  chisq_null <span class="sc">|&gt;</span> </span>
+<span id="cb24-600"><a href="#cb24-600" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(chisq_statistic, <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
+<span id="cb24-601"><a href="#cb24-601" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-602"><a href="#cb24-602" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize the null distribution and test statistic</span></span>
+<span id="cb24-603"><a href="#cb24-603" aria-hidden="true" tabindex="-1"></a>chisq_null <span class="sc">|&gt;</span> </span>
+<span id="cb24-604"><a href="#cb24-604" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span> </span>
+<span id="cb24-605"><a href="#cb24-605" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(chisq_statistic, <span class="at">direction =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"#00A499"</span>) <span class="sc">+</span></span>
+<span id="cb24-606"><a href="#cb24-606" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb24-607"><a href="#cb24-607" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb24-608"><a href="#cb24-608" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">7.5</span>, <span class="at">y =</span> <span class="dv">250</span>,</span>
+<span id="cb24-609"><a href="#cb24-609" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> </span>
+<span id="cb24-610"><a href="#cb24-610" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="st">"χ2 = "</span>, <span class="fu">round</span>(chisq_statistic<span class="sc">$</span>stat, <span class="dv">2</span>),</span>
+<span id="cb24-611"><a href="#cb24-611" aria-hidden="true" tabindex="-1"></a>             <span class="st">"</span><span class="sc">\n</span><span class="st"> p = "</span>, chisq_p),</span>
+<span id="cb24-612"><a href="#cb24-612" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">8</span>), <span class="at">color=</span><span class="st">"grey30"</span></span>
+<span id="cb24-613"><a href="#cb24-613" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb24-614"><a href="#cb24-614" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Chi-Squared Statistic"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="cn">NULL</span>)</span>
+<span id="cb24-615"><a href="#cb24-615" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-616"><a href="#cb24-616" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-617"><a href="#cb24-617" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-618"><a href="#cb24-618" aria-hidden="true" tabindex="-1"></a>As discussed above, the simulation-based approach to hypothesis testing involves carrying out the processes in the hypothesis test more explicitly, and this helps us gain intuition for what we are doing. This also forces us to think about how we specify and compute our test. It's pretty easy to build a t-test without really getting as far as actually checking if it is the right approach, and you don't need to think long and hard about exactly what is going on when you run a t-test. Downey's "There is only one test" framework, and the <span class="in">`{infer}`</span> implementation, forces you to think about what you are doing and to be a little more deliberate about your choices.</span>
+<span id="cb24-619"><a href="#cb24-619" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-620"><a href="#cb24-620" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
+<span id="cb24-621"><a href="#cb24-621" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-622"><a href="#cb24-622" aria-hidden="true" tabindex="-1"></a>The goal for this chapter is that readers come away with an understanding of the significant limitations of null hypothesis significance testing and the more robust approaches to testing hypotheses, and the alternative approach of estimating meaningful effects. I hope that this chapter has helped set people up reasonably well when carrying out tests. Equally, I hope that they will consider the alternatives, recognising when it is defensible to carry out a statistical test and when estimating the effect size is necessary. </span>
+<span id="cb24-623"><a href="#cb24-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-624"><a href="#cb24-624" aria-hidden="true" tabindex="-1"></a>I have taken a slightly more forgiving position than many of the statisticians that I respect, and from which I have learned so much, but I have deliberately done so because I think industry has slightly different incentives, and therefore slightly different requirements. I think that there are situations where the use of hypothesis testing is sufficient and defensible, and those situations are much more common in industry. The criticisms remain perfectly valid, but I hope I have given readers the tools to carry out more robust testing, and a good understanding of when to choose estimation instead, where necessary.</span>
+<span id="cb24-625"><a href="#cb24-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-626"><a href="#cb24-626" aria-hidden="true" tabindex="-1"></a>While it is possible to use statistical tests for estimation, I also believe that the big wide world of estimation is better served by regression models. I think regression modelling is a better starting point than statistical tests because the structure of regression modelling places more emphasis on the effect size. Further, estimating effect sizes does not rule out the use of statistical tests, but it does require redirecting our focus and making sure to treat the magnitude and direction of effect size as the most important part of the analysis. The premise of statistical tests is that they test for the existence of an effect, and while packages like {infer} frame test outputs in a way that makes using statistical tests for these purposes, it does still require a little work to think about about the results of statistical tests in these terms. Further, I think that regression modelling gives a lot more flexibility when we are attempting to estimate an effect as precisely as possible, and the process and resulting outputs of a regression model lend themselves more naturally to a focus that steers away from hypothesis testing and towards estimating effects.</span>
+<span id="cb24-627"><a href="#cb24-627" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-628"><a href="#cb24-628" aria-hidden="true" tabindex="-1"></a>If it hasn't been made clear before, I think it is important to stress the distinction between the null hypothesis testing framework and the statistical tests used to carry them out. The tests themselves are not really the problem. However, they are closely tied to null hypothesis testing. Ultimately, the statistical tests discussed in this chapter (and many more) are just special cases of linear models <span class="co">[</span><span class="ot">@lindelov2019</span><span class="co">]</span>, and the results in both will be identical <span class="co">[</span><span class="ot">@zablotski2019</span><span class="co">]</span> (if not the way the outputs are presented), so the same things can be achieved with either approach, but regression modelling offers more flexibility, allows for the layering of complexity/precision in estimates, and the way regression outputs are framed are generally a little more balanced. Treating regressions as the first point of call for inferential statistics is not a necessary prerequisite for "doing things the right way", but doing things the right way becomes easier, because it is easier to frame everything in terms of the magnitude and direction of effects.</span>
+<span id="cb24-629"><a href="#cb24-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-630"><a href="#cb24-630" aria-hidden="true" tabindex="-1"></a>The good news? The next chapter is about modelling linear effects using regression!</span>
+<span id="cb24-631"><a href="#cb24-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-632"><a href="#cb24-632" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
+<span id="cb24-633"><a href="#cb24-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-634"><a href="#cb24-634" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">{infer}</span><span class="co">]</span></span>
+<span id="cb24-635"><a href="#cb24-635" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Seeing Theory</span><span class="co">]</span></span>
+<span id="cb24-636"><a href="#cb24-636" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">The Permutation Test</span><span class="co">]</span></span>
+<span id="cb24-637"><a href="#cb24-637" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">There is Only One Test</span><span class="co">]</span></span>
+<span id="cb24-638"><a href="#cb24-638" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">More Hypotheses, Less Trivia</span><span class="co">]</span></span>
+<span id="cb24-639"><a href="#cb24-639" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Permutation Tests</span><span class="co">]</span></span>
+<span id="cb24-640"><a href="#cb24-640" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Permutation Test as an Alternative to Two-Sample T-Test Using R</span><span class="co">]</span></span>
+<span id="cb24-641"><a href="#cb24-641" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Power Analysis</span><span class="co">]</span></span>
+<span id="cb24-642"><a href="#cb24-642" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Recommended Resources for A/B Testing</span><span class="co">]</span></span>
+<span id="cb24-643"><a href="#cb24-643" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">McElreath - None of the Above</span><span class="co">]</span></span>
+<span id="cb24-644"><a href="#cb24-644" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Introduction to Scientific Programming and Simulations in R</span><span class="co">]</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
