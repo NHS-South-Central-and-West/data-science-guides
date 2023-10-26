@@ -20,8 +20,9 @@ format:
       - theme.scss
     code-link: true
     code-block-bg: true
+    code-tools: true
     highlight-style: github
-    callout-appearance: simple
+
     fig-width: 10
     fig-height: 6
     dpi: 300
@@ -38,8 +39,11 @@ filters:
 
 collapse-callout:
   all: true
+callout-appearance: simple
+callout-icon: true
 
 profile:
   group:
     - [r, python]
   default: r
+    

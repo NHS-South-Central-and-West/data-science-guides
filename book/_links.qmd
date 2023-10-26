@@ -5,6 +5,12 @@
  
 [CC BY-NC-SA 4.0]: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+<!-- good science -->
+
+[Techniques for Problem Solving]: https://twitter.com/TivadarDanka/status/1682333102637719552?s=20
+[Problem Solving and the Scientific Method]: https://faculty.ai/blog/key-skills-for-aspiring-data-scientists-problem-solving-and-the-scientific-method/
+[Richard Feynman on the Scientific Method]: https://research-training-centre.sps.ed.ac.uk/feynman-scientific-method-and-sociology/
+
 [Learning Statistics with R]: https://learningstatisticswithr.com/
 [Beyond Multiple Linear Regression]: https://bookdown.org/roback/bookdown-BeyondMLR/
 [Statistical Rethinking]: https://xcelab.net/rm/statistical-rethinking/

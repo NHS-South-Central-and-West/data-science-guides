@@ -1,10 +1,18 @@
 # Doing Good Science {#sec-good-science}
 
+{{< include _links.qmd >}}
+
+<!-- To-Do:
+
+- Talk about how you help customers understand that we need to do things like linear regression.
+  - Think the conversation needs to start with talking about uncertainty. Modelling our uncertainty is a key part of this.
+  - Also making sure people realise that so much of what we do can be framed as a data science problem, depending on the detail required and on the long-term use-cases the customer has (for example, if they ask to know what a certain average value is, like attendances, it's possible they are looking to predict demand for planning purposes, and a machine learning model could help do this). -->
+
 ## A Scientific Approach to Problem Solving
 
-While it is important to learn the methods detailed in these guides (and more), the greatest emphasis should be placed on learning how to use the scientific method to approach problems. Approaching business problems scientifically, trying to build theories based on our observations about the subject being studied, is often overlooked, as this is in many ways the most complex part of the process. It is also less exciting than learning new ways to analyse data, so for someone that is new to data science, it is quite easy to deemphasise this and focus on doing the fun parts instead.
+While it is important to learn the methods detailed in these guides (and more), the greatest emphasis should be placed on learning how to use the scientific method to approach problems. Approaching business problems scientifically, trying to build theories based on our observations about the subject being studied, is often overlooked, as this is in many ways the most complex part of the process. It is also less exciting than learning new ways to analyse data, so for someone that is new to data science, it is quite easy to de-emphasise this and focus on doing the fun parts instead.
 
-These issues are exacerbated by the fact that any data science education, whether formal or self-taught, is often focused on the methods and tools required for data science. There is less explicit focus on the "process", but this is because the process is taught implicitly through the methods. Teaching the various methods and tools that a data scientist needs to know is time-consuming and complex, and in the process of learning and applying the methods, the student will also learn the scientific approach to problem solving. That said, once someone has mastered the methods, they are (relatively) east to apply to real-world problems, while the process of doing science the right way is more difficult, and requires careful consideration for every practicioner, no matter how experienced they are.
+These issues are exacerbated by the fact that any data science education, whether formal or self-taught, is often focused on the methods and tools required for data science. There is less explicit focus on the "process", but this is because the process is taught implicitly through the methods. Teaching the various methods and tools that a data scientist needs to know is time-consuming and complex, and in the process of learning and applying the methods, the student will also learn the scientific approach to problem solving. That said, once someone has mastered the methods, they are (relatively) east to apply to real-world problems, while the process of doing science the right way is more difficult, and requires careful consideration for every practitioner, no matter how experienced they are.
 
 ### Framing the Problem
 
@@ -32,7 +40,7 @@ But as more data becomes available, the challenge of making good use of it becom
 
 While the other guides in this project will hopefully give a better understanding of what is possible with data science, this particular guide is intended to help anyone frame business problems, whether internal or external, in terms of data science, and to identify opportunities to develop more advanced solutions to those problems.
 
-## Designing Impactful Research
+<!-- ## Designing Impactful Research -->
 
 ## Identifying Data Science Opportunities
 
@@ -78,6 +86,6 @@ Although the data science guides focus, for the most part, on the implementation
 
 ## Resources
 
-- [Techniques for Problem Solving](https://twitter.com/TivadarDanka/status/1682333102637719552?s=20)
-- [Key Skills for Aspiring Data Scientists: Problem Solving and the Scientific Method](https://faculty.ai/blog/key-skills-for-aspiring-data-scientists-problem-solving-and-the-scientific-method/)
-- [Richard Feynman on the Scientific Method](https://research-training-centre.sps.ed.ac.uk/feynman-scientific-method-and-sociology/)
+- [Techniques for Problem Solving]
+- [Problem Solving and the Scientific Method]
+- [Richard Feynman on the Scientific Method]
