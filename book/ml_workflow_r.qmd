@@ -55,7 +55,7 @@ A simple end-to-end ML solution will typically include the following steps:
 5. Fitting Model on Test Data
 6. Model Evaluation
 
-For a more detailed discussion about a simple modeling workflow in R, @kuhn2023's [tmwr - workflow][Model Workflow] discussion in Tidy Modeling with R is a great resource.
+For a more detailed discussion about a simple modeling workflow in R, @kuhn2023's [Model Workflow][tmwr workflow] discussion in Tidy Modeling with R is a great resource.
 
 ## Data
 
@@ -90,7 +90,7 @@ test_df <- rsample::testing(train_test_split)
 
 On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalisable.
 
-For more information on cross-validation and how it can be used to train models @kuhn2023's [tmwr - resampling][Resampling Methods] discusses cross-validation in detail, in the wider context of resampling methods for training machine learning models. This helps to provide context for the purpose of cross-validation, as well as discussing some of the strategies for cross-validation.
+For more information on cross-validation and how it can be used to train models @kuhn2023's [Resampling Methods][tmwr resampling] discusses cross-validation in detail, in the wider context of resampling methods for training machine learning models. This helps to provide context for the purpose of cross-validation, as well as discussing some of the strategies for cross-validation.
 
 We will use 5-fold stratified cross-validation to train our models. This means that the training data will be split into 5 folds, ensuring that each fold has the same proportion of the target classes. Each fold will be used as a test set once, and the remaining folds will be used as training sets. This will be repeated 5 times, and the average performance will be used to evaluate the model.
 
@@ -151,7 +151,7 @@ scaled_recipe |>
 
 There are many different types of models that can be used for classification problems, and selecting the right model for the problem at hand can be difficult when you are first starting out with machine learning.
 
-Simple models like [parsnip - linear regression][linear] and [parsnip - logistic regression][logistic] regressions are often a good place to start and can be used to get a better understanding of the data and the problem at hand, and can give you a good idea of baseline performance before building more complex models to improve performance. Another example of a simple model is [parsnip - knn][K-Nearest Neighbours] (KNN), which is a non-parametric model that can be used for both classification and regression problems.
+Simple models like [linear][parsnip linear regression] and [logistic][parsnip logistic regression] regressions are often a good place to start and can be used to get a better understanding of the data and the problem at hand, and can give you a good idea of baseline performance before building more complex models to improve performance. Another example of a simple model is [K-Nearest Neighbours][parsnip knn] (KNN), which is a non-parametric model that can be used for both classification and regression problems.
 
 We will fit a logistic regression and a KNN, as well as fitting a Random Forest model, which is a good example of a slightly more complex model that will often perform well on structured data.
 
@@ -215,7 +215,7 @@ eval_metrics <- metric_set(f_meas, accuracy)
 
 Having defined the preprocessing recipes and candidate models, we can now train and tune the models. We will use the `tune_grid()` function to carry out hyperparameter tuning[^tuning], which will search over a grid of hyperparameter values to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using  F1 score and accuracy.
 
-[^tuning]: For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, @kuhn2023's [tmwr - tuning][Model Tuning and the Dangers of Overfitting] discussion is a good place to start. In addition, the AWS overview of [hyperparameter tuning] is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, @jordan2017 is thorough but easy to follow.
+[^tuning]: For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in tidymodels, @kuhn2023's [Model Tuning and the Dangers of Overfitting][tmwr tuning] discussion is a good place to start. In addition, the AWS overview of [hyperparameter tuning] is a good resource if you are only looking for a brief overview. Finally, for an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, @jordan2017 is thorough but easy to follow.
 
 ```{r}
 #| label: train-models

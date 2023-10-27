@@ -141,12 +141,12 @@
 
 <!-- machine learning -->
 
-[tmwr - workflow]: https://www.tmwr.org/workflows.html
-[tmwr - resampling]: https://www.tmwr.org/resampling.html#resampling-methods
-[tmwr - tuning]: https://www.tmwr.org/tuning.html
-[parsnip - linear regression]: https://parsnip.tidymodels.org/reference/linear_reg.html
-[parsnip - logistic regression]: https://parsnip.tidymodels.org/reference/logistic_reg.html
-[parsnip - knn]: https://parsnip.tidymodels.org/reference/nearest_neighbor.html
+[tmwr workflow]: https://www.tmwr.org/workflows.html
+[tmwr resampling]: https://www.tmwr.org/resampling.html#resampling-methods
+[tmwr tuning]: https://www.tmwr.org/tuning.html
+[parsnip linear regression]: https://parsnip.tidymodels.org/reference/linear_reg.html
+[parsnip logistic regression]: https://parsnip.tidymodels.org/reference/logistic_reg.html
+[parsnip knn]: https://parsnip.tidymodels.org/reference/nearest_neighbor.html
 
 [hyperparameter tuning]: https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html
 
