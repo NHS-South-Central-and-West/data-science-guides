@@ -303,7 +303,7 @@ div.csl-indent {
 <!-- hypothesis testing -->
 <!-- machine learning -->
 <!-- version control -->
-<div id="setup" class="cell" data-execution_count="1">
+<div id="setup" class="cell" data-execution_count="2">
 <details>
 <summary>Setup Code (Click to Expand)</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
@@ -342,7 +342,7 @@ div.csl-indent {
 <p>This tutorial will introduce you to linear regression in Python, using data pulled from two different sources. The first data source is the Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a>. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics’ <a href="https://www.ons.gov.uk/releases/healthindexforengland2015to2020">Health Index</a>, which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.</p>
 <section id="exploratory-data-analysis" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">5.1</span> Exploratory Data Analysis</h2>
-<div id="df-info" class="cell" data-execution_count="2">
+<div id="df-info" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data summary</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -362,7 +362,7 @@ dtypes: float64(4), int64(2), object(1)
 memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view first five rows</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-head" class="cell-output cell-output-display" data-execution_count="3">
@@ -439,7 +439,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="summary-stats" class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -536,7 +536,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># imd</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'imd_score'</span>, data<span class="op">=</span>df)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -549,7 +549,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># physiological risk factors</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'physiological_score'</span>, data<span class="op">=</span>df)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -562,7 +562,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># behavioural risk factors</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'behavioural_score'</span>, data<span class="op">=</span>df)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -575,7 +575,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlations with life expectancy</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df.corr(numeric_only<span class="op">=</span><span class="va">True</span>).loc[:,<span class="st">'life_expectancy'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="life-expectancy-correlations" class="cell-output cell-output-display" data-execution_count="8">
@@ -588,7 +588,7 @@ behavioural_score      0.887986
 Name: life_expectancy, dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation matrix</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df[[</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'life_expectancy'</span>, <span class="st">'imd_score'</span>,</span>
@@ -643,7 +643,7 @@ Name: life_expectancy, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot correlation matrix</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span>sns.diverging_palette(<span class="dv">220</span>, <span class="dv">10</span>, as_cmap<span class="op">=</span><span class="va">True</span>),</span>
@@ -662,7 +662,7 @@ Name: life_expectancy, dtype: float64</code></pre>
 </section>
 <section id="linear-regression" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">5.2</span> Linear Regression</h2>
-<div id="model" class="cell" data-execution_count="11">
+<div id="model" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create model</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS.from_formula(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'life_expectancy ~ imd_score + physiological_score + behavioural_score'</span>,</span>

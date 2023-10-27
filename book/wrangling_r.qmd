@@ -4,14 +4,15 @@
 
 ```{r}
 #| label: setup
+#| cache: false
+#| output: false
 #| code-fold: true
 #| code-summary: 'Setup Code (Click to Expand)'
 
-# install.packages("remotes")
+# packages needed to run the code in this section
+# install.packages(c("tidyverse", "here", "janitor", "remotes"))
+# remotes::install_github("NHS-South-Central-and-West/scwplot")
 # remotes::install_github("rOpenSci/fingertipsR")
-# install.packages("here")
-# install.packages("janitor")
-
 ```
 
 The first step in any analysis is to find the right data for the problem at hand, and to transform that data so that it is structured appropriately for the method of analysis. Finding the right data can be challenging, sometimes requiring getting data from multiple sources, and even then, the data might be a mess, with missing values, duplicates, formatting that makes it difficult to work with in R or Python, and a myriad of other problems. The process of transforming data to make it suitable for analysis is often referred to as data wrangling, or data munging. The data wrangling process can take many forms, from simple data cleaning to more complex transformations like combining multiple data sets, or creating new variables to enrich the data.
