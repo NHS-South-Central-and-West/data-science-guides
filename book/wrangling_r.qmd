@@ -20,24 +20,24 @@ The first step in any analysis is to find the right data for the problem at hand
 
 Data wrangling is a task that R is extremely well suited for, particularly thanks to the tidyverse ecosystem, which provides several packages that can be used to do a wide variety of data wrangling tasks, including:
 
-- [readr](https://readr.tidyverse.org/) - package for reading tabular/rectangular data (e.g. csv files).
-- [readxl](https://readxl.tidyverse.org/) - package for reading Excel files.
-- [dplyr](https://dplyr.tidyverse.org/) - set of functions for data manipulation (filtering rows, selecting columns, re-ordering rows, adding new variables with functions of existing variables, and collapsing many values down to a single summary).
-- [tidyr](https://tidyr.tidyverse.org/) - set of functions for data transformation (changing the representation of a dataset from wide to long, or vice versa, and splitting and combining columns).
-- [stringr](https://stringr.tidyverse.org/) - tools for working with strings.
-- [lubridate](https://lubridate.tidyverse.org/) - tools for dealing with dates and times.
+- [readr] - package for reading tabular/rectangular data (e.g. csv files).
+- [readxl] - package for reading Excel files.
+- [dplyr] - set of functions for data manipulation (filtering rows, selecting columns, re-ordering rows, adding new variables with functions of existing variables, and collapsing many values down to a single summary).
+- [tidyr] - set of functions for data transformation (changing the representation of a dataset from wide to long, or vice versa, and splitting and combining columns).
+- [stringr] - tools for working with strings.
+- [lubridate] - tools for dealing with dates and times.
 
 In addition to the tidyverse packages, there are a number of other packages that come in handy when dealing with data, including:
 
-- [here](https://here.r-lib.org/) - package that simplifies how you access files on your local machine by using the relative path based on the location of your R project.
-- [janitor](https://sfirke.github.io/janitor/) - set of tools for data cleaning.
+- [here] - package that simplifies how you access files on your local machine by using the relative path based on the location of your R project.
+- [janitor] - set of tools for data cleaning.
 
 Finally, there are a number of packages that help you work with particularly large data sets:
 
-- [vroom](https://vroom.r-lib.org/) - package that reads files quickly using the [ALTREP frameowrk](https://svn.r-project.org/R/branches/ALTREP/ALTREP.html).
-- [data.table](https://rdatatable.gitlab.io/data.table/) - package that provides a high-performance version of base R’s data.frame with syntax and feature enhancements for ease of use, convenience and programming speed.
-- [arrow](https://arrow.apache.org/docs/r/) - package for using Apache Arrow, which handles in-memory and larger-than-memory data very quickly.
-- [sparklyr](https://spark.rstudio.com/) - R interface for Apache Spark.
+- [vroom] - package that reads files quickly using the [ALTREP framework].
+- [data.table] - package that provides a high-performance version of base R’s data.frame with syntax and feature enhancements for ease of use, convenience and programming speed.
+- [arrow] - package for using Apache Arrow, which handles in-memory and larger-than-memory data very quickly.
+- [sparklyr] - R interface for Apache Spark.
 
 Although the tidyverse packages are very popular, they are not required to work with data in R. There will be equivalent ways to do things using only base R functions too. However, I think the tidyverse is particularly user-friendly, especially for those that are coming to R from SQL, so I will focus on data wrangling using a tidyverse workflow in this guide.
 
@@ -70,6 +70,7 @@ profiles <- fingertipsR::profiles()
 ```
 
 From the profiles, we can identify topics that are of particular interest, for example the Public Health Outcomes Framework (profile ID = 19).
+
 ```{r}
 #| label: phof-inds
 

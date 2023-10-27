@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Python Data Science Guides - 1&nbsp; Introduction</title>
 <style>
@@ -16,6 +16,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -174,12 +208,6 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./installing_python.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Installing Python</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./version_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Version Control</span></a>
   </div>
@@ -205,7 +233,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -218,7 +246,34 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
-</header><p>The goal of these Data Science Guides is…</p>
+</header><!-- links used throughout the book --><!-- intro --><!-- good science --><!-- wrangling --><!-- eda --><!-- hypothesis testing --><!-- machine learning --><!-- version control --><div class="cell">
+<details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># packages needed to run the code in this section</span></span>
+<span><span class="co"># install.packages(c("dplyr", "tidyr", "ggplot2", "remotes"))</span></span>
+<span><span class="co"># remotes::install_github("NHS-South-Central-and-West/scwplot")</span></span>
+<span></span>
+<span><span class="co"># import packages</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ggplot theme</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/theme_scw.html">theme_scw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># reduce margin</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_update</a></span><span class="op">(</span></span>
+<span>  plot.margin <span class="op">=</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">1</span>, r <span class="op">=</span> <span class="fl">.5</span>, b <span class="op">=</span> <span class="fl">1</span>, l <span class="op">=</span> <span class="op">-</span><span class="fl">.5</span><span class="op">)</span>, unit <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">pypl_raw</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">'data'</span>, <span class="st">'pypl.csv'</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">pypl_raw</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Date<span class="op">=</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/date.html">date</a></span><span class="op">(</span><span class="va">Date</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">Date</span>, names_to<span class="op">=</span><span class="st">'language'</span>, values_to<span class="op">=</span><span class="st">'popularity'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The goal of these Data Science Guides is…</p>
 <p>The purpose of this book isn’t to introduce the methods in each section in great detail. There is a wealth of free, publicly available resources that offer this, and they will do a much better job of it than I can. Instead, I hope this book fills a small gap in the literature, offering a series of concise guides that show you how to implement these methods to a minimum standard.</p>
 <p>If you want to do this stuff well then this book will not be sufficient. But if you want to get started, or you already know the fundamentals and want some guidance on implementation, then this book should serve you well.</p>
 <section id="choosing-between-r-python" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="choosing-between-r-python">
@@ -249,13 +304,15 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>As you can see, Python has been the most popular programming language since 2018, and R has been in and around the top ten for about a decade. Both languages are extremely popular, and both are likely to remain popular for the foreseeable future.</p>
-<p>While the PYPL Index is a good measure of language popularity, there are other ways of measuring the most popular programming language, such as GitHub’s <a href="https://octoverse.github.com/2022/top-programming-languages"><em>The State Of Open Source Software</em></a> Report and Stack Overflow’s <a href="https://stackoverflow.blog/2023/01/26/comparing-tag-trends-with-our-most-loved-programming-languages/">Developer Survey and Tag Trends</a>.</p>
+<p>While the PYPL Index is a good measure of language popularity, there are other ways of measuring the most popular programming language, such as GitHub’s <a href="https://octoverse.github.com/2022/top-programming-languages)">The State Of Open Source Software</a> Report and Stack Overflow’s <a href="https://stackoverflow.blog/2023/01/26/comparing-tag-trends-with-our-most-loved-programming-languages/">Developer Survey and Tag Trends</a>.</p>
 </section><section id="nhs-r-python-communities" class="level3" data-number="1.1.2"><h3 data-number="1.1.2" class="anchored" data-anchor-id="nhs-r-python-communities">
 <span class="header-section-number">1.1.2</span> NHS R &amp; Python Communities</h3>
 <p>There are already a sizeable number of people using both languages in the NHS, and there are communities that are already in place to support people using R or Python in the NHS.</p>
-<p>The NHS-R community is a pretty active community of people that are using R in the NHS. You can find them on the <a href="https://nhsrcommunity.com/">NHS-R website</a>, <a href="https://twitter.com/NHSRCommunity">Twitter</a>, and <a href="https://nhsrcommunity.slack.com">Slack</a>. They also have a <a href="https://github.com/nhs-r-community">Github organisation</a> and a <a href="https://www.youtube.com/c/NHSRCommunity">YouTube channel</a> which both contain tons of really useful resources.</p>
-<p>With regards to Python, the equivalent community is the NHS Python Community for Healthcare (typically shortened to NHS-PyCom). The NHS Python Community also have a <a href="https://nhs-pycom.net/">website</a>, a <a href="https://join.slack.com/t/nhs-pycom/shared_invite/zt-z6h1hszo-3_w68FdalVM2EATVVdgCuw">Slack channel</a>, and they have a <a href="https://github.com/nhs-pycom">Github organisation</a> and a <a href="https://www.youtube.com/@nhs-pycom">YouTube channel</a> which are both worth checking out. The NHS Python Community is a little smaller than the NHS-R community, but it is still a very active community, and it is growing quickly, with both communities collaborating regularly to try and spread the growth of both languages in the NHS.</p>
+<p>The NHS-R community is a pretty active community of people that are using R in the NHS. You can find them on the [nhs-r][NHS-R website] and [nhs-r slack][Slack]. They also have a [nhs-r github][Github organisation] and a [nhs-r youtube][YouTube channel] which both contain tons of really useful resources.</p>
+<p>With regards to Python, the equivalent community is the NHS Python Community for Healthcare (typically shortened to NHS-PyCom). The NHS Python Community also have a [nhs-pycom][website] and a [nhs-pycom slack][Slack channel], and they have a [nhs-pycom github][Github organisation] and a [nhs-pycom youtube][YouTube channel] which are both worth checking out. The NHS Python Community is a little smaller than the NHS-R community, but it is still a very active community, and it is growing quickly, with both communities collaborating regularly to try and spread the growth of both languages in the NHS.</p>
 
+
+<!-- -->
 
 </section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -336,6 +393,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -499,7 +607,163 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Doing Good Science</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction {#sec-intro}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>{{&lt; include _links.qmd &gt;}}</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: 'Setup Code (Click to Expand)'</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("dplyr", "tidyr", "ggplot2", "remotes"))</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("NHS-South-Central-and-West/scwplot")</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot theme</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(scwplot<span class="sc">::</span><span class="fu">theme_scw</span>(<span class="at">base_size =</span> <span class="dv">14</span>))</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># reduce margin</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_update</span>(</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.margin =</span> </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">margin</span>(<span class="fu">c</span>(<span class="at">t =</span> <span class="dv">1</span>, <span class="at">r =</span> .<span class="dv">5</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">l =</span> <span class="sc">-</span>.<span class="dv">5</span>), <span class="at">unit =</span> <span class="st">"cm"</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>pypl_raw <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'data'</span>, <span class="st">'pypl.csv'</span>))</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  pypl_raw <span class="sc">|&gt;</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date=</span>lubridate<span class="sc">::</span><span class="fu">date</span>(Date)) <span class="sc">|&gt;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>Date, <span class="at">names_to=</span><span class="st">'language'</span>, <span class="at">values_to=</span><span class="st">'popularity'</span>)</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>The goal of these Data Science Guides is...</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>The purpose of this book isn't to introduce the methods in each section in great detail. There is a wealth of free, publicly available resources that offer this, and they will do a much better job of it than I can. Instead, I hope this book fills a small gap in the literature, offering a series of concise guides that show you how to implement these methods to a minimum standard. </span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>If you want to do this stuff well then this book will not be sufficient. But if you want to get started, or you already know the fundamentals and want some guidance on implementation, then this book should serve you well.</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing Between R &amp; Python</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>R and Python are two of the most popular programming languages in the world, and they are both used extensively in data science. However, there is a lot of debate about which language is better, and which language is more suitable for data science. A quick Google search for "R vs Python" will quickly point you in the direction of plenty of strongly-held opinions about why R or Python is better and why the other language is rubbish and a total waste of time, but I think these debates are a little worn out, and it doesn't help newcomers to the field to see these dichotomous views of two of the most popular languages for data science out there.</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>In my view, as someone that started out with R before moving on to Python, and that is comfortable using either, I don't think the most important decision is about which language you will learn. It's the decision to learn any programming language at all. I've found that different people find different languages easier to get started with. Personally, I find that Python makes a little more sense to me than R. While I've been using R a lot longer, and am quite capable with it (perhaps more so than I am with Python), I tend to be able to learn methods/concepts easier with Python, because the logic that underpins Python methods just works for me. But that doesn't mean that the logic underpinning Python is better. It just happens to be the case that it is well-aligned with the way that I think about programming. I think it is more important to find which language makes the most sense to you. Both are very strong on data science, as well as being strong in a number of other areas, and both are very popular. Playing around with them both and working out which one makes most sense to you, and which one gives you the best shot at maintaining your coding journey, is what matters.</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>It's also worth noting that learning a second language, when you are confident with your first, is a lot easier. The hard part is learning the first language. If you crack that part, then you will be able to tackle the second, third, and fourth languages with a lot more ease and at a much faster pace. Learning R doesn't mean you have to stick to R forever, and vice versa for Python. The important thing is that you've learned a coding language. **Any** coding language.</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Popularity</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>Both R &amp; Python are widely used in data science, and both are very popular programming languages. Although there are a number of ways to measure the popularity of a programming language, every measure demonstrates that Python is one of, if not the most popular language in the world, and R is in and around the top ten. A common measure of the popularity of a programming language is the Popularity of Programming Language (PYPL) Index, which is a measure of popularity based on the number of times they are searched for on Google. The PYPL Index is updated monthly, and the data is available from the <span class="co">[</span><span class="ot">PYPL website</span><span class="co">]</span>.</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>Here is how the top ten most popular programming languages looks in 2023 (based on an average PYPL Index in 2023):</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-current-popularity</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: |</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a><span class="co">#|   The global popularity of programming languages in 2023, according to the </span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="co">#|   PYPL Index </span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>current_pypl <span class="ot">&lt;-</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(Date)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(language) <span class="sc">|&gt;</span> </span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">popularity =</span> <span class="fu">mean</span>(popularity)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">bar_colour =</span> </span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>      <span class="fu">case_when</span>(</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>        language <span class="sc">==</span> <span class="st">'Python'</span> <span class="sc">~</span> <span class="st">'#FFC649'</span>,</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>        language <span class="sc">==</span> <span class="st">'R'</span> <span class="sc">~</span> <span class="st">'#005EB8'</span>,</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">'#D9DDE0'</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(popularity)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>current_pypl <span class="sc">|&gt;</span> </span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="fu">reorder</span>(language, popularity), popularity, <span class="at">fill =</span> bar_colour)) <span class="sc">+</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">colour =</span> <span class="st">"#333333"</span>) <span class="sc">+</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_identity</span>() <span class="sc">+</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span> <span class="st">'PYPL Index'</span>) <span class="sc">+</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>  scwplot<span class="sc">::</span><span class="fu">theme_scw</span>(<span class="at">grid_y =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_text</span>(</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust =</span> <span class="fl">0.5</span>, </span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    <span class="at">margin =</span> <span class="fu">margin</span>(<span class="fu">c</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="sc">-</span>.<span class="dv">8</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>), <span class="at">unit =</span> <span class="st">"cm"</span>)</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>While Python is way out in front in first, R is also very high on the list in seventh place. This is particularly impressive given that every other language on the list is a general purpose programming language, while R is a statistical programming language. When we look at the <span class="co">[</span><span class="ot">PYPL Index in the UK</span><span class="co">]</span>, we see a similar picture, with Python even further out in front in first place, and R in in fifth place. This is a testament to the popularity of R within the niche that it occupies, of which data science is a part.</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>We can also look at how the popularity of R and Python has changed over time, in comparison with other languages that are tracked in the PYPL Index. Here is a plot of the PYPL Index over time, from 2005 to 2023:</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-popularity-over-time</span></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: |</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a><span class="co">#|   The global popularity of programming languages from 2005 to 2023, according</span></span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a><span class="co">#|   to the PYPL Index </span></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>pypl_over_time <span class="ot">&lt;-</span></span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">line_colour =</span> </span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>      <span class="fu">case_when</span>(</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>        language <span class="sc">==</span> <span class="st">'Python'</span> <span class="sc">~</span> <span class="st">'#FFC649'</span>,</span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>        language <span class="sc">==</span> <span class="st">'R'</span> <span class="sc">~</span> <span class="st">'#005EB8'</span>,</span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>pypl_over_time <span class="sc">|&gt;</span> </span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">subset</span>(pypl_over_time, <span class="sc">!</span>language <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'R'</span>, <span class="st">'Python'</span>)),</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> popularity, <span class="at">group =</span> language), </span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>     <span class="at">colour=</span><span class="st">'#D9DDE0'</span>, <span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">subset</span>(pypl_over_time, language <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'R'</span>, <span class="st">'Python'</span>)),</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> popularity, <span class="at">group =</span> language, <span class="at">colour =</span> line_colour),</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.4</span>) <span class="sc">+</span></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ggbump::geom_bump(</span></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   data = subset(pypl_over_time, !language %in% c('R', 'Python')),</span></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   aes(x = Date, y = popularity, group = language), </span></span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>  <span class="co">#    colour='#D9DDE0', size = 0.8, alpha = 0.4</span></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   ) +</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ggbump::geom_bump(</span></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   data = subset(pypl_over_time, language %in% c('R', 'Python')),</span></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   aes(x = Date, y = popularity, group = language, colour = line_colour),</span></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   size = 1.4, smooth = 1</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ) +</span></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_identity</span>(<span class="at">guide=</span><span class="st">'legend'</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">'R'</span>, <span class="st">'Python'</span>)) <span class="sc">+</span></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"2 years"</span>, <span class="at">date_labels =</span>  <span class="st">"%Y"</span>, <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">'PYPL Index'</span>)</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>As you can see, Python has been the most popular programming language since 2018, and R has been in and around the top ten for about a decade. Both languages are extremely popular, and both are likely to remain popular for the foreseeable future.</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>While the PYPL Index is a good measure of language popularity, there are other ways of measuring the most popular programming language, such as GitHub's <span class="co">[</span><span class="ot">The State Of Open Source Software</span><span class="co">]</span> Report and Stack Overflow's <span class="co">[</span><span class="ot">Developer Survey and Tag Trends</span><span class="co">]</span>.</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### NHS R &amp; Python Communities</span></span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>There are already a sizeable number of people using both languages in the NHS, and there are communities that are already in place to support people using R or Python in the NHS.</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>The NHS-R community is a pretty active community of people that are using R in the NHS. You can find them on the <span class="co">[</span><span class="ot">nhs-r</span><span class="co">][NHS-R website]</span> and <span class="co">[</span><span class="ot">nhs-r slack</span><span class="co">][Slack]</span>. They also have a <span class="co">[</span><span class="ot">nhs-r github</span><span class="co">][Github organisation]</span> and a <span class="co">[</span><span class="ot">nhs-r youtube</span><span class="co">][YouTube channel]</span> which both contain tons of really useful resources.</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>With regards to Python, the equivalent community is the NHS Python Community for Healthcare (typically shortened to NHS-PyCom). The NHS Python Community also have a <span class="co">[</span><span class="ot">nhs-pycom</span><span class="co">][website]</span> and a <span class="co">[</span><span class="ot">nhs-pycom slack</span><span class="co">][Slack channel]</span>, and they have a <span class="co">[</span><span class="ot">nhs-pycom github</span><span class="co">][Github organisation]</span> and a <span class="co">[</span><span class="ot">nhs-pycom youtube</span><span class="co">][YouTube channel]</span> which are both worth checking out. The NHS Python Community is a little smaller than the NHS-R community, but it is still a very active community, and it is growing quickly, with both communities collaborating regularly to try and spread the growth of both languages in the NHS.</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">

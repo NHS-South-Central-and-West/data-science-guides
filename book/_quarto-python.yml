@@ -28,7 +28,6 @@ book:
     - part: "Delivering Data Science"
 
   appendices:
-    - installing_python.qmd
     - version_control.qmd
 
 bibliography: references.bib

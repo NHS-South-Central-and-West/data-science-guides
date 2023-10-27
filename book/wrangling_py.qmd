@@ -1,15 +1,21 @@
 # Wrangling Data {#sec-wrangling}
 
+{{< include _links.qmd >}}
+
 ```{python}
 #| label: setup
+#| cache: false
+#| output: false
 #| code-fold: true
 #| code-summary: 'Setup Code (Click to Expand)'
+
+# packages needed to run the code in this section
+# !pip install pandas polars fingertips_py
 
 import pandas as pd
 import polars as pl
 
 import fingertips_py as ftp
-
 ```
 
 The first step in any analysis is to find the right data for the problem at hand, and to transform that data so that it is structured appropriately for the method of analysis. Finding the right data can be challenging, sometimes requiring getting data from multiple sources, and even then, the data might be a mess, with missing values, duplicates, formatting that makes it difficult to work with in R or Python, and a myriad of other problems. The process of transforming data to make it suitable for analysis is often referred to as data wrangling, or data munging. The data wrangling process can take many forms, from simple data cleaning to more complex transformations like combining multiple data sets, or creating new variables to enrich the data.
@@ -33,7 +39,6 @@ profiles_raw = ftp.get_all_profiles()
 profiles = pd.DataFrame(profiles_raw)
 
 profiles.head()
-
 ```
 
 ```{python}
@@ -43,7 +48,6 @@ phof_raw = ftp.get_profile_by_name('public health outcomes framework')
 phof = pd.DataFrame(phof_raw)
 
 phof.head()
-
 ```
 
 
@@ -65,11 +69,9 @@ This is just one example of the data wrangling process, but in reality there is 
 
 ## Resources
 
-- [Hadley Wickham - Tidy Data](https://vita.had.co.nz/papers/tidy-data.pdf)
-- [Modern Polars](https://kevinheavey.github.io/modern-polars/performance.html)
-- [Pandas Anti Patterns](https://www.aidancooper.co.uk/pandas-anti-patterns/)
-- [Minimally Sufficient Pandas](https://www.dunderdata.com/blog/minimally-sufficient-pandas)
-- [Pandas Data Structures](https://www.metasnake.com/blog/pandas-data-structures.html)
-- [Pandas Series Introduction](https://www.metasnake.com/blog/pandas-series-intro.html)
-
-
+- [Hadley Wickham - Tidy Data]
+- [Modern Polars]
+- [Pandas Anti Patterns]
+- [Minimally Sufficient Pandas]
+- [Pandas Data Structures]
+- [Pandas Series Introduction]

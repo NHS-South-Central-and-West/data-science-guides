@@ -5,6 +5,23 @@
  
 [CC BY-NC-SA 4.0]: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+<!-- intro -->
+
+[PYPL website]: https://pypl.github.io/PYPL.html
+[PYPL Index in the UK]: https://pypl.github.io/PYPL.html?country=GB
+[The State Of Open Source Software]: https://octoverse.github.com/2022/top-programming-languages)
+[Developer Survey and Tag Trends]: https://stackoverflow.blog/2023/01/26/comparing-tag-trends-with-our-most-loved-programming-languages/
+
+[nhs-r]: https://nhsrcommunity.com/
+[nhs-r slack]: https://nhsrcommunity.slack.com
+[nhs-r github]: https://github.com/nhs-r-community
+[nhs-r youtube]: https://www.youtube.com/c/NHSRCommunity
+
+[nhs-pycom]: https://nhs-pycom.net/
+[nhs-pycom slack]: https://nhs-pycom.slack.com
+[nhs-pycom github]: https://github.com/nhs-pycom
+[nhs-pycom youtube]: https://www.youtube.com/@nhs-pycom 
+
 <!-- good science -->
 
 [Techniques for Problem Solving]: https://twitter.com/TivadarDanka/status/1682333102637719552?s=20
@@ -27,6 +44,21 @@
 [fingertips_py]: https://github.com/publichealthengland/PHDS_fingertips_py
 [Health Index]: https://www.ons.gov.uk/releases/healthindexforengland2015to2020
 
+<!-- wrangling -->
+
+[readr]: https://readr.tidyverse.org/
+[readxl]: https://readxl.tidyverse.org/
+[dplyr]: https://dplyr.tidyverse.org/
+[tidyr]: https://tidyr.tidyverse.org/
+[stringr]: https://stringr.tidyverse.org/
+[lubridate]: https://lubridate.tidyverse.org/
+[here]: https://here.r-lib.org/
+[janitor]: https://sfirke.github.io/janitor/
+[vroom]: https://vroom.r-lib.org/
+[ALTREP framework]: https://svn.r-project.org/R/branches/ALTREP/ALTREP.html
+[data.table]: https://rdatatable.gitlab.io/data.table/
+[arrow]: https://arrow.apache.org/docs/r/
+[sparklyr]: https://spark.rstudio.com/
 
 [Hadley Wickham - Tidy Data]: https://vita.had.co.nz/papers/tidy-data.pdf
 [Data Transformation with {dplyr}]: https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf
@@ -35,6 +67,37 @@
 [Data Wrangling with R]: https://cengel.github.io/R-data-wrangling/
 [Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel]: https://observablehq.com/@observablehq/data-wrangling-translations
 [R to Python: Data Wrangling Snippets]: https://gist.github.com/conormm/fd8b1980c28dd21cfaf6975c86c74d07?permalink_comment_id=3726652
+[Modern Polars]: https://kevinheavey.github.io/modern-polars/performance.html
+[Pandas Anti Patterns]: https://www.aidancooper.co.uk/pandas-anti-patterns/
+[Minimally Sufficient Pandas]: https://www.dunderdata.com/blog/minimally-sufficient-pandas
+[Pandas Data Structures]: https://www.metasnake.com/blog/pandas-data-structures.html
+[Pandas Series Introduction]: https://www.metasnake.com/blog/pandas-series-intro.html
+
+<!-- eda -->
+
+[ggplot2]: https://ggplot2.tidyverse.org/
+[boxplots]: https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/
+[ggplot extensions]: https://exts.ggplot2.tidyverse.org/gallery/
+[geoms]: https://ggplot2.tidyverse.org/reference/index.html#geoms
+
+[Data Visualization: A Practical Introduction]: https://socviz.co/
+[Fundamentals of Data Visualization]: https://clauswilke.com/dataviz/
+[Data Visualization with R]: https://rkabacoff.github.io/datavis/
+[{ggeasy} - Easy Access to {ggplot2} Commands]: https://jonocarroll.github.io/ggeasy/
+
+[profiling]: https://github.com/ydataai/ydata-profiling
+[seaborn]: https://seaborn.pydata.org/  
+[matplotlib]: https://matplotlib.org/
+[plotly]: https://plotly.com/python/
+[bokeh]: https://bokeh.org/
+[altair]: https://altair-viz.github.io/
+
+[scientific viz pdf]: https://hal.inria.fr/hal-03427242/document
+[scientific viz github]: https://github.com/rougier/scientific-visualization-book
+[Seaborn Tutorials]: https://seaborn.pydata.org/tutorial.html
+[Matplotlib Cheatsheets]: https://github.com/matplotlib/cheatsheets
+
+<!-- hypothesis testing -->
 
 [Statistics Fundamentals]: https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9
 [_Answering Questions With Data_]: https://crumplab.com/statistics 
@@ -53,8 +116,6 @@
 [McElreath - None of the Above]: https://elevanth.org/blog/2023/07/17/none-of-the-above/
 [Introduction to Scientific Programming and Simulations in R]: https://nyu-cdsc.github.io/learningr/assets/simulation.pdf
 
-<!-- hypothesis testing -->
-
 [Regression Analysis Course]: https://sta210-s22.github.io/website/
 [Stats Review: The Most Dangerous Equation]: https://matheusfacure.github.io/python-causality-handbook/03-Stats-Review-The-Most-Dangerous-Equation.html
 [Scientists Rise Up Against Statistical Significance]: https://www.nature.com/articles/d41586-019-00857-9
@@ -66,7 +127,6 @@
 [t-table]: https://www.sjsu.edu/faculty/gerstman/StatPrimer/t-table.pdf
 [Lakens' Power App]: http://shiny.ieis.tue.nl/d_p_power
 
-<!-- simulations -->
 
 [Basic Simulations]: https://bookdown.org/hneth/i2ds/sims.html
 [Simulations in R]: https://web.stanford.edu/class/bios221/labs/simulation/Lab_3_simulation.html
@@ -78,3 +138,23 @@
 [{faux}]: https://debruine.github.io/faux/
 [Fake Data Packages]: https://r-vogg-blog.netlify.app/posts/2020-12-03-useful-packages-for-data-composition/
 [Fake Data with R]: https://rviews.rstudio.com/2020/09/09/fake-data-with-r/
+
+<!-- machine learning -->
+
+[tmwr - workflow]: https://www.tmwr.org/workflows.html
+[tmwr - resampling]: https://www.tmwr.org/resampling.html#resampling-methods
+[tmwr - tuning]: https://www.tmwr.org/tuning.html
+[parsnip - linear regression]: https://parsnip.tidymodels.org/reference/linear_reg.html
+[parsnip - logistic regression]: https://parsnip.tidymodels.org/reference/logistic_reg.html
+[parsnip - knn]: https://parsnip.tidymodels.org/reference/nearest_neighbor.html
+
+[hyperparameter tuning]: https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html
+
+[Machine Learning University]: https://aws.amazon.com/machine-learning/mlu
+[MLU Explain]: https://mlu-explain.github.io/
+[Machine Learning for Beginners]: https://microsoft.github.io/ML-For-Beginners
+
+<!-- version control -->
+
+[NHS-R Git Training]: https://github.com/nhs-r-community/git_training/
+[Introduction to Git]: https://github.com/nhs-r-community/git_training/blob/main/guides/introduction_to_git.md

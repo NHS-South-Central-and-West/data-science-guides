@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,7 +83,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./installing_python.html" rel="next">
+<link href="./version_control.html" rel="next">
 <link href="./eda_py.html" rel="prev">
 <link href="./figures/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -228,12 +247,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./installing_python.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Installing Python</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./version_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Version Control</span></a>
   </div>
@@ -267,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-linear-regression" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-linear-regression" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -282,43 +295,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div id="setup" class="cell" data-execution_count="2">
+<!-- links used throughout the book -->
+<!-- intro -->
+<!-- good science -->
+<!-- wrangling -->
+<!-- eda -->
+<!-- hypothesis testing -->
+<!-- machine learning -->
+<!-- version control -->
+<div id="setup" class="cell" data-execution_count="1">
 <details>
 <summary>Setup Code (Click to Expand)</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'deprivation.csv'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pandas numpy matplotlib seaborn statsmodel</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'deprivation.csv'</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot font</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>rc(<span class="st">'font'</span>,<span class="op">**</span>{<span class="st">'family'</span>:<span class="st">'sans-serif'</span>,<span class="st">'sans-serif'</span>:[<span class="st">'Arial'</span>]})</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#1C355E'</span>, <span class="st">'#00A499'</span>, <span class="st">'#005EB8'</span>]</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot font</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>rc(<span class="st">'font'</span>,<span class="op">**</span>{<span class="st">'family'</span>:<span class="st">'sans-serif'</span>,<span class="st">'sans-serif'</span>:[<span class="st">'Arial'</span>]})</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#1C355E'</span>, <span class="st">'#00A499'</span>, <span class="st">'#005EB8'</span>]</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Linear regression is a cornerstone of data science and statistical inference, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, which is closely related).</p>
 <p>Not only is linear regression a phenomenally useful tool in a data scientist’s arsenal, but it is also a fantastic way to learn about the fundamentals of statistical inference. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because so many regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.</p>
 <p>For a really good, accessible introduction to linear regression, I’d highly recommend Josh Starmer’s StatQuest video on the topic:</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/7ArmBVF2dCs" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>This tutorial will introduce you to linear regression in Python, using data pulled from two different sources. The first data source is the Public Health England’s [Fingertips API]. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics’ [Health Index], which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.</p>
+<p>This tutorial will introduce you to linear regression in Python, using data pulled from two different sources. The first data source is the Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a>. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics’ <a href="https://www.ons.gov.uk/releases/healthindexforengland2015to2020">Health Index</a>, which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.</p>
 <section id="exploratory-data-analysis" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">5.1</span> Exploratory Data Analysis</h2>
-<div id="df-info" class="cell" data-execution_count="3">
+<div id="df-info" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data summary</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -338,7 +362,7 @@ dtypes: float64(4), int64(2), object(1)
 memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view first five rows</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-head" class="cell-output cell-output-display" data-execution_count="3">
@@ -415,7 +439,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="summary-stats" class="cell-output cell-output-display" data-execution_count="4">
 <div>
@@ -512,7 +536,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># imd</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'imd_score'</span>, data<span class="op">=</span>df)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -525,7 +549,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># physiological risk factors</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'physiological_score'</span>, data<span class="op">=</span>df)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -538,7 +562,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># behavioural risk factors</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'behavioural_score'</span>, data<span class="op">=</span>df)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -551,7 +575,7 @@ memory usage: 32.0+ KB</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlations with life expectancy</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df.corr(numeric_only<span class="op">=</span><span class="va">True</span>).loc[:,<span class="st">'life_expectancy'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="life-expectancy-correlations" class="cell-output cell-output-display" data-execution_count="8">
@@ -564,7 +588,7 @@ behavioural_score      0.887986
 Name: life_expectancy, dtype: float64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation matrix</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df[[</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'life_expectancy'</span>, <span class="st">'imd_score'</span>,</span>
@@ -619,7 +643,7 @@ Name: life_expectancy, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot correlation matrix</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span>sns.diverging_palette(<span class="dv">220</span>, <span class="dv">10</span>, as_cmap<span class="op">=</span><span class="va">True</span>),</span>
@@ -638,7 +662,7 @@ Name: life_expectancy, dtype: float64</code></pre>
 </section>
 <section id="linear-regression" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">5.2</span> Linear Regression</h2>
-<div id="model" class="cell" data-execution_count="12">
+<div id="model" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create model</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS.from_formula(</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'life_expectancy ~ imd_score + physiological_score + behavioural_score'</span>,</span>
@@ -655,8 +679,8 @@ Name: life_expectancy, dtype: float64</code></pre>
 Dep. Variable:        life_expectancy   R-squared:                       0.844
 Model:                            OLS   Adj. R-squared:                  0.843
 Method:                 Least Squares   F-statistic:                     1042.
-Date:                Fri, 21 Jul 2023   Prob (F-statistic):          7.23e-233
-Time:                        14:06:54   Log-Likelihood:                -564.29
+Date:                Fri, 27 Oct 2023   Prob (F-statistic):          7.23e-233
+Time:                        17:48:11   Log-Likelihood:                -564.29
 No. Observations:                 583   AIC:                             1137.
 Df Residuals:                     579   BIC:                             1154.
 Df Model:                           3                                         
@@ -699,8 +723,8 @@ strong multicollinearity or other numerical problems.</code></pre>
 <h4 data-number="5.3.1.2" class="anchored" data-anchor-id="p-values"><span class="header-section-number">5.3.1.2</span> P-Values</h4>
 <p>P-values are the probability of observing a coefficient as large as the estimated coefficient for a particular explanatory variable, given that the null hypothesis is true (i.e.&nbsp;that the coefficient is equal to zero), indicating that no effect is present. This can be a little tricky to understand at first, but a slightly crude way of thinking about this is that p-values are an estimate of the probability that the model coefficient you observe is actually distinguishable from zero.</p>
 <p>P-values are used to test the statistical significance of the coefficients. If the p-value is less than the significance level then the coefficient is statistically significant, and we can reject the null hypothesis that the coefficient is equal to zero. If the p-value is greater than the significance level, then the coefficient is not statistically significant, and we cannot reject the null hypothesis that the coefficient is equal to zero. The significance level is often set at 0.05, which means that we are willing to accept a 5% chance of incorrectly rejecting the null hypothesis. This means that if the p-value is less than 0.05, then there is a greater than 95% probability that the coefficient is not equal to zero. However, the significance level is a subjective decision, and can be set at any value. For example, if the significance level is set at 0.01, then we are willing to accept a 1% chance of incorrectly rejecting the null hypothesis.</p>
-<p>In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practicioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.</p>
-<p>I think the best way to think about p-values is the position prescribed by Gelman, Hill, &amp; Vehtari in <a href="https://users.aalto.fi/~ave/ROS.pdf">Regression &amp; Other Stories</a>. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will <strong>some</strong> effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.</p>
+<p>In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practitioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.</p>
+<p>I think the best way to think about p-values is the position prescribed by <span class="citation" data-cites="gelman2020">Gelman, Hill, and Vehtari (<a href="#ref-gelman2020" role="doc-biblioref">2020</a>)</span>. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will <strong>some</strong> effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.</p>
 </section>
 </section>
 <section id="model-interpretation" class="level3" data-number="5.3.2">
@@ -708,8 +732,8 @@ strong multicollinearity or other numerical problems.</code></pre>
 <p>Model interpretation is the process of understanding the influence that each explanatory variable has on the outcome. This involves understanding the direction, the magnitude, and the precision of the model coefficients. The coefficients themselves will tell us about direction and magnitude, while the standard errors and confidence intervals will tell us about precision.</p>
 <section id="model-coefficients" class="level4" data-number="5.3.2.1">
 <h4 data-number="5.3.2.1" class="anchored" data-anchor-id="model-coefficients"><span class="header-section-number">5.3.2.1</span> Model Coefficients</h4>
-<p>The model coefficients are the estimated values of the regression coefficients, or the estimated change in the outcome variable for a one unit change in the explanatory variable, while holding all other explanatory variables constant. The intercept is the estimated value of the outcome variablen when all of the explanatory variables are equal to zero (or the baseline values if the variables are transformed).</p>
-<p>A regression’s coefficients are the most important part of interpreting the model. They specify the association between the explanatory variables and the outcome, telling us both the direction and the magnitude of the association. The direction of the association is indicated by the sign of the coefficient (positive = outcome increases with the explanatory variable, negative = outcome decreases with the explanatory variable). The magnitude of the association is indicated by the size of the coefficient (the larger the coefficient, the stronger the association). If the direction of the asssociation is going in the wrong direction to that which we expect, this obviously indicates issues either in the theory or in the model, and if the magnitude of the effect is too small to be practically significant, then either the explanatory variable is not a good predictor of the outcome, or the model is not doing a good job of fitting the data (either the explanatory variable doesn’t really matter or the model is not capturing the true relationship between the explanatory variables and the outcome). However, while the direction is relatively easy to interpret, magnitude is not, because what counts as a practically significant effect is dependent on the context of the analysis.</p>
+<p>The model coefficients are the estimated values of the regression coefficients, or the estimated change in the outcome variable for a one unit change in the explanatory variable, while holding all other explanatory variables constant. The intercept is the estimated value of the outcome variable when all of the explanatory variables are equal to zero (or the baseline values if the variables are transformed).</p>
+<p>A regression’s coefficients are the most important part of interpreting the model. They specify the association between the explanatory variables and the outcome, telling us both the direction and the magnitude of the association. The direction of the association is indicated by the sign of the coefficient (positive = outcome increases with the explanatory variable, negative = outcome decreases with the explanatory variable). The magnitude of the association is indicated by the size of the coefficient (the larger the coefficient, the stronger the association). If the direction of the association is going in the wrong direction to that which we expect, this obviously indicates issues either in the theory or in the model, and if the magnitude of the effect is too small to be practically significant, then either the explanatory variable is not a good predictor of the outcome, or the model is not doing a good job of fitting the data (either the explanatory variable doesn’t really matter or the model is not capturing the true relationship between the explanatory variables and the outcome). However, while the direction is relatively easy to interpret, magnitude is not, because what counts as a practically significant effect is dependent on the context of the analysis.</p>
 </section>
 <section id="standard-errors" class="level4" data-number="5.3.2.2">
 <h4 data-number="5.3.2.2" class="anchored" data-anchor-id="standard-errors"><span class="header-section-number">5.3.2.2</span> Standard Errors</h4>
@@ -731,6 +755,13 @@ strong multicollinearity or other numerical problems.</code></pre>
 </ul>
 
 
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-gelman2020" class="csl-entry" role="listitem">
+Gelman, Andrew, Jennifer Hill, and Aki Vehtari Vehtari. 2020. <em>Regression and Other Stories</em>. Cambridge University Press.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -813,6 +844,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -974,11 +1056,226 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./installing_python.html" class="pagination-link">
-        <span class="nav-page-text">Installing Python</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./version_control.html" class="pagination-link">
+        <span class="nav-page-text">Version Control</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Linear Regression {#sec-linear-regression}</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>{{&lt; include _links.qmd &gt;}}</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: 'Setup Code (Click to Expand)'</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pandas numpy matplotlib seaborn statsmodel</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'deprivation.csv'</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot font</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>rc(<span class="st">'font'</span>,<span class="op">**</span>{<span class="st">'family'</span>:<span class="st">'sans-serif'</span>,<span class="st">'sans-serif'</span>:[<span class="st">'Arial'</span>]})</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#1C355E'</span>, <span class="st">'#00A499'</span>, <span class="st">'#005EB8'</span>]</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>Linear regression is a cornerstone of data science and statistical inference, and is almost certainly the most common statistical method in use today (t-tests might run it close in industry). Its popularity is owed to its incredible flexibility and simplicity, as it can be used to model a wide range of relationships in a variety of contexts, and it is both simple to use and to interpret. If there is one statistical method that every data scientist and analyst should be familiar with, it is linear regression (followed closely by logistic regression, which is closely related).</span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>Not only is linear regression a phenomenally useful tool in a data scientist's arsenal, but it is also a fantastic way to learn about the fundamentals of statistical inference. Linear regression serves as the perfect introduction to statistical inference, and it is a great starting point for learning about regression analysis because so many regression models are based on linear regression. Once you have a good understanding of linear regression, you can then move on to more advanced regression models, such as logistic regression, Poisson regression, and so on.</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>For a really good, accessible introduction to linear regression, I'd highly recommend Josh Starmer's StatQuest video on the topic:</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>{{&lt; video https://www.youtube.com/watch?v=7ArmBVF2dCs &gt;}}</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>This tutorial will introduce you to linear regression in Python, using data pulled from two different sources. The first data source is the Public Health England's <span class="co">[</span><span class="ot">Fingertips API</span><span class="co">]</span>. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics' <span class="co">[</span><span class="ot">Health Index</span><span class="co">]</span>, which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exploratory Data Analysis</span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: df-info</span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="co"># data summary</span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>df.info()</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: df-head</span></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="co"># view first five rows</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>df.head()</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summary-stats</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a>df.describe()</span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: deprivation-plot</span></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a><span class="co"># imd</span></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'imd_score'</span>, data<span class="op">=</span>df)</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: phsyiological-plot</span></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="co"># physiological risk factors</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'physiological_score'</span>, data<span class="op">=</span>df)</span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: behavioural-plot</span></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a><span class="co"># behavioural risk factors</span></span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">'life_expectancy'</span>, y<span class="op">=</span><span class="st">'behavioural_score'</span>, data<span class="op">=</span>df)</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: life-expectancy-correlations</span></span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a><span class="co"># correlations with life expectancy</span></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a>df.corr(numeric_only<span class="op">=</span><span class="va">True</span>).loc[:,<span class="st">'life_expectancy'</span>]</span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: correlation-matrix</span></span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation matrix</span></span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df[[</span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a>    <span class="st">'life_expectancy'</span>, <span class="st">'imd_score'</span>,</span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a>    <span class="st">'physiological_score'</span>, <span class="st">'behavioural_score'</span>]].corr()</span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a>corr</span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: correlation-plot</span></span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a><span class="co"># plot correlation matrix</span></span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr,</span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span>sns.diverging_palette(<span class="dv">220</span>, <span class="dv">10</span>, as_cmap<span class="op">=</span><span class="va">True</span>),</span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a>    vmin<span class="op">=-</span><span class="fl">1.0</span>, vmax<span class="op">=</span><span class="fl">1.0</span>,</span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a>    square<span class="op">=</span><span class="va">True</span>, annot<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a>There are strong correlations between life expectancy and the three independent variables, however, the correlation between IMD score and the two risk factor variables is also relatively strong, and in the case of behavioural risk factors, it is very strong. This could be an issue.</span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Linear Regression</span></span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: model</span></span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a><span class="co"># create model</span></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS.from_formula(</span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a>    <span class="st">'life_expectancy ~ imd_score + physiological_score + behavioural_score'</span>,</span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df)</span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> model.fit()</span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary</span></span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.summary())</span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a><span class="fu">## Evaluating and Interpreting Regression Models</span></span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a>When we fit a regression model, we have to consider both how well the model fits the data (evaluation) and the influence that each explanatory variable is having on the outcome (interpretation). The evaluation process is making sure that the model is doing a good enough job that we can reasonably draw some conclusions from it, while the interpretation process is understanding the conclusions we can draw. It's important to understand the purpose that both of these processes serve, and to understand that the evaluation process is just kicking the tires, while what we are ultimately concerned with is the interpretation.</span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a>There are several elements to consider when interpreting the results of a linear regression model. Broadly speaking the focus should be on the magnitude and the precision of the model coeffficients. The magnitude of the coefficients indicates the strength of the association between the explanatory variables and the outcome variable, while the precision of the coefficients indicates the uncertainty in the estimated coefficients. We use the regression model coefficients to understand the magnitude of the effect and standard errors (and confidence intervals) to understand the precision of the effect.</span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model Evaluation</span></span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a>There are a number of ways we might evaluate model performance, but the starting point should be the model's $R^2$ and the p-values of the model coefficients. These can help us consider whether the model fits the data and whether we have enough data to trust the conclusions we can draw from each explanatory variable.</span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a><span class="fu">#### $R^2$</span></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a>The $R^2$ value is the proportion of the variance in the outcome that is explained by the model. It is often used as a measure of the goodness of fit of the model, and by extension the extent to which the specified model explains the outcome, but caution should be applied when using $R^2$ this way, because $R^2$ can be misleading and doesn't always tell the whole story. One of the main problems with $R^2$ when used in an inferential context is that adding more variables to the model will always increase the $R^2$ value, even if the new variables are not actually related to the outcome. Adjusted $R^2$ values are used to account for this problem, but they don't resolve all issues with $R^2$, so it is important to consider $R^2$ as just one of a number of indicators of the model's fit. If the $R^2$ is high, this doesn't necessarily mean that the model is a good fit for the data, but if the $R^2$ is particularly low, this might be a good indication that the model is not a good fit for the data, and at the very least it is good reason to be cautious about the results of the analysis, and to take a closer look at the model and the data to understand why the $R^2$ is so low.</span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a>Defining high/low $R^2$ values is dependent on the context of the analysis. The theory behind the model should inform our expectations about the $R^2$ value, and we should also consider the number of explanatory variables in the model (adding variables to a regression will increase the $R^2$). If the theory suggests that the model should explain a small amount of the variance in the outcome, and the model has only a few explanatory variables, then a low $R^2$ value might not be a cause for concern.</span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a>The Adjusted $R^2$ value for the above regression model is 0.843, which means that the model explains 84.3% of the observed variance in life expectancy in our dataset. This is a relatively high $R^2$ value.</span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a><span class="fu">#### P-Values</span></span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a>P-values are the probability of observing a coefficient as large as the estimated coefficient for a particular explanatory variable, given that the null hypothesis is true (i.e. that the coefficient is equal to zero), indicating that no effect is present. This can be a little tricky to understand at first, but a slightly crude way of thinking about this is that p-values are an estimate of the probability that the model coefficient you observe is actually distinguishable from zero.</span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>P-values are used to test the statistical significance of the coefficients. If the p-value is less than the significance level then the coefficient is statistically significant, and we can reject the null hypothesis that the coefficient is equal to zero. If the p-value is greater than the significance level, then the coefficient is not statistically significant, and we cannot reject the null hypothesis that the coefficient is equal to zero. The significance level is often set at 0.05, which means that we are willing to accept a 5% chance of incorrectly rejecting the null hypothesis. This means that if the p-value is less than 0.05, then there is a greater than 95% probability that the coefficient is not equal to zero. However, the significance level is a subjective decision, and can be set at any value. For example, if the significance level is set at 0.01, then we are willing to accept a 1% chance of incorrectly rejecting the null hypothesis.</span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a>In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practitioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.</span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a>I think the best way to think about p-values is the position prescribed by  @gelman2020. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will **some** effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.</span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a><span class="fu">### Model Interpretation</span></span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a>Model interpretation is the process of understanding the influence that each explanatory variable has on the outcome. This involves understanding the direction, the magnitude, and the precision of the model coefficients. The coefficients themselves will tell us about direction and magnitude, while the standard errors and confidence intervals will tell us about precision.</span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Model Coefficients</span></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a>The model coefficients are the estimated values of the regression coefficients, or the estimated change in the outcome variable for a one unit change in the explanatory variable, while holding all other explanatory variables constant. The intercept is the estimated value of the outcome variable when all of the explanatory variables are equal to zero (or the baseline values if the variables are transformed).</span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a>A regression's coefficients are the most important part of interpreting the model. They specify the association between the explanatory variables and the outcome, telling us both the direction and the magnitude of the association. The direction of the association is indicated by the sign of the coefficient (positive = outcome increases with the explanatory variable, negative = outcome decreases with the explanatory variable). The magnitude of the association is indicated by the size of the coefficient (the larger the coefficient, the stronger the association). If the direction of the association is going in the wrong direction to that which we expect, this obviously indicates issues either in the theory or in the model, and if the magnitude of the effect is too small to be practically significant, then either the explanatory variable is not a good predictor of the outcome, or the model is not doing a good job of fitting the data (either the explanatory variable doesn't really matter or the model is not capturing the true relationship between the explanatory variables and the outcome). However, while the direction is relatively easy to interpret, magnitude is not, because what counts as a practically significant effect is dependent on the context of the analysis.</span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Standard Errors</span></span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a>The standard errors are the standard deviation of the estimated coefficients. This is a measure of the precision of the estimated association between the explanatory variables and the outcome. The larger the standard error, the less precise the coefficient estimate. Precisely measured coefficients suggest that the model is fitting the data well, and we can be confident that the association between the explanatory variables and the outcome is real, and not just a result of random variation in the data. Defining what counts as 'precise' in any analysis, much like the coefficient magnitude, is dependent on the context of the analysis. However, in general, a standard error of less than 0.5 is considered to be a good estimate, and a standard error of less than 0.25 is considered to be a very precise estimate.</span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a>It is important to recognise that a precise coefficient alone cannot be treated as evidence of a causal effect between the explanatory variable and the outcome but it is, at least, a good indication that the explanatory variable is a good predictor of the outcome. In order to establish a causal relationship, we may consider methods that are more robust to the presence of confounding or ommitted variables, the gold standard being randomised controlled trials, but with a strong theoretical basis and a good understanding of the data, we can make a good case for a causal relationship based on observational data.</span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">StatQuest: Linear Regression</span><span class="co">](https://www.youtube.com/watch?v=7ArmBVF2dCs)</span></span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Regression &amp; Other Stories</span><span class="co">](https://avehtari.github.io/ROS-Examples/)</span></span>
+<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Statistical Inference via Data Science</span><span class="co">](https://moderndive.com)</span></span>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">A User's Guide to Statistical Inference and Regression</span><span class="co">](https://mattblackwell.github.io/gov2002-book/)</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

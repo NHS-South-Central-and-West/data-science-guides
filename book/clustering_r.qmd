@@ -1,11 +1,17 @@
 # Unsupervised Learning {#sec-unsupervised-learning}
 
+{{< include _links.qmd >}}
+
 ```{r}
 #| label: setup
 #| cache: false
 #| output: false
 #| code-fold: true
 #| code-summary: 'Setup Code (Click to Expand)'
+
+# packages needed to run the code in this section
+# install.packages(c("dplyr", "ggplot2", "tidymodels", "tidyclust, "remotes"))
+# remotes::install_github("NHS-South-Central-and-West/scwplot")
 
 # import packages
 suppressPackageStartupMessages({

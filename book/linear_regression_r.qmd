@@ -9,6 +9,10 @@
 #| code-fold: true
 #| code-summary: 'Setup Code (Click to Expand)'
 
+# packages needed to run the code in this section
+# install.packages(c("dplyr", "gt", "modelsummary", "ggplot2", "tidymodels", "remotes"))
+# remotes::install_github("NHS-South-Central-and-West/scwplot")
+
 # import packages
 suppressPackageStartupMessages({
   library(dplyr)
@@ -279,7 +283,7 @@ P-values are used to test the statistical significance of the coefficients. If t
 
 In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practitioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.
 
-I think the best way to think about p-values is the position prescribed by Gelman, Hill, & Vehtari in [Regression & Other Stories]. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will **some** effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.
+I think the best way to think about p-values is the position prescribed by @gelman2020. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will **some** effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.
 
 ### Model Interpretation
 
@@ -287,7 +291,7 @@ Model interpretation is the process of understanding the influence that each exp
 
 #### Model Coefficients
 
-The model coefficients are the estimated values of the regression coefficients, or the estimated change in the outcome variable for a one unit change in the explanatory variable, while holding all other explanatory variables constant. The intercept is the estimated value of the outcome variable  when all of the explanatory variables are equal to zero (or the baseline values if the variables are transformed).
+The model coefficients are the estimated values of the regression coefficients, or the estimated change in the outcome variable for a one unit change in the explanatory variable, while holding all other explanatory variables constant. The intercept is the estimated value of the outcome variable when all of the explanatory variables are equal to zero (or the baseline values if the variables are transformed).
 
 A regression's coefficients are the most important part of interpreting the model. They specify the association between the explanatory variables and the outcome, telling us both the direction and the magnitude of the association. The direction of the association is indicated by the sign of the coefficient (positive = outcome increases with the explanatory variable, negative = outcome decreases with the explanatory variable). The magnitude of the association is indicated by the size of the coefficient (the larger the coefficient, the stronger the association). If the direction of the association is going in the wrong direction to that which we expect, this obviously indicates issues either in the theory or in the model, and if the magnitude of the effect is too small to be practically significant, then either the explanatory variable is not a good predictor of the outcome, or the model is not doing a good job of fitting the data (either the explanatory variable doesn't really matter or the model is not capturing the true relationship between the explanatory variables and the outcome). However, while the direction is relatively easy to interpret, magnitude is not, because what counts as a practically significant effect is dependent on the context of the analysis.
 

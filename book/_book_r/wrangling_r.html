@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><!-- links used throughout the book --><!-- good science --><!-- hypothesis testing --><!-- simulations --><div class="cell" data-hash="wrangling_r_cache/html/setup_4951577da3200578f0a6f55c437954b4">
+</header><!-- links used throughout the book --><!-- intro --><!-- good science --><!-- wrangling --><!-- eda --><!-- hypothesis testing --><!-- machine learning --><!-- version control --><div class="cell" data-hash="wrangling_r_cache/html/setup_4951577da3200578f0a6f55c437954b4">
 <details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="co"># remotes::install_github("rOpenSci/fingertipsR")</span></span>
 <span><span class="co"># install.packages("here")</span></span>
@@ -322,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Finally, there are a number of packages that help you work with particularly large data sets:</p>
 <ul>
 <li>
-<a href="https://vroom.r-lib.org/">vroom</a> - package that reads files quickly using the <a href="https://svn.r-project.org/R/branches/ALTREP/ALTREP.html">ALTREP frameowrk</a>.</li>
+<a href="https://vroom.r-lib.org/">vroom</a> - package that reads files quickly using the <a href="https://svn.r-project.org/R/branches/ALTREP/ALTREP.html">ALTREP framework</a>.</li>
 <li>
 <a href="https://rdatatable.gitlab.io/data.table/">data.table</a> - package that provides a high-performance version of base R’s data.frame with syntax and feature enhancements for ease of use, convenience and programming speed.</li>
 <li>
@@ -911,24 +911,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>Data wrangling is a task that R is extremely well suited for, particularly thanks to the tidyverse ecosystem, which provides several packages that can be used to do a wide variety of data wrangling tasks, including:</span>
 <span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">readr</span><span class="co">](https://readr.tidyverse.org/)</span> - package for reading tabular/rectangular data (e.g. csv files).</span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">readxl</span><span class="co">](https://readxl.tidyverse.org/)</span> - package for reading Excel files.</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">dplyr</span><span class="co">](https://dplyr.tidyverse.org/)</span> - set of functions for data manipulation (filtering rows, selecting columns, re-ordering rows, adding new variables with functions of existing variables, and collapsing many values down to a single summary).</span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">tidyr</span><span class="co">](https://tidyr.tidyverse.org/)</span> - set of functions for data transformation (changing the representation of a dataset from wide to long, or vice versa, and splitting and combining columns).</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">stringr</span><span class="co">](https://stringr.tidyverse.org/)</span> - tools for working with strings.</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">lubridate</span><span class="co">](https://lubridate.tidyverse.org/)</span> - tools for dealing with dates and times.</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">readr</span><span class="co">]</span> - package for reading tabular/rectangular data (e.g. csv files).</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">readxl</span><span class="co">]</span> - package for reading Excel files.</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">dplyr</span><span class="co">]</span> - set of functions for data manipulation (filtering rows, selecting columns, re-ordering rows, adding new variables with functions of existing variables, and collapsing many values down to a single summary).</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">tidyr</span><span class="co">]</span> - set of functions for data transformation (changing the representation of a dataset from wide to long, or vice versa, and splitting and combining columns).</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">stringr</span><span class="co">]</span> - tools for working with strings.</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">lubridate</span><span class="co">]</span> - tools for dealing with dates and times.</span>
 <span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>In addition to the tidyverse packages, there are a number of other packages that come in handy when dealing with data, including:</span>
 <span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">here</span><span class="co">](https://here.r-lib.org/)</span> - package that simplifies how you access files on your local machine by using the relative path based on the location of your R project.</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">janitor</span><span class="co">](https://sfirke.github.io/janitor/)</span> - set of tools for data cleaning.</span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">here</span><span class="co">]</span> - package that simplifies how you access files on your local machine by using the relative path based on the location of your R project.</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">janitor</span><span class="co">]</span> - set of tools for data cleaning.</span>
 <span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>Finally, there are a number of packages that help you work with particularly large data sets:</span>
 <span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">vroom</span><span class="co">](https://vroom.r-lib.org/)</span> - package that reads files quickly using the <span class="co">[</span><span class="ot">ALTREP frameowrk</span><span class="co">](https://svn.r-project.org/R/branches/ALTREP/ALTREP.html)</span>.</span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">data.table</span><span class="co">](https://rdatatable.gitlab.io/data.table/)</span> - package that provides a high-performance version of base R’s data.frame with syntax and feature enhancements for ease of use, convenience and programming speed.</span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">arrow</span><span class="co">](https://arrow.apache.org/docs/r/)</span> - package for using Apache Arrow, which handles in-memory and larger-than-memory data very quickly.</span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">sparklyr</span><span class="co">](https://spark.rstudio.com/)</span> - R interface for Apache Spark.</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">vroom</span><span class="co">]</span> - package that reads files quickly using the <span class="co">[</span><span class="ot">ALTREP framework</span><span class="co">]</span>.</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">data.table</span><span class="co">]</span> - package that provides a high-performance version of base R’s data.frame with syntax and feature enhancements for ease of use, convenience and programming speed.</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">arrow</span><span class="co">]</span> - package for using Apache Arrow, which handles in-memory and larger-than-memory data very quickly.</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">sparklyr</span><span class="co">]</span> - R interface for Apache Spark.</span>
 <span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>Although the tidyverse packages are very popular, they are not required to work with data in R. There will be equivalent ways to do things using only base R functions too. However, I think the tidyverse is particularly user-friendly, especially for those that are coming to R from SQL, so I will focus on data wrangling using a tidyverse workflow in this guide.</span>
 <span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a></span>
@@ -961,177 +961,178 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a>From the profiles, we can identify topics that are of particular interest, for example the Public Health Outcomes Framework (profile ID = 19).</span>
-<span id="cb24-81"><a href="#cb24-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-82"><a href="#cb24-82" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: phof-inds</span></span>
-<span id="cb24-83"><a href="#cb24-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-84"><a href="#cb24-84" aria-hidden="true" tabindex="-1"></a>phof_inds <span class="ot">&lt;-</span> fingertipsR<span class="sc">::</span><span class="fu">indicators</span>(<span class="at">ProfileID=</span><span class="dv">19</span>)</span>
-<span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a><span class="co"># View(phof_inds)</span></span>
-<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-88"><a href="#cb24-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-89"><a href="#cb24-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-90"><a href="#cb24-90" aria-hidden="true" tabindex="-1"></a>There are lots of indicators available from this profile. We can also check the area types that the indicators in the Public Health Outcomes Framework are available for, using either the <span class="in">`fingerprintsR::area_types()`</span> function, with the <span class="in">`ProfileID`</span> argument set to the profile we are interested in, or the <span class="in">`fingertipsR::indicator_area_types()`</span> function, with the <span class="in">`IndicatorID`</span> argument set to one of the indicators that we are interested in.</span>
-<span id="cb24-91"><a href="#cb24-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-94"><a href="#cb24-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-95"><a href="#cb24-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fingertips-area-types</span></span>
-<span id="cb24-96"><a href="#cb24-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-97"><a href="#cb24-97" aria-hidden="true" tabindex="-1"></a>fingertipsR<span class="sc">::</span><span class="fu">area_types</span>(<span class="at">ProfileID=</span><span class="dv">19</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-98"><a href="#cb24-98" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(AreaTypeID, AreaTypeName)</span>
-<span id="cb24-99"><a href="#cb24-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-100"><a href="#cb24-100" aria-hidden="true" tabindex="-1"></a>fingertipsR<span class="sc">::</span><span class="fu">indicator_areatypes</span>(<span class="at">IndicatorID=</span>phof_inds<span class="sc">$</span>IndicatorID[<span class="dv">1</span>])</span>
-<span id="cb24-101"><a href="#cb24-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-102"><a href="#cb24-102" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-103"><a href="#cb24-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-104"><a href="#cb24-104" aria-hidden="true" tabindex="-1"></a>The list of area types is quite long, but from the <span class="in">`indicator_area_types()`</span> function, we can see that there are six area types available for the first indicator in the list of profile indicators. The area types ending in 2 are all upper tier local authorities (the different types being different local authority boundaries from different points in time), while the other two area types refer to Government Office Regions and England as a whole.</span>
-<span id="cb24-105"><a href="#cb24-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-106"><a href="#cb24-106" aria-hidden="true" tabindex="-1"></a>We will use the most recent upper tier local authority boundaries, which have the <span class="in">`AreaTypeID`</span>, 502.</span>
-<span id="cb24-107"><a href="#cb24-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-108"><a href="#cb24-108" aria-hidden="true" tabindex="-1"></a>Having identified the profile and area type we are interested in, we can now pull the data from the Fingertips API using the <span class="in">`fingertipsR::fingertips_data()`</span> function.</span>
-<span id="cb24-109"><a href="#cb24-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-112"><a href="#cb24-112" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-113"><a href="#cb24-113" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: import</span></span>
-<span id="cb24-114"><a href="#cb24-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-115"><a href="#cb24-115" aria-hidden="true" tabindex="-1"></a><span class="co"># pull wider determinants raw data from fingertips</span></span>
-<span id="cb24-116"><a href="#cb24-116" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="ot">&lt;-</span></span>
-<span id="cb24-117"><a href="#cb24-117" aria-hidden="true" tabindex="-1"></a>  fingertipsR<span class="sc">::</span><span class="fu">fingertips_data</span>(</span>
-<span id="cb24-118"><a href="#cb24-118" aria-hidden="true" tabindex="-1"></a>    <span class="at">ProfileID =</span> <span class="dv">19</span>,</span>
-<span id="cb24-119"><a href="#cb24-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">AreaTypeID =</span> <span class="dv">502</span></span>
-<span id="cb24-120"><a href="#cb24-120" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-121"><a href="#cb24-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-122"><a href="#cb24-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-123"><a href="#cb24-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-126"><a href="#cb24-126" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-127"><a href="#cb24-127" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check</span></span>
-<span id="cb24-128"><a href="#cb24-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-129"><a href="#cb24-129" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(phof_raw)</span>
-<span id="cb24-130"><a href="#cb24-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-131"><a href="#cb24-131" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
-<span id="cb24-132"><a href="#cb24-132" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(IndicatorName) <span class="sc">|&gt;</span></span>
-<span id="cb24-133"><a href="#cb24-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
-<span id="cb24-134"><a href="#cb24-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-135"><a href="#cb24-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-136"><a href="#cb24-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-137"><a href="#cb24-137" aria-hidden="true" tabindex="-1"></a>With the raw data imported, we are now able to start the process of cleaning and wrangling the data into a format that is ready for analysis.</span>
-<span id="cb24-138"><a href="#cb24-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-139"><a href="#cb24-139" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Wrangling</span></span>
-<span id="cb24-140"><a href="#cb24-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-141"><a href="#cb24-141" aria-hidden="true" tabindex="-1"></a>First, we will clean the column names using the <span class="in">`janitor::clean_names()`</span> function. This will convert all column names to lower case, remove any spaces and replace them with underscores, and remove any special characters. This will make it easier to work with the data in the future.</span>
-<span id="cb24-142"><a href="#cb24-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-145"><a href="#cb24-145" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-146"><a href="#cb24-146" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: clean-names</span></span>
-<span id="cb24-147"><a href="#cb24-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-148"><a href="#cb24-148" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="ot">&lt;-</span></span>
-<span id="cb24-149"><a href="#cb24-149" aria-hidden="true" tabindex="-1"></a>  phof_raw <span class="sc">|&gt;</span></span>
-<span id="cb24-150"><a href="#cb24-150" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
-<span id="cb24-151"><a href="#cb24-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-152"><a href="#cb24-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-153"><a href="#cb24-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-79"><a href="#cb24-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-82"><a href="#cb24-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-83"><a href="#cb24-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: phof-inds</span></span>
+<span id="cb24-84"><a href="#cb24-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a>phof_inds <span class="ot">&lt;-</span> fingertipsR<span class="sc">::</span><span class="fu">indicators</span>(<span class="at">ProfileID=</span><span class="dv">19</span>)</span>
+<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a><span class="co"># View(phof_inds)</span></span>
+<span id="cb24-88"><a href="#cb24-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-89"><a href="#cb24-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-90"><a href="#cb24-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-91"><a href="#cb24-91" aria-hidden="true" tabindex="-1"></a>There are lots of indicators available from this profile. We can also check the area types that the indicators in the Public Health Outcomes Framework are available for, using either the <span class="in">`fingerprintsR::area_types()`</span> function, with the <span class="in">`ProfileID`</span> argument set to the profile we are interested in, or the <span class="in">`fingertipsR::indicator_area_types()`</span> function, with the <span class="in">`IndicatorID`</span> argument set to one of the indicators that we are interested in.</span>
+<span id="cb24-92"><a href="#cb24-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-95"><a href="#cb24-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-96"><a href="#cb24-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fingertips-area-types</span></span>
+<span id="cb24-97"><a href="#cb24-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-98"><a href="#cb24-98" aria-hidden="true" tabindex="-1"></a>fingertipsR<span class="sc">::</span><span class="fu">area_types</span>(<span class="at">ProfileID=</span><span class="dv">19</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-99"><a href="#cb24-99" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(AreaTypeID, AreaTypeName)</span>
+<span id="cb24-100"><a href="#cb24-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-101"><a href="#cb24-101" aria-hidden="true" tabindex="-1"></a>fingertipsR<span class="sc">::</span><span class="fu">indicator_areatypes</span>(<span class="at">IndicatorID=</span>phof_inds<span class="sc">$</span>IndicatorID[<span class="dv">1</span>])</span>
+<span id="cb24-102"><a href="#cb24-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-103"><a href="#cb24-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-104"><a href="#cb24-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-105"><a href="#cb24-105" aria-hidden="true" tabindex="-1"></a>The list of area types is quite long, but from the <span class="in">`indicator_area_types()`</span> function, we can see that there are six area types available for the first indicator in the list of profile indicators. The area types ending in 2 are all upper tier local authorities (the different types being different local authority boundaries from different points in time), while the other two area types refer to Government Office Regions and England as a whole.</span>
+<span id="cb24-106"><a href="#cb24-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-107"><a href="#cb24-107" aria-hidden="true" tabindex="-1"></a>We will use the most recent upper tier local authority boundaries, which have the <span class="in">`AreaTypeID`</span>, 502.</span>
+<span id="cb24-108"><a href="#cb24-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-109"><a href="#cb24-109" aria-hidden="true" tabindex="-1"></a>Having identified the profile and area type we are interested in, we can now pull the data from the Fingertips API using the <span class="in">`fingertipsR::fingertips_data()`</span> function.</span>
+<span id="cb24-110"><a href="#cb24-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-113"><a href="#cb24-113" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-114"><a href="#cb24-114" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: import</span></span>
+<span id="cb24-115"><a href="#cb24-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-116"><a href="#cb24-116" aria-hidden="true" tabindex="-1"></a><span class="co"># pull wider determinants raw data from fingertips</span></span>
+<span id="cb24-117"><a href="#cb24-117" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="ot">&lt;-</span></span>
+<span id="cb24-118"><a href="#cb24-118" aria-hidden="true" tabindex="-1"></a>  fingertipsR<span class="sc">::</span><span class="fu">fingertips_data</span>(</span>
+<span id="cb24-119"><a href="#cb24-119" aria-hidden="true" tabindex="-1"></a>    <span class="at">ProfileID =</span> <span class="dv">19</span>,</span>
+<span id="cb24-120"><a href="#cb24-120" aria-hidden="true" tabindex="-1"></a>    <span class="at">AreaTypeID =</span> <span class="dv">502</span></span>
+<span id="cb24-121"><a href="#cb24-121" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-122"><a href="#cb24-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-123"><a href="#cb24-123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-124"><a href="#cb24-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-127"><a href="#cb24-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-128"><a href="#cb24-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: check</span></span>
+<span id="cb24-129"><a href="#cb24-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-130"><a href="#cb24-130" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(phof_raw)</span>
+<span id="cb24-131"><a href="#cb24-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-132"><a href="#cb24-132" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb24-133"><a href="#cb24-133" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(IndicatorName) <span class="sc">|&gt;</span></span>
+<span id="cb24-134"><a href="#cb24-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span>
+<span id="cb24-135"><a href="#cb24-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-136"><a href="#cb24-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-137"><a href="#cb24-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-138"><a href="#cb24-138" aria-hidden="true" tabindex="-1"></a>With the raw data imported, we are now able to start the process of cleaning and wrangling the data into a format that is ready for analysis.</span>
+<span id="cb24-139"><a href="#cb24-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-140"><a href="#cb24-140" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Wrangling</span></span>
+<span id="cb24-141"><a href="#cb24-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-142"><a href="#cb24-142" aria-hidden="true" tabindex="-1"></a>First, we will clean the column names using the <span class="in">`janitor::clean_names()`</span> function. This will convert all column names to lower case, remove any spaces and replace them with underscores, and remove any special characters. This will make it easier to work with the data in the future.</span>
+<span id="cb24-143"><a href="#cb24-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-146"><a href="#cb24-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-147"><a href="#cb24-147" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: clean-names</span></span>
+<span id="cb24-148"><a href="#cb24-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-149"><a href="#cb24-149" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="ot">&lt;-</span></span>
+<span id="cb24-150"><a href="#cb24-150" aria-hidden="true" tabindex="-1"></a>  phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb24-151"><a href="#cb24-151" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb24-152"><a href="#cb24-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-153"><a href="#cb24-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb24-154"><a href="#cb24-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-155"><a href="#cb24-155" aria-hidden="true" tabindex="-1"></a>We've got a total of 168 indicators, which means some of the indicators from the Public Health Outcomes Framework are not available for upper tier local authorities. We can filter the data to just the indicators we are interested in (as well as filtering any rows where the value is missing), using the <span class="in">`dplyr::filter()`</span> function. We can also use the <span class="in">`dplyr::group_by()`</span> and <span class="in">`dplyr::summarise()`</span> functions to get the mean value of the indicators across all areas in the data. Below is an example:</span>
-<span id="cb24-156"><a href="#cb24-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-159"><a href="#cb24-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-160"><a href="#cb24-160" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summarise-values</span></span>
-<span id="cb24-161"><a href="#cb24-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-162"><a href="#cb24-162" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
-<span id="cb24-163"><a href="#cb24-163" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
-<span id="cb24-164"><a href="#cb24-164" aria-hidden="true" tabindex="-1"></a>    indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>) <span class="sc">&amp;</span></span>
-<span id="cb24-165"><a href="#cb24-165" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(value)) <span class="sc">|&gt;</span></span>
-<span id="cb24-166"><a href="#cb24-166" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name) <span class="sc">|&gt;</span></span>
-<span id="cb24-167"><a href="#cb24-167" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="fu">mean</span>(value))</span>
-<span id="cb24-168"><a href="#cb24-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-169"><a href="#cb24-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-170"><a href="#cb24-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-171"><a href="#cb24-171" aria-hidden="true" tabindex="-1"></a>The data pulled from the Fingertips API has a number of idiosyncracies that need addressing when wrangling the data. For example, the <span class="in">`timeperiod_sortable`</span> column refers to the year that the data relates to, and it contains four superfluous zeros at the end of each year (i.e, 20230000). We can use the <span class="in">`dplyr::mutate()`</span> function to create a <span class="in">`year`</span> column which strips out the zeros from the <span class="in">`timeperiod_sortable`</span> column (using the <span class="in">`stringr::str_remove_all()`</span> function).</span>
-<span id="cb24-172"><a href="#cb24-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-175"><a href="#cb24-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-176"><a href="#cb24-176" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: format-years</span></span>
-<span id="cb24-177"><a href="#cb24-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-178"><a href="#cb24-178" aria-hidden="true" tabindex="-1"></a><span class="co"># filter for the indicators of interest and wrangle data into tidy structure</span></span>
-<span id="cb24-179"><a href="#cb24-179" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
-<span id="cb24-180"><a href="#cb24-180" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>) <span class="sc">&amp;</span> area_code <span class="sc">==</span> <span class="st">"E92000001"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-181"><a href="#cb24-181" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name, area_code, timeperiod_sortable) <span class="sc">|&gt;</span></span>
-<span id="cb24-182"><a href="#cb24-182" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">mean</span>(value)) <span class="sc">|&gt;</span></span>
-<span id="cb24-183"><a href="#cb24-183" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">year =</span> stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(timeperiod_sortable, <span class="st">"0000"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-184"><a href="#cb24-184" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_name, area_code, year, value)</span>
-<span id="cb24-185"><a href="#cb24-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-186"><a href="#cb24-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-187"><a href="#cb24-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-188"><a href="#cb24-188" aria-hidden="true" tabindex="-1"></a>We can also remove the ID that appended to the beginning of each indicator name. We can use <span class="in">`str_remove_all()`</span> again, using a regular expression to remove everything up to and including the dash in the indicator name (and the space immediately after).</span>
-<span id="cb24-189"><a href="#cb24-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-192"><a href="#cb24-192" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-193"><a href="#cb24-193" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: remove-inds-id</span></span>
-<span id="cb24-194"><a href="#cb24-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-195"><a href="#cb24-195" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
-<span id="cb24-196"><a href="#cb24-196" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-197"><a href="#cb24-197" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">indicator_name =</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(indicator_name, <span class="st">"^[^-]+- "</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-198"><a href="#cb24-198" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(indicator_name)</span>
-<span id="cb24-199"><a href="#cb24-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-200"><a href="#cb24-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-201"><a href="#cb24-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-202"><a href="#cb24-202" aria-hidden="true" tabindex="-1"></a>Finally, the data is structured in a wide format, with each indicator having its own column. This is not a tidy structure, as each column should represent a variable, and each row should represent an observation. We can use the <span class="in">`tidyr::pivot_wider()`</span> function to convert the data into a tidy structure, with each indicator having its own row. We can also use the <span class="in">`dplyr::rename()`</span> function to rename the columns to something more meaningful, and the <span class="in">`tidyr::drop_na()`</span> function to remove any rows where the value is missing.</span>
-<span id="cb24-203"><a href="#cb24-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-206"><a href="#cb24-206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-207"><a href="#cb24-207" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: pivot-wider</span></span>
-<span id="cb24-208"><a href="#cb24-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-209"><a href="#cb24-209" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
-<span id="cb24-210"><a href="#cb24-210" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-211"><a href="#cb24-211" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_id, indicator_name, area_code, timeperiod_sortable, sex, value) <span class="sc">|&gt;</span></span>
-<span id="cb24-212"><a href="#cb24-212" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb24-213"><a href="#cb24-213" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> indicator_name,</span>
-<span id="cb24-214"><a href="#cb24-214" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
-<span id="cb24-215"><a href="#cb24-215" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb24-216"><a href="#cb24-216" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb24-217"><a href="#cb24-217" aria-hidden="true" tabindex="-1"></a>      <span class="at">life_expectancy =</span> <span class="st">`</span><span class="at">A01b - Life expectancy at birth</span><span class="st">`</span>,</span>
-<span id="cb24-218"><a href="#cb24-218" aria-hidden="true" tabindex="-1"></a>      <span class="at">low_birth_weight =</span> <span class="st">`</span><span class="at">C04 - Low birth weight of term babies</span><span class="st">`</span>,</span>
-<span id="cb24-219"><a href="#cb24-219" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise/health reasons</span><span class="st">`</span></span>
-<span id="cb24-220"><a href="#cb24-220" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-223"><a href="#cb24-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-224"><a href="#cb24-224" aria-hidden="true" tabindex="-1"></a>We can combine all of the above steps into a single function, which we can then apply to the raw data to get the data into a tidy structure.</span>
-<span id="cb24-225"><a href="#cb24-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-228"><a href="#cb24-228" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb24-229"><a href="#cb24-229" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: function-wrangle-data</span></span>
-<span id="cb24-230"><a href="#cb24-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-231"><a href="#cb24-231" aria-hidden="true" tabindex="-1"></a><span class="co"># function to wrangle data into tidy structure</span></span>
-<span id="cb24-232"><a href="#cb24-232" aria-hidden="true" tabindex="-1"></a>wrangle_phof_data <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb24-233"><a href="#cb24-233" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
-<span id="cb24-234"><a href="#cb24-234" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-235"><a href="#cb24-235" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name, area_code, timeperiod_sortable) <span class="sc">|&gt;</span></span>
-<span id="cb24-236"><a href="#cb24-236" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">mean</span>(value)) <span class="sc">|&gt;</span></span>
-<span id="cb24-237"><a href="#cb24-237" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">year =</span> stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(timeperiod_sortable, <span class="st">"0000"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb24-238"><a href="#cb24-238" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_name, area_code, year, value) <span class="sc">|&gt;</span></span>
-<span id="cb24-239"><a href="#cb24-239" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb24-240"><a href="#cb24-240" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> indicator_name,</span>
-<span id="cb24-241"><a href="#cb24-241" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> value</span>
-<span id="cb24-242"><a href="#cb24-242" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb24-243"><a href="#cb24-243" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb24-244"><a href="#cb24-244" aria-hidden="true" tabindex="-1"></a>      <span class="at">life_expectancy =</span> <span class="st">`</span><span class="at">A01b - Life expectancy at birth</span><span class="st">`</span>,</span>
-<span id="cb24-245"><a href="#cb24-245" aria-hidden="true" tabindex="-1"></a>      <span class="at">low_birth_weight =</span> <span class="st">`</span><span class="at">C04 - Low birth weight of term babies</span><span class="st">`</span>,</span>
-<span id="cb24-246"><a href="#cb24-246" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise/health reasons</span><span class="st">`</span></span>
-<span id="cb24-247"><a href="#cb24-247" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb24-248"><a href="#cb24-248" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span>
-<span id="cb24-249"><a href="#cb24-249" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-250"><a href="#cb24-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-251"><a href="#cb24-251" aria-hidden="true" tabindex="-1"></a>phof <span class="ot">&lt;-</span> <span class="fu">wrangle_phof_data</span>(phof_raw)</span>
-<span id="cb24-252"><a href="#cb24-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-253"><a href="#cb24-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb24-254"><a href="#cb24-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-255"><a href="#cb24-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
-<span id="cb24-256"><a href="#cb24-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-257"><a href="#cb24-257" aria-hidden="true" tabindex="-1"></a>We have successfully imported, cleaned, and wrangled Fingertips data into a tidy structure. We can now move on to the next step of the data science process, which is to explore the data and perform some analysis.</span>
-<span id="cb24-258"><a href="#cb24-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-259"><a href="#cb24-259" aria-hidden="true" tabindex="-1"></a>We could save the data to a CSV file at this point, using the <span class="in">`readr::write_csv()`</span> function (for example, <span class="in">`readr::write_csv(phof, here::here("data/phof.csv"))`</span>), or we could perform the analysis on the dataframe object we have created.</span>
-<span id="cb24-260"><a href="#cb24-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-261"><a href="#cb24-261" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
-<span id="cb24-262"><a href="#cb24-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-263"><a href="#cb24-263" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Hadley Wickham - Tidy Data</span><span class="co">]</span></span>
-<span id="cb24-264"><a href="#cb24-264" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Transformation with {dplyr}</span><span class="co">]</span></span>
-<span id="cb24-265"><a href="#cb24-265" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Tidying with {tidyr}</span><span class="co">]</span></span>
-<span id="cb24-266"><a href="#cb24-266" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Top 10 Must-Know {dplyr} Commands for Data Wrangling in R!</span><span class="co">]</span></span>
-<span id="cb24-267"><a href="#cb24-267" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Wrangling with R</span><span class="co">]</span></span>
-<span id="cb24-268"><a href="#cb24-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel</span><span class="co">]</span></span>
-<span id="cb24-269"><a href="#cb24-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">R to Python: Data Wrangling Snippets</span><span class="co">]</span></span>
+<span id="cb24-155"><a href="#cb24-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-156"><a href="#cb24-156" aria-hidden="true" tabindex="-1"></a>We've got a total of 168 indicators, which means some of the indicators from the Public Health Outcomes Framework are not available for upper tier local authorities. We can filter the data to just the indicators we are interested in (as well as filtering any rows where the value is missing), using the <span class="in">`dplyr::filter()`</span> function. We can also use the <span class="in">`dplyr::group_by()`</span> and <span class="in">`dplyr::summarise()`</span> functions to get the mean value of the indicators across all areas in the data. Below is an example:</span>
+<span id="cb24-157"><a href="#cb24-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-160"><a href="#cb24-160" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-161"><a href="#cb24-161" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summarise-values</span></span>
+<span id="cb24-162"><a href="#cb24-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-163"><a href="#cb24-163" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb24-164"><a href="#cb24-164" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb24-165"><a href="#cb24-165" aria-hidden="true" tabindex="-1"></a>    indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>) <span class="sc">&amp;</span></span>
+<span id="cb24-166"><a href="#cb24-166" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb24-167"><a href="#cb24-167" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name) <span class="sc">|&gt;</span></span>
+<span id="cb24-168"><a href="#cb24-168" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="fu">mean</span>(value))</span>
+<span id="cb24-169"><a href="#cb24-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-170"><a href="#cb24-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-171"><a href="#cb24-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-172"><a href="#cb24-172" aria-hidden="true" tabindex="-1"></a>The data pulled from the Fingertips API has a number of idiosyncracies that need addressing when wrangling the data. For example, the <span class="in">`timeperiod_sortable`</span> column refers to the year that the data relates to, and it contains four superfluous zeros at the end of each year (i.e, 20230000). We can use the <span class="in">`dplyr::mutate()`</span> function to create a <span class="in">`year`</span> column which strips out the zeros from the <span class="in">`timeperiod_sortable`</span> column (using the <span class="in">`stringr::str_remove_all()`</span> function).</span>
+<span id="cb24-173"><a href="#cb24-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-176"><a href="#cb24-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-177"><a href="#cb24-177" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: format-years</span></span>
+<span id="cb24-178"><a href="#cb24-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-179"><a href="#cb24-179" aria-hidden="true" tabindex="-1"></a><span class="co"># filter for the indicators of interest and wrangle data into tidy structure</span></span>
+<span id="cb24-180"><a href="#cb24-180" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb24-181"><a href="#cb24-181" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>) <span class="sc">&amp;</span> area_code <span class="sc">==</span> <span class="st">"E92000001"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-182"><a href="#cb24-182" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name, area_code, timeperiod_sortable) <span class="sc">|&gt;</span></span>
+<span id="cb24-183"><a href="#cb24-183" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">mean</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb24-184"><a href="#cb24-184" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">year =</span> stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(timeperiod_sortable, <span class="st">"0000"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-185"><a href="#cb24-185" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_name, area_code, year, value)</span>
+<span id="cb24-186"><a href="#cb24-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-187"><a href="#cb24-187" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-188"><a href="#cb24-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-189"><a href="#cb24-189" aria-hidden="true" tabindex="-1"></a>We can also remove the ID that appended to the beginning of each indicator name. We can use <span class="in">`str_remove_all()`</span> again, using a regular expression to remove everything up to and including the dash in the indicator name (and the space immediately after).</span>
+<span id="cb24-190"><a href="#cb24-190" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-193"><a href="#cb24-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-194"><a href="#cb24-194" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: remove-inds-id</span></span>
+<span id="cb24-195"><a href="#cb24-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-196"><a href="#cb24-196" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb24-197"><a href="#cb24-197" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-198"><a href="#cb24-198" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">indicator_name =</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(indicator_name, <span class="st">"^[^-]+- "</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-199"><a href="#cb24-199" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(indicator_name)</span>
+<span id="cb24-200"><a href="#cb24-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-201"><a href="#cb24-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-202"><a href="#cb24-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-203"><a href="#cb24-203" aria-hidden="true" tabindex="-1"></a>Finally, the data is structured in a wide format, with each indicator having its own column. This is not a tidy structure, as each column should represent a variable, and each row should represent an observation. We can use the <span class="in">`tidyr::pivot_wider()`</span> function to convert the data into a tidy structure, with each indicator having its own row. We can also use the <span class="in">`dplyr::rename()`</span> function to rename the columns to something more meaningful, and the <span class="in">`tidyr::drop_na()`</span> function to remove any rows where the value is missing.</span>
+<span id="cb24-204"><a href="#cb24-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-207"><a href="#cb24-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-208"><a href="#cb24-208" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: pivot-wider</span></span>
+<span id="cb24-209"><a href="#cb24-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-210"><a href="#cb24-210" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb24-211"><a href="#cb24-211" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-212"><a href="#cb24-212" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_id, indicator_name, area_code, timeperiod_sortable, sex, value) <span class="sc">|&gt;</span></span>
+<span id="cb24-213"><a href="#cb24-213" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb24-214"><a href="#cb24-214" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> indicator_name,</span>
+<span id="cb24-215"><a href="#cb24-215" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
+<span id="cb24-216"><a href="#cb24-216" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb24-217"><a href="#cb24-217" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb24-218"><a href="#cb24-218" aria-hidden="true" tabindex="-1"></a>      <span class="at">life_expectancy =</span> <span class="st">`</span><span class="at">A01b - Life expectancy at birth</span><span class="st">`</span>,</span>
+<span id="cb24-219"><a href="#cb24-219" aria-hidden="true" tabindex="-1"></a>      <span class="at">low_birth_weight =</span> <span class="st">`</span><span class="at">C04 - Low birth weight of term babies</span><span class="st">`</span>,</span>
+<span id="cb24-220"><a href="#cb24-220" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise/health reasons</span><span class="st">`</span></span>
+<span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-223"><a href="#cb24-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-224"><a href="#cb24-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-225"><a href="#cb24-225" aria-hidden="true" tabindex="-1"></a>We can combine all of the above steps into a single function, which we can then apply to the raw data to get the data into a tidy structure.</span>
+<span id="cb24-226"><a href="#cb24-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-229"><a href="#cb24-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb24-230"><a href="#cb24-230" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: function-wrangle-data</span></span>
+<span id="cb24-231"><a href="#cb24-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-232"><a href="#cb24-232" aria-hidden="true" tabindex="-1"></a><span class="co"># function to wrangle data into tidy structure</span></span>
+<span id="cb24-233"><a href="#cb24-233" aria-hidden="true" tabindex="-1"></a>wrangle_phof_data <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb24-234"><a href="#cb24-234" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb24-235"><a href="#cb24-235" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-236"><a href="#cb24-236" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name, area_code, timeperiod_sortable) <span class="sc">|&gt;</span></span>
+<span id="cb24-237"><a href="#cb24-237" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">mean</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb24-238"><a href="#cb24-238" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">year =</span> stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(timeperiod_sortable, <span class="st">"0000"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-239"><a href="#cb24-239" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_name, area_code, year, value) <span class="sc">|&gt;</span></span>
+<span id="cb24-240"><a href="#cb24-240" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb24-241"><a href="#cb24-241" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> indicator_name,</span>
+<span id="cb24-242"><a href="#cb24-242" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> value</span>
+<span id="cb24-243"><a href="#cb24-243" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb24-244"><a href="#cb24-244" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb24-245"><a href="#cb24-245" aria-hidden="true" tabindex="-1"></a>      <span class="at">life_expectancy =</span> <span class="st">`</span><span class="at">A01b - Life expectancy at birth</span><span class="st">`</span>,</span>
+<span id="cb24-246"><a href="#cb24-246" aria-hidden="true" tabindex="-1"></a>      <span class="at">low_birth_weight =</span> <span class="st">`</span><span class="at">C04 - Low birth weight of term babies</span><span class="st">`</span>,</span>
+<span id="cb24-247"><a href="#cb24-247" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise/health reasons</span><span class="st">`</span></span>
+<span id="cb24-248"><a href="#cb24-248" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb24-249"><a href="#cb24-249" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span>
+<span id="cb24-250"><a href="#cb24-250" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb24-251"><a href="#cb24-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-252"><a href="#cb24-252" aria-hidden="true" tabindex="-1"></a>phof <span class="ot">&lt;-</span> <span class="fu">wrangle_phof_data</span>(phof_raw)</span>
+<span id="cb24-253"><a href="#cb24-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-254"><a href="#cb24-254" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-255"><a href="#cb24-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-256"><a href="#cb24-256" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
+<span id="cb24-257"><a href="#cb24-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-258"><a href="#cb24-258" aria-hidden="true" tabindex="-1"></a>We have successfully imported, cleaned, and wrangled Fingertips data into a tidy structure. We can now move on to the next step of the data science process, which is to explore the data and perform some analysis.</span>
+<span id="cb24-259"><a href="#cb24-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-260"><a href="#cb24-260" aria-hidden="true" tabindex="-1"></a>We could save the data to a CSV file at this point, using the <span class="in">`readr::write_csv()`</span> function (for example, <span class="in">`readr::write_csv(phof, here::here("data/phof.csv"))`</span>), or we could perform the analysis on the dataframe object we have created.</span>
+<span id="cb24-261"><a href="#cb24-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-262"><a href="#cb24-262" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
+<span id="cb24-263"><a href="#cb24-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-264"><a href="#cb24-264" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Hadley Wickham - Tidy Data</span><span class="co">]</span></span>
+<span id="cb24-265"><a href="#cb24-265" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Transformation with {dplyr}</span><span class="co">]</span></span>
+<span id="cb24-266"><a href="#cb24-266" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Tidying with {tidyr}</span><span class="co">]</span></span>
+<span id="cb24-267"><a href="#cb24-267" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Top 10 Must-Know {dplyr} Commands for Data Wrangling in R!</span><span class="co">]</span></span>
+<span id="cb24-268"><a href="#cb24-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Wrangling with R</span><span class="co">]</span></span>
+<span id="cb24-269"><a href="#cb24-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Wrangling Essentials: Comparisons in JavaScript, Python, SQL, R, and Excel</span><span class="co">]</span></span>
+<span id="cb24-270"><a href="#cb24-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">R to Python: Data Wrangling Snippets</span><span class="co">]</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

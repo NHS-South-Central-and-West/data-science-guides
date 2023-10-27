@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -226,12 +226,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./installing_python.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Installing Python</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./version_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Version Control</span></a>
   </div>
@@ -265,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-eda" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></h1>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-eda" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -280,39 +274,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div id="setup" class="cell" data-execution_count="2">
+<!-- links used throughout the book -->
+<!-- intro -->
+<!-- good science -->
+<!-- wrangling -->
+<!-- eda -->
+<!-- hypothesis testing -->
+<!-- machine learning -->
+<!-- version control -->
+<div id="setup" class="cell" data-execution_count="1">
 <details>
-<summary>Setup Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimpy <span class="im">import</span> skim</span>
+<summary>Setup Code (Click to Expand)</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pandas numpy matplotlib seaborn skimpy</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'heart_disease.csv'</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimpy <span class="im">import</span> skim</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'heart_disease.csv'</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># get categorical columns</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'sex'</span>, <span class="st">'fasting_bs'</span>, <span class="st">'resting_ecg'</span>, <span class="st">'angina'</span>, <span class="st">'heart_disease'</span>]</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].astype(<span class="st">'category'</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># get categorical columns</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'sex'</span>, <span class="st">'fasting_bs'</span>, <span class="st">'resting_ecg'</span>, <span class="st">'angina'</span>, <span class="st">'heart_disease'</span>]</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].astype(<span class="st">'category'</span>)</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot font</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>rc(<span class="st">'font'</span>,<span class="op">**</span>{<span class="st">'family'</span>:<span class="st">'sans-serif'</span>,<span class="st">'sans-serif'</span>:[<span class="st">'Arial'</span>]})</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#1C355E'</span>, <span class="st">'#00A499'</span>, <span class="st">'#005EB8'</span>]</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot font</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>rc(<span class="st">'font'</span>,<span class="op">**</span>{<span class="st">'family'</span>:<span class="st">'sans-serif'</span>,<span class="st">'sans-serif'</span>:[<span class="st">'Arial'</span>]})</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#1C355E'</span>, <span class="st">'#00A499'</span>, <span class="st">'#005EB8'</span>]</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Exploratory data analysis (EDA) is the process of inspecting, visualising, and summarising a dataset. It is the first step in any data science project, and the importance of EDA can often be overlooked. Without exploring the data, it is difficult to know how to construct a piece of analysis or a model, and it is difficult to know if the data is suitable for the task at hand. As a critical step in the data science workflow, it is important to spend time on EDA and to be thorough and methodical in the process. While EDA is often the most time-consuming step in an analysis, taking the time to explore the data can save time in the long run.</p>
@@ -322,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The first step when doing EDA is to inspect the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.</p>
 <p>We can use the <code>head()</code> and <code>info()</code> functions to get a sense of the structure of the data. The <code>head()</code> function returns the first five rows of the data, and the <code>info()</code> method returns a summary of the data, including the number of rows, the number of columns, the column names, and the data type of each column. The <code>info()</code> method is particularly useful for identifying missing values, as it returns the number of non-null values in each column. If the number of non-null values is less than the number of rows, then there are missing values in the column.</p>
 <p>In addition to these two methods, we can also use the <code>nunique()</code> method to count the number of unique values in each column, which helps identify categorical variables, and we can use the <code>unique()</code> method to get a list of the unique values in a column.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-head" class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -416,7 +421,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="df-info" class="cell" data-execution_count="4">
+<div id="df-info" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -438,7 +443,7 @@ dtypes: category(5), float64(1), int64(4)
 memory usage: 41.1 KB</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count unique values in each column</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="count-unique" class="cell-output cell-output-display" data-execution_count="4">
@@ -455,7 +460,7 @@ heart_disease           2
 dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unique values of the outcome variable</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df.heart_disease.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-unique" class="cell-output cell-output-display" data-execution_count="5">
@@ -463,7 +468,7 @@ dtype: int64</code></pre>
 Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unique values of a continuous explanatory variable</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df.cholesterol.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="cholesterol-unique" class="cell-output cell-output-display" data-execution_count="6">
@@ -491,7 +496,7 @@ Categories (2, int64): [0, 1]</code></pre>
 <section id="summary-statistics" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="summary-statistics"><span class="header-section-number">4.2</span> Summary Statistics</h2>
 <p>Summary statistics are a quick and easy way to get a sense of the distribution and central tendency of the variables in the dataset. We can use the <code>describe()</code> method to get a quick overview of every column in the dataset, including the row count, the mean and standard deviation, the minimum and maximum value, and quartiles of each variable.</p>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of the data</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-describe" class="cell-output cell-output-display" data-execution_count="7">
@@ -581,8 +586,8 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
 <p>While the <code>describe()</code> function is pretty effective, the <code>skimpy</code> package can provide a more detailed summary of the data, using the <code>skim()</code> function. If you are looking for a single function to capture the entire process of inspecting the data and computing summary statistics, <code>skim()</code> is the function for the job, giving you a wealth of information about the dataset as a whole and each variable in the data.</p>
-<p>Another package that provides a similar function is the <a href="https://github.com/ydataai/ydata-profiling"><code>ydata-profiling</code></a> package, which can be used to generate a report containing a summary of the data, including the data types, missing values, and summary statistics. The <code>ydata-profiling</code> package is particularly useful for generating a report that can be shared with others, as it can be exported as an HTML file, however it’s a bit more resource-intensive than <code>skimpy</code>, so we will stick with <code>skimpy</code> for this tutorial.</p>
-<div class="cell" data-execution_count="9">
+<p>Another package that provides a similar function is the [profiling][<code>ydata-profiling</code>] package, which can be used to generate a report containing a summary of the data, including the data types, missing values, and summary statistics. The <code>ydata-profiling</code> package is particularly useful for generating a report that can be shared with others, as it can be exported as an HTML file, however it’s a bit more resource-intensive than <code>skimpy</code>, so we will stick with <code>skimpy</code> for this tutorial.</p>
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more detailed summary of the data</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>skim(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-skim" class="cell-output cell-output-display">
@@ -622,21 +627,21 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
 <p>If we want to examine a particular variable, the functions <code>mean()</code>, <code>median()</code>, <code>quantile()</code>, <code>min()</code>, and <code>max()</code> will return the same information as the <code>describe()</code> function. We can also get a sense of dispersion by computing the standard deviation or variance of a variable. The <code>std()</code> function returns the standard deviation of a variable, and the <code>var()</code> function returns the variance.</p>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean &amp; median age</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.age.mean(), df.age.median()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="avg-age" class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>(53.510893246187365, 54.0)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># min and max age</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.age.<span class="bu">min</span>(), df.age.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="min-max-age" class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>(28, 77)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dispersion of age</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.age.std(), df.age.var()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="dispersion-age" class="cell-output cell-output-display" data-execution_count="11">
@@ -644,7 +649,7 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
 <p>Finally, we can use the <code>value_counts()</code> function to get a count of the number of observations in each category of a discrete variable.</p>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease count</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'heart_disease'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-count" class="cell-output cell-output-display" data-execution_count="12">
@@ -654,7 +659,7 @@ Categories (2, int64): [0, 1]</code></pre>
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resting ecg count</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'resting_ecg'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="resting-ecg-count" class="cell-output cell-output-display" data-execution_count="13">
@@ -665,7 +670,7 @@ ST        178
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
+<div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'angina'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="angina-count" class="cell-output cell-output-display" data-execution_count="14">
@@ -675,7 +680,7 @@ Y    371
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="16">
+<div class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'cholesterol'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="cholesterol-count" class="cell-output cell-output-display" data-execution_count="15">
@@ -695,7 +700,7 @@ Name: count, Length: 222, dtype: int64</code></pre>
 </div>
 </div>
 <p>We can also use the <code>groupby()</code> method to get the counts of each category in a categorical variable, grouped by another categorical variable.</p>
-<div class="cell" data-execution_count="17">
+<div class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">'resting_ecg'</span>])[<span class="st">'heart_disease'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-by-resting-ecg-count" class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>resting_ecg  heart_disease
@@ -709,7 +714,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>In addition to the counts, we can also get the proportions of each category using the <code>normalize=True</code> argument.</p>
-<div class="cell" data-execution_count="18">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">'resting_ecg'</span>])[<span class="st">'heart_disease'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-by-resting-ecg-freq" class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>resting_ecg  heart_disease
@@ -734,7 +739,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="continuous-distributions" class="level4" data-number="4.3.1.1">
 <h4 data-number="4.3.1.1" class="anchored" data-anchor-id="continuous-distributions"><span class="header-section-number">4.3.1.1</span> Continuous Distributions</h4>
 <p>For continuous variables, we can use histograms to visualise the distribution of the data. We can use the <code>histplot()</code> function to create a histogram of a continuous variable. The <code>binwidth</code> argument allows us to specify the width of the bins in the histogram.</p>
-<div class="cell" data-execution_count="19">
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, binwidth<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -747,7 +752,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr distribution</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'max_hr'</span>, binwidth<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -760,7 +765,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="21">
+<div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol distribution</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'cholesterol'</span>, binwidth<span class="op">=</span><span class="dv">25</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -773,7 +778,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="22">
+<div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol distribution</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'cholesterol'</span>, binwidth<span class="op">=</span><span class="dv">25</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -791,7 +796,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="discrete-distributions" class="level4" data-number="4.3.1.2">
 <h4 data-number="4.3.1.2" class="anchored" data-anchor-id="discrete-distributions"><span class="header-section-number">4.3.1.2</span> Discrete Distributions</h4>
 <p>We can use bar plots to visualise the distribution of discrete variables. We can use the <code>countplot()</code> function to create a bar plot of a discrete variable.</p>
-<div class="cell" data-execution_count="23">
+<div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease distribution</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -804,7 +809,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="24">
+<div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sex distribution</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'sex'</span>)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -817,7 +822,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="25">
+<div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina distribution</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'angina'</span>)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -838,7 +843,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="visualising-multiple-discrete-variables" class="level4" data-number="4.3.2.1">
 <h4 data-number="4.3.2.1" class="anchored" data-anchor-id="visualising-multiple-discrete-variables"><span class="header-section-number">4.3.2.1</span> Visualising Multiple Discrete Variables</h4>
 <p>Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). We can use the <code>countplot()</code> function to create bar plots, and the <code>hue</code> argument to split the bars by a particular variable and display them in different colours.</p>
-<div class="cell" data-execution_count="26">
+<div class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by sex</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -851,7 +856,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="27">
+<div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by resting ecg</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'resting_ecg'</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -864,7 +869,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="28">
+<div class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'angina'</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -877,7 +882,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="29">
+<div class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fasting bs</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'fasting_bs'</span>)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -897,7 +902,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="histogram-plots" class="level5" data-number="4.3.2.2.1">
 <h5 data-number="4.3.2.2.1" class="anchored" data-anchor-id="histogram-plots"><span class="header-section-number">4.3.2.2.1</span> Histogram Plots</h5>
 <p>We can use the <code>histplot()</code> function to create a histogram of a continuous variable. The <code>hue</code> argument allows us to split the histogram by a particular variable and display them in different colours, while the <code>multiple</code> argument allows us to specify how the histograms should be displayed. The <code>multiple</code> argument can be set to <code>stack</code> to stack the histograms on top of each other, or <code>dodge</code> to display the histograms side-by-side.</p>
-<div class="cell" data-execution_count="30">
+<div class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution by heart disease</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>, binwidth<span class="op">=</span><span class="dv">5</span>, multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -910,7 +915,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="31">
+<div class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'cholesterol'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>, binwidth<span class="op">=</span><span class="dv">25</span>, multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -923,7 +928,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="32">
+<div class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter zero values</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>],</span>
@@ -947,8 +952,8 @@ Name: proportion, dtype: float64</code></pre>
 <section id="box-plots" class="level5" data-number="4.3.2.2.2">
 <h5 data-number="4.3.2.2.2" class="anchored" data-anchor-id="box-plots"><span class="header-section-number">4.3.2.2.2</span> Box Plots</h5>
 <p>Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the <code>boxplot()</code> function to create box plots, and the <code>hue</code> argument to split the box plots by a particular variable and display them in different colours.</p>
-<p>However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained <a href="https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/">here</a> by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.</p>
-<div class="cell" data-execution_count="33">
+<p>However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained <a href="https://here.r-lib.org/">boxplots</a> by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.</p>
+<div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; heart disease</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'age'</span>)</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -961,7 +966,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="34">
+<div class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; heart disease, split by sex</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(figsize=(10,6))</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'age'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
@@ -975,7 +980,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="35">
+<div class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr &amp; heart disease</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>)</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -988,7 +993,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="36">
+<div class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr &amp; heart disease, split by sex</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(figsize=(10,6))</span></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
@@ -1007,7 +1012,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="visualising-multiple-discrete-variables-1" class="level4" data-number="4.3.2.3">
 <h4 data-number="4.3.2.3" class="anchored" data-anchor-id="visualising-multiple-discrete-variables-1"><span class="header-section-number">4.3.2.3</span> Visualising Multiple Discrete Variables</h4>
 <p>Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the <code>scatterplot()</code> function to create scatter plots, and the <code>hue</code> argument to split the scatter plots by a particular variable and display them in different colours.</p>
-<div class="cell" data-execution_count="37">
+<div class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>)</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1020,7 +1025,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="38">
+<div class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.resting_bp<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>)</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1033,7 +1038,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="39">
+<div class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'cholesterol'</span>)</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1045,7 +1050,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="40">
+<div class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1059,7 +1064,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <p>The scatter plot visualising age and resting blood pressure highlights another observation that needs to be removed due to data quality issues.</p>
 <p>If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The <code>regplot()</code> function can be used to add a regression line to a scatter plot. The <code>ci</code> argument specifies whether or not to display the confidence interval of the regression line.</p>
-<div class="cell" data-execution_count="41">
+<div class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; max hr</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>, ci<span class="op">=</span><span class="va">None</span>)</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1074,7 +1079,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <p>You can also include discrete variables by assigning the discrete groups different colours in the scatter plot, and if you add regression lines to these plots, separate regression lines will be fit to the discrete groups. This can be useful for visualising how the association between the two continuous variables varies across the discrete groups.</p>
 <p>The <code>lmplot()</code> function can be used to create scatter plots with regression lines, and the <code>hue</code> argument can be used to split the scatter plots by a particular variable and display them in different colours.</p>
-<div class="cell" data-execution_count="42">
+<div class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp, split by heart disease</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.resting_bp<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>)</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1087,7 +1092,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="43">
+<div class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; cholesterol, split by heart disease (with regression line)</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>],</span>
@@ -1106,7 +1111,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="44">
+<div class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; max hr, split by heart disease (with regression line)</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df,</span>
@@ -1130,14 +1135,14 @@ Name: proportion, dtype: float64</code></pre>
 </section>
 <section id="next-steps" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">4.4</span> Next Steps</h2>
-<p>There are many more visualisation techniques that you can use to explore your data, and you can find a comprehensive list of them on the <a href="https://seaborn.pydata.org/api.html">seaborn API reference</a> and <a href="https://matplotlib.org/stable/api/index.html">matplotlib API reference</a> pages. There are also a number of other Python libraries that can be used to create visualisations, including <a href="https://plotly.com/python/">plotly</a>, <a href="https://docs.bokeh.org/en/latest/docs/user_guide.html">bokeh</a>, and <a href="https://altair-viz.github.io/">altair</a>.</p>
+<p>There are many more visualisation techniques that you can use to explore your data. You can find plenty of inspiration for different approaches to visualising data in the <a href="https://seaborn.pydata.org/">seaborn</a> and <a href="https://matplotlib.org/">matplotlib</a> documentation. There are also a number of other Python libraries that can be used to create visualisations, including <a href="https://plotly.com/python/">plotly</a>, <a href="https://bokeh.org/">bokeh</a>, and <a href="https://altair-viz.github.io/">altair</a>.</p>
 <p>The next step in the data science process is to build a model to either explain or predict the outcome variable, heart disease. The exploratory work done here can help inform decisions about the choice of the model, and the choice of the variables that will be used to build the model. It will also help clean up the data, particularly the zero values in the cholesterol and resting blood pressure variables, to ensure that the model is built on the best possible data.</p>
 </section>
 <section id="resources" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="resources"><span class="header-section-number">4.5</span> Resources</h2>
 <p>There are a wealth of resources available to help you learn more about data visualisation, and while the resources for producing visualisations in R are more extensive, there are still a number of good resources for producing visualisations in Python.</p>
 <ul>
-<li>Scientific Visualization: Python + Matplotlib [<a href="https://hal.inria.fr/hal-03427242/document">PDF</a>|<a href="https://github.com/rougier/scientific-visualization-book">GitHub</a>]</li>
+<li>Scientific Visualization: Python + Matplotlib [scientific viz pdf][[PDF]][scientific viz github][[GitHub]]</li>
 <li><a href="https://seaborn.pydata.org/tutorial.html">Seaborn Tutorials</a></li>
 <li><a href="https://github.com/matplotlib/cheatsheets">Matplotlib Cheatsheets</a></li>
 </ul>
@@ -1147,6 +1152,8 @@ Name: proportion, dtype: float64</code></pre>
 <li><a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualization</a></li>
 </ul>
 
+
+<!-- -->
 
 </section>
 
@@ -1230,6 +1237,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
@@ -1395,7 +1453,589 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb57" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Exploratory Data Analysis {#sec-eda}</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>{{&lt; include _links.qmd &gt;}}</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: 'Setup Code (Click to Expand)'</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pandas numpy matplotlib seaborn skimpy</span></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a><span class="co"># import packages</span></span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> rc</span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> skimpy <span class="im">import</span> skim</span>
+<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a><span class="co"># data path</span></span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">'../data/'</span></span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'heart_disease.csv'</span></span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="ss">f"</span><span class="sc">{</span>path<span class="sc">}{</span>file_name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a><span class="co"># get categorical columns</span></span>
+<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'sex'</span>, <span class="st">'fasting_bs'</span>, <span class="st">'resting_ecg'</span>, <span class="st">'angina'</span>, <span class="st">'heart_disease'</span>]</span>
+<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>    df[col] <span class="op">=</span> df[col].astype(<span class="st">'category'</span>)</span>
+<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot style</span></span>
+<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">'whitegrid'</span>)</span>
+<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot font</span></span>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a>rc(<span class="st">'font'</span>,<span class="op">**</span>{<span class="st">'family'</span>:<span class="st">'sans-serif'</span>,<span class="st">'sans-serif'</span>:[<span class="st">'Arial'</span>]})</span>
+<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot colour palette</span></span>
+<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a>colours <span class="op">=</span> [<span class="st">'#1C355E'</span>, <span class="st">'#00A499'</span>, <span class="st">'#005EB8'</span>]</span>
+<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>sns.set_palette(sns.color_palette(colours))</span>
+<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-48"><a href="#cb57-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-49"><a href="#cb57-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-50"><a href="#cb57-50" aria-hidden="true" tabindex="-1"></a>Exploratory data analysis (EDA) is the process of inspecting, visualising, and summarising a dataset. It is the first step in any data science project, and the importance of EDA can often be overlooked. Without exploring the data, it is difficult to know how to construct a piece of analysis or a model, and it is difficult to know if the data is suitable for the task at hand. As a critical step in the data science workflow, it is important to spend time on EDA and to be thorough and methodical in the process. While EDA is often the most time-consuming step in an analysis, taking the time to explore the data can save time in the long run.</span>
+<span id="cb57-51"><a href="#cb57-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-52"><a href="#cb57-52" aria-hidden="true" tabindex="-1"></a>EDA is an iterative process. In this tutorial, we will use the <span class="in">`pandas`</span> and <span class="in">`seaborn`</span> packages to explore a dataset containing information about heart disease. We will start by inspecting the data itself, to get a sense of the structure and the components of the dataset, and to identify any data quality issues (such as missing values). We will then compute summary statistics to get a better understanding of the distribution and central tendency of the variables that are relevant to the analysis. Finally, we will use data visualisations to explore specific variables in more detail, and to identify any interesting relationships between variables.</span>
+<span id="cb57-53"><a href="#cb57-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-54"><a href="#cb57-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Inspecting the Data</span></span>
+<span id="cb57-55"><a href="#cb57-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-56"><a href="#cb57-56" aria-hidden="true" tabindex="-1"></a>The first step when doing EDA is to inspect the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.</span>
+<span id="cb57-57"><a href="#cb57-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-58"><a href="#cb57-58" aria-hidden="true" tabindex="-1"></a>We can use the <span class="in">`head()`</span> and <span class="in">`info()`</span> functions to get a sense of the structure of the data. The <span class="in">`head()`</span> function returns the first five rows of the data, and the <span class="in">`info()`</span> method returns a summary of the data, including the number of rows, the number of columns, the column names, and the data type of each column. The <span class="in">`info()`</span> method is particularly useful for identifying missing values, as it returns the number of non-null values in each column. If the number of non-null values is less than the number of rows, then there are missing values in the column.</span>
+<span id="cb57-59"><a href="#cb57-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-60"><a href="#cb57-60" aria-hidden="true" tabindex="-1"></a>In addition to these two methods, we can also use the <span class="in">`nunique()`</span> method to count the number of unique values in each column, which helps identify categorical variables, and we can use the <span class="in">`unique()`</span> method to get a list of the unique values in a column.</span>
+<span id="cb57-61"><a href="#cb57-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-64"><a href="#cb57-64" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-65"><a href="#cb57-65" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: df-head</span></span>
+<span id="cb57-66"><a href="#cb57-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-67"><a href="#cb57-67" aria-hidden="true" tabindex="-1"></a>df.head()</span>
+<span id="cb57-68"><a href="#cb57-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-69"><a href="#cb57-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-70"><a href="#cb57-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-73"><a href="#cb57-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-74"><a href="#cb57-74" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: df-info</span></span>
+<span id="cb57-75"><a href="#cb57-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-76"><a href="#cb57-76" aria-hidden="true" tabindex="-1"></a>df.info()</span>
+<span id="cb57-77"><a href="#cb57-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-78"><a href="#cb57-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-79"><a href="#cb57-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-82"><a href="#cb57-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-83"><a href="#cb57-83" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: count-unique</span></span>
+<span id="cb57-84"><a href="#cb57-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-85"><a href="#cb57-85" aria-hidden="true" tabindex="-1"></a><span class="co"># count unique values in each column</span></span>
+<span id="cb57-86"><a href="#cb57-86" aria-hidden="true" tabindex="-1"></a>df.nunique()</span>
+<span id="cb57-87"><a href="#cb57-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-88"><a href="#cb57-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-89"><a href="#cb57-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-92"><a href="#cb57-92" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-93"><a href="#cb57-93" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-unique</span></span>
+<span id="cb57-94"><a href="#cb57-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-95"><a href="#cb57-95" aria-hidden="true" tabindex="-1"></a><span class="co"># unique values of the outcome variable</span></span>
+<span id="cb57-96"><a href="#cb57-96" aria-hidden="true" tabindex="-1"></a>df.heart_disease.unique()</span>
+<span id="cb57-97"><a href="#cb57-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-98"><a href="#cb57-98" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-99"><a href="#cb57-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-102"><a href="#cb57-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-103"><a href="#cb57-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: cholesterol-unique</span></span>
+<span id="cb57-104"><a href="#cb57-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-105"><a href="#cb57-105" aria-hidden="true" tabindex="-1"></a><span class="co"># unique values of a continuous explanatory variable</span></span>
+<span id="cb57-106"><a href="#cb57-106" aria-hidden="true" tabindex="-1"></a>df.cholesterol.unique()</span>
+<span id="cb57-107"><a href="#cb57-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-108"><a href="#cb57-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-109"><a href="#cb57-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-110"><a href="#cb57-110" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary Statistics</span></span>
+<span id="cb57-111"><a href="#cb57-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-112"><a href="#cb57-112" aria-hidden="true" tabindex="-1"></a>Summary statistics are a quick and easy way to get a sense of the distribution and central tendency of the variables in the dataset. We can use the <span class="in">`describe()`</span> method to get a quick overview of every column in the dataset, including the row count, the mean and standard deviation, the minimum and maximum value, and quartiles of each variable.</span>
+<span id="cb57-113"><a href="#cb57-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-116"><a href="#cb57-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-117"><a href="#cb57-117" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: df-describe</span></span>
+<span id="cb57-118"><a href="#cb57-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-119"><a href="#cb57-119" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of the data</span></span>
+<span id="cb57-120"><a href="#cb57-120" aria-hidden="true" tabindex="-1"></a>df.describe()</span>
+<span id="cb57-121"><a href="#cb57-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-122"><a href="#cb57-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-123"><a href="#cb57-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-124"><a href="#cb57-124" aria-hidden="true" tabindex="-1"></a>While the <span class="in">`describe()`</span> function is pretty effective, the <span class="in">`skimpy`</span> package can provide a more detailed summary of the data, using the <span class="in">`skim()`</span> function. If you are looking for a single function to capture the entire process of inspecting the data and computing summary statistics, <span class="in">`skim()`</span> is the function for the job, giving you a wealth of information about the dataset as a whole and each variable in the data.</span>
+<span id="cb57-125"><a href="#cb57-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-126"><a href="#cb57-126" aria-hidden="true" tabindex="-1"></a>Another package that provides a similar function is the <span class="co">[</span><span class="ot">profiling</span><span class="co">][`ydata-profiling`]</span> package, which can be used to generate a report containing a summary of the data, including the data types, missing values, and summary statistics. The <span class="in">`ydata-profiling`</span> package is particularly useful for generating a report that can be shared with others, as it can be exported as an HTML file, however it's a bit more resource-intensive than <span class="in">`skimpy`</span>, so we will stick with <span class="in">`skimpy`</span> for this tutorial.</span>
+<span id="cb57-127"><a href="#cb57-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-130"><a href="#cb57-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-131"><a href="#cb57-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: df-skim</span></span>
+<span id="cb57-132"><a href="#cb57-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-133"><a href="#cb57-133" aria-hidden="true" tabindex="-1"></a><span class="co"># more detailed summary of the data</span></span>
+<span id="cb57-134"><a href="#cb57-134" aria-hidden="true" tabindex="-1"></a>skim(df)</span>
+<span id="cb57-135"><a href="#cb57-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-136"><a href="#cb57-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-137"><a href="#cb57-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-138"><a href="#cb57-138" aria-hidden="true" tabindex="-1"></a>If we want to examine a particular variable, the functions <span class="in">`mean()`</span>, <span class="in">`median()`</span>, <span class="in">`quantile()`</span>, <span class="in">`min()`</span>, and <span class="in">`max()`</span> will return the same information as the <span class="in">`describe()`</span> function. We can also get a sense of dispersion by computing the standard deviation or variance of a variable. The <span class="in">`std()`</span> function returns the standard deviation of a variable, and the <span class="in">`var()`</span> function returns the variance.</span>
+<span id="cb57-139"><a href="#cb57-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-142"><a href="#cb57-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-143"><a href="#cb57-143" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: avg-age</span></span>
+<span id="cb57-144"><a href="#cb57-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-145"><a href="#cb57-145" aria-hidden="true" tabindex="-1"></a><span class="co"># mean &amp; median age</span></span>
+<span id="cb57-146"><a href="#cb57-146" aria-hidden="true" tabindex="-1"></a>df.age.mean(), df.age.median()</span>
+<span id="cb57-147"><a href="#cb57-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-148"><a href="#cb57-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-149"><a href="#cb57-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-152"><a href="#cb57-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-153"><a href="#cb57-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: min-max-age</span></span>
+<span id="cb57-154"><a href="#cb57-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-155"><a href="#cb57-155" aria-hidden="true" tabindex="-1"></a><span class="co"># min and max age</span></span>
+<span id="cb57-156"><a href="#cb57-156" aria-hidden="true" tabindex="-1"></a>df.age.<span class="bu">min</span>(), df.age.<span class="bu">max</span>()</span>
+<span id="cb57-157"><a href="#cb57-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-158"><a href="#cb57-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-159"><a href="#cb57-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-162"><a href="#cb57-162" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-163"><a href="#cb57-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: dispersion-age</span></span>
+<span id="cb57-164"><a href="#cb57-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-165"><a href="#cb57-165" aria-hidden="true" tabindex="-1"></a><span class="co"># dispersion of age</span></span>
+<span id="cb57-166"><a href="#cb57-166" aria-hidden="true" tabindex="-1"></a>df.age.std(), df.age.var()</span>
+<span id="cb57-167"><a href="#cb57-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-168"><a href="#cb57-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-169"><a href="#cb57-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-170"><a href="#cb57-170" aria-hidden="true" tabindex="-1"></a>Finally, we can use the <span class="in">`value_counts()`</span> function to get a count of the number of observations in each category of a discrete variable.</span>
+<span id="cb57-171"><a href="#cb57-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-174"><a href="#cb57-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-175"><a href="#cb57-175" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-count</span></span>
+<span id="cb57-176"><a href="#cb57-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-177"><a href="#cb57-177" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease count</span></span>
+<span id="cb57-178"><a href="#cb57-178" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'heart_disease'</span>].value_counts()</span>
+<span id="cb57-179"><a href="#cb57-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-180"><a href="#cb57-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-181"><a href="#cb57-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-184"><a href="#cb57-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-185"><a href="#cb57-185" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: resting-ecg-count</span></span>
+<span id="cb57-186"><a href="#cb57-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-187"><a href="#cb57-187" aria-hidden="true" tabindex="-1"></a><span class="co"># resting ecg count</span></span>
+<span id="cb57-188"><a href="#cb57-188" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'resting_ecg'</span>].value_counts()</span>
+<span id="cb57-189"><a href="#cb57-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-190"><a href="#cb57-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-191"><a href="#cb57-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-194"><a href="#cb57-194" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-195"><a href="#cb57-195" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: angina-count</span></span>
+<span id="cb57-196"><a href="#cb57-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-197"><a href="#cb57-197" aria-hidden="true" tabindex="-1"></a><span class="co"># angina</span></span>
+<span id="cb57-198"><a href="#cb57-198" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'angina'</span>].value_counts()</span>
+<span id="cb57-199"><a href="#cb57-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-200"><a href="#cb57-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-201"><a href="#cb57-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-204"><a href="#cb57-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-205"><a href="#cb57-205" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: cholesterol-count</span></span>
+<span id="cb57-206"><a href="#cb57-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-207"><a href="#cb57-207" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol</span></span>
+<span id="cb57-208"><a href="#cb57-208" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'cholesterol'</span>].value_counts()</span>
+<span id="cb57-209"><a href="#cb57-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-210"><a href="#cb57-210" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-211"><a href="#cb57-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-212"><a href="#cb57-212" aria-hidden="true" tabindex="-1"></a>We can also use the <span class="in">`groupby()`</span> method to get the counts of each category in a categorical variable, grouped by another categorical variable.</span>
+<span id="cb57-213"><a href="#cb57-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-216"><a href="#cb57-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-217"><a href="#cb57-217" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-by-resting-ecg-count</span></span>
+<span id="cb57-218"><a href="#cb57-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-219"><a href="#cb57-219" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">'resting_ecg'</span>])[<span class="st">'heart_disease'</span>].value_counts()</span>
+<span id="cb57-220"><a href="#cb57-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-221"><a href="#cb57-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-222"><a href="#cb57-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-223"><a href="#cb57-223" aria-hidden="true" tabindex="-1"></a>In addition to the counts, we can also get the proportions of each category using the <span class="in">`normalize=True`</span> argument.</span>
+<span id="cb57-224"><a href="#cb57-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-227"><a href="#cb57-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-228"><a href="#cb57-228" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-by-resting-ecg-freq</span></span>
+<span id="cb57-229"><a href="#cb57-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-230"><a href="#cb57-230" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">'resting_ecg'</span>])[<span class="st">'heart_disease'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span>
+<span id="cb57-231"><a href="#cb57-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-232"><a href="#cb57-232" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-233"><a href="#cb57-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-234"><a href="#cb57-234" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Visualisation</span></span>
+<span id="cb57-235"><a href="#cb57-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-236"><a href="#cb57-236" aria-hidden="true" tabindex="-1"></a>While inspecting the data directly and using summary statistics to describe it is a good first step, data visualisation is a more effective way to explore the data. It allows us to quickly identify patterns and relationships in the data, and to identify any data quality issues that might not be immediately obvious without a visual representation of the data.</span>
+<span id="cb57-237"><a href="#cb57-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-238"><a href="#cb57-238" aria-hidden="true" tabindex="-1"></a>When using data visualisation for exploratory purposes, the intent is generally to visualise the way data is distributed, both within and between variables. This can be done using a variety of different types of plots, including histograms, bar charts, box plots, scatter plots, and line plots. How variables are distributed can tell us a lot about the variable itself, and how variables are distributed relative to each other can tell us a lot about the potential relationship between the variables.</span>
+<span id="cb57-239"><a href="#cb57-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-240"><a href="#cb57-240" aria-hidden="true" tabindex="-1"></a>In this tutorial, we will use the <span class="in">`matplotlib`</span> and <span class="in">`seaborn`</span> packages to create a series of data visualisations to explore the data in more detail. The <span class="in">`seaborn`</span> package is a high-level data visualisation library that is built on top of <span class="in">`matplotlib`</span>. Although data visualisation in Python is not as straightforward as it is in R, <span class="in">`seaborn`</span> makes it much easier to create good quality and informative plots.</span>
+<span id="cb57-241"><a href="#cb57-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-242"><a href="#cb57-242" aria-hidden="true" tabindex="-1"></a><span class="fu">### Visualising Data Distributions</span></span>
+<span id="cb57-243"><a href="#cb57-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-244"><a href="#cb57-244" aria-hidden="true" tabindex="-1"></a>The first step in the exploratory process is to visualise the data distributions of key variables in the dataset. This allows us to get a sense of the typical values and central tendency of the variable, as well as identifying any outliers or other data quality issues.</span>
+<span id="cb57-245"><a href="#cb57-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-246"><a href="#cb57-246" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Continuous Distributions</span></span>
+<span id="cb57-247"><a href="#cb57-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-248"><a href="#cb57-248" aria-hidden="true" tabindex="-1"></a>For continuous variables, we can use histograms to visualise the distribution of the data. We can use the <span class="in">`histplot()`</span> function to create a histogram of a continuous variable. The <span class="in">`binwidth`</span> argument allows us to specify the width of the bins in the histogram.</span>
+<span id="cb57-249"><a href="#cb57-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-252"><a href="#cb57-252" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-253"><a href="#cb57-253" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: age-dist</span></span>
+<span id="cb57-254"><a href="#cb57-254" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-255"><a href="#cb57-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-256"><a href="#cb57-256" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution</span></span>
+<span id="cb57-257"><a href="#cb57-257" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, binwidth<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb57-258"><a href="#cb57-258" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-259"><a href="#cb57-259" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-260"><a href="#cb57-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-261"><a href="#cb57-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-262"><a href="#cb57-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-265"><a href="#cb57-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-266"><a href="#cb57-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: max-hr-dist</span></span>
+<span id="cb57-267"><a href="#cb57-267" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-268"><a href="#cb57-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-269"><a href="#cb57-269" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr distribution</span></span>
+<span id="cb57-270"><a href="#cb57-270" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'max_hr'</span>, binwidth<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb57-271"><a href="#cb57-271" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-272"><a href="#cb57-272" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-273"><a href="#cb57-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-274"><a href="#cb57-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-275"><a href="#cb57-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-278"><a href="#cb57-278" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-279"><a href="#cb57-279" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: cholesterol-dist</span></span>
+<span id="cb57-280"><a href="#cb57-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-281"><a href="#cb57-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-282"><a href="#cb57-282" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol distribution</span></span>
+<span id="cb57-283"><a href="#cb57-283" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'cholesterol'</span>, binwidth<span class="op">=</span><span class="dv">25</span>)</span>
+<span id="cb57-284"><a href="#cb57-284" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-285"><a href="#cb57-285" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-286"><a href="#cb57-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-287"><a href="#cb57-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-288"><a href="#cb57-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-291"><a href="#cb57-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-292"><a href="#cb57-292" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: filter-zeroes-cholesterol-dist</span></span>
+<span id="cb57-293"><a href="#cb57-293" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-294"><a href="#cb57-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-295"><a href="#cb57-295" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol distribution</span></span>
+<span id="cb57-296"><a href="#cb57-296" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'cholesterol'</span>, binwidth<span class="op">=</span><span class="dv">25</span>)</span>
+<span id="cb57-297"><a href="#cb57-297" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-298"><a href="#cb57-298" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-299"><a href="#cb57-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-300"><a href="#cb57-300" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-301"><a href="#cb57-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-302"><a href="#cb57-302" aria-hidden="true" tabindex="-1"></a>The inflated zero values in the cholesterol distribution suggests that there may be an issue with data quality that needs addressing.</span>
+<span id="cb57-303"><a href="#cb57-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-304"><a href="#cb57-304" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Discrete Distributions</span></span>
+<span id="cb57-305"><a href="#cb57-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-306"><a href="#cb57-306" aria-hidden="true" tabindex="-1"></a>We can use bar plots to visualise the distribution of discrete variables. We can use the <span class="in">`countplot()`</span> function to create a bar plot of a discrete variable.</span>
+<span id="cb57-307"><a href="#cb57-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-310"><a href="#cb57-310" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-311"><a href="#cb57-311" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-dist</span></span>
+<span id="cb57-312"><a href="#cb57-312" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-313"><a href="#cb57-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-314"><a href="#cb57-314" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease distribution</span></span>
+<span id="cb57-315"><a href="#cb57-315" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>)</span>
+<span id="cb57-316"><a href="#cb57-316" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-317"><a href="#cb57-317" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-318"><a href="#cb57-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-319"><a href="#cb57-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-320"><a href="#cb57-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-323"><a href="#cb57-323" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-324"><a href="#cb57-324" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: sex-dist</span></span>
+<span id="cb57-325"><a href="#cb57-325" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-326"><a href="#cb57-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-327"><a href="#cb57-327" aria-hidden="true" tabindex="-1"></a><span class="co"># sex distribution</span></span>
+<span id="cb57-328"><a href="#cb57-328" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'sex'</span>)</span>
+<span id="cb57-329"><a href="#cb57-329" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-330"><a href="#cb57-330" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-331"><a href="#cb57-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-332"><a href="#cb57-332" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-333"><a href="#cb57-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-336"><a href="#cb57-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-337"><a href="#cb57-337" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: angina-dist</span></span>
+<span id="cb57-338"><a href="#cb57-338" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-339"><a href="#cb57-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-340"><a href="#cb57-340" aria-hidden="true" tabindex="-1"></a><span class="co"># angina distribution</span></span>
+<span id="cb57-341"><a href="#cb57-341" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'angina'</span>)</span>
+<span id="cb57-342"><a href="#cb57-342" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-343"><a href="#cb57-343" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-344"><a href="#cb57-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-345"><a href="#cb57-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-346"><a href="#cb57-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-347"><a href="#cb57-347" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparing Distributions</span></span>
+<span id="cb57-348"><a href="#cb57-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-349"><a href="#cb57-349" aria-hidden="true" tabindex="-1"></a>There are a number of ways to compare the distributions of multiple variables. Bar plots can be used to visualise two discrete variables, while histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable, and scatter plots are particularly useful for comparing the distribution of two continuous variables.</span>
+<span id="cb57-350"><a href="#cb57-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-351"><a href="#cb57-351" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Visualising Multiple Discrete Variables</span></span>
+<span id="cb57-352"><a href="#cb57-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-353"><a href="#cb57-353" aria-hidden="true" tabindex="-1"></a>Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). We can use the <span class="in">`countplot()`</span> function to create bar plots, and the <span class="in">`hue`</span> argument to split the bars by a particular variable and display them in different colours.</span>
+<span id="cb57-354"><a href="#cb57-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-357"><a href="#cb57-357" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-358"><a href="#cb57-358" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-by-sex</span></span>
+<span id="cb57-359"><a href="#cb57-359" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-360"><a href="#cb57-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-361"><a href="#cb57-361" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by sex</span></span>
+<span id="cb57-362"><a href="#cb57-362" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
+<span id="cb57-363"><a href="#cb57-363" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-364"><a href="#cb57-364" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-365"><a href="#cb57-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-366"><a href="#cb57-366" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-367"><a href="#cb57-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-370"><a href="#cb57-370" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-371"><a href="#cb57-371" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-by-resting-ecg</span></span>
+<span id="cb57-372"><a href="#cb57-372" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-373"><a href="#cb57-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-374"><a href="#cb57-374" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by resting ecg</span></span>
+<span id="cb57-375"><a href="#cb57-375" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'resting_ecg'</span>)</span>
+<span id="cb57-376"><a href="#cb57-376" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-377"><a href="#cb57-377" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-378"><a href="#cb57-378" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-379"><a href="#cb57-379" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-380"><a href="#cb57-380" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-383"><a href="#cb57-383" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-384"><a href="#cb57-384" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-by-angina</span></span>
+<span id="cb57-385"><a href="#cb57-385" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-386"><a href="#cb57-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-387"><a href="#cb57-387" aria-hidden="true" tabindex="-1"></a><span class="co"># angina</span></span>
+<span id="cb57-388"><a href="#cb57-388" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'angina'</span>)</span>
+<span id="cb57-389"><a href="#cb57-389" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-390"><a href="#cb57-390" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-391"><a href="#cb57-391" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-392"><a href="#cb57-392" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-393"><a href="#cb57-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-396"><a href="#cb57-396" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-397"><a href="#cb57-397" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: heart-disease-by-fasting-bs</span></span>
+<span id="cb57-398"><a href="#cb57-398" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-399"><a href="#cb57-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-400"><a href="#cb57-400" aria-hidden="true" tabindex="-1"></a><span class="co"># fasting bs</span></span>
+<span id="cb57-401"><a href="#cb57-401" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'fasting_bs'</span>)</span>
+<span id="cb57-402"><a href="#cb57-402" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-403"><a href="#cb57-403" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-404"><a href="#cb57-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-405"><a href="#cb57-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-406"><a href="#cb57-406" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-407"><a href="#cb57-407" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Visualising A Continuous Variable Across Discrete Groups</span></span>
+<span id="cb57-408"><a href="#cb57-408" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-409"><a href="#cb57-409" aria-hidden="true" tabindex="-1"></a>Histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable.</span>
+<span id="cb57-410"><a href="#cb57-410" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-411"><a href="#cb57-411" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Histogram Plots</span></span>
+<span id="cb57-412"><a href="#cb57-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-413"><a href="#cb57-413" aria-hidden="true" tabindex="-1"></a>We can use the <span class="in">`histplot()`</span> function to create a histogram of a continuous variable. The <span class="in">`hue`</span> argument allows us to split the histogram by a particular variable and display them in different colours, while the <span class="in">`multiple`</span> argument allows us to specify how the histograms should be displayed. The <span class="in">`multiple`</span> argument can be set to <span class="in">`stack`</span> to stack the histograms on top of each other, or <span class="in">`dodge`</span> to display the histograms side-by-side.</span>
+<span id="cb57-414"><a href="#cb57-414" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-417"><a href="#cb57-417" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-418"><a href="#cb57-418" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: age-by-heart-disease</span></span>
+<span id="cb57-419"><a href="#cb57-419" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-420"><a href="#cb57-420" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-421"><a href="#cb57-421" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution by heart disease</span></span>
+<span id="cb57-422"><a href="#cb57-422" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>, binwidth<span class="op">=</span><span class="dv">5</span>, multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
+<span id="cb57-423"><a href="#cb57-423" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-424"><a href="#cb57-424" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-425"><a href="#cb57-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-426"><a href="#cb57-426" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-427"><a href="#cb57-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-430"><a href="#cb57-430" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-431"><a href="#cb57-431" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: cholesterol-by-heart-disease</span></span>
+<span id="cb57-432"><a href="#cb57-432" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-433"><a href="#cb57-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-434"><a href="#cb57-434" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol</span></span>
+<span id="cb57-435"><a href="#cb57-435" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'cholesterol'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>, binwidth<span class="op">=</span><span class="dv">25</span>, multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
+<span id="cb57-436"><a href="#cb57-436" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-437"><a href="#cb57-437" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-438"><a href="#cb57-438" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-439"><a href="#cb57-439" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-440"><a href="#cb57-440" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-443"><a href="#cb57-443" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-444"><a href="#cb57-444" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: filtered-zeroes-cholesterol-by-heart-disease</span></span>
+<span id="cb57-445"><a href="#cb57-445" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-446"><a href="#cb57-446" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-447"><a href="#cb57-447" aria-hidden="true" tabindex="-1"></a><span class="co"># filter zero values</span></span>
+<span id="cb57-448"><a href="#cb57-448" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
+<span id="cb57-449"><a href="#cb57-449" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>],</span>
+<span id="cb57-450"><a href="#cb57-450" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'cholesterol'</span>,</span>
+<span id="cb57-451"><a href="#cb57-451" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">'heart_disease'</span>,</span>
+<span id="cb57-452"><a href="#cb57-452" aria-hidden="true" tabindex="-1"></a>    binwidth<span class="op">=</span><span class="dv">25</span>,</span>
+<span id="cb57-453"><a href="#cb57-453" aria-hidden="true" tabindex="-1"></a>    multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
+<span id="cb57-454"><a href="#cb57-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-455"><a href="#cb57-455" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-456"><a href="#cb57-456" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-457"><a href="#cb57-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-458"><a href="#cb57-458" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-459"><a href="#cb57-459" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-460"><a href="#cb57-460" aria-hidden="true" tabindex="-1"></a>The fact that there is a significantly larger proportion of positive heart disease cases in the zero cholesterol values further demonstrates the need to address this data quality issue.</span>
+<span id="cb57-461"><a href="#cb57-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-462"><a href="#cb57-462" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Box Plots</span></span>
+<span id="cb57-463"><a href="#cb57-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-464"><a href="#cb57-464" aria-hidden="true" tabindex="-1"></a>Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the <span class="in">`boxplot()`</span> function to create box plots, and the <span class="in">`hue`</span> argument to split the box plots by a particular variable and display them in different colours.</span>
+<span id="cb57-465"><a href="#cb57-465" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-466"><a href="#cb57-466" aria-hidden="true" tabindex="-1"></a>However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained <span class="co">[</span><span class="ot">boxplots</span><span class="co">][here]</span> by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.</span>
+<span id="cb57-467"><a href="#cb57-467" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-470"><a href="#cb57-470" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-471"><a href="#cb57-471" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: age-by-heart-disease-box</span></span>
+<span id="cb57-472"><a href="#cb57-472" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-473"><a href="#cb57-473" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-474"><a href="#cb57-474" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; heart disease</span></span>
+<span id="cb57-475"><a href="#cb57-475" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'age'</span>)</span>
+<span id="cb57-476"><a href="#cb57-476" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-477"><a href="#cb57-477" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-478"><a href="#cb57-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-479"><a href="#cb57-479" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-480"><a href="#cb57-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-483"><a href="#cb57-483" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-484"><a href="#cb57-484" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: age-box-split-by-sex</span></span>
+<span id="cb57-485"><a href="#cb57-485" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-486"><a href="#cb57-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-487"><a href="#cb57-487" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; heart disease, split by sex</span></span>
+<span id="cb57-488"><a href="#cb57-488" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(figsize=(10,6))</span></span>
+<span id="cb57-489"><a href="#cb57-489" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'age'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
+<span id="cb57-490"><a href="#cb57-490" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-491"><a href="#cb57-491" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-492"><a href="#cb57-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-493"><a href="#cb57-493" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-494"><a href="#cb57-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-497"><a href="#cb57-497" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-498"><a href="#cb57-498" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: max-hr-by-heart-disease-box</span></span>
+<span id="cb57-499"><a href="#cb57-499" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-500"><a href="#cb57-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-501"><a href="#cb57-501" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr &amp; heart disease</span></span>
+<span id="cb57-502"><a href="#cb57-502" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>)</span>
+<span id="cb57-503"><a href="#cb57-503" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-504"><a href="#cb57-504" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-505"><a href="#cb57-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-506"><a href="#cb57-506" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-507"><a href="#cb57-507" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-510"><a href="#cb57-510" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-511"><a href="#cb57-511" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: max-hr-box-split-by-sex</span></span>
+<span id="cb57-512"><a href="#cb57-512" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-513"><a href="#cb57-513" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-514"><a href="#cb57-514" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr &amp; heart disease, split by sex</span></span>
+<span id="cb57-515"><a href="#cb57-515" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(figsize=(10,6))</span></span>
+<span id="cb57-516"><a href="#cb57-516" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
+<span id="cb57-517"><a href="#cb57-517" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-518"><a href="#cb57-518" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-519"><a href="#cb57-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-520"><a href="#cb57-520" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-521"><a href="#cb57-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-522"><a href="#cb57-522" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Visualising Multiple Discrete Variables</span></span>
+<span id="cb57-523"><a href="#cb57-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-524"><a href="#cb57-524" aria-hidden="true" tabindex="-1"></a>Scatter plots are an effective way to visualize how two continuous variables vary together.</span>
+<span id="cb57-525"><a href="#cb57-525" aria-hidden="true" tabindex="-1"></a>We can use the <span class="in">`scatterplot()`</span> function to create scatter plots, and the <span class="in">`hue`</span> argument to split the scatter plots by a particular variable and display them in different colours.</span>
+<span id="cb57-526"><a href="#cb57-526" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-529"><a href="#cb57-529" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-530"><a href="#cb57-530" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: age-resting-bp-scatter</span></span>
+<span id="cb57-531"><a href="#cb57-531" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-532"><a href="#cb57-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-533"><a href="#cb57-533" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
+<span id="cb57-534"><a href="#cb57-534" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>)</span>
+<span id="cb57-535"><a href="#cb57-535" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-536"><a href="#cb57-536" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-537"><a href="#cb57-537" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-538"><a href="#cb57-538" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-539"><a href="#cb57-539" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-542"><a href="#cb57-542" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-543"><a href="#cb57-543" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: filtered-zeroes-resting-bp-scatter</span></span>
+<span id="cb57-544"><a href="#cb57-544" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-545"><a href="#cb57-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-546"><a href="#cb57-546" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
+<span id="cb57-547"><a href="#cb57-547" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.resting_bp<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>)</span>
+<span id="cb57-548"><a href="#cb57-548" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-549"><a href="#cb57-549" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-550"><a href="#cb57-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-551"><a href="#cb57-551" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-552"><a href="#cb57-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-555"><a href="#cb57-555" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-556"><a href="#cb57-556" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: age-cholesterol-scatter</span></span>
+<span id="cb57-557"><a href="#cb57-557" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-558"><a href="#cb57-558" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-559"><a href="#cb57-559" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'cholesterol'</span>)</span>
+<span id="cb57-560"><a href="#cb57-560" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-561"><a href="#cb57-561" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-562"><a href="#cb57-562" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-563"><a href="#cb57-563" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-564"><a href="#cb57-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-567"><a href="#cb57-567" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-568"><a href="#cb57-568" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: age-max-hr-scatter</span></span>
+<span id="cb57-569"><a href="#cb57-569" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-570"><a href="#cb57-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-571"><a href="#cb57-571" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>)</span>
+<span id="cb57-572"><a href="#cb57-572" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-573"><a href="#cb57-573" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-574"><a href="#cb57-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-575"><a href="#cb57-575" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-576"><a href="#cb57-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-577"><a href="#cb57-577" aria-hidden="true" tabindex="-1"></a>The scatter plot visualising age and resting blood pressure highlights another observation that needs to be removed due to data quality issues.</span>
+<span id="cb57-578"><a href="#cb57-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-579"><a href="#cb57-579" aria-hidden="true" tabindex="-1"></a>If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The <span class="in">`regplot()`</span> function can be used to add a regression line to a scatter plot. The <span class="in">`ci`</span> argument specifies whether or not to display the confidence interval of the regression line.</span>
+<span id="cb57-580"><a href="#cb57-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-583"><a href="#cb57-583" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-584"><a href="#cb57-584" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: max-hr-by-age-regression-plot</span></span>
+<span id="cb57-585"><a href="#cb57-585" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-586"><a href="#cb57-586" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-587"><a href="#cb57-587" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; max hr</span></span>
+<span id="cb57-588"><a href="#cb57-588" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>, ci<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb57-589"><a href="#cb57-589" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-590"><a href="#cb57-590" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-591"><a href="#cb57-591" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-592"><a href="#cb57-592" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-593"><a href="#cb57-593" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-594"><a href="#cb57-594" aria-hidden="true" tabindex="-1"></a>You can also include discrete variables by assigning the discrete groups different colours in the scatter plot, and if you add regression lines to these plots, separate regression lines will be fit to the discrete groups. This can be useful for visualising how the association between the two continuous variables varies across the discrete groups.</span>
+<span id="cb57-595"><a href="#cb57-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-596"><a href="#cb57-596" aria-hidden="true" tabindex="-1"></a>The <span class="in">`lmplot()`</span> function can be used to create scatter plots with regression lines, and the <span class="in">`hue`</span> argument can be used to split the scatter plots by a particular variable and display them in different colours.</span>
+<span id="cb57-597"><a href="#cb57-597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-600"><a href="#cb57-600" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-601"><a href="#cb57-601" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: resting-bp-heart-disease-scatter</span></span>
+<span id="cb57-602"><a href="#cb57-602" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-603"><a href="#cb57-603" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-604"><a href="#cb57-604" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp, split by heart disease</span></span>
+<span id="cb57-605"><a href="#cb57-605" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.resting_bp<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>)</span>
+<span id="cb57-606"><a href="#cb57-606" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb57-607"><a href="#cb57-607" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-608"><a href="#cb57-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-609"><a href="#cb57-609" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-610"><a href="#cb57-610" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-613"><a href="#cb57-613" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-614"><a href="#cb57-614" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: cholesterol-regression-plot</span></span>
+<span id="cb57-615"><a href="#cb57-615" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-616"><a href="#cb57-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-617"><a href="#cb57-617" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; cholesterol, split by heart disease (with regression line)</span></span>
+<span id="cb57-618"><a href="#cb57-618" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
+<span id="cb57-619"><a href="#cb57-619" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>],</span>
+<span id="cb57-620"><a href="#cb57-620" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'cholesterol'</span>,</span>
+<span id="cb57-621"><a href="#cb57-621" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">'heart_disease'</span>,</span>
+<span id="cb57-622"><a href="#cb57-622" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb57-623"><a href="#cb57-623" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> <span class="dv">7</span>,</span>
+<span id="cb57-624"><a href="#cb57-624" aria-hidden="true" tabindex="-1"></a>    aspect<span class="op">=</span><span class="fl">1.3</span>)</span>
+<span id="cb57-625"><a href="#cb57-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-626"><a href="#cb57-626" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-627"><a href="#cb57-627" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-628"><a href="#cb57-628" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-629"><a href="#cb57-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-632"><a href="#cb57-632" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb57-633"><a href="#cb57-633" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: max-hr-regression-plot</span></span>
+<span id="cb57-634"><a href="#cb57-634" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: center</span></span>
+<span id="cb57-635"><a href="#cb57-635" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-636"><a href="#cb57-636" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; max hr, split by heart disease (with regression line)</span></span>
+<span id="cb57-637"><a href="#cb57-637" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
+<span id="cb57-638"><a href="#cb57-638" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df,</span>
+<span id="cb57-639"><a href="#cb57-639" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>,</span>
+<span id="cb57-640"><a href="#cb57-640" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">'heart_disease'</span>,</span>
+<span id="cb57-641"><a href="#cb57-641" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb57-642"><a href="#cb57-642" aria-hidden="true" tabindex="-1"></a>    height <span class="op">=</span> <span class="dv">7</span>,</span>
+<span id="cb57-643"><a href="#cb57-643" aria-hidden="true" tabindex="-1"></a>    aspect<span class="op">=</span><span class="fl">1.3</span>)</span>
+<span id="cb57-644"><a href="#cb57-644" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-645"><a href="#cb57-645" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb57-646"><a href="#cb57-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-647"><a href="#cb57-647" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb57-648"><a href="#cb57-648" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-649"><a href="#cb57-649" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
+<span id="cb57-650"><a href="#cb57-650" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-651"><a href="#cb57-651" aria-hidden="true" tabindex="-1"></a>There are many more visualisation techniques that you can use to explore your data. You can find plenty of inspiration for different approaches to visualising data in the <span class="co">[</span><span class="ot">seaborn</span><span class="co">]</span> and <span class="co">[</span><span class="ot">matplotlib</span><span class="co">]</span> documentation. There are also a number of other Python libraries that can be used to create visualisations, including <span class="co">[</span><span class="ot">plotly</span><span class="co">]</span>, <span class="co">[</span><span class="ot">bokeh</span><span class="co">]</span>, and <span class="co">[</span><span class="ot">altair</span><span class="co">]</span>.</span>
+<span id="cb57-652"><a href="#cb57-652" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-653"><a href="#cb57-653" aria-hidden="true" tabindex="-1"></a>The next step in the data science process is to build a model to either explain or predict the outcome variable, heart disease. The exploratory work done here can help inform decisions about the choice of the model, and the choice of the variables that will be used to build the model. It will also help clean up the data, particularly the zero values in the cholesterol and resting blood pressure variables, to ensure that the model is built on the best possible data.</span>
+<span id="cb57-654"><a href="#cb57-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-655"><a href="#cb57-655" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
+<span id="cb57-656"><a href="#cb57-656" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-657"><a href="#cb57-657" aria-hidden="true" tabindex="-1"></a>There are a wealth of resources available to help you learn more about data visualisation, and while the resources for producing visualisations in R are more extensive, there are still a number of good resources for producing visualisations in Python.</span>
+<span id="cb57-658"><a href="#cb57-658" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-659"><a href="#cb57-659" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Scientific Visualization: Python + Matplotlib <span class="co">[</span><span class="ot">scientific viz pdf</span><span class="co">]</span>[<span class="co">[</span><span class="ot">PDF</span><span class="co">]</span>]<span class="co">[</span><span class="ot">scientific viz github</span><span class="co">]</span>[<span class="co">[</span><span class="ot">GitHub</span><span class="co">]</span>]</span>
+<span id="cb57-660"><a href="#cb57-660" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Seaborn Tutorials</span><span class="co">]</span></span>
+<span id="cb57-661"><a href="#cb57-661" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Matplotlib Cheatsheets</span><span class="co">]</span></span>
+<span id="cb57-662"><a href="#cb57-662" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-663"><a href="#cb57-663" aria-hidden="true" tabindex="-1"></a>While the following resources are R-based, they are still useful for learning about data visualisation principles:</span>
+<span id="cb57-664"><a href="#cb57-664" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-665"><a href="#cb57-665" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Data Visualization: A Practical Introduction</span><span class="co">]</span></span>
+<span id="cb57-666"><a href="#cb57-666" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Fundamentals of Data Visualization</span><span class="co">]</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
