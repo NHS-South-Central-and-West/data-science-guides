@@ -1,10 +1,17 @@
 # Introduction {#sec-intro}
 
+{{< include _links.qmd >}}
+
 ```{r}
 #| label: setup
-#| output: false
 #| cache: false
-#| echo: false
+#| output: false
+#| code-fold: true
+#| code-summary: 'Setup Code (Click to Expand)'
+
+# packages needed to run the code in this section
+# install.packages(c("tidyverse", "remotes"))
+# remotes::install_github("NHS-South-Central-and-West/scwplot")
 
 # import packages
 suppressPackageStartupMessages({
@@ -15,7 +22,10 @@ suppressPackageStartupMessages({
 # ggplot theme
 theme_set(scwplot::theme_scw(base_size = 14))
 # reduce margin
-theme_update(plot.margin = margin(c(t = 1, r = .5, b = 1, l = -.5), unit = "cm"))
+theme_update(
+  plot.margin = 
+    margin(c(t = 1, r = .5, b = 1, l = -.5), unit = "cm")
+  )
 
 pypl_raw <- readr::read_csv(here::here('data', 'pypl.csv'))
 
@@ -42,7 +52,7 @@ It's also worth noting that learning a second language, when you are confident w
 
 ### Popularity
 
-Both R & Python are widely used in data science, and both are very popular programming languages. Although there are a number of ways to measure the popularity of a programming language, every measure demonstrates that Python is one of, if not the most popular language in the world, and R is in and around the top ten. A common measure of the popularity of a programming language is the Popularity of Programming Language (PYPL) Index, which is a measure of popularity based on the number of times they are searched for on Google. The PYPL Index is updated monthly, and the data is available from the [PYPL website](https://pypl.github.io/PYPL.html).
+Both R & Python are widely used in data science, and both are very popular programming languages. Although there are a number of ways to measure the popularity of a programming language, every measure demonstrates that Python is one of, if not the most popular language in the world, and R is in and around the top ten. A common measure of the popularity of a programming language is the Popularity of Programming Language (PYPL) Index, which is a measure of popularity based on the number of times they are searched for on Google. The PYPL Index is updated monthly, and the data is available from the [PYPL website].
 
 Here is how the top ten most popular programming languages looks in 2023 (based on an average PYPL Index in 2023):
 
@@ -86,7 +96,7 @@ current_pypl |>
 
 ```
 
-While Python is way out in front in first, R is also very high on the list in seventh place. This is particularly impressive given that every other language on the list is a general purpose programming language, while R is a statistical programming language. When we look at the [PYPL Index in the UK](https://pypl.github.io/PYPL.html?country=GB), we see a similar picture, with Python even further out in front in first place, and R in in fifth place. This is a testament to the popularity of R within the niche that it occupies, of which data science is a part.
+While Python is way out in front in first, R is also very high on the list in seventh place. This is particularly impressive given that every other language on the list is a general purpose programming language, while R is a statistical programming language. When we look at the [PYPL Index in the UK], we see a similar picture, with Python even further out in front in first place, and R in in fifth place. This is a testament to the popularity of R within the niche that it occupies, of which data science is a part.
 
 We can also look at how the popularity of R and Python has changed over time, in comparison with other languages that are tracked in the PYPL Index. Here is a plot of the PYPL Index over time, from 2005 to 2023:
 
@@ -133,12 +143,12 @@ pypl_over_time |>
 
 As you can see, Python has been the most popular programming language since 2018, and R has been in and around the top ten for about a decade. Both languages are extremely popular, and both are likely to remain popular for the foreseeable future.
 
-While the PYPL Index is a good measure of language popularity, there are other ways of measuring the most popular programming language, such as GitHub's [_The State Of Open Source Software_](https://octoverse.github.com/2022/top-programming-languages) Report and Stack Overflow's [Developer Survey and Tag Trends](https://stackoverflow.blog/2023/01/26/comparing-tag-trends-with-our-most-loved-programming-languages/).
+While the PYPL Index is a good measure of language popularity, there are other ways of measuring the most popular programming language, such as GitHub's [The State Of Open Source Software] Report and Stack Overflow's [Developer Survey and Tag Trends].
 
 ### NHS R & Python Communities
 
 There are already a sizeable number of people using both languages in the NHS, and there are communities that are already in place to support people using R or Python in the NHS.
 
-The NHS-R community is a pretty active community of people that are using R in the NHS. You can find them on the [NHS-R website](https://nhsrcommunity.com/), [Twitter](https://twitter.com/NHSRCommunity), and [Slack](https://nhsrcommunity.slack.com). They also have a [Github organisation](https://github.com/nhs-r-community) and a [YouTube channel](https://www.youtube.com/c/NHSRCommunity) which both contain tons of really useful resources.
+The NHS-R community is a pretty active community of people that are using R in the NHS. You can find them on the [nhs-r][NHS-R website] and [nhs-r slack][Slack]. They also have a [nhs-r github][Github organisation] and a [nhs-r youtube][YouTube channel] which both contain tons of really useful resources.
 
-With regards to Python, the equivalent community is the NHS Python Community for Healthcare (typically shortened to NHS-PyCom). The NHS Python Community also have a [website](https://nhs-pycom.net/), a [Slack channel](https://join.slack.com/t/nhs-pycom/shared_invite/zt-z6h1hszo-3_w68FdalVM2EATVVdgCuw), and they have a [Github organisation](https://github.com/nhs-pycom) and a [YouTube channel](https://www.youtube.com/@nhs-pycom) which are both worth checking out. The NHS Python Community is a little smaller than the NHS-R community, but it is still a very active community, and it is growing quickly, with both communities collaborating regularly to try and spread the growth of both languages in the NHS.
+With regards to Python, the equivalent community is the NHS Python Community for Healthcare (typically shortened to NHS-PyCom). The NHS Python Community also have a [nhs-pycom][website] and a [nhs-pycom slack][Slack channel], and they have a [nhs-pycom github][Github organisation] and a [nhs-pycom youtube][YouTube channel] which are both worth checking out. The NHS Python Community is a little smaller than the NHS-R community, but it is still a very active community, and it is growing quickly, with both communities collaborating regularly to try and spread the growth of both languages in the NHS.

@@ -1,9 +1,16 @@
 # Exploratory Data Analysis {#sec-eda}
 
+{{< include _links.qmd >}}
+
 ```{python}
 #| label: setup
+#| cache: false
+#| output: false
 #| code-fold: true
-#| code-summary: 'Setup Code'
+#| code-summary: 'Setup Code (Click to Expand)'
+
+# packages needed to run the code in this section
+# !pip install pandas numpy matplotlib seaborn skimpy
 
 # import packages
 import pandas as pd
@@ -102,7 +109,7 @@ df.describe()
 
 While the `describe()` function is pretty effective, the `skimpy` package can provide a more detailed summary of the data, using the `skim()` function. If you are looking for a single function to capture the entire process of inspecting the data and computing summary statistics, `skim()` is the function for the job, giving you a wealth of information about the dataset as a whole and each variable in the data.
 
-Another package that provides a similar function is the [`ydata-profiling`](https://github.com/ydataai/ydata-profiling) package, which can be used to generate a report containing a summary of the data, including the data types, missing values, and summary statistics. The `ydata-profiling` package is particularly useful for generating a report that can be shared with others, as it can be exported as an HTML file, however it's a bit more resource-intensive than `skimpy`, so we will stick with `skimpy` for this tutorial.
+Another package that provides a similar function is the [profiling][`ydata-profiling`] package, which can be used to generate a report containing a summary of the data, including the data types, missing values, and summary statistics. The `ydata-profiling` package is particularly useful for generating a report that can be shared with others, as it can be exported as an HTML file, however it's a bit more resource-intensive than `skimpy`, so we will stick with `skimpy` for this tutorial.
 
 ```{python}
 #| label: df-skim
@@ -394,7 +401,7 @@ The fact that there is a significantly larger proportion of positive heart disea
 
 Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the `boxplot()` function to create box plots, and the `hue` argument to split the box plots by a particular variable and display them in different colours.
 
-However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained [here](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.
+However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained [boxplots][here] by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.
 
 ```{python}
 #| label: age-by-heart-disease-box
@@ -555,7 +562,7 @@ plt.show()
 
 ## Next Steps
 
-There are many more visualisation techniques that you can use to explore your data, and you can find a comprehensive list of them on the [seaborn API reference](https://seaborn.pydata.org/api.html) and [matplotlib API reference](https://matplotlib.org/stable/api/index.html) pages. There are also a number of other Python libraries that can be used to create visualisations, including [plotly](https://plotly.com/python/), [bokeh](https://docs.bokeh.org/en/latest/docs/user_guide.html), and [altair](https://altair-viz.github.io/).
+There are many more visualisation techniques that you can use to explore your data. You can find plenty of inspiration for different approaches to visualising data in the [seaborn] and [matplotlib] documentation. There are also a number of other Python libraries that can be used to create visualisations, including [plotly], [bokeh], and [altair].
 
 The next step in the data science process is to build a model to either explain or predict the outcome variable, heart disease. The exploratory work done here can help inform decisions about the choice of the model, and the choice of the variables that will be used to build the model. It will also help clean up the data, particularly the zero values in the cholesterol and resting blood pressure variables, to ensure that the model is built on the best possible data.
 
@@ -563,11 +570,11 @@ The next step in the data science process is to build a model to either explain 
 
 There are a wealth of resources available to help you learn more about data visualisation, and while the resources for producing visualisations in R are more extensive, there are still a number of good resources for producing visualisations in Python.
 
-- Scientific Visualization: Python + Matplotlib [[PDF](https://hal.inria.fr/hal-03427242/document)|[GitHub](https://github.com/rougier/scientific-visualization-book)]
-- [Seaborn Tutorials](https://seaborn.pydata.org/tutorial.html)
-- [Matplotlib Cheatsheets](https://github.com/matplotlib/cheatsheets)
+- Scientific Visualization: Python + Matplotlib [scientific viz pdf][[PDF]][scientific viz github][[GitHub]]
+- [Seaborn Tutorials]
+- [Matplotlib Cheatsheets]
 
 While the following resources are R-based, they are still useful for learning about data visualisation principles:
 
-- [Data Visualization: A Practical Introduction](https://socviz.co/)
-- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/)
+- [Data Visualization: A Practical Introduction]
+- [Fundamentals of Data Visualization]

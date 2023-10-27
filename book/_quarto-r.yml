@@ -37,7 +37,6 @@ book:
     - references.qmd
 
   appendices:
-    - installing_r.qmd
     - version_control.qmd
 
 bibliography: references.bib

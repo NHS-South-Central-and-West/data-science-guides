@@ -1,5 +1,7 @@
 # Exploratory Data Analysis {#sec-eda}
 
+{{< include _links.qmd >}}
+
 ```{r}
 #| label: setup
 #| cache: false
@@ -7,7 +9,9 @@
 #| code-fold: true
 #| code-summary: 'Setup Code (Click to Expand)'
 
-# install.packages("remotes")
+# packages needed to run the code in this section
+# install.packages(c("tidyverse", "janitor", "skimr", "remotes"))
+# remotes::install_github("StatsGary/MLDataR")
 # remotes::install_github("NHS-South-Central-and-West/scwplot")
 
 # import packages
@@ -127,7 +131,7 @@ While inspecting the data directly and using summary statistics to describe it i
 
 When using data visualisation for exploratory purposes, the intent is generally to visualise the way data is distributed, both within and between variables. This can be done using a variety of different types of plots, including histograms, bar charts, box plots, scatter plots, and line plots. How variables are distributed can tell us a lot about the variable itself, and how variables are distributed relative to each other can tell us a lot about the potential relationship between the variables.
 
-In this tutorial, we will use the `ggplot2` package to create a series of data visualisations to explore the data in more detail. `ggplot2` is an incredibly flexible and powerful package for creating data visualisations. While it can be a little difficult to make sense of the syntax at first, it is well worth the effort to learn how to use it. Learning how to use `ggplot2` is beyond the scope of this tutorial, but there are a number of excellent resources available online, including the [ggplot2 documentation](https://ggplot2.tidyverse.org/) and this [ggplot2 cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf).
+In this tutorial, we will use the `ggplot2` package to create a series of data visualisations to explore the data in more detail. `ggplot2` is an incredibly flexible and powerful package for creating data visualisations. While it can be a little difficult to make sense of the syntax at first, it is well worth the effort to learn how to use it. Learning how to use `ggplot2` is beyond the scope of this tutorial, but there are a number of excellent resources available online, including the [ggplot2][ggplot2 documentation].
 
 ### Visualising Data Distributions
 
@@ -349,7 +353,7 @@ The fact that there is a significantly larger proportion of positive heart disea
 
 Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the `geom_boxplot()` function to create box plots, and the `fill()` argument to split the box plots by a particular variable and display them in different colours.
 
-However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained [here](https://www.cedricscherer.com/2021/06/06/visualizing-distributions-with-raincloud-plots-and-how-to-create-them-with-ggplot2/) by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.
+However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained [here][boxplots] by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.
 
 ```{r}
 #| label: fig-box-plots
@@ -503,7 +507,7 @@ df |>
 
 ## Next Steps
 
-There are many more visualisation techniques that you can use to explore your data, and you can find a comprehensive list of them on the [ggplot2 function reference](https://ggplot2.tidyverse.org/reference/index.html#geoms) page. There are also a wide variety of [ggplot extension packages](https://exts.ggplot2.tidyverse.org/gallery/) that can be used to create more complex visualisations.
+There are many more visualisation techniques that you can use to explore your data, and you can find a comprehensive list of them on the [geoms][ggplot2 function reference] page. There are also a wide variety of [ggplot extensions][ggplot extension packages] that can be used to create more complex visualisations.
 
 The next step in the data science process is to build a model to either explain or predict the outcome variable, heart disease. The exploratory work done here can help inform decisions about the choice of the model, and the choice of the variables that will be used to build the model. It will also help clean up the data, particularly the zero values in the cholesterol and resting blood pressure variables, to ensure that the model is built on the best possible data.
 
@@ -511,7 +515,7 @@ The next step in the data science process is to build a model to either explain 
 
 There are a wealth of resources available to help you learn more about data visualisation.
 
--   [Data Visualization: A Practical Introduction](https://socviz.co/)
--   [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/)
--   [Data Visualization with R](https://rkabacoff.github.io/datavis/)
--   [{ggeasy} - Easy Access to {ggplot2} Commands](https://jonocarroll.github.io/ggeasy/)
+-   [Data Visualization: A Practical Introduction]
+-   [Fundamentals of Data Visualization]
+-   [Data Visualization with R]
+-   [{ggeasy} - Easy Access to {ggplot2} Commands]
