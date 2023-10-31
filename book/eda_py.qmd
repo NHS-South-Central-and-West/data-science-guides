@@ -570,7 +570,7 @@ The next step in the data science process is to build a model to either explain 
 
 There are a wealth of resources available to help you learn more about data visualisation, and while the resources for producing visualisations in R are more extensive, there are still a number of good resources for producing visualisations in Python.
 
-- Scientific Visualization: Python + Matplotlib [scientific viz pdf][[PDF]][scientific viz github][[GitHub]]
+- Scientific Visualization: Python + Matplotlib [[PDF][Scientific Viz PDF]][[GitHub][Scientific Viz GitHub]]
 - [Seaborn Tutorials]
 - [Matplotlib Cheatsheets]
 

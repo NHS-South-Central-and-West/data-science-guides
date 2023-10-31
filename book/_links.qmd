@@ -12,15 +12,15 @@
 [The State Of Open Source Software]: https://octoverse.github.com/2022/top-programming-languages)
 [Developer Survey and Tag Trends]: https://stackoverflow.blog/2023/01/26/comparing-tag-trends-with-our-most-loved-programming-languages/
 
-[nhs-r]: https://nhsrcommunity.com/
-[nhs-r slack]: https://nhsrcommunity.slack.com
-[nhs-r github]: https://github.com/nhs-r-community
-[nhs-r youtube]: https://www.youtube.com/c/NHSRCommunity
+[NHS-R]: https://nhsrcommunity.com/
+[NHS-R Slack]: https://nhsrcommunity.slack.com
+[NHS-R GitHub]: https://github.com/NHS-R-community
+[NHS-R YouTube]: https://www.youtube.com/c/NHSRCommunity
 
-[nhs-pycom]: https://nhs-pycom.net/
-[nhs-pycom slack]: https://nhs-pycom.slack.com
-[nhs-pycom github]: https://github.com/nhs-pycom
-[nhs-pycom youtube]: https://www.youtube.com/@nhs-pycom 
+[NHS-Pycom]: https://NHS-Py.com.net/
+[NHS-Pycom Slack]: https://NHS-Py.com.slack.com
+[NHS-Pycom GitHub]: https://github.com/NHS-Py.com
+[NHS-Pycom YouTube]: https://www.youtube.com/@NHS-Py.com 
 
 <!-- good science -->
 
@@ -92,8 +92,8 @@
 [bokeh]: https://bokeh.org/
 [altair]: https://altair-viz.github.io/
 
-[scientific viz pdf]: https://hal.inria.fr/hal-03427242/document
-[scientific viz github]: https://github.com/rougier/scientific-visualization-book
+[Scientific Viz PDF]: https://hal.inria.fr/hal-03427242/document
+[Scientific Viz GitHub]: https://github.com/rougier/scientific-visualization-book
 [Seaborn Tutorials]: https://seaborn.pydata.org/tutorial.html
 [Matplotlib Cheatsheets]: https://github.com/matplotlib/cheatsheets
 
@@ -141,20 +141,28 @@
 
 <!-- machine learning -->
 
-[tmwr workflow]: https://www.tmwr.org/workflows.html
-[tmwr resampling]: https://www.tmwr.org/resampling.html#resampling-methods
-[tmwr tuning]: https://www.tmwr.org/tuning.html
+[TMwR]: https://www.TMwR.org/
+[TMwR Workflow]: https://www.TMwR.org/workflows.html
+[TMwR Resampling]: https://www.TMwR.org/resampling.html#resampling-methods
+[TMwR Tuning]: https://www.TMwR.org/tuning.html
 [parsnip linear regression]: https://parsnip.tidymodels.org/reference/linear_reg.html
 [parsnip logistic regression]: https://parsnip.tidymodels.org/reference/logistic_reg.html
 [parsnip knn]: https://parsnip.tidymodels.org/reference/nearest_neighbor.html
 
-[hyperparameter tuning]: https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html
+[Hyperparameter Tuning]: https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html
 
 [Machine Learning University]: https://aws.amazon.com/machine-learning/mlu
 [MLU Explain]: https://mlu-explain.github.io/
 [Machine Learning for Beginners]: https://microsoft.github.io/ML-For-Beginners
+[ML Zoomcamp GitHub]: https://github.com/alexeygrigorev/mlbookcamp-code/tree/master/course-zoomcamp
+[ML Zoomcamp YouTube]: https://www.youtube.com/watch?v=MqI8vt3-cag&list=PL3MmuxUbc_hIhxl5Ji8t4O6lPAOpHaCLR
+[ISL R]: https://drive.google.com/file/d/106d-rN7cXpyAkgrUqjcPONNCyO-rX7MQ/view?usp=drive_link
+[ISL Python]: https://drive.google.com/file/d/1ajFkHO6zjrdGNqhqW1jKBZdiNGh_8YQ1/view
+[ISL Online]: https://www.statlearning.com/online-course
+[Mathematics of Machine Learning]: https://tivadardanka.com/books/mathematics-of-machine-learning
+[3Blue1Brown]: https://www.youtube.com/@3blue1brown
 
 <!-- version control -->
 
-[NHS-R Git Training]: https://github.com/nhs-r-community/git_training/
-[Introduction to Git]: https://github.com/nhs-r-community/git_training/blob/main/guides/introduction_to_git.md
+[NHS-R Git Training]: https://github.com/NHS-R-community/git_training/
+[Introduction to Git]: https://github.com/NHS-R-community/git_training/blob/main/guides/introduction_to_git.md
