@@ -179,16 +179,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./hypothesis_testing_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_regression_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Machine Learning</span></span>
-  </li>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ml_workflow_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Deep Learning</span></span>
@@ -197,6 +216,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Delivering Data Science</span></span>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
@@ -295,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>While Python is way out in front in first, R is also very high on the list in seventh place. This is particularly impressive given that every other language on the list is a general purpose programming language, while R is a statistical programming language. When we look at the <a href="https://pypl.github.io/PYPL.html?country=GB">PYPL Index in the UK</a>, we see a similar picture, with Python even further out in front in first place, and R in in fifth place. This is a testament to the popularity of R within the niche that it occupies, of which data science is a part.</p>
 <p>We can also look at how the popularity of R and Python has changed over time, in comparison with other languages that are tracked in the PYPL Index. Here is a plot of the PYPL Index over time, from 2005 to 2023:</p>
-<div class="cell" data-hash="intro_cache/html/fig-popularity-over-time_876c77b7159f9dec8e4e78903a06a3cc">
+<div class="cell" data-hash="intro_cache/html/fig-popularity-over-time_dbe76711092d7e948514285b94c3e2fd">
 <div class="cell-output-display">
 <div id="fig-popularity-over-time" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="intro_files/figure-html/fig-popularity-over-time-1.png" class="img-fluid figure-img" width="960"></p>
@@ -735,33 +760,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">subset</span>(pypl_over_time, language <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'R'</span>, <span class="st">'Python'</span>)),</span>
 <span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> popularity, <span class="at">group =</span> language, <span class="at">colour =</span> line_colour),</span>
 <span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.4</span>) <span class="sc">+</span></span>
-<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ggbump::geom_bump(</span></span>
-<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   data = subset(pypl_over_time, !language %in% c('R', 'Python')),</span></span>
-<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   aes(x = Date, y = popularity, group = language), </span></span>
-<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>  <span class="co">#    colour='#D9DDE0', size = 0.8, alpha = 0.4</span></span>
-<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   ) +</span></span>
-<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ggbump::geom_bump(</span></span>
-<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   data = subset(pypl_over_time, language %in% c('R', 'Python')),</span></span>
-<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   aes(x = Date, y = popularity, group = language, colour = line_colour),</span></span>
-<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   size = 1.4, smooth = 1</span></span>
-<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ) +</span></span>
-<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_identity</span>(<span class="at">guide=</span><span class="st">'legend'</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">'R'</span>, <span class="st">'Python'</span>)) <span class="sc">+</span></span>
-<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"2 years"</span>, <span class="at">date_labels =</span>  <span class="st">"%Y"</span>, <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span> </span>
-<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">'PYPL Index'</span>)</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_identity</span>(<span class="at">guide=</span><span class="st">'legend'</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">'R'</span>, <span class="st">'Python'</span>)) <span class="sc">+</span></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"2 years"</span>, <span class="at">date_labels =</span>  <span class="st">"%Y"</span>, <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span> </span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">'PYPL Index'</span>)</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>As you can see, Python has been the most popular programming language since 2018, and R has been in and around the top ten for about a decade. Both languages are extremely popular, and both are likely to remain popular for the foreseeable future.</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>While the PYPL Index is a good measure of language popularity, there are other ways of measuring the most popular programming language, such as GitHub's <span class="co">[</span><span class="ot">The State Of Open Source Software</span><span class="co">]</span> Report and Stack Overflow's <span class="co">[</span><span class="ot">Developer Survey and Tag Trends</span><span class="co">]</span>.</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a><span class="fu">### NHS R &amp; Python Communities</span></span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>There are already a sizeable number of people using both languages in the NHS, and there are communities that are already in place to support people using R or Python in the NHS.</span>
 <span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>The NHS-R community is a pretty active community of people that are using R in the NHS. You can find them on the <span class="co">[</span><span class="ot">NHS-R website</span><span class="co">][NHS-R]</span> and <span class="co">[</span><span class="ot">Slack</span><span class="co">][NHS-R Slack]</span>. They also have a <span class="co">[</span><span class="ot">Github organisation</span><span class="co">][NHS-R GitHub]</span> and a <span class="co">[</span><span class="ot">YouTube channel</span><span class="co">][NHS-R YouTube]</span> which both contain tons of really useful resources.</span>
 <span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>As you can see, Python has been the most popular programming language since 2018, and R has been in and around the top ten for about a decade. Both languages are extremely popular, and both are likely to remain popular for the foreseeable future.</span>
-<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>While the PYPL Index is a good measure of language popularity, there are other ways of measuring the most popular programming language, such as GitHub's <span class="co">[</span><span class="ot">The State Of Open Source Software</span><span class="co">]</span> Report and Stack Overflow's <span class="co">[</span><span class="ot">Developer Survey and Tag Trends</span><span class="co">]</span>.</span>
-<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a><span class="fu">### NHS R &amp; Python Communities</span></span>
-<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>There are already a sizeable number of people using both languages in the NHS, and there are communities that are already in place to support people using R or Python in the NHS.</span>
-<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>The NHS-R community is a pretty active community of people that are using R in the NHS. You can find them on the <span class="co">[</span><span class="ot">NHS-R website</span><span class="co">][NHS-R]</span> and <span class="co">[</span><span class="ot">Slack</span><span class="co">][NHS-R Slack]</span>. They also have a <span class="co">[</span><span class="ot">Github organisation</span><span class="co">][NHS-R GitHub]</span> and a <span class="co">[</span><span class="ot">YouTube channel</span><span class="co">][NHS-R YouTube]</span> which both contain tons of really useful resources.</span>
-<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>With regards to Python, the equivalent community is the NHS Python Community for Healthcare (typically shortened to NHS-Pycom). The NHS Python Community also have a <span class="co">[</span><span class="ot">website</span><span class="co">][NHS-Pycom]</span> and a <span class="co">[</span><span class="ot">Slack channel</span><span class="co">][NHS-Pycom Slack]</span>, and they have a <span class="co">[</span><span class="ot">Github organisation</span><span class="co">][NHS-Pycom GitHub]</span> and a <span class="co">[</span><span class="ot">YouTube channel</span><span class="co">][NHS-Pycom YouTube]</span> which are both worth checking out. The NHS Python Community is a little smaller than the NHS-R community, but it is still a very active community, and it is growing quickly, with both communities collaborating regularly to try and spread the growth of both languages in the NHS.</span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>With regards to Python, the equivalent community is the NHS Python Community for Healthcare (typically shortened to NHS-Pycom). The NHS Python Community also have a <span class="co">[</span><span class="ot">website</span><span class="co">][NHS-Pycom]</span> and a <span class="co">[</span><span class="ot">Slack channel</span><span class="co">][NHS-Pycom Slack]</span>, and they have a <span class="co">[</span><span class="ot">Github organisation</span><span class="co">][NHS-Pycom GitHub]</span> and a <span class="co">[</span><span class="ot">YouTube channel</span><span class="co">][NHS-Pycom YouTube]</span> which are both worth checking out. The NHS Python Community is a little smaller than the NHS-R community, but it is still a very active community, and it is growing quickly, with both communities collaborating regularly to try and spread the growth of both languages in the NHS.</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

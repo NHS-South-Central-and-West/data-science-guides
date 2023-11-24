@@ -15,6 +15,9 @@ jupyter-cache = "*"
 statsmodels = "*"
 pyadomd = "*"
 rpy2 = "*"
+scipy = "*"
+pingouin = "*"
+tqdm = "*"
 
 [dev-packages]
 

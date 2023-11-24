@@ -125,16 +125,6 @@ pypl_over_time |>
   geom_line(data = subset(pypl_over_time, language %in% c('R', 'Python')),
     aes(x = Date, y = popularity, group = language, colour = line_colour),
     size = 1.4) +
-  # ggbump::geom_bump(
-  #   data = subset(pypl_over_time, !language %in% c('R', 'Python')),
-  #   aes(x = Date, y = popularity, group = language), 
-  #    colour='#D9DDE0', size = 0.8, alpha = 0.4
-  #   ) +
-  # ggbump::geom_bump(
-  #   data = subset(pypl_over_time, language %in% c('R', 'Python')),
-  #   aes(x = Date, y = popularity, group = language, colour = line_colour),
-  #   size = 1.4, smooth = 1
-  # ) +
   scale_colour_identity(guide='legend', labels=c('R', 'Python')) +
   scale_x_date(date_breaks = "2 years", date_labels =  "%Y", expand = c(0, 0)) + 
   labs(x= NULL, y = 'PYPL Index')

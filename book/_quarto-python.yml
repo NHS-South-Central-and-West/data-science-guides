@@ -19,13 +19,20 @@ book:
       chapters:
         - sql.qmd
         - eda_py.qmd
-
+        
     - part: "Statistical Inference"
       chapters:
+        - hypothesis_testing_py.qmd
         - linear_regression_py.qmd
+        
     - part: "Machine Learning"
+      chapters:
+        - ml_workflow_py.qmd
+        
     - part: "Deep Learning"
     - part: "Delivering Data Science"
+    
+    - references.qmd
 
   appendices:
     - version_control.qmd

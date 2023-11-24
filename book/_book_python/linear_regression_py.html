@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Python Data Science Guides - 5&nbsp; Linear Regression</title>
+<title>Python Data Science Guides - 6&nbsp; Linear Regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -83,8 +83,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./version_control.html" rel="next">
-<link href="./eda_py.html" rel="prev">
+<link href="./ml_workflow_py.html" rel="next">
+<link href="./hypothesis_testing_py.html" rel="prev">
 <link href="./figures/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -135,7 +135,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear_regression_py.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./linear_regression_py.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hypothesis_testing_py.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./linear_regression_py.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -218,15 +218,34 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./hypothesis_testing_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear_regression_py.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Machine Learning</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ml_workflow_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
@@ -236,6 +255,12 @@ div.csl-indent {
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Delivering Data Science</span></span>
   </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
@@ -263,15 +288,15 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link active" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">5.1</span> Exploratory Data Analysis</a></li>
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">5.2</span> Linear Regression</a></li>
-  <li><a href="#evaluating-and-interpreting-regression-models" id="toc-evaluating-and-interpreting-regression-models" class="nav-link" data-scroll-target="#evaluating-and-interpreting-regression-models"><span class="header-section-number">5.3</span> Evaluating and Interpreting Regression Models</a>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link active" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">6.1</span> Exploratory Data Analysis</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">6.2</span> Linear Regression</a></li>
+  <li><a href="#evaluating-and-interpreting-regression-models" id="toc-evaluating-and-interpreting-regression-models" class="nav-link" data-scroll-target="#evaluating-and-interpreting-regression-models"><span class="header-section-number">6.3</span> Evaluating and Interpreting Regression Models</a>
   <ul class="collapse">
-  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">5.3.1</span> Model Evaluation</a></li>
-  <li><a href="#model-interpretation" id="toc-model-interpretation" class="nav-link" data-scroll-target="#model-interpretation"><span class="header-section-number">5.3.2</span> Model Interpretation</a></li>
+  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">6.3.1</span> Model Evaluation</a></li>
+  <li><a href="#model-interpretation" id="toc-model-interpretation" class="nav-link" data-scroll-target="#model-interpretation"><span class="header-section-number">6.3.2</span> Model Interpretation</a></li>
   </ul></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">5.4</span> Next Steps</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">5.5</span> Resources</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">6.4</span> Next Steps</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">6.5</span> Resources</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/linear_regression_py.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -280,7 +305,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-linear-regression" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-linear-regression" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -340,8 +365,8 @@ div.csl-indent {
 <p>For a really good, accessible introduction to linear regression, I’d highly recommend Josh Starmer’s StatQuest video on the topic:</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/7ArmBVF2dCs" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>This tutorial will introduce you to linear regression in Python, using data pulled from two different sources. The first data source is the Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a>. The data included in this tutorial relates to health outcomes (life expectancy at birth) and deprivation (Indices of Multiple Deprivation (IMD) score and decile). The second data source is the Office of National Statistics’ <a href="https://www.ons.gov.uk/releases/healthindexforengland2015to2020">Health Index</a>, which is a composite measure of the health of the population in England. The Health Index is derived from a wide range of indicators related to three health domains: Healthy People (health outcomes), Healthy Lives (health-related behaviours and personal circumstances), and Healthy Places (wider drivers of health that relate to the places people live). The data included in this tutorial comes from two composite sub-domains in the Healthy Lives domain, which measure the physiological and behavioural risk factors that are associated with poor health outcomes. Both data sources are aggregated at the upper-tier local authority level, and the data covers the years 2015 to 2018.</p>
-<section id="exploratory-data-analysis" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">5.1</span> Exploratory Data Analysis</h2>
+<section id="exploratory-data-analysis" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">6.1</span> Exploratory Data Analysis</h2>
 <div id="df-info" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data summary</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -660,8 +685,8 @@ Name: life_expectancy, dtype: float64</code></pre>
 </div>
 <p>There are strong correlations between life expectancy and the three independent variables, however, the correlation between IMD score and the two risk factor variables is also relatively strong, and in the case of behavioural risk factors, it is very strong. This could be an issue.</p>
 </section>
-<section id="linear-regression" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">5.2</span> Linear Regression</h2>
+<section id="linear-regression" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">6.2</span> Linear Regression</h2>
 <div id="model" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create model</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.OLS.from_formula(</span>
@@ -706,47 +731,47 @@ strong multicollinearity or other numerical problems.</code></pre>
 </div>
 </div>
 </section>
-<section id="evaluating-and-interpreting-regression-models" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="evaluating-and-interpreting-regression-models"><span class="header-section-number">5.3</span> Evaluating and Interpreting Regression Models</h2>
+<section id="evaluating-and-interpreting-regression-models" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="evaluating-and-interpreting-regression-models"><span class="header-section-number">6.3</span> Evaluating and Interpreting Regression Models</h2>
 <p>When we fit a regression model, we have to consider both how well the model fits the data (evaluation) and the influence that each explanatory variable is having on the outcome (interpretation). The evaluation process is making sure that the model is doing a good enough job that we can reasonably draw some conclusions from it, while the interpretation process is understanding the conclusions we can draw. It’s important to understand the purpose that both of these processes serve, and to understand that the evaluation process is just kicking the tires, while what we are ultimately concerned with is the interpretation.</p>
 <p>There are several elements to consider when interpreting the results of a linear regression model. Broadly speaking the focus should be on the magnitude and the precision of the model coeffficients. The magnitude of the coefficients indicates the strength of the association between the explanatory variables and the outcome variable, while the precision of the coefficients indicates the uncertainty in the estimated coefficients. We use the regression model coefficients to understand the magnitude of the effect and standard errors (and confidence intervals) to understand the precision of the effect.</p>
-<section id="model-evaluation" class="level3" data-number="5.3.1">
-<h3 data-number="5.3.1" class="anchored" data-anchor-id="model-evaluation"><span class="header-section-number">5.3.1</span> Model Evaluation</h3>
+<section id="model-evaluation" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="model-evaluation"><span class="header-section-number">6.3.1</span> Model Evaluation</h3>
 <p>There are a number of ways we might evaluate model performance, but the starting point should be the model’s <span class="math inline">\(R^2\)</span> and the p-values of the model coefficients. These can help us consider whether the model fits the data and whether we have enough data to trust the conclusions we can draw from each explanatory variable.</p>
-<section id="r2" class="level4" data-number="5.3.1.1">
-<h4 data-number="5.3.1.1" class="anchored" data-anchor-id="r2"><span class="header-section-number">5.3.1.1</span> <span class="math inline">\(R^2\)</span></h4>
+<section id="r2" class="level4" data-number="6.3.1.1">
+<h4 data-number="6.3.1.1" class="anchored" data-anchor-id="r2"><span class="header-section-number">6.3.1.1</span> <span class="math inline">\(R^2\)</span></h4>
 <p>The <span class="math inline">\(R^2\)</span> value is the proportion of the variance in the outcome that is explained by the model. It is often used as a measure of the goodness of fit of the model, and by extension the extent to which the specified model explains the outcome, but caution should be applied when using <span class="math inline">\(R^2\)</span> this way, because <span class="math inline">\(R^2\)</span> can be misleading and doesn’t always tell the whole story. One of the main problems with <span class="math inline">\(R^2\)</span> when used in an inferential context is that adding more variables to the model will always increase the <span class="math inline">\(R^2\)</span> value, even if the new variables are not actually related to the outcome. Adjusted <span class="math inline">\(R^2\)</span> values are used to account for this problem, but they don’t resolve all issues with <span class="math inline">\(R^2\)</span>, so it is important to consider <span class="math inline">\(R^2\)</span> as just one of a number of indicators of the model’s fit. If the <span class="math inline">\(R^2\)</span> is high, this doesn’t necessarily mean that the model is a good fit for the data, but if the <span class="math inline">\(R^2\)</span> is particularly low, this might be a good indication that the model is not a good fit for the data, and at the very least it is good reason to be cautious about the results of the analysis, and to take a closer look at the model and the data to understand why the <span class="math inline">\(R^2\)</span> is so low.</p>
 <p>Defining high/low <span class="math inline">\(R^2\)</span> values is dependent on the context of the analysis. The theory behind the model should inform our expectations about the <span class="math inline">\(R^2\)</span> value, and we should also consider the number of explanatory variables in the model (adding variables to a regression will increase the <span class="math inline">\(R^2\)</span>). If the theory suggests that the model should explain a small amount of the variance in the outcome, and the model has only a few explanatory variables, then a low <span class="math inline">\(R^2\)</span> value might not be a cause for concern.</p>
 <p>The Adjusted <span class="math inline">\(R^2\)</span> value for the above regression model is 0.843, which means that the model explains 84.3% of the observed variance in life expectancy in our dataset. This is a relatively high <span class="math inline">\(R^2\)</span> value.</p>
 </section>
-<section id="p-values" class="level4" data-number="5.3.1.2">
-<h4 data-number="5.3.1.2" class="anchored" data-anchor-id="p-values"><span class="header-section-number">5.3.1.2</span> P-Values</h4>
+<section id="p-values" class="level4" data-number="6.3.1.2">
+<h4 data-number="6.3.1.2" class="anchored" data-anchor-id="p-values"><span class="header-section-number">6.3.1.2</span> P-Values</h4>
 <p>P-values are the probability of observing a coefficient as large as the estimated coefficient for a particular explanatory variable, given that the null hypothesis is true (i.e.&nbsp;that the coefficient is equal to zero), indicating that no effect is present. This can be a little tricky to understand at first, but a slightly crude way of thinking about this is that p-values are an estimate of the probability that the model coefficient you observe is actually distinguishable from zero.</p>
 <p>P-values are used to test the statistical significance of the coefficients. If the p-value is less than the significance level then the coefficient is statistically significant, and we can reject the null hypothesis that the coefficient is equal to zero. If the p-value is greater than the significance level, then the coefficient is not statistically significant, and we cannot reject the null hypothesis that the coefficient is equal to zero. The significance level is often set at 0.05, which means that we are willing to accept a 5% chance of incorrectly rejecting the null hypothesis. This means that if the p-value is less than 0.05, then there is a greater than 95% probability that the coefficient is not equal to zero. However, the significance level is a subjective decision, and can be set at any value. For example, if the significance level is set at 0.01, then we are willing to accept a 1% chance of incorrectly rejecting the null hypothesis.</p>
 <p>In recent years p-values (and the wider concept of statistical significance) have been the subject of a great deal of discussion in the scientific community, because there is a belief among many practitioners that a lot of scientific research places too much weight in the p-value, treating it as the most important factor when interpreting a regression model. I think this perspective is correct, but I think dismissing p-values entirely is a mistake too. The real problem is not with p-values themselves, but with the goal of an analysis being the identification of a statistically significant effect.</p>
-<p>I think the best way to think about p-values is the position prescribed by <span class="citation" data-cites="gelman2020">Gelman, Hill, and Vehtari (<a href="#ref-gelman2020" role="doc-biblioref">2020</a>)</span>. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will <strong>some</strong> effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.</p>
+<p>I think the best way to think about p-values is the position prescribed by <span class="citation" data-cites="gelman2020">Gelman, Hill, and Vehtari (<a href="references.html#ref-gelman2020" role="doc-biblioref">2020</a>)</span>. Asking whether our coefficient is distinguishable from zero is the wrong question. As analysts, we should typically know enough about the context we are studying to build regression models with explanatory variables that will <strong>some</strong> effect. The question is how much. A statistically insignificant model coefficient is less a sign that a variable has no effect, and more a sign that there is insufficient data to detect a meaningful effect. If our model coefficients are not statistically significant, it is simply a good indication that we need more data. If the model coefficients are statistically significant, then our focus should be on interpreting the coefficients, not on the p-value itself.</p>
 </section>
 </section>
-<section id="model-interpretation" class="level3" data-number="5.3.2">
-<h3 data-number="5.3.2" class="anchored" data-anchor-id="model-interpretation"><span class="header-section-number">5.3.2</span> Model Interpretation</h3>
+<section id="model-interpretation" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="model-interpretation"><span class="header-section-number">6.3.2</span> Model Interpretation</h3>
 <p>Model interpretation is the process of understanding the influence that each explanatory variable has on the outcome. This involves understanding the direction, the magnitude, and the precision of the model coefficients. The coefficients themselves will tell us about direction and magnitude, while the standard errors and confidence intervals will tell us about precision.</p>
-<section id="model-coefficients" class="level4" data-number="5.3.2.1">
-<h4 data-number="5.3.2.1" class="anchored" data-anchor-id="model-coefficients"><span class="header-section-number">5.3.2.1</span> Model Coefficients</h4>
+<section id="model-coefficients" class="level4" data-number="6.3.2.1">
+<h4 data-number="6.3.2.1" class="anchored" data-anchor-id="model-coefficients"><span class="header-section-number">6.3.2.1</span> Model Coefficients</h4>
 <p>The model coefficients are the estimated values of the regression coefficients, or the estimated change in the outcome variable for a one unit change in the explanatory variable, while holding all other explanatory variables constant. The intercept is the estimated value of the outcome variable when all of the explanatory variables are equal to zero (or the baseline values if the variables are transformed).</p>
 <p>A regression’s coefficients are the most important part of interpreting the model. They specify the association between the explanatory variables and the outcome, telling us both the direction and the magnitude of the association. The direction of the association is indicated by the sign of the coefficient (positive = outcome increases with the explanatory variable, negative = outcome decreases with the explanatory variable). The magnitude of the association is indicated by the size of the coefficient (the larger the coefficient, the stronger the association). If the direction of the association is going in the wrong direction to that which we expect, this obviously indicates issues either in the theory or in the model, and if the magnitude of the effect is too small to be practically significant, then either the explanatory variable is not a good predictor of the outcome, or the model is not doing a good job of fitting the data (either the explanatory variable doesn’t really matter or the model is not capturing the true relationship between the explanatory variables and the outcome). However, while the direction is relatively easy to interpret, magnitude is not, because what counts as a practically significant effect is dependent on the context of the analysis.</p>
 </section>
-<section id="standard-errors" class="level4" data-number="5.3.2.2">
-<h4 data-number="5.3.2.2" class="anchored" data-anchor-id="standard-errors"><span class="header-section-number">5.3.2.2</span> Standard Errors</h4>
+<section id="standard-errors" class="level4" data-number="6.3.2.2">
+<h4 data-number="6.3.2.2" class="anchored" data-anchor-id="standard-errors"><span class="header-section-number">6.3.2.2</span> Standard Errors</h4>
 <p>The standard errors are the standard deviation of the estimated coefficients. This is a measure of the precision of the estimated association between the explanatory variables and the outcome. The larger the standard error, the less precise the coefficient estimate. Precisely measured coefficients suggest that the model is fitting the data well, and we can be confident that the association between the explanatory variables and the outcome is real, and not just a result of random variation in the data. Defining what counts as ‘precise’ in any analysis, much like the coefficient magnitude, is dependent on the context of the analysis. However, in general, a standard error of less than 0.5 is considered to be a good estimate, and a standard error of less than 0.25 is considered to be a very precise estimate.</p>
 <p>It is important to recognise that a precise coefficient alone cannot be treated as evidence of a causal effect between the explanatory variable and the outcome but it is, at least, a good indication that the explanatory variable is a good predictor of the outcome. In order to establish a causal relationship, we may consider methods that are more robust to the presence of confounding or ommitted variables, the gold standard being randomised controlled trials, but with a strong theoretical basis and a good understanding of the data, we can make a good case for a causal relationship based on observational data.</p>
 </section>
 </section>
 </section>
-<section id="next-steps" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">5.4</span> Next Steps</h2>
+<section id="next-steps" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">6.4</span> Next Steps</h2>
 </section>
-<section id="resources" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="resources"><span class="header-section-number">5.5</span> Resources</h2>
+<section id="resources" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="resources"><span class="header-section-number">6.5</span> Resources</h2>
 <ul>
 <li><a href="https://mlu-explain.github.io/linear-regression/">MLU Explain: Linear Regression</a></li>
 <li><a href="https://www.youtube.com/watch?v=7ArmBVF2dCs">StatQuest: Linear Regression</a></li>
@@ -758,7 +783,7 @@ strong multicollinearity or other numerical problems.</code></pre>
 
 <!-- -->
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-gelman2020" class="csl-entry" role="listitem">
 Gelman, Andrew, Jennifer Hill, and Aki Vehtari Vehtari. 2020. <em>Regression and Other Stories</em>. Cambridge University Press.
 </div>
@@ -1052,13 +1077,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./eda_py.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span>
+      <a href="./hypothesis_testing_py.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./version_control.html" class="pagination-link">
-        <span class="nav-page-text">Version Control</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ml_workflow_py.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

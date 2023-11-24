@@ -2,7 +2,7 @@
 
 {{< include _links.qmd >}}
 
-```{r}
+```{python}
 #| label: setup
 #| cache: false
 #| output: false
@@ -10,25 +10,36 @@
 #| code-summary: 'Setup Code (Click to Expand)'
 
 # packages needed to run the code in this section
-# install.packages(c("tidyverse", "infer", "faux", "remotes"))
-# remotes::install_github("NHS-South-Central-and-West/scwplot")
+# !pip install pandas numpy matplotlib seaborn statsmodel
 
-suppressPackageStartupMessages({
-  library(dplyr)
-  library(ggplot2)
-  library(infer)
-})
+# import packages
+import pandas as pd
+import numpy as np
+import scipy.stats as stats
+import pingouin as pg
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# set plot theme
-theme_set(scwplot::theme_scw(base_size = 14))
+from matplotlib import rc
+from tqdm.auto import tqdm
+from scipy.stats import norm
+
+# set plot style
+sns.set_style('whitegrid')
+
+# set plot font
+rc('font',**{'family':'sans-serif','sans-serif':['Arial']})
+
+# set plot colour palette
+colours = ['#1C355E', '#00A499', '#005EB8']
+sns.set_palette(sns.color_palette(colours))
 
 # set random seed
-set.seed(123)
+np.random.seed(10)
 
 ```
 
-This chapter will cover a topic that is well known to many practitioners - hypothesis testing.
-Hypothesis testing is a popular approach for attempting to make inferences about data without being led astray by noise. Although hypothesis testing remains very popular, it has been much criticised because the most common framework for testing, Null Hypothesis Significance Testing (NHST), has faced increasing criticisms regarding it's external validity. If you have ever come across discussions about the "replication crisis" in science, you will have read about the many issues concerning the use of statistical significance as a measure of evidence in science and the misunderstanding and misuse of p-values. The null hypothesis significance testing framework is another of the central culprits in this crisis.
+This chapter will cover a topic that is well known to many practitioners - hypothesis testing. Hypothesis testing is a popular approach for attempting to make inferences about data without being led astray by noise. Although hypothesis testing remains very popular, it has been much criticised because the most common framework for testing, Null Hypothesis Significance Testing (NHST), has faced increasing criticisms regarding it's external validity. If you have ever come across discussions about the "replication crisis" in science, you will have read about the many issues concerning the use of statistical significance as a measure of evidence in science and the misunderstanding and misuse of p-values. The null hypothesis significance testing framework is another of the central culprits in this crisis.
 
 Hypothesis testing may be one of the most prominent tools for statistical inference, but there is plenty of debate about how we should be doing it, and whether the method should be consigned to the history books of statistics, only to be remembered as that silly time in our lives when we used to do science really badly. Here I hope to be able to give readers a clear understanding of how hypothesis testing works, it's biggest drawbacks, and some advice about how to carry out robust tests of hypotheses.
 
@@ -44,7 +55,7 @@ Our hypothesis might relate to how the mean value of a certain quantity of inter
 
 Hypothesis testing is effectively a statistical method for testing the compatibility of the observed data against a relevant hypothesised effect, often the hypothesis of zero effect. The measure of that incompatibility is a test statistic, which quantifies the distance between the observed data and the expectations of the statistical test, given all the assumptions of the test (including the hypothesised effect size). For example, if testing the hypothesis that there is no effect, a distribution under the assumptions of the statistical test, including the null hypothesis, is generated, and the test statistic measures the distance between the observed data and the null distribution. A p-value is then calculated from this test statistic, representing the probability of a test statistic at least as extreme as the computed test statistic if all the assumptions of the statistical test are true, including the hypothesis that is being tested.
 
-The most common approach to testing hypotheses is the Null Hypothesis Significance Testing (NHST) framework, which involves testing the hypothesis that there is no effect (the null hypothesis) and, where it is possible to reject the null, this can be used as evidence that **something** is going on, to which this may help present evidence for the theory developed by the researcher (the alternative hypothesis). 
+The most common approach to testing hypotheses is the Null Hypothesis Significance Testing (NHST) framework, which involves testing the hypothesis that there is no effect (the null hypothesis) and, where it is possible to reject the null, this can be used as evidence that **something** is going on, to which this may help present evidence for the theory developed by the researcher (the alternative hypothesis).
 
 Hypothesis testing can be valuable for a variety of different use-cases, but they are not without their issues. Despite those issues, they remain a useful tool when you want to know whether the difference between two groups is real, or whether it's a product of noise, or when you are interested in knowing whether an effect size is different from zero. When you have a need to answer questions with greater precision, I would argue that there is a need to go further than hypothesis testing, but in industry, where speed and simplicity are often of equal importance to precision^[This is in contrast to academia, where it is rare that anything other than precision will matter.], hypothesis testing can serve real value.
   
@@ -54,8 +65,7 @@ Hypothesis testing can be valuable for a variety of different use-cases, but the
 
 The goal of NHST is to "adjudicate between two complementary hypotheses" [@blackwell2023], the null hypothesis ($H_0$) and the alternative/research hypothesis ($H_1$). The null hypothesis, which is the hypothesis that no effect exists in the population, is our starting assumption, and we require strong evidence to reject it. If we are able to find strong enough evidence to reject the null, this moves us one step closer to making a case for our alternative hypothesis. 
 
-The reasoning for using two complementary hypotheses is based on @popper1935's _The Logic of Scientific Discovery_. Popper argues that it is impossible to confirm a hypothesis, because hypotheses are a form of inductive reasoning, which involves drawing conclusions about a general principle based on specific observations. We cannot confirm a hypothesis because we cannot prove that it is true by generalising from specific instances. However, we _can_ falsify a hypothesis. If what we observe in our sample provides strong evidence that our hypothesis cannot be true, then we can conclude (with a degree of certainty) that the hypothesis is false.
-
+The reasoning for using two complementary hypotheses is based on @popper1935's _The Logic of Scientific Discovery_. Popper argues that it is impossible to confirm a hypothesis, because hypotheses are a form of inductive reasoning, which involves drawing conclusions about a general principle based on specific observations. We cannot confirm a hypothesis because we cannot prove that it is true by generalising from specific instances. However, we _can_ falsify a hypothesis. If what we observe in our sample provides strong evidence that our hypothesis cannot be true, then we can conclude (with a degree of certainty) that the hypothesis is false
 For a better understanding about the null and alternative hypothesis, I would recommend Josh Starmer's StatQuest videos, embedded below:
 
 {{< video https://youtu.be/0oc49DyA3hU?si=wDuNFfgpP4hQml8e >}}
@@ -98,12 +108,11 @@ One of the central questions that @gelman2021 ask, is whether the same data-anal
 
 I think that the biggest issue with p-values themselves is that we have placed far too much value in them. We use methods that are designed to compute p-values, we define "success" as the discovery of a statistically significant finding, and we give little thought to the design choices made in the process of carrying out these tests. This is partly driven by the frequency of misconceptions and misunderstandings of p-values, but it's also a result of the methods we use. 
 
-If we are more precise about how we think about p-values, this should help us avoid making the mistake of thinking they are proving a hypothesis or that they are sufficient evidence for a theory, but if we are more precise about what a p-value really represents, this raises significant questions about the methods we use. What purpose does a test for "statistical significance" serve if we acknowledge that p-values are not enough? 
-
+If we are more precise about how we think about p-values, this should help us avoid making the mistake of thinking they are proving a hypothesis or that they are sufficient evidence for a theory, but if we are more precise about what a p-value really represents, this raises significant questions about the methods we use. What purpose does a test for "statistical significance" serve if we acknowledge that p-values are not enough?
 @gelman2016 argue that p-values are not the real problem, because the real problem is null hypothesis significance testing, which they refer to as a "parody of falsificationism in which straw-man null hypothesis A is rejected and this is taken as evidence in favour of preferred alternative B." The null hypothesis significance testing framework places far too much weight on the shoulders of p-values, and even if we are doing a better job of hypothesis testing (being particularly careful not to make mistakes about how we use p-values), what is it really worth? When we are treating p-values as a part of the wider toolkit, hypothesis tests become less useful. 
 
 :::
-
+ 
 ## Avoiding the Pitfalls 
 
 There has been plenty of debate among statisticians about the issues around hypothesis testing and p-values, and while there is no detail too minor for two academics to throw hands over, there is a general consensus that our approach to p-values is a problem. What has not been settled, however, is what the right approach is. That makes this section of this chapter a little trickier. However, I will attempt to give some sensible advice about how to avoid the greatest dangers pose by hypothesis testing and the use of p-values more broadly.
@@ -165,10 +174,10 @@ What is needed is to build coherent, logically-specified scientific models from 
 Building scientific models doesn't necessarily address all concerns around the "garden of forking paths" issue, but by doing so we are forced to be more thoughtful about our research, and we are more able to identify problems with our analysis.
 
 :::
-
-
+  
+  
 ## Building Statistical Tests
-
+  
 A generalised framework for hypothesis testing, that discards of NHST's problematic baggage (instead following a Fisherian approach [@fisher1956]), would take the following steps:
 
 1. Specify the test hypothesis ($H_0$) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything^[It could be a hypothesis that captures a consequence of a scientific hypothesis being true (as opposed to false, in the case of the null hypothesis), or it can test two scientific hypotheses against each other (instead of one against the possibility of nothing going on) [@prytherch2022].].
@@ -185,7 +194,7 @@ While there are many different statistical tests that are designed to test diffe
 The general idea of a t-test is to calculate the statistical significance of the difference between two groups. What the groups represent depends on the type of t-test being carried out, whether it be comparing a single group of observed data against a null distribution that assumes the data was generated by chance, or comparing the difference between two observed groups against a null distribution that assumes the difference is zero.
 
 There are several broad groups of t-tests:
-
+  
 -   One-sample t-test - comparing the sample mean of a single group against a "known mean", generally testing whether a sample is likely to be generated by chance.
 -   Paired t-test - comparing means from the same group measured multiple times, like how someone responds to a survey at different points in time.
 -   Two samples t-test - comparing the means of two groups, such as measuring the difference in blood glucose levels of two different groups.
@@ -208,200 +217,226 @@ A one-sample t-test would allow us to do this because we are able to test the me
 
 Lets first start by simulating our high achievers' IQ scores, assuming that their mean score is 105 (perhaps some of the group studied IQ tests extensively and are now able to ace the test), with a standard deviation of 15.
 
-```{r}
-# label: simulate-high-achievers
 
-high_achievers <- tibble(score = rnorm(10, mean = 105, sd = 15))
+```{python}
+#| label: simulate-high-achievers
 
+# mean and standard deviation
+mean, sd = 105, 15 
+
+# draw sample from normal distribution
+high_achievers = np.random.normal(mean, sd, 10)
 ```
 
 We can take a look at the sample data we have simulated, to see how close it is to the true mean and standard deviation (because we are simulating the data it won't be a perfect match).
 
-```{r}
+```{python}
 #| label: summarise-sample
-
+  
 # compute summary statistics for our sample
-high_achievers |> 
-  summarise(
-    mean = mean(score),
-    std_dev = sd(score)
-    )
-
+np.mean(high_achievers)
+np.std(high_achievers)
 ```
 
 And we can visualise the data to get a better sense of what the group looks like.
-
-```{r}
+  
+```{python}
 #| label: visualise-sample
 
-high_achievers |> 
-  ggplot(aes(score)) +
-  geom_histogram(binwidth = 5, colour = "#FFFFFF", linewidth = 1) +
-  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
-  scale_x_continuous(breaks = seq(80, 130, 5)) +
-  labs(x = "IQ Score", y = NULL)
-  
+fig, ax = plt.subplots()
 
+sns.histplot(x=high_achievers, binwidth=5)
+
+# set plot labels and title
+plt.xlabel('IQ Score')
+plt.ylabel('')
+
+sns.despine()
+plt.show()
 ```
-
+  
 It is not clear what the underlying distribution of our sample data is here. We already know that the data was drawn from a normal distribution, but if we did not, we would need more observations to confirm this.
-
-```{r}
+  
+```{python}
 #| label: one-sample-test
 
-t_test(high_achievers, response = score, mu = 100, alternative = "greater")
-
+pg.ttest(high_achievers, y = 100, alternative = "greater")
 ```
 
+  
 The p-value of our one-sample t-test is 0.105. This means that we would expect to observe a sample mean at least as extreme as our observed mean (106), if the null that there is no difference between the high achiever group's mean IQ score and the population mean IQ score is true, a little more than 10% of the time, or 1 in 10 times. That's quite high, so I wouldn't be confident that we are observing a meaningful difference.
 
 However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person, this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).
 
 If we increase our sample size, maybe we will have more luck!
- 
-```{r}
+
+```{python}
 #| label: increase-sample-size
 
-larger_sample <- tibble(score = rnorm(30, mean = 105, sd = 15))
+larger_sample = np.random.normal(mean, sd, 30)
 
-t_test(larger_sample, response = score, mu = 100, alternative = "greater")
-
+pg.ttest(larger_sample, y = 100, alternative = "greater")
 ```
 
 Increasing the sample size from 10 to 30 has decreased the probability of observing a test statistic at least as extreme as our sample mean if our data was generated by chance (and the assumptions of our statistical model are all met) from around 10% to just over 1.5%. That seems a lot more reasonable, and at this point I'd be more comfortable concluding that the high achiever's IQ scores are meaningfully different to the average score in the population.
 
 Of course, our p-value doesn't tell us anything about the substantive importance of the difference in IQ scores. We might be willing to conclude that there **is** a difference, but does it matter? Well, the answer is no because it's IQ scores and IQ scores don't matter. 
-
+  
 But what if, for some truly baffling reason, we had reason to believe IQ scores are not nonsense? In that case, how do we know if the difference between the mean value in the high achievers group and the population is large enough to be of scientific and substantive relevance? This is not a question that significance tests can answer, and is instead something that our domain expertise should answer.
-
+  
 #### Paired T-Test
-
+  
 When respondents in surveys are asked to self-report certain details about themselves, this can invite bias. Take, for example, the difference in [self-reported and interviewer-measured height among men in the UK][Male Heights]. Although there are many proud short kings out there that will confidently declare their height, safe in the knowledge that good things come in small packages, there are plenty of men that wish they were a little bit taller (someone should write a song about that), and for whom a self-reported survey is an opportunity to dream big (literally). Any time that respondents are given the opportunity to report details about themselves that have any social baggage attached, there is a possibility that the responses will be subject to social desirability bias.
-
+  
 In the case of self-reported and measured male heights, the differences are not particularly large in absolute terms. It's very possible that the difference is actually a product of some random variation, or measurement error. We can test this! 
 
 Using the mean values for reported and measured heights in 2016, calculating the standard deviation from the reported standard error^[Standard deviation can be computed from standard error by multiplying the standard error by the square root of the sample size. The formula for this is as follows: $$\sigma = SE \times \sqrt{n}$$], and calculating the correlation between the two variables using the value for each variable from 2011-2016^[Using only five observations is less than ideal, but given that what we are doing is just illustrative, this will work fine.], we can simulate our sample data.
 
-```{r}
+```{python}
 #| label: simulate-male-heights
 
-short_kings <-
-  faux::rnorm_multi(
-    n = 100,
-    vars = 2,
-    mu = c(177.23, 175.71),
-    sd = c(9.02, 8.99),
-    r = 0.83,
-    varnames = c("self_reported_height", "measured_height")
-  ) |> 
-  mutate(height_diff = self_reported_height - measured_height)
+mean, cov, n = [177.23, 175.71], [[1, .83], [.83,  1]], 100
 
+self_reported, measured = np.random.multivariate_normal(mean, cov, n).T
 ```
 
-We have simulated the self-reported and measured height for 100 men, given the mean, standard deviation, and correlation as detailed in Table 1 of the above analysis^[We have used the [`{faux}`][{faux}] package to simulate this data because simulating two variables that are related to each other is a little more involved.]. Using these two simulated variables, we are then able to calculate the difference between the two, and carry out a simple one-sample t-test that compares that difference against a null hypothesis with mean zero.
+We have simulated the self-reported and measured height for 100 men, given the mean, standard deviation, and correlation as detailed in Table 1 of the above analysis, and carried out a paired t-test that compares the difference between the two simulated groups.
 
-```{r}
-#| label: male-heights-test
+```{python}
 
-t_test(short_kings, response = height_diff, mu = 0, direction = "greater")
-
+pg.ttest(self_reported, measured, alternative="greater")
 ```
 
 The difference between the self-reported and measured heights has a p-value of 0.00719, suggesting there is a 0.7% probability of observing a t-statistic at least as extreme as we observe here, if the data was generated by chance and if the assumptions of our statistical model are valid.
 
 The estimated difference between self-reported height and measured height is 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I'll leave that up to you to decide.
-
+  
 #### Two Samples T-Test
-
+  
 So we've established a very real, totally scientific over-reporting of male height across the UK, and some clever, entrepreneurial, and not at all exploitative pharmaceutical company has had the good sense to develop a medication that gives you an extra couple of inches in height. 
 
 In order to prove that it works it needs to go through testing (because we are particularly reckless, we don't really care if it is safe in this example). An experiment is designed, with a treatment and control group that is representative of the wider male population, and the wonder drug is given to the treatment group.
-
+  
 We can compare the change in height for the two groups in the 6 months after the treatment group have taken the medication, hypothesising that the drug has had a positive effect on the treatment group, helping them grow by a whopping 1.5cm! This is compared against the average increase in height for the control group that is approximately zero, with a very small standard deviation. A two-sample t-test can help us shed some light on whether we can be confident that this difference did not occur by chance.
-
+  
 We simulate our treatment and control groups, with 20 observations in each, with the treatment group having a mean growth of 3cm and standard deviation of 3cm, and the control group having a mean growth of 0cm and a standard deviation of 0.5cm.
 
-```{r}
+```{python}
 #| label: simulate-height-experiment
 
-growers <-
-  tibble(
-    group = rep(c("treatment", "control"), times = 20),
-    growth = rnorm(40, mean = c(3, 0), sd = c(.5, .5))
-  )
 
+# create an empty list for the simulated data
+data = []
 
+# for loop to simulate 300 not bald observations
+for i in range(300):
+  hair_status = "Not Bald"
+  education = np.random.choice(
+    ["Basic", "Secondary", "Tertiary"],
+    p=[0.039, 0.594, 0.367]
+    )
+
+  # collect all simulated variables into a dictionary
+  not_bald = { "hair_status": hair_status, "education": education }
+
+  # append dictionary to data
+  data.append(not_bald)
+
+# create pandas dataframe from simulated data
+baldness_survey = pd.DataFrame(data)
+
+# draw samples from normal distribution
+treatment, control = np.random.normal(3, .5, 20), np.random.normal(0, .5, 20)
 ```
-
+  
 Having simulated our treatment and control groups, we can compute a t-test to see if there is a difference in how much each group has grown, on average.
 
-```{r}
+```{python}
 #| label: height-experiment
 
-t_test(growers, formula = growth ~ group,
-       order = c("treatment", "control"),
-       alternative = "greater")
-
+pg.ttest(x=treatment, y=control, paired=False, alternative='greater')
 ```
-
-The probability that we would observe a test statistic as large or larger than observed here is very, very small, and the results of the t-test estimate that the difference between the two groups is a little bit less than 4cm, with a lower confidence interval of just under 3cm, suggesting that this medication is having a positive difference on height in the treatment group!
-
+  
+  The probability that we would observe a test statistic as large or larger than observed here is very, very small, and the results of the t-test estimate that the difference between the two groups is a little bit less than 4cm, with a lower confidence interval of just under 3cm, suggesting that this medication is having a positive difference on height in the treatment group!
+    
 ### Chi-Squared Tests
-
+    
 Although there are many ways that you may encounter chi-squared ($\chi^2$) tests, the two most common are tests of independence and a goodness of fit tests. The chi-squared test of independence is a test of the association between two categorical variables, meaning whether the variables are related or not. It is testing whether they vary independently of each other. A chi-squared goodness of fit test is used to examine how well a theoretical distribution fits the distribution of a categorical variable. We will focus on the test of independence here, because I think this is the most common use case.
-
+  
 A common use-case for chi-squared tests of independence is survey data, where individuals from different groups respond to a survey question that offers a finite number of discrete answers, like a scale from good to bad. A good example of categorical variables used in survey data is the impact of male baldness on 46 year old men, carried out by @sinikumpu2021. In this survey they grouped men by levels of baldness, and asked them various questions about their lives, from education to sex-life, to consider the impact that being bald has on men's lives and well-being. 
 
 We will use the education question as the basis for simulating the data for our chi-squared test. The survey splits education-level in to three groups - basic, secondary, and tertiary - while I have simplified the question by turning the levels of baldness into a binary categorical variable.
 
-```{r}
+```{python}
 #| label: simulate-survey
 
-not_bald <-
-  tibble(
-    hair_status = rep("Not Bald", times = 300),
-    education = sample(
-      c("Basic", "Secondary", "Tertiary"),
-      size = 300, replace = TRUE, 
-      prob = c(0.039, 0.594, 0.367))
-  )
+# create an empty list for the simulated data
+data = []
 
-bald <-
-  tibble(
-    hair_status = rep("Bald", times = 600),
-    education = sample(
-      c("Basic", "Secondary", "Tertiary"),
-      size = 600, replace = TRUE, 
-      prob = c(0.03, 0.603, 0.367))
+# for loop to simulate 300 not bald observations
+for i in range(300):
+  hair_status = "Not Bald"
+  education = np.random.choice(
+    ["Basic", "Secondary", "Tertiary"],
+    p=[0.039, 0.594, 0.367]
     )
 
-baldness_survey <-
-  rbind(not_bald, bald)
+  # collect all simulated variables into a dictionary
+  not_bald = { "hair_status": hair_status, "education": education }
 
+  # append dictionary to data
+  data.append(not_bald)
+
+# for loop to simulate 600 bald observations
+for i in range(600):
+  hair_status = "Bald"
+  education = np.random.choice(
+    ["Basic", "Secondary", "Tertiary"],
+    p=[0.03, 0.603, 0.367]
+    )
+
+  # collect all simulated variables into a dictionary
+  bald = { "hair_status": hair_status, "education": education }
+
+  # append dictionary to data
+  data.append(bald)
+
+# create pandas dataframe from simulated data
+baldness_survey = pd.DataFrame(data)
 ```
 
 We have simulated each of the different baldness categories individually, before combining them into a single dataset. I think there should be a more concise way of doing this, but I haven't wrapped my head round how I should do that yet.
-
+  
 We can visualise the difference between the three education-levels in terms of proportion of baldness, to see if there is an obvious difference.
-
-```{r}
+  
+```{python}
 #| label: visualise-survey
 
-baldness_survey |> 
-  ggplot(aes(education, fill = hair_status)) +
-  geom_bar(position = "fill", colour = "#FFFFFF", linewidth = 1) +
-  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
-  scwplot::scale_fill_qualitative("nhs") +
-  labs(x = "Education Level", y = "Proportion")
+fig, ax = plt.subplots()
 
+sns.histplot(
+  data = baldness_survey, 
+  x = 'education', hue = 'hair_status',
+  multiple='fill'
+  )
+  
+# set plot labels and title
+plt.xlabel('Education Level')
+plt.ylabel('Proportion')
+
+
+sns.despine()
+plt.show()
 ```
 
 There's a small difference between people with a basic education, but for secondary and tertiary education it seems to be pretty evenly split. Our chi-squared test can test this empirically.
 
-```{r}
+```{python}
 #| label: chi-sq-test
 
-chisq_test(baldness_survey, education ~ hair_status)
+expected, observed, stats = pg.chi2_independence(baldness_survey, x='education', y='hair_status')
+
+stats.round(3)
 
 ```
 
@@ -409,144 +444,260 @@ So our p-value tells us that we should expect to observe data at least extreme a
 
 If we were to fudge the numbers a little bit, so as to artificially increase the difference in education levels based on the amount of hair a 46 year old man has, what would our results look like?
 
-```{r}
+```{python}
 #| label: add-effect
 
-not_bald <-
-  tibble(
-    hair_status = rep("Not Bald", times = 300),
-    education = sample(
-      c("Basic", "Secondary", "Tertiary"),
-      size = 300, replace = TRUE, 
-      prob = c(0.15, 0.55, 0.3))
-  )
+# Step 1, empty list `data`:
+data = []
 
-bald <-
-  tibble(
-    hair_status = rep("Bald", times = 600),
-    education = sample(
-      c("Basic", "Secondary", "Tertiary"),
-      size = 600, replace = TRUE, 
-      prob = c(0.05, 0.6, 0.35))
+# Step 2: for-loop:
+for i in range(300):
+  # Step 3: simulate all real-world factors:
+  hair_status = "Not Bald"
+  education = np.random.choice(
+    ["Basic", "Secondary", "Tertiary"],
+    p=[0.15, 0.55, 0.3]
     )
 
-baldness_survey_with_effect <-
-  rbind(not_bald, bald)
+  # Step 4: accumulate all factors in dictionary `d`:
+  not_bald = { "hair_status": hair_status, "education": education }
 
-chisq_test(baldness_survey_with_effect, education ~ hair_status)
+  # Step 5: append `d` to `data`
+  data.append(not_bald)
 
+# Step 2: for-loop:
+for i in range(600):
+  # Step 3: simulate all real-world factors:
+  hair_status = "Bald"
+  education = np.random.choice(
+    ["Basic", "Secondary", "Tertiary"],
+    p=[0.05, 0.6, 0.35]
+    )
+
+  # Step 4: accumulate all factors in dictionary `d`:
+  bald = { "hair_status": hair_status, "education": education }
+
+  # Step 5: append `d` to `data`
+  data.append(bald)
+
+# Step 6: create the DataFrame (outside of the for-loop)
+baldness_survey_with_effect = pd.DataFrame(data)
+
+expected, observed, stats = pg.chi2_independence(baldness_survey_with_effect, x='education', y='hair_status')
+
+stats.round(3)
 ```
 
 Having increased the number of respondents with a basic education (and in turn decreasing those with secondary and tertiary educations) for the not bald group, our chi-squared test results suggest the data we observe is much more extreme. The p-value for this test is extremely small, but that's not totally surprising. We did fake our data, after all.
+  
+<!-- ### Simulation-Based Statistical Tests -->
 
-### Simulation-Based Statistical Tests
+<!-- One of the reasons I always struggled with hypothesis testing when first learning about them is the seemingly endless variations of tests, each suited to a slightly different data distribution or context. While you could take on the arduous task of learning as many different tests as possible, it is probably (definitely) better to think in terms of the framework for carrying out a hypothesis test that was detailed earlier, and understanding all tests as generalisations of this framework. -->
 
-One of the reasons I always struggled with hypothesis testing when first learning about them is the seemingly endless variations of tests, each suited to a slightly different data distribution or context. While you could take on the arduous task of learning as many different tests as possible, it is probably (definitely) better to think in terms of the framework for carrying out a hypothesis test that was detailed earlier, and understanding all tests as generalisations of this framework.
+<!-- This was an idea pitched by the computer scientist Allen Downey, when he wrote that "there is only one test". He's right. This framework for understanding all hypothesis tests as variations on the same basic method uses simulated data from permutation or bootstrapping methods to generate the null distribution against which observed data can be evaluated.  -->
 
-This was an idea pitched by the computer scientist Allen Downey, when he wrote that "there is only one test". He's right. This framework for understanding all hypothesis tests as variations on the same basic method uses simulated data from permutation or bootstrapping methods to generate the null distribution against which observed data can be evaluated. 
+<!-- When classical significance testing methods were developed, simulation wasn't possible, due to the absence of computational power. Now that we have high-powered machines that will do everything for us, we don't have to worry about this so much, which makes simulation much more viable. -->
 
-When classical significance testing methods were developed, simulation wasn't possible, due to the absence of computational power. Now that we have high-powered machines that will do everything for us, we don't have to worry about this so much, which makes simulation much more viable.
+<!-- Downey visualises how this simulation-based workflow for hypothesis testing works using the following diagram: -->
 
-Downey visualises how this simulation-based workflow for hypothesis testing works using the following diagram:
+<!-- ![](figures/hypothesis_testing.png) -->
 
-![](figures/hypothesis_testing.png)
+<!-- The `{infer}` workflow for carrying out simulation-based hypothesis tests is designed based on the same principles (`specify()`, `hypothesize()`, `generate()`, `calculate()`, & `visualize()`). This all-in-one process for hypothesis testing is a little more involved than the humble t-test, and the code for computing hypothesis tests using this approach is definitely more verbose. However, the power that this process gives you is that you can easily carry out any hypothesis test once you've learned Downey's framework, and the consistency of the `{infer}` workflow makes it easier to learn how to do this. The `{infer}` documentation also provides a [pretty exhaustive list][{infer} Examples] of how to compute hypothesis tests under a variety of conditions. -->
 
-The `{infer}` workflow for carrying out simulation-based hypothesis tests is designed based on the same principles (`specify()`, `hypothesize()`, `generate()`, `calculate()`, & `visualize()`). This all-in-one process for hypothesis testing is a little more involved than the humble t-test, and the code for computing hypothesis tests using this approach is definitely more verbose. However, the power that this process gives you is that you can easily carry out any hypothesis test once you've learned Downey's framework, and the consistency of the `{infer}` workflow makes it easier to learn how to do this. The `{infer}` documentation also provides a [pretty exhaustive list][{infer} Examples] of how to compute hypothesis tests under a variety of conditions.
+<!-- We can see `{infer}` in action by recalculating our IQ scores t-test that we carried out earlier on. Here is what that looks like using simulation-based methods. -->
 
-We can see `{infer}` in action by recalculating our IQ scores t-test that we carried out earlier on. Here is what that looks like using simulation-based methods.
+<!-- https://allendowney.github.io/ElementsOfDataScience/13_hypothesis.html  -->
 
-```{r}
-#| label: high-achievers-sim-test
+<!-- ```{python} -->
 
-# compute test statistic
-test_statistic <- 
-  larger_sample |> 
-  specify(response = score) |> 
-  calculate(stat = "mean")
+<!-- # compute test statistic -->
+<!-- np.mean(larger_sample) -->
 
-# generate null distribution
-null_distribution <- 
-  larger_sample |>
-  specify(response = score) |> 
-  hypothesize(null = "point", mu = 100) |> 
-  generate(reps = 1000, type = "bootstrap") |> 
-  calculate(stat = "mean")
+<!-- # generate null distribution -->
+<!-- null = np.random.normal(100, sd, 1000) -->
+<!-- ``` -->
 
-# calculate the p-value of observing a test statistic at least as extreme as 
-# our observed statistic if the data was generated by chance
-p_value <- 
-  null_distribution |>
-  get_p_value(obs_stat = test_statistic, direction = "greater")
+<!-- ```{python} -->
 
-# visualise the test statistic against the null
-null_distribution |>
-  visualize() + 
-  shade_p_value(test_statistic, direction = NULL, color = "#00A499") +
-  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
-  annotate(
-    "text", x = 95, y = 125,
-    label = paste0("t = ", round(test_statistic, 2), "\n p = ", p_value),
-    size = rel(8), color="grey30"
-    ) +
-  labs(x = "IQ Score", y = NULL, title = NULL)
+<!-- np.sum(null < np.mean(larger_sample)) / len(null) -->
 
-```
+<!-- ``` -->
 
-I think that one of the main strengths of this approach is the intuition it gives us for how hypothesis testing really works. By going through the process step-by-step, we can see what we are doing more easily. We compute our test statistic, which is some summary measure of the data (in this case the mean value), before simulating a null distribution under the assumption that there is no difference between our high achievers and the population. We do this by specifying the data we are testing (the response variable), stating our null hypothesis (that we are carrying out a test using a point estimate, and that the mean of the null is 100), and generating a distribution by taking 1000 bootstrap samples (where sample size is equal to our input and samples are drawn from our data with replacement). 
+<!-- ```{python} -->
+<!-- #| label: visualise-sample -->
 
-Having built a null distribution, we can compare our test statistic against that null and see how extreme it appears to be if the assumption that the null hypothesis is true is correct. We can quantify this by computing a p-value, which is just a measure of the proportion of values in our null distribution that are at least as extreme as the test statistic. In the above example, because we are carrying out a one-tailed test (`direction = "greater"`), we would just need to filter the null distribution for values equal to or greater than our sample mean. If we were carrying out a two-tailed test, we would have to calculate the absolute distance of all values from the null mean, and then filter for all values equal to or greater than the difference between our sample mean and the null mean.
+<!-- fig, ax = plt.subplots() -->
 
-To further illustrate this workflow, below is the chi-squared test equivalent.
+<!-- sns.histplot(x=null, binwidth=5) -->
+<!-- plt.axvline(x=np.mean(larger_sample), color = "red") -->
 
-```{r}
-#| label: chi-squared-sim-test
+<!-- # set plot labels and title -->
+<!-- plt.xlabel('IQ Score') -->
+<!-- plt.ylabel('') -->
 
-# calculate test statistic
-chisq_statistic <- 
-  baldness_survey |> 
-  specify(education ~ hair_status) |> 
-  hypothesize(null = "independence") |> 
-  calculate(stat = "Chisq")
+<!-- sns.despine() -->
+<!-- plt.show() -->
+<!-- ``` -->
 
-# generate null distribution
-chisq_null <- 
-  baldness_survey |> 
-  specify(education ~ hair_status) |> 
-  hypothesize(null = "independence") |> 
-  generate(reps = 1000, type = "permute") |> 
-  calculate(stat = "Chisq")
 
-# calculate the p value from the test statistic and null distribution
-chisq_p <-
-  chisq_null |> 
-  get_p_value(chisq_statistic, direction = "greater")
+<!-- ```{python} -->
 
-# visualize the null distribution and test statistic
-chisq_null |> 
-  visualize() + 
-  shade_p_value(chisq_statistic, direction = NULL, color = "#00A499") +
-  geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) +
-  annotate(
-    "text", x = 7.5, y = 250,
-    label = 
-      paste0("χ2 = ", round(chisq_statistic$stat, 2),
-             "\n p = ", chisq_p),
-    size = rel(8), color="grey30"
-    ) +
-  labs(x = "Chi-Squared Statistic", y = NULL, title = NULL)
+<!-- def get_bootstrap(data_column_1, data_column_2, iterations=15000, statistic=np.mean, sign_level=0.05): -->
 
-```
+<!--   boot_len = max(len(data_column_1), len(data_column_2)) -->
+<!--   boot_data, samples_1_a, samples_2_a = [], [], [] -->
 
-As discussed above, the simulation-based approach to hypothesis testing involves carrying out the processes in the hypothesis test more explicitly, and this helps us gain intuition for what we are doing. This also forces us to think about how we specify and compute our test. It's pretty easy to build a t-test without really getting as far as actually checking if it is the right approach, and you don't need to think long and hard about exactly what is going on when you run a t-test. Downey's "There is only one test" framework, and the `{infer}` implementation, forces you to think about what you are doing and to be a little more deliberate about your choices.
+<!--   # Bootstrap sampling -->
+<!--   for _ in tqdm(range(iterations)): -->
+<!--     sample_1, sample_2 = data_column_1.sample(boot_len, replace=True).values, data_column_2.sample(boot_len, replace=True).values -->
+<!--     boot_data.append(statistic(sample_2 - sample_1)) -->
+<!--     samples_1_a.append(np.mean(sample_1)) -->
+<!--     samples_2_a.append(np.mean(sample_2)) -->
 
+<!--     # Calculate quantiles -->
+<!--     quants = pd.DataFrame(boot_data).quantile([sign_level / 2, 1 - sign_level / 2]) -->
+
+<!--     # Calculate p-values -->
+<!--     boot_mean, boot_std = np.mean(boot_data), np.std(boot_data) -->
+<!--     p_1 = norm.cdf(0, boot_mean, boot_std) -->
+<!--     p_2 = norm.cdf(0, -boot_mean, boot_std) -->
+<!--     p_value = min(p_1, p_2) * 2 -->
+
+<!--     # Plotting -->
+<!--     fig, axes = plt.subplots(2, 1, figsize=(10, 10), dpi=100) -->
+
+<!--     # Plot 1 -->
+<!--     axes[0].grid(True, linestyle='-', linewidth=0.7, color='lightgrey') -->
+<!--     axes[0].set_facecolor('white') -->
+<!--     n, _, bars = axes[0].hist(boot_data, bins=50) -->
+
+<!--     for bar in bars: -->
+
+<!--       if bar.get_x() <= quants.iloc[0][0] or bar.get_x() >= quants.iloc[1][0]: -->
+<!--         bar.set_facecolor('palevioletred') -->
+
+<!--       else: -->
+<!--         bar.set_facecolor('deepskyblue') -->
+<!--         bar.set_edgecolor('purple') -->
+
+<!--     axes[0].vlines(boot_mean, ymin=0, ymax=max(n),linestyle='-', color='purple',linewidth=0.7)    -->
+<!--     axes[0].vlines(quants,ymin=0,ymax=max(n),linestyle='--', color='purple',linewidth=0.7) -->
+<!--     axes[0].annotate(f"{quants.iloc[0][0]:.3f}", xy=(quants.iloc[0][0], 0), xytext=(quants.iloc[0][0]+.001, max(n)/2)) -->
+<!--     axes[0].annotate(f"{quants.iloc[1][0]:.3f}", xy=(quants.iloc[1][0], 0), xytext=(quants.iloc[1][0]+.001, max(n)/2)) -->
+<!--     axes[0].set(xlabel='boot_data', ylabel='Frequency', title=f'Distribution of differences in {statistic.__name__}s') -->
+
+<!--     # Plot 2 -->
+<!--     axes[1].grid(True, linestyle='-', linewidth=0.7, color='lightgrey') -->
+<!--     axes[1].set_facecolor('white') -->
+<!--     axes[1].hist(samples_1_a, bins=50, color='deepskyblue', alpha=0.5, label=f"{statistic.__name__}s of boot dataset 1") -->
+<!--     axes[1].hist(samples_2_a, bins=50, color='crimson', alpha=0.5, label=f"{statistic.__name__}s of boot dataset 2") -->
+<!--     axes[1].set(ylabel='Frequency') -->
+<!--     axes[1].legend() -->
+
+<!--     plt.subplots_adjust(hspace=0.2) -->
+
+<!--     # Result -->
+<!--     conclusion = "reject" if p_value <= sign_level else "fail to reject" -->
+
+<!--     print(f"The p-value of {np.round(p_value, 6)} suggests that there is evidence to {conclusion} the null hypothesis at the {sign_level} significance level.") -->
+
+<!--     return {'quants': quants, 'boot mean': boot_mean, 'p_value': p_value} -->
+
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- #| label: high-achievers-sim-test -->
+
+<!-- # compute test statistic -->
+<!-- test_statistic <-  -->
+<!--   larger_sample |>  -->
+<!--   specify(response = score) |>  -->
+<!--   calculate(stat = "mean") -->
+
+<!-- # generate null distribution -->
+<!-- null_distribution <-  -->
+<!--   larger_sample |> -->
+<!--   specify(response = score) |>  -->
+<!--   hypothesize(null = "point", mu = 100) |>  -->
+<!--   generate(reps = 1000, type = "bootstrap") |>  -->
+<!--   calculate(stat = "mean") -->
+
+<!-- # calculate the p-value of observing a test statistic at least as extreme as  -->
+<!-- # our observed statistic if the data was generated by chance -->
+<!-- p_value <-  -->
+<!--   null_distribution |> -->
+<!--   get_p_value(obs_stat = test_statistic, direction = "greater") -->
+
+<!-- # visualise the test statistic against the null -->
+<!-- null_distribution |> -->
+<!--   visualize() +  -->
+<!--   shade_p_value(test_statistic, direction = NULL, color = "#00A499") + -->
+<!--   geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) + -->
+<!--   annotate( -->
+<!--     "text", x = 95, y = 125, -->
+<!--     label = paste0("t = ", round(test_statistic, 2), "\n p = ", p_value), -->
+<!--     size = rel(8), color="grey30" -->
+<!--     ) + -->
+<!--   labs(x = "IQ Score", y = NULL, title = NULL) -->
+
+<!-- ``` -->
+
+<!-- I think that one of the main strengths of this approach is the intuition it gives us for how hypothesis testing really works. By going through the process step-by-step, we can see what we are doing more easily. We compute our test statistic, which is some summary measure of the data (in this case the mean value), before simulating a null distribution under the assumption that there is no difference between our high achievers and the population. We do this by specifying the data we are testing (the response variable), stating our null hypothesis (that we are carrying out a test using a point estimate, and that the mean of the null is 100), and generating a distribution by taking 1000 bootstrap samples (where sample size is equal to our input and samples are drawn from our data with replacement).  -->
+
+<!-- Having built a null distribution, we can compare our test statistic against that null and see how extreme it appears to be if the assumption that the null hypothesis is true is correct. We can quantify this by computing a p-value, which is just a measure of the proportion of values in our null distribution that are at least as extreme as the test statistic. In the above example, because we are carrying out a one-tailed test (`direction = "greater"`), we would just need to filter the null distribution for values equal to or greater than our sample mean. If we were carrying out a two-tailed test, we would have to calculate the absolute distance of all values from the null mean, and then filter for all values equal to or greater than the difference between our sample mean and the null mean. -->
+
+<!-- To further illustrate this workflow, below is the chi-squared test equivalent. -->
+
+
+<!-- ```{r} -->
+<!-- #| label: chi-squared-sim-test -->
+
+<!-- # calculate test statistic -->
+<!-- chisq_statistic <-  -->
+<!--   baldness_survey |>  -->
+<!--   specify(education ~ hair_status) |>  -->
+<!--   hypothesize(null = "independence") |>  -->
+<!--   calculate(stat = "Chisq") -->
+
+<!-- # generate null distribution -->
+<!-- chisq_null <-  -->
+<!--   baldness_survey |>  -->
+<!--   specify(education ~ hair_status) |>  -->
+<!--   hypothesize(null = "independence") |>  -->
+<!--   generate(reps = 1000, type = "permute") |>  -->
+<!--   calculate(stat = "Chisq") -->
+
+<!-- # calculate the p value from the test statistic and null distribution -->
+<!-- chisq_p <- -->
+<!--   chisq_null |>  -->
+<!--   get_p_value(chisq_statistic, direction = "greater") -->
+
+<!-- # visualize the null distribution and test statistic -->
+<!-- chisq_null |>  -->
+<!--   visualize() +  -->
+<!--   shade_p_value(chisq_statistic, direction = NULL, color = "#00A499") + -->
+<!--   geom_hline(yintercept = 0, colour = "#333333", linewidth = 1) + -->
+<!--   annotate( -->
+<!--     "text", x = 7.5, y = 250, -->
+<!--     label =  -->
+<!--       paste0("χ2 = ", round(chisq_statistic$stat, 2), -->
+<!--              "\n p = ", chisq_p), -->
+<!--     size = rel(8), color="grey30" -->
+<!--     ) + -->
+<!--   labs(x = "Chi-Squared Statistic", y = NULL, title = NULL) -->
+
+<!-- ``` -->
+
+<!-- As discussed above, the simulation-based approach to hypothesis testing involves carrying out the processes in the hypothesis test more explicitly, and this helps us gain intuition for what we are doing. This also forces us to think about how we specify and compute our test. It's pretty easy to build a t-test without really getting as far as actually checking if it is the right approach, and you don't need to think long and hard about exactly what is going on when you run a t-test. Downey's "There is only one test" framework, and the `{infer}` implementation, forces you to think about what you are doing and to be a little more deliberate about your choices. -->
+  
 ## Moving Beyond Testing
-
+  
 Hypothesis testing is still a useful tool when we are looking to make conclusions about data without overinterpreting noise [@gelman2020]. Simple statistical tests of difference between groups or differences from a hypothesised value have plenty of utility, especially in industry, where getting reasonably reliable results quickly can often be more valuable than taking more time to get more precision.
-
+  
 However, where more precision is needed, a different approach may be necessary. Testing a test hypothesis can only give us some sense of the degree to which our data is consistent with the hypothesis. This may move us closer to being able to make inferences, especially if the testing approach is robust, and sound scientific models have been developed for which the hypothesis test is a reasonable statistical representation, but answering meaningful questions usually involves trying to make some assertions not just about the existence of an effect or a difference, but also quantifying it too. Where this is the goal, estimation is a better choice. The estimation approach to statistical inference does not rely on a hypothesis, and instead focuses on a "quantity of interest", for which we use the data to estimate [@prytherch2022]. While testing tries to give us a sense of whether or not what we observe in our sample is likely to exist in the population, the estimation approach tries to measure the effect size itself.
-
+  
 Although estimating an effect size is a good start, it is also important to quantify the precision of that estimate as well. Estimating the size of an effect, a point estimate, is inherently uncertain. This uncertainty can be a strength, rather than a weakness. By incorporating uncertainty in to our estimates, we can say more about what our sample data is telling us, and we are better able to make inferences about the population. 
-
+  
 Further, by acknowledging the uncertainty in the statistical modelling process, not just about the model's point estimates, the process should become a more honest representation of the quantity of interest. @greenland2016 argue that the goal of statistical analysis is to evaluate the certainty of an effect size, and acknowledging and embracing that uncertainty should include every aspect of the process, including the conclusions we draw and the way we present our findings.
 
 :::{.callout-note collapse='true'}
@@ -560,9 +711,9 @@ This is, I believe, the most important suggestion made in this chapter. I am bor
 @gelman2020 argue that we are generally capable of being interested in issues where effects exist, and that the presence of an effect is therefore not entirely interesting, in and of itself. Therefore, we should concern ourselves with the things that do matter, like the size of the effect, not the existence of the effect itself.
 
 Although I'm not going to take quite as strong a position as @poole2022 or @gelman2020, I do think his position is pretty much correct. I am of the view that hypothesis testing is generally a sub-optimal approach when trying to better understand phenomena using data. I think there are still plenty of situations where a hypothesis test is sufficient, and in industry where there is often value to providing functionally useful (if relatively imprecise) conclusions quickly, it is reasonable to turn to testing. However, there are lots of situations where an estimate of the effect size, and the precision of that estimate, are both very valuable!
-
+    
 It is rare that we should only care that the effect exists. Generally speaking, this should be a prerequisite to the more important question of what the magnitude and direction of that effect is. Even where the knowledge of the existence of an effect is sufficient, it is hard for me to imagine a situation where knowing the magnitude and direction of the effect wouldn't be useful, and wouldn't allow us to estimate our confidence in that effect more effectively.
-
+  
 Taking an estimation approach to statistical inference doesn't necessarily alter the statistical methods used (though more on this at the end of this chapter), but it does require our adjusting how we approach these methods and what we look to get out of them.
 
 Estimation is not specifically about method. If statistical tests are used, then it requires taking the estimate of the effect size, or calculating it if the context means that any output does not offer an intuitive interpretation of effect. Other methods, like regression, can give a more direct measure of effect size (though there are plenty of regression models that also require work to produce more interpretable effect estimates).
@@ -572,13 +723,13 @@ The important change in approach is to focus on the importance of the estimated 
 #### Embrace Uncertainty {.unnumbered}
 
 When we move away from testing null hypotheses and focus instead on the estimation of effect sizes, we go from testing for the existence of an effect to estimating the magnitude (effect size) and the direction (whether the effect is positive or negative). However, a key part of this that is missing is the precision with which we are able to estimate the effect. It's important to remember, in any statistical modelling, that we are estimating quantities, and therefore any point estimate is just our best effort at quantifying an unknown population parameter. The point estimate is probably wrong! It is important that we acknowledge the uncertainty in our estimations and account for them in the way we present model outputs^[It is also worth noting that while the guidance here is about the estimation approach to statistical inference, it can also be applied to hypothesis testing too.].
-
+  
 However, the embrace of uncertainty is not limited to our uncertainty in our estimates. It is a wider issue. We have to accept that every part of the process of estimating meaningful quantities is done with a degree of uncertainty, and as such the way we think about statistical modelling and the way we present our results should account for the existence of variance. Uncertainty exists everywhere in statistical analysis and inference [@wasserstein2019].
-
+  
 @wasserstein2019 describe the use of "significance tests and dichotomized p-values" as an attempt by some practitioners to avoid dealing with uncertainty by escaping to a more simplistic world where results are either statistically significant or not. Perhaps a little uncharitable (though in an academic context I am more inclined to agree), but we've already discussed the importance of moving away from significance testing, so we should complete the journey and confront uncertainty head-on! We have to accept that findings are more uncertain than is often acknowledged. Our embrace of uncertainty should help us to seek out better methods, apply the necessary amount of care and critical thinking to our work, and draw inferences with the appropriate amount of confidence.
 
 One way of acknowledging and working with this uncertainty is the use of confidence intervals when estimating effect sizes. Confidence intervals estimate a range of values that would be compatible with the data, given all of the statistical model's assumptions are met. While confidence intervals are ultimately estimated from the p-value, and the typical 95% confidence interval corresponds to the p > .05 threshold that I have warned against, they are useful because they frame results in terms of effect sizes, and they incorporate uncertainty in our estimates, helping to quantify the precision with which we are able to estimate effect size. 
-
+  
 Confidence intervals are a step in the right direction, because point estimates, while they are our best shot at the quantity of interest, are highly likely to be wrong. Estimating the interval within which we would expect the quantity of interest to fall, acknowledges that uncertainty, and there's a better chance that the population parameter falls within the estimated range than bang on the point estimate. However, it's important that we don't treat confidence intervals as the fix for all uncertainty! @gelman2016 states that "the solution is not to reform p-values or to replace them with some other statistical summary or threshold, but rather to move toward a greater acceptance of uncertainty and embracing of variation".
 
 Ultimately, confidence intervals are valuable when estimating meaningful quantities, but there are very far from sufficient when it comes to embracing uncertainty. We have to acknowledge the uncertainty in the entire statistical modelling process, both when we are making decisions about that modelling process and when we present our findings to others.
@@ -594,11 +745,11 @@ I have taken a slightly more forgiving position than many of the statisticians t
 While it is possible to use statistical tests for estimation, I also believe that the big wide world of estimation is better served by regression models. I think regression modelling is a better starting point than statistical tests because the structure of regression modelling places more emphasis on the effect size. Further, estimating effect sizes does not rule out the use of statistical tests, but it does require redirecting our focus and making sure to treat the magnitude and direction of effect size as the most important part of the analysis. The premise of statistical tests is that they test for the existence of an effect, and while packages like {infer} frame test outputs in a way that makes using statistical tests for these purposes, it does still require a little work to think about about the results of statistical tests in these terms. Further, I think that regression modelling gives a lot more flexibility when we are attempting to estimate an effect as precisely as possible, and the process and resulting outputs of a regression model lend themselves more naturally to a focus that steers away from hypothesis testing and towards estimating effects.
 
 If it hasn't been made clear before, I think it is important to stress the distinction between the null hypothesis testing framework and the statistical tests used to carry them out. The tests themselves are not really the problem. However, they are closely tied to null hypothesis testing. Ultimately, the statistical tests discussed in this chapter (and many more) are just special cases of linear models [@lindelov2019], and the results in both will be identical [@zablotski2019] (if not the way the outputs are presented), so the same things can be achieved with either approach, but regression modelling offers more flexibility, allows for the layering of complexity/precision in estimates, and the way regression outputs are framed are generally a little more balanced. Treating regressions as the first point of call for inferential statistics is not a necessary prerequisite for "doing things the right way", but doing things the right way becomes easier, because it is easier to frame everything in terms of the magnitude and direction of effects.
-
+  
 The good news? The next chapter is about modelling linear effects using regression!
-
+    
 ## Resources
-
+    
 - [{infer}]
 - [Seeing Theory]
 - [The Permutation Test]
@@ -610,3 +761,9 @@ The good news? The next chapter is about modelling linear effects using regressi
 - [Recommended Resources for A/B Testing]
 - [McElreath - None of the Above]
 - [Introduction to Scientific Programming and Simulations in R]
+  
+  
+- [Statistical Inference is Only Mostly Wrong]
+- [Hypothesis Testing is Only Mostly Useless]
+- [The Idea of Permutation]
+- [Coding for Data: Permutation and the T-Test]
