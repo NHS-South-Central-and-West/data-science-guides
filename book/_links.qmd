@@ -139,6 +139,12 @@
 [Fake Data Packages]: https://r-vogg-blog.netlify.app/posts/2020-12-03-useful-packages-for-data-composition/
 [Fake Data with R]: https://rviews.rstudio.com/2020/09/09/fake-data-with-r/
 
+  
+[Statistical Inference is Only Mostly Wrong]: http://allendowney.blogspot.com/2015/03/statistical-inference-is-only-mostly.html
+[Hypothesis Testing is Only Mostly Useless]: http://allendowney.blogspot.com/2015/05/hypothesis-testing-is-only-mostly.html
+[The Idea of Permutation]: https://matthew-brett.github.io/cfd2020/permutation/permutation_idea.html
+[Coding for Data: Permutation and the T-Test]: https://matthew-brett.github.io/cfd2020/permutation/permutation_and_t_test.html
+
 <!-- machine learning -->
 
 [TMwR]: https://www.TMwR.org/

@@ -2,30 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://python-data-science-guides.netlify.app/index.html</loc>
-    <lastmod>2023-10-31T17:36:12.289Z</lastmod>
+    <lastmod>2023-11-24T16:11:03.707Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/intro.html</loc>
-    <lastmod>2023-10-31T17:36:12.312Z</lastmod>
+    <lastmod>2023-11-24T16:11:03.737Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/good_science.html</loc>
-    <lastmod>2023-10-31T17:36:12.324Z</lastmod>
+    <lastmod>2023-11-24T16:11:03.762Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/sql.html</loc>
-    <lastmod>2023-10-31T17:36:12.344Z</lastmod>
+    <lastmod>2023-11-24T16:11:03.797Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/eda_py.html</loc>
-    <lastmod>2023-10-31T17:36:12.448Z</lastmod>
+    <lastmod>2023-11-24T16:11:03.917Z</lastmod>
+  </url>
+  <url>
+    <loc>https://python-data-science-guides.netlify.app/hypothesis_testing_py.html</loc>
+    <lastmod>2023-11-24T16:11:04.040Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/linear_regression_py.html</loc>
-    <lastmod>2023-10-31T17:36:12.481Z</lastmod>
+    <lastmod>2023-11-24T16:11:04.097Z</lastmod>
+  </url>
+  <url>
+    <loc>https://python-data-science-guides.netlify.app/ml_workflow_py.html</loc>
+    <lastmod>2023-11-24T16:11:04.187Z</lastmod>
+  </url>
+  <url>
+    <loc>https://python-data-science-guides.netlify.app/references.html</loc>
+    <lastmod>2023-11-24T16:11:04.212Z</lastmod>
   </url>
   <url>
     <loc>https://python-data-science-guides.netlify.app/version_control.html</loc>
-    <lastmod>2023-10-31T17:36:12.482Z</lastmod>
+    <lastmod>2023-11-24T16:11:04.217Z</lastmod>
   </url>
 </urlset>
