@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Python Data Science Guides - 4&nbsp; Exploratory Data Analysis</title>
+<title>Python Data Science Guides - 5&nbsp; Exploratory Data Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./hypothesis_testing_py.html" rel="next">
-<link href="./sql.html" rel="prev">
+<link href="./wrangling_py.html" rel="prev">
 <link href="./figures/favicon.ico" rel="icon">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./eda_py.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./eda_py.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -180,8 +180,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./wrangling_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./eda_py.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -198,13 +204,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hypothesis_testing_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_regression_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -221,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ml_workflow_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
   </div>
 </li>
       </ul>
@@ -267,15 +273,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#inspecting-the-data" id="toc-inspecting-the-data" class="nav-link active" data-scroll-target="#inspecting-the-data"><span class="header-section-number">4.1</span> Inspecting the Data</a></li>
-  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="header-section-number">4.2</span> Summary Statistics</a></li>
-  <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation"><span class="header-section-number">4.3</span> Data Visualisation</a>
+  <li><a href="#inspecting-the-data" id="toc-inspecting-the-data" class="nav-link active" data-scroll-target="#inspecting-the-data"><span class="header-section-number">5.1</span> Inspecting the Data</a></li>
+  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="header-section-number">5.2</span> Summary Statistics</a></li>
+  <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation"><span class="header-section-number">5.3</span> Data Visualisation</a>
   <ul class="collapse">
-  <li><a href="#visualising-data-distributions" id="toc-visualising-data-distributions" class="nav-link" data-scroll-target="#visualising-data-distributions"><span class="header-section-number">4.3.1</span> Visualising Data Distributions</a></li>
-  <li><a href="#comparing-distributions" id="toc-comparing-distributions" class="nav-link" data-scroll-target="#comparing-distributions"><span class="header-section-number">4.3.2</span> Comparing Distributions</a></li>
+  <li><a href="#visualising-data-distributions" id="toc-visualising-data-distributions" class="nav-link" data-scroll-target="#visualising-data-distributions"><span class="header-section-number">5.3.1</span> Visualising Data Distributions</a></li>
+  <li><a href="#comparing-distributions" id="toc-comparing-distributions" class="nav-link" data-scroll-target="#comparing-distributions"><span class="header-section-number">5.3.2</span> Comparing Distributions</a></li>
   </ul></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">4.4</span> Next Steps</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">4.5</span> Resources</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">5.4</span> Next Steps</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">5.5</span> Resources</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/eda_py.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -284,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-eda" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-eda" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -347,8 +353,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Exploratory data analysis (EDA) is the process of inspecting, visualising, and summarising a dataset. It is the first step in any data science project, and the importance of EDA can often be overlooked. Without exploring the data, it is difficult to know how to construct a piece of analysis or a model, and it is difficult to know if the data is suitable for the task at hand. As a critical step in the data science workflow, it is important to spend time on EDA and to be thorough and methodical in the process. While EDA is often the most time-consuming step in an analysis, taking the time to explore the data can save time in the long run.</p>
 <p>EDA is an iterative process. In this tutorial, we will use the <code>pandas</code> and <code>seaborn</code> packages to explore a dataset containing information about heart disease. We will start by inspecting the data itself, to get a sense of the structure and the components of the dataset, and to identify any data quality issues (such as missing values). We will then compute summary statistics to get a better understanding of the distribution and central tendency of the variables that are relevant to the analysis. Finally, we will use data visualisations to explore specific variables in more detail, and to identify any interesting relationships between variables.</p>
-<section id="inspecting-the-data" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="inspecting-the-data"><span class="header-section-number">4.1</span> Inspecting the Data</h2>
+<section id="inspecting-the-data" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="inspecting-the-data"><span class="header-section-number">5.1</span> Inspecting the Data</h2>
 <p>The first step when doing EDA is to inspect the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.</p>
 <p>We can use the <code>head()</code> and <code>info()</code> functions to get a sense of the structure of the data. The <code>head()</code> function returns the first five rows of the data, and the <code>info()</code> method returns a summary of the data, including the number of rows, the number of columns, the column names, and the data type of each column. The <code>info()</code> method is particularly useful for identifying missing values, as it returns the number of non-null values in each column. If the number of non-null values is less than the number of rows, then there are missing values in the column.</p>
 <p>In addition to these two methods, we can also use the <code>nunique()</code> method to count the number of unique values in each column, which helps identify categorical variables, and we can use the <code>unique()</code> method to get a list of the unique values in a column.</p>
@@ -518,8 +524,8 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
 </section>
-<section id="summary-statistics" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="summary-statistics"><span class="header-section-number">4.2</span> Summary Statistics</h2>
+<section id="summary-statistics" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="summary-statistics"><span class="header-section-number">5.2</span> Summary Statistics</h2>
 <p>Summary statistics are a quick and easy way to get a sense of the distribution and central tendency of the variables in the dataset. We can use the <code>describe()</code> method to get a quick overview of every column in the dataset, including the row count, the mean and standard deviation, the minimum and maximum value, and quartiles of each variable.</p>
 <div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of the data</span></span>
@@ -753,16 +759,16 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </section>
-<section id="data-visualisation" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="data-visualisation"><span class="header-section-number">4.3</span> Data Visualisation</h2>
+<section id="data-visualisation" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="data-visualisation"><span class="header-section-number">5.3</span> Data Visualisation</h2>
 <p>While inspecting the data directly and using summary statistics to describe it is a good first step, data visualisation is a more effective way to explore the data. It allows us to quickly identify patterns and relationships in the data, and to identify any data quality issues that might not be immediately obvious without a visual representation of the data.</p>
 <p>When using data visualisation for exploratory purposes, the intent is generally to visualise the way data is distributed, both within and between variables. This can be done using a variety of different types of plots, including histograms, bar charts, box plots, scatter plots, and line plots. How variables are distributed can tell us a lot about the variable itself, and how variables are distributed relative to each other can tell us a lot about the potential relationship between the variables.</p>
 <p>In this tutorial, we will use the <code>matplotlib</code> and <code>seaborn</code> packages to create a series of data visualisations to explore the data in more detail. The <code>seaborn</code> package is a high-level data visualisation library that is built on top of <code>matplotlib</code>. Although data visualisation in Python is not as straightforward as it is in R, <code>seaborn</code> makes it much easier to create good quality and informative plots.</p>
-<section id="visualising-data-distributions" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="visualising-data-distributions"><span class="header-section-number">4.3.1</span> Visualising Data Distributions</h3>
+<section id="visualising-data-distributions" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="visualising-data-distributions"><span class="header-section-number">5.3.1</span> Visualising Data Distributions</h3>
 <p>The first step in the exploratory process is to visualise the data distributions of key variables in the dataset. This allows us to get a sense of the typical values and central tendency of the variable, as well as identifying any outliers or other data quality issues.</p>
-<section id="continuous-distributions" class="level4" data-number="4.3.1.1">
-<h4 data-number="4.3.1.1" class="anchored" data-anchor-id="continuous-distributions"><span class="header-section-number">4.3.1.1</span> Continuous Distributions</h4>
+<section id="continuous-distributions" class="level4" data-number="5.3.1.1">
+<h4 data-number="5.3.1.1" class="anchored" data-anchor-id="continuous-distributions"><span class="header-section-number">5.3.1.1</span> Continuous Distributions</h4>
 <p>For continuous variables, we can use histograms to visualise the distribution of the data. We can use the <code>histplot()</code> function to create a histogram of a continuous variable. The <code>binwidth</code> argument allows us to specify the width of the bins in the histogram.</p>
 <div class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution</span></span>
@@ -818,8 +824,8 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <p>The inflated zero values in the cholesterol distribution suggests that there may be an issue with data quality that needs addressing.</p>
 </section>
-<section id="discrete-distributions" class="level4" data-number="4.3.1.2">
-<h4 data-number="4.3.1.2" class="anchored" data-anchor-id="discrete-distributions"><span class="header-section-number">4.3.1.2</span> Discrete Distributions</h4>
+<section id="discrete-distributions" class="level4" data-number="5.3.1.2">
+<h4 data-number="5.3.1.2" class="anchored" data-anchor-id="discrete-distributions"><span class="header-section-number">5.3.1.2</span> Discrete Distributions</h4>
 <p>We can use bar plots to visualise the distribution of discrete variables. We can use the <code>countplot()</code> function to create a bar plot of a discrete variable.</p>
 <div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease distribution</span></span>
@@ -862,11 +868,11 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </section>
 </section>
-<section id="comparing-distributions" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="comparing-distributions"><span class="header-section-number">4.3.2</span> Comparing Distributions</h3>
+<section id="comparing-distributions" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="comparing-distributions"><span class="header-section-number">5.3.2</span> Comparing Distributions</h3>
 <p>There are a number of ways to compare the distributions of multiple variables. Bar plots can be used to visualise two discrete variables, while histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable, and scatter plots are particularly useful for comparing the distribution of two continuous variables.</p>
-<section id="visualising-multiple-discrete-variables" class="level4" data-number="4.3.2.1">
-<h4 data-number="4.3.2.1" class="anchored" data-anchor-id="visualising-multiple-discrete-variables"><span class="header-section-number">4.3.2.1</span> Visualising Multiple Discrete Variables</h4>
+<section id="visualising-multiple-discrete-variables" class="level4" data-number="5.3.2.1">
+<h4 data-number="5.3.2.1" class="anchored" data-anchor-id="visualising-multiple-discrete-variables"><span class="header-section-number">5.3.2.1</span> Visualising Multiple Discrete Variables</h4>
 <p>Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). We can use the <code>countplot()</code> function to create bar plots, and the <code>hue</code> argument to split the bars by a particular variable and display them in different colours.</p>
 <div class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by sex</span></span>
@@ -921,11 +927,11 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </section>
-<section id="visualising-a-continuous-variable-across-discrete-groups" class="level4" data-number="4.3.2.2">
-<h4 data-number="4.3.2.2" class="anchored" data-anchor-id="visualising-a-continuous-variable-across-discrete-groups"><span class="header-section-number">4.3.2.2</span> Visualising A Continuous Variable Across Discrete Groups</h4>
+<section id="visualising-a-continuous-variable-across-discrete-groups" class="level4" data-number="5.3.2.2">
+<h4 data-number="5.3.2.2" class="anchored" data-anchor-id="visualising-a-continuous-variable-across-discrete-groups"><span class="header-section-number">5.3.2.2</span> Visualising A Continuous Variable Across Discrete Groups</h4>
 <p>Histograms and box plots are useful for comparing the distribution of a continuous variable across the groups of a discrete variable.</p>
-<section id="histogram-plots" class="level5" data-number="4.3.2.2.1">
-<h5 data-number="4.3.2.2.1" class="anchored" data-anchor-id="histogram-plots"><span class="header-section-number">4.3.2.2.1</span> Histogram Plots</h5>
+<section id="histogram-plots" class="level5" data-number="5.3.2.2.1">
+<h5 data-number="5.3.2.2.1" class="anchored" data-anchor-id="histogram-plots"><span class="header-section-number">5.3.2.2.1</span> Histogram Plots</h5>
 <p>We can use the <code>histplot()</code> function to create a histogram of a continuous variable. The <code>hue</code> argument allows us to split the histogram by a particular variable and display them in different colours, while the <code>multiple</code> argument allows us to specify how the histograms should be displayed. The <code>multiple</code> argument can be set to <code>stack</code> to stack the histograms on top of each other, or <code>dodge</code> to display the histograms side-by-side.</p>
 <div class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution by heart disease</span></span>
@@ -974,8 +980,8 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <p>The fact that there is a significantly larger proportion of positive heart disease cases in the zero cholesterol values further demonstrates the need to address this data quality issue.</p>
 </section>
-<section id="box-plots" class="level5" data-number="4.3.2.2.2">
-<h5 data-number="4.3.2.2.2" class="anchored" data-anchor-id="box-plots"><span class="header-section-number">4.3.2.2.2</span> Box Plots</h5>
+<section id="box-plots" class="level5" data-number="5.3.2.2.2">
+<h5 data-number="5.3.2.2.2" class="anchored" data-anchor-id="box-plots"><span class="header-section-number">5.3.2.2.2</span> Box Plots</h5>
 <p>Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the <code>boxplot()</code> function to create box plots, and the <code>hue</code> argument to split the box plots by a particular variable and display them in different colours.</p>
 <p>However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained <a href="https://here.r-lib.org/">boxplots</a> by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.</p>
 <div class="cell" data-execution_count="33">
@@ -1034,8 +1040,8 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </section>
 </section>
-<section id="visualising-multiple-discrete-variables-1" class="level4" data-number="4.3.2.3">
-<h4 data-number="4.3.2.3" class="anchored" data-anchor-id="visualising-multiple-discrete-variables-1"><span class="header-section-number">4.3.2.3</span> Visualising Multiple Discrete Variables</h4>
+<section id="visualising-multiple-discrete-variables-1" class="level4" data-number="5.3.2.3">
+<h4 data-number="5.3.2.3" class="anchored" data-anchor-id="visualising-multiple-discrete-variables-1"><span class="header-section-number">5.3.2.3</span> Visualising Multiple Discrete Variables</h4>
 <p>Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the <code>scatterplot()</code> function to create scatter plots, and the <code>hue</code> argument to split the scatter plots by a particular variable and display them in different colours.</p>
 <div class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
@@ -1158,13 +1164,13 @@ Name: proportion, dtype: float64</code></pre>
 </section>
 </section>
 </section>
-<section id="next-steps" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">4.4</span> Next Steps</h2>
+<section id="next-steps" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">5.4</span> Next Steps</h2>
 <p>There are many more visualisation techniques that you can use to explore your data. You can find plenty of inspiration for different approaches to visualising data in the <a href="https://seaborn.pydata.org/">seaborn</a> and <a href="https://matplotlib.org/">matplotlib</a> documentation. There are also a number of other Python libraries that can be used to create visualisations, including <a href="https://plotly.com/python/">plotly</a>, <a href="https://bokeh.org/">bokeh</a>, and <a href="https://altair-viz.github.io/">altair</a>.</p>
 <p>The next step in the data science process is to build a model to either explain or predict the outcome variable, heart disease. The exploratory work done here can help inform decisions about the choice of the model, and the choice of the variables that will be used to build the model. It will also help clean up the data, particularly the zero values in the cholesterol and resting blood pressure variables, to ensure that the model is built on the best possible data.</p>
 </section>
-<section id="resources" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="resources"><span class="header-section-number">4.5</span> Resources</h2>
+<section id="resources" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="resources"><span class="header-section-number">5.5</span> Resources</h2>
 <p>There are a wealth of resources available to help you learn more about data visualisation, and while the resources for producing visualisations in R are more extensive, there are still a number of good resources for producing visualisations in Python.</p>
 <ul>
 <li>Scientific Visualization: Python + Matplotlib [<a href="https://hal.inria.fr/hal-03427242/document">PDF</a>][<a href="https://github.com/rougier/scientific-visualization-book">GitHub</a>]</li>
@@ -1469,13 +1475,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./sql.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing Data from SQL</span></span>
+      <a href="./wrangling_py.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./hypothesis_testing_py.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

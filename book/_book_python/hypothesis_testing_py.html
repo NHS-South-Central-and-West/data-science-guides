@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Python Data Science Guides - 5&nbsp; Hypothesis Testing</title>
+<title>Python Data Science Guides - 6&nbsp; Hypothesis Testing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -135,7 +135,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hypothesis_testing_py.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./hypothesis_testing_py.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hypothesis_testing_py.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./hypothesis_testing_py.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -201,8 +201,14 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./wrangling_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./eda_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -219,13 +225,13 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hypothesis_testing_py.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_regression_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -242,7 +248,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ml_workflow_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
   </div>
 </li>
       </ul>
@@ -288,17 +294,17 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-motivation-for-hypothesis-testing" id="toc-the-motivation-for-hypothesis-testing" class="nav-link active" data-scroll-target="#the-motivation-for-hypothesis-testing"><span class="header-section-number">5.1</span> The Motivation for Hypothesis Testing</a></li>
-  <li><a href="#the-problems-with-hypothesis-testing" id="toc-the-problems-with-hypothesis-testing" class="nav-link" data-scroll-target="#the-problems-with-hypothesis-testing"><span class="header-section-number">5.2</span> The Problems With Hypothesis Testing</a></li>
-  <li><a href="#avoiding-the-pitfalls" id="toc-avoiding-the-pitfalls" class="nav-link" data-scroll-target="#avoiding-the-pitfalls"><span class="header-section-number">5.3</span> Avoiding the Pitfalls</a></li>
-  <li><a href="#building-statistical-tests" id="toc-building-statistical-tests" class="nav-link" data-scroll-target="#building-statistical-tests"><span class="header-section-number">5.4</span> Building Statistical Tests</a>
+  <li><a href="#the-motivation-for-hypothesis-testing" id="toc-the-motivation-for-hypothesis-testing" class="nav-link active" data-scroll-target="#the-motivation-for-hypothesis-testing"><span class="header-section-number">6.1</span> The Motivation for Hypothesis Testing</a></li>
+  <li><a href="#the-problems-with-hypothesis-testing" id="toc-the-problems-with-hypothesis-testing" class="nav-link" data-scroll-target="#the-problems-with-hypothesis-testing"><span class="header-section-number">6.2</span> The Problems With Hypothesis Testing</a></li>
+  <li><a href="#avoiding-the-pitfalls" id="toc-avoiding-the-pitfalls" class="nav-link" data-scroll-target="#avoiding-the-pitfalls"><span class="header-section-number">6.3</span> Avoiding the Pitfalls</a></li>
+  <li><a href="#building-statistical-tests" id="toc-building-statistical-tests" class="nav-link" data-scroll-target="#building-statistical-tests"><span class="header-section-number">6.4</span> Building Statistical Tests</a>
   <ul class="collapse">
-  <li><a href="#t-tests" id="toc-t-tests" class="nav-link" data-scroll-target="#t-tests"><span class="header-section-number">5.4.1</span> T-Tests</a></li>
-  <li><a href="#chi-squared-tests" id="toc-chi-squared-tests" class="nav-link" data-scroll-target="#chi-squared-tests"><span class="header-section-number">5.4.2</span> Chi-Squared Tests</a></li>
+  <li><a href="#t-tests" id="toc-t-tests" class="nav-link" data-scroll-target="#t-tests"><span class="header-section-number">6.4.1</span> T-Tests</a></li>
+  <li><a href="#chi-squared-tests" id="toc-chi-squared-tests" class="nav-link" data-scroll-target="#chi-squared-tests"><span class="header-section-number">6.4.2</span> Chi-Squared Tests</a></li>
   </ul></li>
-  <li><a href="#moving-beyond-testing" id="toc-moving-beyond-testing" class="nav-link" data-scroll-target="#moving-beyond-testing"><span class="header-section-number">5.5</span> Moving Beyond Testing</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">5.6</span> Next Steps</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">5.7</span> Resources</a></li>
+  <li><a href="#moving-beyond-testing" id="toc-moving-beyond-testing" class="nav-link" data-scroll-target="#moving-beyond-testing"><span class="header-section-number">6.5</span> Moving Beyond Testing</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">6.6</span> Next Steps</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">6.7</span> Resources</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/hypothesis_testing_py.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -307,7 +313,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-hypothesis-testing" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-hypothesis-testing" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -366,8 +372,8 @@ div.csl-indent {
 <p>Hypothesis testing may be one of the most prominent tools for statistical inference, but there is plenty of debate about how we should be doing it, and whether the method should be consigned to the history books of statistics, only to be remembered as that silly time in our lives when we used to do science really badly. Here I hope to be able to give readers a clear understanding of how hypothesis testing works, it’s biggest drawbacks, and some advice about how to carry out robust tests of hypotheses.</p>
 <p>Beyond this, I will make a case for moving away from hypothesis testing and towards the estimation of effect sizes. In doing so, I will demonstrate how to carry out some common statistical tests, using the guidelines in this chapter to inform how tests are carried out and how the results are presented. I will attempt to thread the needle between caution and clarity<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, but I recognise that this is not easy, and I’m not sure how successfully I will manage it!</p>
 <p>The compromise that I make here is that this chapter will be like a really terrible Choose Your Own Adventure book, where you choose to take the short route, which lays out a process for carrying out hypothesis testing in a robust manner, or you can tread the long, arduous path through this subject. The intention is that the shorter path should give you everything you need, particularly for anyone that is unfamiliar with hypothesis testing. However, if you have are looking to improve your understanding of hypothesis testing, you can choose to expand the sections with further details.</p>
-<section id="the-motivation-for-hypothesis-testing" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="the-motivation-for-hypothesis-testing"><span class="header-section-number">5.1</span> The Motivation for Hypothesis Testing</h2>
+<section id="the-motivation-for-hypothesis-testing" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-motivation-for-hypothesis-testing"><span class="header-section-number">6.1</span> The Motivation for Hypothesis Testing</h2>
 <p>A hypothesis is a statement about an effect that we expect to observe in our sample data, that is intended to generalise to the population. We do not know what the true effect in the population is, but we have a theory about what it might be, and we can test that theory using a hypothesis about what we will observe in the sample.</p>
 <p>Our hypothesis might relate to how the mean value of a certain quantity of interest (like height) differs from one group to another, or how we expect the value of one quantity in our sample to change as the value of another quantity changes (like the effect of weight on height). A hypothesis test is a statistical method for empirically evaluating a hypothesis, to determine whether what we observe in our sample data is likely to exist in the population.</p>
 <p>Hypothesis testing is effectively a statistical method for testing the compatibility of the observed data against a relevant hypothesised effect, often the hypothesis of zero effect. The measure of that incompatibility is a test statistic, which quantifies the distance between the observed data and the expectations of the statistical test, given all the assumptions of the test (including the hypothesised effect size). For example, if testing the hypothesis that there is no effect, a distribution under the assumptions of the statistical test, including the null hypothesis, is generated, and the test statistic measures the distance between the observed data and the null distribution. A p-value is then calculated from this test statistic, representing the probability of a test statistic at least as extreme as the computed test statistic if all the assumptions of the statistical test are true, including the hypothesis that is being tested.</p>
@@ -394,8 +400,8 @@ Further Details
 </div>
 </div>
 </section>
-<section id="the-problems-with-hypothesis-testing" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="the-problems-with-hypothesis-testing"><span class="header-section-number">5.2</span> The Problems With Hypothesis Testing</h2>
+<section id="the-problems-with-hypothesis-testing" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="the-problems-with-hypothesis-testing"><span class="header-section-number">6.2</span> The Problems With Hypothesis Testing</h2>
 <p>Hypothesis testing serves an important purpose in science, both in academia and in industry. We use hypothesis testing to sift through noise in data to dry and draw conclusions, and this is a perfectly reasonable goal.</p>
 <p>However, the dominant framework for testing hypotheses, Null Hypothesis Significance Testing, is rife with issues. The primary problems with NHST are that it defines tests in terms of them being statistically significant or not, based on an arbitrary threshold value for p-values, and it frames p-values as the primary concern when interpreting a statistical model. While p-values are still relevant, they are not the whole story (nor the main part of the story).</p>
 <p>Further, the importance afforded to p-values in the NHST framework encourages certain common misconceptions about them, and the framing that prioritises them also makes those misconceptions even more harmful. P-values are not the measure of the substantive importance of the effect; they are not the probability that the null hypothesis is true; and finally, a statistically significant p-value does not confirm the alternative hypothesis, just as a non-significant p-values does not confirm the null. They are a measure of how surprising the observed data would be if the hypothesis being tested (like the null hypothesis), and all other assumptions of the statistical test, are true.</p>
@@ -432,8 +438,8 @@ Further Details
 </div>
 </div>
 </section>
-<section id="avoiding-the-pitfalls" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="avoiding-the-pitfalls"><span class="header-section-number">5.3</span> Avoiding the Pitfalls</h2>
+<section id="avoiding-the-pitfalls" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="avoiding-the-pitfalls"><span class="header-section-number">6.3</span> Avoiding the Pitfalls</h2>
 <p>There has been plenty of debate among statisticians about the issues around hypothesis testing and p-values, and while there is no detail too minor for two academics to throw hands over, there is a general consensus that our approach to p-values is a problem. What has not been settled, however, is what the right approach is. That makes this section of this chapter a little trickier. However, I will attempt to give some sensible advice about how to avoid the greatest dangers pose by hypothesis testing and the use of p-values more broadly.</p>
 <p>A more general approach to hypothesis testing would frame things in terms of a test hypothesis, which is a hypothesised effect (including but not limited to zero effect – the null hypothesis) that is assumed to be true, and a statistical test is carried out that considers how well the observed date conforms to our expectations given that the test’s assumptions, including the test hypothesis, are true.</p>
 <p>Perhaps unsurprisingly, the primary way to improve how we do hypothesis testing is to approach p-values differently. The simplest solution is not to use statistical significance at all. This is an arbitrary threshold that gives us very little good information, and allows researchers to avoid thinking critically about their findings. Instead, we should report the p-value itself, and be clear about what it is that p-values actually tell us!</p>
@@ -485,8 +491,8 @@ Further Details
 </div>
 </div>
 </section>
-<section id="building-statistical-tests" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="building-statistical-tests"><span class="header-section-number">5.4</span> Building Statistical Tests</h2>
+<section id="building-statistical-tests" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="building-statistical-tests"><span class="header-section-number">6.4</span> Building Statistical Tests</h2>
 <p>A generalised framework for hypothesis testing, that discards of NHST’s problematic baggage (instead following a Fisherian approach <span class="citation" data-cites="fisher1956">(<a href="references.html#ref-fisher1956" role="doc-biblioref">Fisher 1956</a>)</span>), would take the following steps:</p>
 <ol type="1">
 <li>Specify the test hypothesis (<span class="math inline">\(H_0\)</span>) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</li>
@@ -496,8 +502,8 @@ Further Details
 </ol>
 <p>The important takeaway is that the test statistic is a measure of the sample data, the test distribution is a measure of what we would expect to observe if the test hypothesis, and all other model assumptions, are true, and the statistical test is simply quantifying how compatible the observed data would be with the generated distribution.</p>
 <p>While there are many different statistical tests that are designed to test different data distributions, using different assumptions, the general framework is the same. Below are some examples of statistical tests that are commonly used.</p>
-<section id="t-tests" class="level3" data-number="5.4.1">
-<h3 data-number="5.4.1" class="anchored" data-anchor-id="t-tests"><span class="header-section-number">5.4.1</span> T-Tests</h3>
+<section id="t-tests" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="t-tests"><span class="header-section-number">6.4.1</span> T-Tests</h3>
 <p>The general idea of a t-test is to calculate the statistical significance of the difference between two groups. What the groups represent depends on the type of t-test being carried out, whether it be comparing a single group of observed data against a null distribution that assumes the data was generated by chance, or comparing the difference between two observed groups against a null distribution that assumes the difference is zero.</p>
 <p>There are several broad groups of t-tests:</p>
 <ul>
@@ -509,8 +515,8 @@ Further Details
 <p>Finally, when deciding on the nature of a t-test, you must also decide if the test should be one-tailed or two-tailed. A one-tailed t-test is used to test a hypothesis that includes a directional component (such as <span class="math inline">\(x &gt; y\)</span>), while a two-tailed t-test is just testing whether there is a difference between two groups. A one-tailed t-test is appropriate when you believe the difference between two groups should be positive or negative, but if the only belief is that the groups are different, a two-tailed t-test is appropriate.</p>
 <p>A two-tailed t-test compares whether the sample mean(s) is different, whether larger or smaller, while a one-tailed t-test assumes the direction of the difference is known. For example, if it is known that Group A is either the same or bigger than Group B (or that Group A being smaller is not of interest), then a one-tailed t-test would be appropriate.</p>
 <p>I will simulate data from real-world examples to demonstrate one-sample, paired, and two-sample t-tests, however, these examples are not exhaustive, and there are many variations on t-test implementations.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
-<section id="one-sample-t-test" class="level4" data-number="5.4.1.1">
-<h4 data-number="5.4.1.1" class="anchored" data-anchor-id="one-sample-t-test"><span class="header-section-number">5.4.1.1</span> One-Sample T-Test</h4>
+<section id="one-sample-t-test" class="level4" data-number="6.4.1.1">
+<h4 data-number="6.4.1.1" class="anchored" data-anchor-id="one-sample-t-test"><span class="header-section-number">6.4.1.1</span> One-Sample T-Test</h4>
 <p>We can carry out a one-sample t-test using IQ scores as our example, because there is plenty of data out there about IQ scores that we can base our simulations on. The average IQ score is said to be around 100, and scores are normally distributed with a standard deviation of 15, meaning that the majority of people have an IQ in the range of 85-115.</p>
 <p>In a one-sample t-test we are interested in testing a sample mean against an “expected” mean. For example, perhaps we have a group of individuals that are viewed as “high achievers”, and we want to use IQ scores to test whether this group is meaningfully different to the rest of the population (despite being aware that IQ is not a particularly good test of either an individual’s intelligence or their potential).</p>
 <p>A one-sample t-test would allow us to do this because we are able to test the mean IQ score for our high achievers against the expected mean value if there was no real difference between them and the population, which would just be the mean IQ score in the population (100).</p>
@@ -633,8 +639,8 @@ Further Details
 <p>Of course, our p-value doesn’t tell us anything about the substantive importance of the difference in IQ scores. We might be willing to conclude that there <strong>is</strong> a difference, but does it matter? Well, the answer is no because it’s IQ scores and IQ scores don’t matter.</p>
 <p>But what if, for some truly baffling reason, we had reason to believe IQ scores are not nonsense? In that case, how do we know if the difference between the mean value in the high achievers group and the population is large enough to be of scientific and substantive relevance? This is not a question that significance tests can answer, and is instead something that our domain expertise should answer.</p>
 </section>
-<section id="paired-t-test" class="level4" data-number="5.4.1.2">
-<h4 data-number="5.4.1.2" class="anchored" data-anchor-id="paired-t-test"><span class="header-section-number">5.4.1.2</span> Paired T-Test</h4>
+<section id="paired-t-test" class="level4" data-number="6.4.1.2">
+<h4 data-number="6.4.1.2" class="anchored" data-anchor-id="paired-t-test"><span class="header-section-number">6.4.1.2</span> Paired T-Test</h4>
 <p>When respondents in surveys are asked to self-report certain details about themselves, this can invite bias. Take, for example, the difference in <a href="https://digital.nhs.uk/data-and-information/areas-of-interest/public-health/health-survey-for-england-predicting-height-weight-and-body-mass-index-from-self-reported-data/differences-between-self-reported-and-interviewer-measured-height-weight-and-bmi-using-hse-2011-2016-data">self-reported and interviewer-measured height among men in the UK</a>. Although there are many proud short kings out there that will confidently declare their height, safe in the knowledge that good things come in small packages, there are plenty of men that wish they were a little bit taller (someone should write a song about that), and for whom a self-reported survey is an opportunity to dream big (literally). Any time that respondents are given the opportunity to report details about themselves that have any social baggage attached, there is a possibility that the responses will be subject to social desirability bias.</p>
 <p>In the case of self-reported and measured male heights, the differences are not particularly large in absolute terms. It’s very possible that the difference is actually a product of some random variation, or measurement error. We can test this!</p>
 <p>Using the mean values for reported and measured heights in 2016, calculating the standard deviation from the reported standard error<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, and calculating the correlation between the two variables using the value for each variable from 2011-2016<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>, we can simulate our sample data.</p>
@@ -685,8 +691,8 @@ Further Details
 <p>The difference between the self-reported and measured heights has a p-value of 0.00719, suggesting there is a 0.7% probability of observing a t-statistic at least as extreme as we observe here, if the data was generated by chance and if the assumptions of our statistical model are valid.</p>
 <p>The estimated difference between self-reported height and measured height is 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I’ll leave that up to you to decide.</p>
 </section>
-<section id="two-samples-t-test" class="level4" data-number="5.4.1.3">
-<h4 data-number="5.4.1.3" class="anchored" data-anchor-id="two-samples-t-test"><span class="header-section-number">5.4.1.3</span> Two Samples T-Test</h4>
+<section id="two-samples-t-test" class="level4" data-number="6.4.1.3">
+<h4 data-number="6.4.1.3" class="anchored" data-anchor-id="two-samples-t-test"><span class="header-section-number">6.4.1.3</span> Two Samples T-Test</h4>
 <p>So we’ve established a very real, totally scientific over-reporting of male height across the UK, and some clever, entrepreneurial, and not at all exploitative pharmaceutical company has had the good sense to develop a medication that gives you an extra couple of inches in height.</p>
 <p>In order to prove that it works it needs to go through testing (because we are particularly reckless, we don’t really care if it is safe in this example). An experiment is designed, with a treatment and control group that is representative of the wider male population, and the wonder drug is given to the treatment group.</p>
 <p>We can compare the change in height for the two groups in the 6 months after the treatment group have taken the medication, hypothesising that the drug has had a positive effect on the treatment group, helping them grow by a whopping 1.5cm! This is compared against the average increase in height for the control group that is approximately zero, with a very small standard deviation. A two-sample t-test can help us shed some light on whether we can be confident that this difference did not occur by chance.</p>
@@ -757,8 +763,8 @@ Further Details
 <p>The probability that we would observe a test statistic as large or larger than observed here is very, very small, and the results of the t-test estimate that the difference between the two groups is a little bit less than 4cm, with a lower confidence interval of just under 3cm, suggesting that this medication is having a positive difference on height in the treatment group!</p>
 </section>
 </section>
-<section id="chi-squared-tests" class="level3" data-number="5.4.2">
-<h3 data-number="5.4.2" class="anchored" data-anchor-id="chi-squared-tests"><span class="header-section-number">5.4.2</span> Chi-Squared Tests</h3>
+<section id="chi-squared-tests" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="chi-squared-tests"><span class="header-section-number">6.4.2</span> Chi-Squared Tests</h3>
 <p>Although there are many ways that you may encounter chi-squared (<span class="math inline">\(\chi^2\)</span>) tests, the two most common are tests of independence and a goodness of fit tests. The chi-squared test of independence is a test of the association between two categorical variables, meaning whether the variables are related or not. It is testing whether they vary independently of each other. A chi-squared goodness of fit test is used to examine how well a theoretical distribution fits the distribution of a categorical variable. We will focus on the test of independence here, because I think this is the most common use case.</p>
 <p>A common use-case for chi-squared tests of independence is survey data, where individuals from different groups respond to a survey question that offers a finite number of discrete answers, like a scale from good to bad. A good example of categorical variables used in survey data is the impact of male baldness on 46 year old men, carried out by <span class="citation" data-cites="sinikumpu2021">Sinikumpu et al. (<a href="references.html#ref-sinikumpu2021" role="doc-biblioref">2021</a>)</span>. In this survey they grouped men by levels of baldness, and asked them various questions about their lives, from education to sex-life, to consider the impact that being bald has on men’s lives and well-being.</p>
 <p>We will use the education question as the basis for simulating the data for our chi-squared test. The survey splits education-level in to three groups - basic, secondary, and tertiary - while I have simplified the question by turning the levels of baldness into a binary categorical variable.</p>
@@ -1181,8 +1187,8 @@ Further Details
 <!-- As discussed above, the simulation-based approach to hypothesis testing involves carrying out the processes in the hypothesis test more explicitly, and this helps us gain intuition for what we are doing. This also forces us to think about how we specify and compute our test. It's pretty easy to build a t-test without really getting as far as actually checking if it is the right approach, and you don't need to think long and hard about exactly what is going on when you run a t-test. Downey's "There is only one test" framework, and the `{infer}` implementation, forces you to think about what you are doing and to be a little more deliberate about your choices. -->
 </section>
 </section>
-<section id="moving-beyond-testing" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="moving-beyond-testing"><span class="header-section-number">5.5</span> Moving Beyond Testing</h2>
+<section id="moving-beyond-testing" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="moving-beyond-testing"><span class="header-section-number">6.5</span> Moving Beyond Testing</h2>
 <p>Hypothesis testing is still a useful tool when we are looking to make conclusions about data without overinterpreting noise <span class="citation" data-cites="gelman2020">(<a href="references.html#ref-gelman2020" role="doc-biblioref">Gelman, Hill, and Vehtari 2020</a>)</span>. Simple statistical tests of difference between groups or differences from a hypothesised value have plenty of utility, especially in industry, where getting reasonably reliable results quickly can often be more valuable than taking more time to get more precision.</p>
 <p>However, where more precision is needed, a different approach may be necessary. Testing a test hypothesis can only give us some sense of the degree to which our data is consistent with the hypothesis. This may move us closer to being able to make inferences, especially if the testing approach is robust, and sound scientific models have been developed for which the hypothesis test is a reasonable statistical representation, but answering meaningful questions usually involves trying to make some assertions not just about the existence of an effect or a difference, but also quantifying it too. Where this is the goal, estimation is a better choice. The estimation approach to statistical inference does not rely on a hypothesis, and instead focuses on a “quantity of interest”, for which we use the data to estimate <span class="citation" data-cites="prytherch2022">(<a href="references.html#ref-prytherch2022" role="doc-biblioref">Prytherch 2022</a>)</span>. While testing tries to give us a sense of whether or not what we observe in our sample is likely to exist in the population, the estimation approach tries to measure the effect size itself.</p>
 <p>Although estimating an effect size is a good start, it is also important to quantify the precision of that estimate as well. Estimating the size of an effect, a point estimate, is inherently uncertain. This uncertainty can be a strength, rather than a weakness. By incorporating uncertainty in to our estimates, we can say more about what our sample data is telling us, and we are better able to make inferences about the population.</p>
@@ -1222,16 +1228,16 @@ Further Details
 </div>
 </div>
 </section>
-<section id="next-steps" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">5.6</span> Next Steps</h2>
+<section id="next-steps" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">6.6</span> Next Steps</h2>
 <p>The goal for this chapter is that readers come away with an understanding of the significant limitations of null hypothesis significance testing and the more robust approaches to testing hypotheses, and the alternative approach of estimating meaningful effects. I hope that this chapter has helped set people up reasonably well when carrying out tests. Equally, I hope that they will consider the alternatives, recognising when it is defensible to carry out a statistical test and when estimating the effect size is necessary.</p>
 <p>I have taken a slightly more forgiving position than many of the statisticians that I respect, and from which I have learned so much, but I have deliberately done so because I think industry has slightly different incentives, and therefore slightly different requirements. I think that there are situations where the use of hypothesis testing is sufficient and defensible, and those situations are much more common in industry. The criticisms remain perfectly valid, but I hope I have given readers the tools to carry out more robust testing, and a good understanding of when to choose estimation instead, where necessary.</p>
 <p>While it is possible to use statistical tests for estimation, I also believe that the big wide world of estimation is better served by regression models. I think regression modelling is a better starting point than statistical tests because the structure of regression modelling places more emphasis on the effect size. Further, estimating effect sizes does not rule out the use of statistical tests, but it does require redirecting our focus and making sure to treat the magnitude and direction of effect size as the most important part of the analysis. The premise of statistical tests is that they test for the existence of an effect, and while packages like {infer} frame test outputs in a way that makes using statistical tests for these purposes, it does still require a little work to think about about the results of statistical tests in these terms. Further, I think that regression modelling gives a lot more flexibility when we are attempting to estimate an effect as precisely as possible, and the process and resulting outputs of a regression model lend themselves more naturally to a focus that steers away from hypothesis testing and towards estimating effects.</p>
 <p>If it hasn’t been made clear before, I think it is important to stress the distinction between the null hypothesis testing framework and the statistical tests used to carry them out. The tests themselves are not really the problem. However, they are closely tied to null hypothesis testing. Ultimately, the statistical tests discussed in this chapter (and many more) are just special cases of linear models <span class="citation" data-cites="lindelov2019">(<a href="references.html#ref-lindelov2019" role="doc-biblioref">Lindeløv 2019</a>)</span>, and the results in both will be identical <span class="citation" data-cites="zablotski2019">(<a href="references.html#ref-zablotski2019" role="doc-biblioref">Zablotski 2019</a>)</span> (if not the way the outputs are presented), so the same things can be achieved with either approach, but regression modelling offers more flexibility, allows for the layering of complexity/precision in estimates, and the way regression outputs are framed are generally a little more balanced. Treating regressions as the first point of call for inferential statistics is not a necessary prerequisite for “doing things the right way”, but doing things the right way becomes easier, because it is easier to frame everything in terms of the magnitude and direction of effects.</p>
 <p>The good news? The next chapter is about modelling linear effects using regression!</p>
 </section>
-<section id="resources" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="resources"><span class="header-section-number">5.7</span> Resources</h2>
+<section id="resources" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="resources"><span class="header-section-number">6.7</span> Resources</h2>
 <ul>
 <li><p><a href="https://infer.tidymodels.org/">{infer}</a></p></li>
 <li><p><a href="https://seeing-theory.brown.edu/">Seeing Theory</a></p></li>
@@ -1618,12 +1624,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./eda_py.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./linear_regression_py.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">

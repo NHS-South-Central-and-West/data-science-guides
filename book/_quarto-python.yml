@@ -18,6 +18,7 @@ book:
     - part: "Dealing with Data"
       chapters:
         - sql.qmd
+        - wrangling_py.qmd
         - eda_py.qmd
         
     - part: "Statistical Inference"

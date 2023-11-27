@@ -1,0 +1,2128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Python Data Science Guides - 4&nbsp; Wrangling Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./eda_py.html" rel="next">
+<link href="./sql.html" rel="prev">
+<link href="./figures/favicon.ico" rel="icon">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./wrangling_py.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/scw_logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Python Data Science Guides</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/NHS-South-Central-and-West/data-science-guides/tree/main/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./good_science.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Doing Good Science</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Dealing with Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sql.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing Data from SQL</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./wrangling_py.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis_testing_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear_regression_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ml_workflow_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Deep Learning</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Delivering Data Science</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./version_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Version Control</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#python-libraries-for-data-wrangling" id="toc-python-libraries-for-data-wrangling" class="nav-link active" data-scroll-target="#python-libraries-for-data-wrangling"><span class="header-section-number">4.1</span> Python Libraries for Data Wrangling</a></li>
+  <li><a href="#fingertips-data" id="toc-fingertips-data" class="nav-link" data-scroll-target="#fingertips-data"><span class="header-section-number">4.2</span> Fingertips Data</a></li>
+  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">4.3</span> Data Wrangling</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">4.4</span> Next Steps</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">4.5</span> Resources</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/wrangling_py.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-wrangling" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- links used throughout the book -->
+<!-- intro -->
+<!-- good science -->
+<!-- wrangling -->
+<!-- eda -->
+<!-- hypothesis testing -->
+<!-- machine learning -->
+<!-- version control -->
+<div id="setup" class="cell" data-execution_count="1">
+<details>
+<summary>Setup Code (Click to Expand)</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pyjanitor pandas polars fingertips_py</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> janitor <span class="im">import</span> clean_names</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># import fingertips_py as ftp</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>The first step in any analysis is to find the right data for the problem at hand, and to transform that data so that it is structured appropriately for the method of analysis. Finding the right data can be challenging, sometimes requiring getting data from multiple sources, and even then, the data might be a mess, with missing values, duplicates, formatting that makes it difficult to work with in R or Python, and a myriad of other problems. The process of transforming data to make it suitable for analysis is often referred to as data wrangling, or data munging. The data wrangling process can take many forms, from simple data cleaning to more complex transformations like combining multiple data sets, or creating new variables to enrich the data.</p>
+<section id="python-libraries-for-data-wrangling" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="python-libraries-for-data-wrangling"><span class="header-section-number">4.1</span> Python Libraries for Data Wrangling</h2>
+<p>The Python ecosystem for data wrangling is not quite as rich as in R, but there is one library that is extremely dominant (pandas) and one library that is seeking to disrupt it (polars).</p>
+</section>
+<section id="fingertips-data" class="level2 page-columns page-full" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="fingertips-data"><span class="header-section-number">4.2</span> Fingertips Data</h2>
+<p>We will use Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a> (for which there are packages available in <a href="https://github.com/ropensci/fingertipsR">R</a> and <a href="https://github.com/publichealthengland/PHDS_fingertips_py">Python</a>) as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it. Fingertips is a repository of public health data on a wide range of topics. The data included in this tutorial relates to the wider determinants of health.</p>
+<p>First, we can look at what is available.</p>
+<p>Unfortunately, the <code>fingertips_py</code> package does seem to be a little less mature than the R equivalent, and there are a lot of errors running the functions we would need to import the data. While this is the case, we’ll take a little shortcut, importing the data from a CSV that I’ve stored in the guides GitHub repository, using the Fingertips R package.</p>
+<div id="import-data" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/NHS-South-Central-and-West/data-science-guides/main/data/phof.csv"</span>, low_memory<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="data-info" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>phof_raw.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 264329 entries, 0 to 264328
+Data columns (total 27 columns):
+ #   Column                               Non-Null Count   Dtype  
+---  ------                               --------------   -----  
+ 0   IndicatorID                          264329 non-null  int64  
+ 1   IndicatorName                        264329 non-null  object 
+ 2   ParentCode                           261229 non-null  object 
+ 3   ParentName                           261229 non-null  object 
+ 4   AreaCode                             264329 non-null  object 
+ 5   AreaName                             264329 non-null  object 
+ 6   AreaType                             264329 non-null  object 
+ 7   Sex                                  264329 non-null  object 
+ 8   Age                                  264329 non-null  object 
+ 9   CategoryType                         0 non-null       float64
+ 10  Category                             0 non-null       float64
+ 11  Timeperiod                           264329 non-null  object 
+ 12  Value                                249986 non-null  float64
+ 13  LowerCI95.0limit                     243173 non-null  float64
+ 14  UpperCI95.0limit                     243173 non-null  float64
+ 15  LowerCI99.8limit                     56885 non-null   float64
+ 16  UpperCI99.8limit                     56885 non-null   float64
+ 17  Count                                187440 non-null  float64
+ 18  Denominator                          198367 non-null  float64
+ 19  Valuenote                            28742 non-null   object 
+ 20  RecentTrend                          42091 non-null   object 
+ 21  ComparedtoEnglandvalueorpercentiles  264329 non-null  object 
+ 22  Comparedtopercentiles                264329 non-null  object 
+ 23  TimeperiodSortable                   264329 non-null  int64  
+ 24  Newdata                              72025 non-null   object 
+ 25  Comparedtogoal                       38885 non-null   object 
+ 26  Timeperiodrange                      264329 non-null  object 
+dtypes: float64(9), int64(2), object(16)
+memory usage: 54.5+ MB</code></pre>
+</div>
+</div>
+<div class="cell page-columns page-full" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>phof_raw.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="describe-data" class="cell-output cell-output-display column-page" data-execution_count="4">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">IndicatorID</th>
+<th data-quarto-table-cell-role="th">CategoryType</th>
+<th data-quarto-table-cell-role="th">Category</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">LowerCI95.0limit</th>
+<th data-quarto-table-cell-role="th">UpperCI95.0limit</th>
+<th data-quarto-table-cell-role="th">LowerCI99.8limit</th>
+<th data-quarto-table-cell-role="th">UpperCI99.8limit</th>
+<th data-quarto-table-cell-role="th">Count</th>
+<th data-quarto-table-cell-role="th">Denominator</th>
+<th data-quarto-table-cell-role="th">TimeperiodSortable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>264329.000000</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>249986.000000</td>
+<td>243173.000000</td>
+<td>243173.000000</td>
+<td>56885.000000</td>
+<td>56885.000000</td>
+<td>1.874400e+05</td>
+<td>1.983670e+05</td>
+<td>2.643290e+05</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>72371.514560</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>72.092017</td>
+<td>65.526956</td>
+<td>81.604363</td>
+<td>122.884874</td>
+<td>165.406557</td>
+<td>4.023386e+04</td>
+<td>1.390792e+07</td>
+<td>2.015224e+07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>30934.529754</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>276.950447</td>
+<td>253.887549</td>
+<td>311.174288</td>
+<td>452.040131</td>
+<td>622.510687</td>
+<td>1.124600e+06</td>
+<td>1.361739e+09</td>
+<td>4.862563e+04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>10301.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>-36.400000</td>
+<td>-72.200000</td>
+<td>-5.200000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>-1.800000e+02</td>
+<td>2.544061e-01</td>
+<td>2.000000e+07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>41001.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>12.398315</td>
+<td>8.300000</td>
+<td>16.790000</td>
+<td>22.773030</td>
+<td>33.147850</td>
+<td>6.200000e+01</td>
+<td>7.900000e+02</td>
+<td>2.012000e+07</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>90634.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>40.859605</td>
+<td>35.579380</td>
+<td>50.900000</td>
+<td>58.024690</td>
+<td>69.074819</td>
+<td>4.850000e+02</td>
+<td>4.798000e+03</td>
+<td>2.016000e+07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>92517.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>75.900000</td>
+<td>72.400000</td>
+<td>79.700120</td>
+<td>83.092446</td>
+<td>90.801542</td>
+<td>4.164250e+03</td>
+<td>1.181570e+05</td>
+<td>2.019000e+07</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>93982.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>9110.634850</td>
+<td>8473.979610</td>
+<td>9782.239270</td>
+<td>8122.734550</td>
+<td>10179.121160</td>
+<td>1.942292e+08</td>
+<td>2.894740e+11</td>
+<td>2.023000e+07</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>phof_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="glimpse-data" class="cell-output cell-output-display column-page" data-execution_count="5">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">IndicatorID</th>
+<th data-quarto-table-cell-role="th">IndicatorName</th>
+<th data-quarto-table-cell-role="th">ParentCode</th>
+<th data-quarto-table-cell-role="th">ParentName</th>
+<th data-quarto-table-cell-role="th">AreaCode</th>
+<th data-quarto-table-cell-role="th">AreaName</th>
+<th data-quarto-table-cell-role="th">AreaType</th>
+<th data-quarto-table-cell-role="th">Sex</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">CategoryType</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Count</th>
+<th data-quarto-table-cell-role="th">Denominator</th>
+<th data-quarto-table-cell-role="th">Valuenote</th>
+<th data-quarto-table-cell-role="th">RecentTrend</th>
+<th data-quarto-table-cell-role="th">ComparedtoEnglandvalueorpercentiles</th>
+<th data-quarto-table-cell-role="th">Comparedtopercentiles</th>
+<th data-quarto-table-cell-role="th">TimeperiodSortable</th>
+<th data-quarto-table-cell-role="th">Newdata</th>
+<th data-quarto-table-cell-role="th">Comparedtogoal</th>
+<th data-quarto-table-cell-role="th">Timeperiodrange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>90362</td>
+<td>A01a - Healthy life expectancy at birth</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>E92000001</td>
+<td>England</td>
+<td>England</td>
+<td>Male</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Not compared</td>
+<td>Not compared</td>
+<td>20090000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>90362</td>
+<td>A01a - Healthy life expectancy at birth</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>E92000001</td>
+<td>England</td>
+<td>England</td>
+<td>Female</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Not compared</td>
+<td>Not compared</td>
+<td>20090000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>90362</td>
+<td>A01a - Healthy life expectancy at birth</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E06000001</td>
+<td>Hartlepool</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Male</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Worse</td>
+<td>Not compared</td>
+<td>20090000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>90362</td>
+<td>A01a - Healthy life expectancy at birth</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E06000002</td>
+<td>Middlesbrough</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Male</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Worse</td>
+<td>Not compared</td>
+<td>20090000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>90362</td>
+<td>A01a - Healthy life expectancy at birth</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E06000003</td>
+<td>Redcar and Cleveland</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Male</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Worse</td>
+<td>Not compared</td>
+<td>20090000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 27 columns</p>
+</div>
+</div>
+</div>
+<p>With the raw data imported, we are now able to start the process of cleaning and wrangling the data into a format that is ready for analysis.</p>
+</section>
+<section id="data-wrangling" class="level2 page-columns page-full" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="data-wrangling"><span class="header-section-number">4.3</span> Data Wrangling</h2>
+<p>First, we will clean the column names using the pyjanitor’s <code>clean_names</code> function. This will convert all column names to lower case and remove any spaces and special characters. This will make it easier to work with the data in the future.</p>
+<div id="clean-names" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="op">=</span> (</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    phof_raw</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .pipe(clean_names)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ve got a total of 168 indicators, which means some of the indicators from the Public Health Outcomes Framework are not available for upper tier local authorities. We can filter the data to just the indicators we are interested in (as well as filtering any rows where the value is missing), using the panda’s <code>loc</code> function. We can also use the <code>group_by</code> and <code>mean</code> functions to get the mean value of the indicators across all areas in the data. Below is an example:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  .dropna(subset<span class="op">=</span><span class="st">'value'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  .groupby(<span class="st">'indicatorname'</span>)[<span class="st">'value'</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  .mean()</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="summarise-values" class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>indicatorname
+A01b - Life expectancy at birth                                      80.199513
+B16 - Utilisation of outdoor space for exercise or health reasons    16.216824
+C04 - Low birth weight of term babies                                 2.870756
+Name: value, dtype: float64</code></pre>
+</div>
+</div>
+<p>The data pulled from the Fingertips API has a number of idiosyncracies that need addressing when wrangling the data. For example, the <code>timeperiodsortable</code> column refers to the year that the data relates to, and it contains four superfluous zeros at the end of each year (i.e, 20230000). We can use the pandas <code>assign</code> function to create a <code>year</code> column which strips out the zeros from the <code>timeperiodsortable</code> column by dividing it by 10000, and dropping the decimal place by converting year to integer (using the <code>astype(int)</code> function).</p>
+<div class="cell page-columns page-full" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter for the indicators of interest and wrangle data into tidy structure</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  .loc[(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>])) </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (phof_raw[<span class="st">'areacode'</span>] <span class="op">==</span> <span class="st">'E92000001'</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    )]</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  .assign(year<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">'timeperiodsortable'</span>] <span class="op">/</span> <span class="dv">10000</span>).astype(<span class="bu">int</span>))</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  .groupby([<span class="st">'indicatorname'</span>, <span class="st">'areacode'</span>, <span class="st">'year'</span>], as_index<span class="op">=</span><span class="va">False</span>)[<span class="st">'value'</span>]</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  .mean()</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="format-years" class="cell-output cell-output-display column-page" data-execution_count="8">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">indicatorname</th>
+<th data-quarto-table-cell-role="th">areacode</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2001</td>
+<td>78.448740</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2002</td>
+<td>78.700330</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2003</td>
+<td>78.987650</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2004</td>
+<td>79.358295</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2005</td>
+<td>79.614160</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2006</td>
+<td>79.817360</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2007</td>
+<td>80.082390</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2008</td>
+<td>80.355270</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2009</td>
+<td>80.744790</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2010</td>
+<td>80.982525</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2011</td>
+<td>81.154860</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2012</td>
+<td>81.276175</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2013</td>
+<td>81.283525</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2014</td>
+<td>81.337425</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2015</td>
+<td>81.339375</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2016</td>
+<td>81.419660</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2017</td>
+<td>81.565000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2018</td>
+<td>81.270000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>A01b - Life expectancy at birth</td>
+<td>E92000001</td>
+<td>2021</td>
+<td>80.748915</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>B16 - Utilisation of outdoor space for exercis...</td>
+<td>E92000001</td>
+<td>2011</td>
+<td>14.015031</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td>B16 - Utilisation of outdoor space for exercis...</td>
+<td>E92000001</td>
+<td>2012</td>
+<td>15.329390</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>B16 - Utilisation of outdoor space for exercis...</td>
+<td>E92000001</td>
+<td>2013</td>
+<td>17.130101</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>B16 - Utilisation of outdoor space for exercis...</td>
+<td>E92000001</td>
+<td>2014</td>
+<td>17.907098</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
+<td>B16 - Utilisation of outdoor space for exercis...</td>
+<td>E92000001</td>
+<td>2015</td>
+<td>17.917663</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">24</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2006</td>
+<td>3.018037</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2007</td>
+<td>2.912639</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">26</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2008</td>
+<td>2.894468</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">27</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2009</td>
+<td>2.919269</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">28</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2010</td>
+<td>2.853172</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">29</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2011</td>
+<td>2.844595</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2012</td>
+<td>2.798094</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">31</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2013</td>
+<td>2.822148</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">32</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2014</td>
+<td>2.864100</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">33</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2015</td>
+<td>2.774469</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">34</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2016</td>
+<td>2.786173</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">35</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2017</td>
+<td>2.819327</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">36</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2018</td>
+<td>2.864822</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">37</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2019</td>
+<td>2.902918</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">38</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2020</td>
+<td>2.856152</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">39</td>
+<td>C04 - Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>2021</td>
+<td>2.774210</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>We can also remove the ID that is appended to the beginning of each indicator name. We can use <code>str.replace</code> to remove this part of the string from the indicator name, using a regular expression to remove everything up to and including the dash (and the space immediately after).</p>
+<div class="cell page-columns page-full" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  .assign(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    indicatorname <span class="op">=</span> <span class="kw">lambda</span> x: x[<span class="st">'indicatorname'</span>]</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                              .<span class="bu">str</span>.replace(<span class="st">'^[^-]+- '</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="remove-inds-id" class="cell-output cell-output-display column-page" data-execution_count="9">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">indicatorid</th>
+<th data-quarto-table-cell-role="th">indicatorname</th>
+<th data-quarto-table-cell-role="th">parentcode</th>
+<th data-quarto-table-cell-role="th">parentname</th>
+<th data-quarto-table-cell-role="th">areacode</th>
+<th data-quarto-table-cell-role="th">areaname</th>
+<th data-quarto-table-cell-role="th">areatype</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">age</th>
+<th data-quarto-table-cell-role="th">categorytype</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">count</th>
+<th data-quarto-table-cell-role="th">denominator</th>
+<th data-quarto-table-cell-role="th">valuenote</th>
+<th data-quarto-table-cell-role="th">recenttrend</th>
+<th data-quarto-table-cell-role="th">comparedtoenglandvalueorpercentiles</th>
+<th data-quarto-table-cell-role="th">comparedtopercentiles</th>
+<th data-quarto-table-cell-role="th">timeperiodsortable</th>
+<th data-quarto-table-cell-role="th">newdata</th>
+<th data-quarto-table-cell-role="th">comparedtogoal</th>
+<th data-quarto-table-cell-role="th">timeperiodrange</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2984</td>
+<td>90366</td>
+<td>Life expectancy at birth</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>E92000001</td>
+<td>England</td>
+<td>England</td>
+<td>Male</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Not compared</td>
+<td>Not compared</td>
+<td>20010000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2985</td>
+<td>90366</td>
+<td>Life expectancy at birth</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>E92000001</td>
+<td>England</td>
+<td>England</td>
+<td>Female</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Not compared</td>
+<td>Not compared</td>
+<td>20010000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2986</td>
+<td>90366</td>
+<td>Life expectancy at birth</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E06000001</td>
+<td>Hartlepool</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Male</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Not compared</td>
+<td>Not compared</td>
+<td>20010000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2987</td>
+<td>90366</td>
+<td>Life expectancy at birth</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E06000002</td>
+<td>Middlesbrough</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Male</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Not compared</td>
+<td>Not compared</td>
+<td>20010000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2988</td>
+<td>90366</td>
+<td>Life expectancy at birth</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E06000003</td>
+<td>Redcar and Cleveland</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Male</td>
+<td>All ages</td>
+<td>NaN</td>
+<td>...</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>Not compared</td>
+<td>Not compared</td>
+<td>20010000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3y</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">103354</td>
+<td>20101</td>
+<td>Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E10000029</td>
+<td>Suffolk</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Persons</td>
+<td>&gt;=37 weeks gestational age at birth</td>
+<td>NaN</td>
+<td>...</td>
+<td>169.0</td>
+<td>6124.0</td>
+<td>NaN</td>
+<td>No significant change</td>
+<td>Similar</td>
+<td>Not compared</td>
+<td>20210000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1y</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">103355</td>
+<td>20101</td>
+<td>Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E10000030</td>
+<td>Surrey</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Persons</td>
+<td>&gt;=37 weeks gestational age at birth</td>
+<td>NaN</td>
+<td>...</td>
+<td>277.0</td>
+<td>11536.0</td>
+<td>NaN</td>
+<td>No significant change</td>
+<td>Better</td>
+<td>Not compared</td>
+<td>20210000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1y</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">103356</td>
+<td>20101</td>
+<td>Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E10000031</td>
+<td>Warwickshire</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Persons</td>
+<td>&gt;=37 weeks gestational age at birth</td>
+<td>NaN</td>
+<td>...</td>
+<td>128.0</td>
+<td>5474.0</td>
+<td>NaN</td>
+<td>No significant change</td>
+<td>Better</td>
+<td>Not compared</td>
+<td>20210000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1y</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">103357</td>
+<td>20101</td>
+<td>Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E10000032</td>
+<td>West Sussex</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Persons</td>
+<td>&gt;=37 weeks gestational age at birth</td>
+<td>NaN</td>
+<td>...</td>
+<td>138.0</td>
+<td>7854.0</td>
+<td>NaN</td>
+<td>No significant change</td>
+<td>Better</td>
+<td>Not compared</td>
+<td>20210000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1y</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">103358</td>
+<td>20101</td>
+<td>Low birth weight of term babies</td>
+<td>E92000001</td>
+<td>England</td>
+<td>E10000034</td>
+<td>Worcestershire</td>
+<td>Counties &amp; UAs (from Apr 2023)</td>
+<td>Persons</td>
+<td>&gt;=37 weeks gestational age at birth</td>
+<td>NaN</td>
+<td>...</td>
+<td>117.0</td>
+<td>5069.0</td>
+<td>NaN</td>
+<td>No significant change</td>
+<td>Better</td>
+<td>Not compared</td>
+<td>20210000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1y</td>
+</tr>
+</tbody>
+</table>
+
+<p>8847 rows × 27 columns</p>
+</div>
+</div>
+</div>
+<p>Finally, the data is structured in a wide format, with each indicator having its own column. This is not a tidy structure, as each column should represent a variable, and each row should represent an observation. We can use the <code>pivot_table</code> function to convert the data into a tidy structure, with each indicator having its own row. Pandas will turn <code>areacode</code> and <code>timeperiodsortable</code> into the index of the dataframe, and in order to convert these variables back to columns we use <code>reset_index</code> and <code>rename_axis(None, axis=1)</code>. We can also use the <code>rename</code> function to rename the columns to something more meaningful, and the <code>dropna</code> function to remove any rows where the value is missing.</p>
+<div class="cell page-columns page-full" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  .groupby(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'indicatorname'</span>, <span class="st">'areacode'</span>, <span class="st">'timeperiodsortable'</span>], </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    as_index<span class="op">=</span><span class="va">False</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    )[<span class="st">'value'</span>]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  .mean()</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  .pivot_table(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'areacode'</span>, <span class="st">'timeperiodsortable'</span>],</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'indicatorname'</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'value'</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  .rename(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>{</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">'A01b - Life expectancy at birth'</span>: <span class="st">'life_expectancy'</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">'C04 - Low birth weight of term babies'</span>: <span class="st">'low_birth_weight'</span>, </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B16 - Utilisation of outdoor space for exercise or health reasons'</span>: <span class="st">'outdoor_space'</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  .reset_index()</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  .rename_axis(<span class="va">None</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  .dropna()</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="pivot-wider" class="cell-output cell-output-display column-page" data-execution_count="10">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">areacode</th>
+<th data-quarto-table-cell-role="th">timeperiodsortable</th>
+<th data-quarto-table-cell-role="th">life_expectancy</th>
+<th data-quarto-table-cell-role="th">outdoor_space</th>
+<th data-quarto-table-cell-role="th">low_birth_weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">11</td>
+<td>E06000001</td>
+<td>20120000</td>
+<td>79.607655</td>
+<td>21.131038</td>
+<td>3.222749</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">12</td>
+<td>E06000001</td>
+<td>20130000</td>
+<td>79.075110</td>
+<td>9.837764</td>
+<td>2.555911</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">13</td>
+<td>E06000001</td>
+<td>20140000</td>
+<td>78.846375</td>
+<td>18.596376</td>
+<td>2.989691</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">14</td>
+<td>E06000001</td>
+<td>20150000</td>
+<td>78.738395</td>
+<td>11.314412</td>
+<td>1.794616</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">31</td>
+<td>E06000002</td>
+<td>20110000</td>
+<td>78.344225</td>
+<td>16.792305</td>
+<td>3.448276</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3104</td>
+<td>E92000001</td>
+<td>20110000</td>
+<td>81.154860</td>
+<td>14.015031</td>
+<td>2.844595</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3105</td>
+<td>E92000001</td>
+<td>20120000</td>
+<td>81.276175</td>
+<td>15.329390</td>
+<td>2.798094</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3106</td>
+<td>E92000001</td>
+<td>20130000</td>
+<td>81.283525</td>
+<td>17.130101</td>
+<td>2.822148</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3107</td>
+<td>E92000001</td>
+<td>20140000</td>
+<td>81.337425</td>
+<td>17.907098</td>
+<td>2.864100</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3108</td>
+<td>E92000001</td>
+<td>20150000</td>
+<td>81.339375</td>
+<td>17.917663</td>
+<td>2.774469</td>
+</tr>
+</tbody>
+</table>
+
+<p>667 rows × 5 columns</p>
+</div>
+</div>
+</div>
+<p>We can combine all of the above steps into a single function, which we can then apply to the raw data to get the data into a tidy structure.</p>
+<div class="cell page-columns page-full" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to wrangle data into tidy structure</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrangle_phof_data(data):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">"""</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">  Returns a tidy, formatted DataFrame with Public Health England data</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">  """</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  phof_data <span class="op">=</span> (</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    data</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    .loc[(data[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    .assign(year<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">'timeperiodsortable'</span>] <span class="op">/</span> <span class="dv">10000</span>).astype(<span class="bu">int</span>))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    .groupby(</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>      [<span class="st">'indicatorname'</span>, <span class="st">'areacode'</span>, <span class="st">'year'</span>], </span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>      as_index<span class="op">=</span><span class="va">False</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>      )[<span class="st">'value'</span>]</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    .pivot_table(</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>      index<span class="op">=</span>[<span class="st">'areacode'</span>, <span class="st">'year'</span>],</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>      columns<span class="op">=</span><span class="st">'indicatorname'</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>      values<span class="op">=</span><span class="st">'value'</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    .rename(</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>      columns<span class="op">=</span>{</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">'A01b - Life expectancy at birth'</span>: <span class="st">'life_expectancy'</span>,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">'C04 - Low birth weight of term babies'</span>: <span class="st">'low_birth_weight'</span>, </span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">'B16 - Utilisation of outdoor space for exercise or health reasons'</span>: <span class="st">'outdoor_space'</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    .rename_axis(<span class="va">None</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    .dropna()</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> phof_data</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>phof <span class="op">=</span> wrangle_phof_data(phof_raw)</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>phof.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="function-wrangle-data" class="cell-output cell-output-display column-page" data-execution_count="11">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">areacode</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">life_expectancy</th>
+<th data-quarto-table-cell-role="th">outdoor_space</th>
+<th data-quarto-table-cell-role="th">low_birth_weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">11</td>
+<td>E06000001</td>
+<td>2012</td>
+<td>79.607655</td>
+<td>21.131038</td>
+<td>3.222749</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">12</td>
+<td>E06000001</td>
+<td>2013</td>
+<td>79.075110</td>
+<td>9.837764</td>
+<td>2.555911</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">13</td>
+<td>E06000001</td>
+<td>2014</td>
+<td>78.846375</td>
+<td>18.596376</td>
+<td>2.989691</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">14</td>
+<td>E06000001</td>
+<td>2015</td>
+<td>78.738395</td>
+<td>11.314412</td>
+<td>1.794616</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">31</td>
+<td>E06000002</td>
+<td>2011</td>
+<td>78.344225</td>
+<td>16.792305</td>
+<td>3.448276</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="next-steps" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">4.4</span> Next Steps</h2>
+<p>We have successfully imported, cleaned, and wrangled Fingertips data into a tidy structure. We can now move on to the next step of the data science process, which is to explore the data and perform some analysis.</p>
+<p>We could save the data to a CSV file at this point, using the pandas <code>to_csv</code> function (for example, <code>phof.to_csv('data/phof.csv', index=False)</code>), or we could perform the analysis on the dataframe object we have created.</p>
+<p>This is just one example of the data wrangling process, but in reality there is a vast array of ways you might transform data in the process of preparing it for an analysis. There is no set recipe for this process, but the goal is to transform data from whatever raw form it arrives in to something structured (typically this means tidy data) that lends itself to analysis.</p>
+</section>
+<section id="resources" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="resources"><span class="header-section-number">4.5</span> Resources</h2>
+<ul>
+<li><a href="https://vita.had.co.nz/papers/tidy-data.pdf">Hadley Wickham - Tidy Data</a></li>
+<li><a href="https://kevinheavey.github.io/modern-polars/performance.html">Modern Polars</a></li>
+<li><a href="https://www.aidancooper.co.uk/pandas-anti-patterns/">Pandas Anti Patterns</a></li>
+<li><a href="https://www.dunderdata.com/blog/minimally-sufficient-pandas">Minimally Sufficient Pandas</a></li>
+<li><a href="https://www.metasnake.com/blog/pandas-data-structures.html">Pandas Data Structures</a></li>
+<li><a href="https://www.metasnake.com/blog/pandas-series-intro.html">Pandas Series Introduction</a></li>
+</ul>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./sql.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing Data from SQL</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./eda_py.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb14" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Wrangling Data {#sec-wrangling}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>{{&lt; include _links.qmd &gt;}}</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: false</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: true</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-summary: 'Setup Code (Click to Expand)'</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pyjanitor pandas polars fingertips_py</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> janitor <span class="im">import</span> clean_names</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># import fingertips_py as ftp</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>The first step in any analysis is to find the right data for the problem at hand, and to transform that data so that it is structured appropriately for the method of analysis. Finding the right data can be challenging, sometimes requiring getting data from multiple sources, and even then, the data might be a mess, with missing values, duplicates, formatting that makes it difficult to work with in R or Python, and a myriad of other problems. The process of transforming data to make it suitable for analysis is often referred to as data wrangling, or data munging. The data wrangling process can take many forms, from simple data cleaning to more complex transformations like combining multiple data sets, or creating new variables to enrich the data.</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Python Libraries for Data Wrangling</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>The Python ecosystem for data wrangling is not quite as rich as in R, but there is one library that is extremely dominant (pandas) and one library that is seeking to disrupt it (polars).</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fingertips Data</span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>We will use Public Health England's <span class="co">[</span><span class="ot">Fingertips API</span><span class="co">]</span> (for which there are packages available in <span class="co">[</span><span class="ot">R</span><span class="co">][fingertipsR]</span> and <span class="co">[</span><span class="ot">Python</span><span class="co">][fingertips_py]</span>) as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it. Fingertips is a repository of public health data on a wide range of topics. The data included in this tutorial relates to the wider determinants of health. </span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>First, we can look at what is available.</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>Unfortunately, the <span class="in">`fingertips_py`</span> package does seem to be a little less mature than the R equivalent, and there are a lot of errors running the functions we would need to import the data. While this is the case, we'll take a little shortcut, importing the data from a CSV that I've stored in the guides GitHub repository, using the Fingertips R package.</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: import-data</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/NHS-South-Central-and-West/data-science-guides/main/data/phof.csv"</span>, low_memory<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: data-info</span></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>phof_raw.info()</span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: describe-data</span></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: page</span></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>phof_raw.describe()</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: glimpse-data</span></span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: page</span></span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>phof_raw.head()</span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>With the raw data imported, we are now able to start the process of cleaning and wrangling the data into a format that is ready for analysis.</span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Wrangling</span></span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>First, we will clean the column names using the pyjanitor's <span class="in">`clean_names`</span> function. This will convert all column names to lower case and remove any spaces and special characters. This will make it easier to work with the data in the future.</span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: clean-names</span></span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="op">=</span> (</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>    phof_raw</span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>    .pipe(clean_names)</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>We've got a total of 168 indicators, which means some of the indicators from the Public Health Outcomes Framework are not available for upper tier local authorities. We can filter the data to just the indicators we are interested in (as well as filtering any rows where the value is missing), using the panda's <span class="in">`loc`</span> function. We can also use the <span class="in">`group_by`</span> and <span class="in">`mean`</span> functions to get the mean value of the indicators across all areas in the data. Below is an example:</span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: summarise-values</span></span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>  .dropna(subset<span class="op">=</span><span class="st">'value'</span>)</span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>  .groupby(<span class="st">'indicatorname'</span>)[<span class="st">'value'</span>]</span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>  .mean()</span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>The data pulled from the Fingertips API has a number of idiosyncracies that need addressing when wrangling the data. For example, the <span class="in">`timeperiodsortable`</span> column refers to the year that the data relates to, and it contains four superfluous zeros at the end of each year (i.e, 20230000). We can use the pandas <span class="in">`assign`</span> function to create a <span class="in">`year`</span> column which strips out the zeros from the <span class="in">`timeperiodsortable`</span> column by dividing it by 10000, and dropping the decimal place by converting year to integer (using the <span class="in">`astype(int)`</span> function).</span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: format-years</span></span>
+<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: page</span></span>
+<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a><span class="co"># filter for the indicators of interest and wrangle data into tidy structure</span></span>
+<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
+<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a>  .loc[(</span>
+<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>    phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>])) </span>
+<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (phof_raw[<span class="st">'areacode'</span>] <span class="op">==</span> <span class="st">'E92000001'</span> </span>
+<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>    )]</span>
+<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>  .assign(year<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">'timeperiodsortable'</span>] <span class="op">/</span> <span class="dv">10000</span>).astype(<span class="bu">int</span>))</span>
+<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a>  .groupby([<span class="st">'indicatorname'</span>, <span class="st">'areacode'</span>, <span class="st">'year'</span>], as_index<span class="op">=</span><span class="va">False</span>)[<span class="st">'value'</span>]</span>
+<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a>  .mean()</span>
+<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>We can also remove the ID that is appended to the beginning of each indicator name. We can use <span class="in">`str.replace`</span> to remove this part of the string from the indicator name, using a regular expression to remove everything up to and including the dash (and the space immediately after).</span>
+<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: remove-inds-id</span></span>
+<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: page</span></span>
+<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
+<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
+<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a>  .assign(</span>
+<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a>    indicatorname <span class="op">=</span> <span class="kw">lambda</span> x: x[<span class="st">'indicatorname'</span>]</span>
+<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a>                              .<span class="bu">str</span>.replace(<span class="st">'^[^-]+- '</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>Finally, the data is structured in a wide format, with each indicator having its own column. This is not a tidy structure, as each column should represent a variable, and each row should represent an observation. We can use the <span class="in">`pivot_table`</span> function to convert the data into a tidy structure, with each indicator having its own row. Pandas will turn <span class="in">`areacode`</span> and <span class="in">`timeperiodsortable`</span> into the index of the dataframe, and in order to convert these variables back to columns we use <span class="in">`reset_index`</span> and <span class="in">`rename_axis(None, axis=1)`</span>. We can also use the <span class="in">`rename`</span> function to rename the columns to something more meaningful, and the <span class="in">`dropna`</span> function to remove any rows where the value is missing.</span>
+<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: pivot-wider</span></span>
+<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: page</span></span>
+<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
+<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
+<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a>  .groupby(</span>
+<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'indicatorname'</span>, <span class="st">'areacode'</span>, <span class="st">'timeperiodsortable'</span>], </span>
+<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a>    as_index<span class="op">=</span><span class="va">False</span></span>
+<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a>    )[<span class="st">'value'</span>]</span>
+<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>  .mean()</span>
+<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a>  .pivot_table(</span>
+<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'areacode'</span>, <span class="st">'timeperiodsortable'</span>],</span>
+<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'indicatorname'</span>,</span>
+<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'value'</span></span>
+<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>  .rename(</span>
+<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>{</span>
+<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a>      <span class="st">'A01b - Life expectancy at birth'</span>: <span class="st">'life_expectancy'</span>,</span>
+<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a>      <span class="st">'C04 - Low birth weight of term babies'</span>: <span class="st">'low_birth_weight'</span>, </span>
+<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a>      <span class="st">'B16 - Utilisation of outdoor space for exercise or health reasons'</span>: <span class="st">'outdoor_space'</span></span>
+<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a>      })</span>
+<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a>  .reset_index()</span>
+<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>  .rename_axis(<span class="va">None</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>  .dropna()</span>
+<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a>We can combine all of the above steps into a single function, which we can then apply to the raw data to get the data into a tidy structure.</span>
+<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: function-wrangle-data</span></span>
+<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a><span class="co">#| column: page</span></span>
+<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a><span class="co"># function to wrangle data into tidy structure</span></span>
+<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrangle_phof_data(data):</span>
+<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a>  <span class="co">"""</span></span>
+<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a><span class="co">  Returns a tidy, formatted DataFrame with Public Health England data</span></span>
+<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a><span class="co">  """</span></span>
+<span id="cb14-194"><a href="#cb14-194" aria-hidden="true" tabindex="-1"></a>  phof_data <span class="op">=</span> (</span>
+<span id="cb14-195"><a href="#cb14-195" aria-hidden="true" tabindex="-1"></a>    data</span>
+<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a>    .loc[(data[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
+<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a>    .assign(year<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="st">'timeperiodsortable'</span>] <span class="op">/</span> <span class="dv">10000</span>).astype(<span class="bu">int</span>))</span>
+<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a>    .groupby(</span>
+<span id="cb14-199"><a href="#cb14-199" aria-hidden="true" tabindex="-1"></a>      [<span class="st">'indicatorname'</span>, <span class="st">'areacode'</span>, <span class="st">'year'</span>], </span>
+<span id="cb14-200"><a href="#cb14-200" aria-hidden="true" tabindex="-1"></a>      as_index<span class="op">=</span><span class="va">False</span></span>
+<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a>      )[<span class="st">'value'</span>]</span>
+<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a>    .mean()</span>
+<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a>    .pivot_table(</span>
+<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a>      index<span class="op">=</span>[<span class="st">'areacode'</span>, <span class="st">'year'</span>],</span>
+<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a>      columns<span class="op">=</span><span class="st">'indicatorname'</span>,</span>
+<span id="cb14-206"><a href="#cb14-206" aria-hidden="true" tabindex="-1"></a>      values<span class="op">=</span><span class="st">'value'</span></span>
+<span id="cb14-207"><a href="#cb14-207" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a>    .rename(</span>
+<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a>      columns<span class="op">=</span>{</span>
+<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a>        <span class="st">'A01b - Life expectancy at birth'</span>: <span class="st">'life_expectancy'</span>,</span>
+<span id="cb14-211"><a href="#cb14-211" aria-hidden="true" tabindex="-1"></a>        <span class="st">'C04 - Low birth weight of term babies'</span>: <span class="st">'low_birth_weight'</span>, </span>
+<span id="cb14-212"><a href="#cb14-212" aria-hidden="true" tabindex="-1"></a>        <span class="st">'B16 - Utilisation of outdoor space for exercise or health reasons'</span>: <span class="st">'outdoor_space'</span></span>
+<span id="cb14-213"><a href="#cb14-213" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb14-214"><a href="#cb14-214" aria-hidden="true" tabindex="-1"></a>    .reset_index()</span>
+<span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a>    .rename_axis(<span class="va">None</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a>    .dropna()</span>
+<span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> phof_data</span>
+<span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a>phof <span class="op">=</span> wrangle_phof_data(phof_raw)</span>
+<span id="cb14-222"><a href="#cb14-222" aria-hidden="true" tabindex="-1"></a>phof.head()</span>
+<span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb14-224"><a href="#cb14-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-225"><a href="#cb14-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next Steps</span></span>
+<span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a>We have successfully imported, cleaned, and wrangled Fingertips data into a tidy structure. We can now move on to the next step of the data science process, which is to explore the data and perform some analysis.</span>
+<span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a>We could save the data to a CSV file at this point, using the pandas <span class="in">`to_csv`</span> function (for example, <span class="in">`phof.to_csv('data/phof.csv', index=False)`</span>), or we could perform the analysis on the dataframe object we have created.</span>
+<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a>This is just one example of the data wrangling process, but in reality there is a vast array of ways you might transform data in the process of preparing it for an analysis. There is no set recipe for this process, but the goal is to transform data from whatever raw form it arrives in to something structured (typically this means tidy data) that lends itself to analysis.</span>
+<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Resources</span></span>
+<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Hadley Wickham - Tidy Data</span><span class="co">]</span></span>
+<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Modern Polars</span><span class="co">]</span></span>
+<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Pandas Anti Patterns</span><span class="co">]</span></span>
+<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Minimally Sufficient Pandas</span><span class="co">]</span></span>
+<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Pandas Data Structures</span><span class="co">]</span></span>
+<span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Pandas Series Introduction</span><span class="co">]</span></span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center"><a href="https://r-data-science-guides.netlify.app"> R Data Science Guides</a> <i class="fa-brands fa-r-project fa-xl" aria-label="r-project"></i></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>
