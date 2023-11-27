@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Python Data Science Guides - 7&nbsp; End-to-End Machine Learning Workflow</title>
+<title>Python Data Science Guides - 8&nbsp; End-to-End Machine Learning Workflow</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ml_workflow_py.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="./ml_workflow_py.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ml_workflow_py.html">Machine Learning</a></li><li class="breadcrumb-item"><a href="./ml_workflow_py.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -180,8 +180,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./wrangling_py.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./eda_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -198,13 +204,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hypothesis_testing_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear_regression_py.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -221,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ml_workflow_py.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
   </div>
 </li>
       </ul>
@@ -267,21 +273,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="header-section-number">7.1</span> Data</a>
+  <li><a href="#data" id="toc-data" class="nav-link active" data-scroll-target="#data"><span class="header-section-number">8.1</span> Data</a>
   <ul class="collapse">
-  <li><a href="#cleaning" id="toc-cleaning" class="nav-link" data-scroll-target="#cleaning"><span class="header-section-number">7.1.1</span> Cleaning</a></li>
-  <li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split"><span class="header-section-number">7.1.2</span> Train/Test Split</a></li>
-  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">7.1.3</span> Preprocessing</a></li>
+  <li><a href="#cleaning" id="toc-cleaning" class="nav-link" data-scroll-target="#cleaning"><span class="header-section-number">8.1.1</span> Cleaning</a></li>
+  <li><a href="#traintest-split" id="toc-traintest-split" class="nav-link" data-scroll-target="#traintest-split"><span class="header-section-number">8.1.2</span> Train/Test Split</a></li>
+  <li><a href="#preprocessing" id="toc-preprocessing" class="nav-link" data-scroll-target="#preprocessing"><span class="header-section-number">8.1.3</span> Preprocessing</a></li>
   </ul></li>
-  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training"><span class="header-section-number">7.2</span> Model Training</a>
+  <li><a href="#model-training" id="toc-model-training" class="nav-link" data-scroll-target="#model-training"><span class="header-section-number">8.2</span> Model Training</a>
   <ul class="collapse">
-  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">7.2.1</span> Cross-Validation</a></li>
-  <li><a href="#hyperparameter-tuning" id="toc-hyperparameter-tuning" class="nav-link" data-scroll-target="#hyperparameter-tuning"><span class="header-section-number">7.2.2</span> Hyperparameter Tuning</a></li>
+  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation"><span class="header-section-number">8.2.1</span> Cross-Validation</a></li>
+  <li><a href="#hyperparameter-tuning" id="toc-hyperparameter-tuning" class="nav-link" data-scroll-target="#hyperparameter-tuning"><span class="header-section-number">8.2.2</span> Hyperparameter Tuning</a></li>
   </ul></li>
-  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">7.3</span> Model Evaluation</a></li>
-  <li><a href="#model-interpretation" id="toc-model-interpretation" class="nav-link" data-scroll-target="#model-interpretation"><span class="header-section-number">7.4</span> Model Interpretation</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">7.5</span> Next Steps</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">7.6</span> Resources</a></li>
+  <li><a href="#model-evaluation" id="toc-model-evaluation" class="nav-link" data-scroll-target="#model-evaluation"><span class="header-section-number">8.3</span> Model Evaluation</a></li>
+  <li><a href="#model-interpretation" id="toc-model-interpretation" class="nav-link" data-scroll-target="#model-interpretation"><span class="header-section-number">8.4</span> Model Interpretation</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">8.5</span> Next Steps</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">8.6</span> Resources</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/ml_workflow_py.qmd" class="toc-action">View source</a></p></div></div></nav>
     </div>
@@ -290,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-ml-workflow" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-ml-workflow" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -346,7 +352,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A simple end-to-end ML solution will typically include the following steps:</p>
 <ol type="1">
 <li>Importing &amp; Cleaning Data</li>
-<li>Exploratory Data Analysis (See <a href="eda_py.html"><span>Chapter&nbsp;4</span></a>)</li>
+<li>Exploratory Data Analysis (See <a href="eda_py.html"><span>Chapter&nbsp;5</span></a>)</li>
 <li>Data Preprocessing</li>
 <li>Model Training
 <ul>
@@ -357,8 +363,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Fitting Model on Test Data</li>
 <li>Model Evaluation</li>
 </ol>
-<section id="data" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="data"><span class="header-section-number">7.1</span> Data</h2>
+<section id="data" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="data"><span class="header-section-number">8.1</span> Data</h2>
 <div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data summary</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.info()</span>
@@ -475,8 +481,8 @@ memory usage: 71.8+ KB</code></pre>
 </div>
 </div>
 </div>
-<section id="cleaning" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="cleaning"><span class="header-section-number">7.1.1</span> Cleaning</h3>
+<section id="cleaning" class="level3" data-number="8.1.1">
+<h3 data-number="8.1.1" class="anchored" data-anchor-id="cleaning"><span class="header-section-number">8.1.1</span> Cleaning</h3>
 <p>Though in this instance, the data is relatively clean, the following steps are included to demonstrate how you might clean data in a real-world scenario. Dropping NAs and duplicates should, however, be done with care (see discussion below).</p>
 <div id="data_cleaning" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check for missing values</span></span>
@@ -498,8 +504,8 @@ memory usage: 71.8+ KB</code></pre>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[(df[<span class="st">'cholesterol'</span>] <span class="op">!=</span> <span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">'resting_bp'</span>] <span class="op">!=</span> <span class="dv">0</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="traintest-split" class="level3" data-number="7.1.2">
-<h3 data-number="7.1.2" class="anchored" data-anchor-id="traintest-split"><span class="header-section-number">7.1.2</span> Train/Test Split</h3>
+<section id="traintest-split" class="level3" data-number="8.1.2">
+<h3 data-number="8.1.2" class="anchored" data-anchor-id="traintest-split"><span class="header-section-number">8.1.2</span> Train/Test Split</h3>
 <p>One of the central tenets of machine learning is that the model should not be trained on the same data that it is evaluated on. This is because the model could learn spurious/random patterns and correlations in the training data, and this will harm the model’s ability to make good predictions on new, unseen data. There are many way of trying to resolve this, but the most simple approach is to split the data into a training and test set. The training set will be used to train the model, and the test set will be used to evaluate the model.</p>
 <div id="train_test_split" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># split data into train and test sets</span></span>
@@ -509,8 +515,8 @@ memory usage: 71.8+ KB</code></pre>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="preprocessing" class="level3" data-number="7.1.3">
-<h3 data-number="7.1.3" class="anchored" data-anchor-id="preprocessing"><span class="header-section-number">7.1.3</span> Preprocessing</h3>
+<section id="preprocessing" class="level3" data-number="8.1.3">
+<h3 data-number="8.1.3" class="anchored" data-anchor-id="preprocessing"><span class="header-section-number">8.1.3</span> Preprocessing</h3>
 <p>The purpose of preprocessing is to prepare the data for model fitting. This can take a number of different forms, but some of the most common preprocessing steps include:</p>
 <ul>
 <li>Normalising/Standardising data</li>
@@ -542,13 +548,13 @@ memory usage: 71.8+ KB</code></pre>
 </div>
 </section>
 </section>
-<section id="model-training" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="model-training"><span class="header-section-number">7.2</span> Model Training</h2>
+<section id="model-training" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="model-training"><span class="header-section-number">8.2</span> Model Training</h2>
 <p>There are many different types of models that can be used for classification problems, and selecting the right model for the problem at hand can be difficult when you are first starting out with machine learning.</p>
 <p>Simple models like <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">linear</a> and <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">logistic</a> regressions are often a good place to start and can be used to get a better understanding of the data and the problem at hand, and can give you a good idea of baseline performance before building more complex models to improve performance. Another example of a simple model is <a href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">K-Nearest Neighbours</a> (KNN), which is a non-parametric model that can be used for both classification and regression problems.</p>
 <p>We will fit a logistic regression and a KNN, as well as fitting a Random Forest model, which is a good example of a slightly more complex model that will often perform well on structured data.</p>
-<section id="cross-validation" class="level3" data-number="7.2.1">
-<h3 data-number="7.2.1" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">7.2.1</span> Cross-Validation</h3>
+<section id="cross-validation" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="cross-validation"><span class="header-section-number">8.2.1</span> Cross-Validation</h3>
 <p>On top of the train/test split, we will also use cross-validation to train our models. Cross-validation is a method of training a model on a subset of the data, and then evaluating the model on the remaining data. This process is repeated multiple times, and the average performance is used to evaluate the model. This helps make the training process more generalisable.</p>
 <p>For more information on cross-validation and how it can be used to train models:</p>
 <ul>
@@ -600,8 +606,8 @@ knn: 0.74 (0.018)</code></pre>
 </div>
 <p>Although the logistic regression performs slightly better than the random forest, the random forest has higher standard deviation and has more hyperparameters that can be tuned, so it is likely this will model has the highest potential.</p>
 </section>
-<section id="hyperparameter-tuning" class="level3" data-number="7.2.2">
-<h3 data-number="7.2.2" class="anchored" data-anchor-id="hyperparameter-tuning"><span class="header-section-number">7.2.2</span> Hyperparameter Tuning</h3>
+<section id="hyperparameter-tuning" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="hyperparameter-tuning"><span class="header-section-number">8.2.2</span> Hyperparameter Tuning</h3>
 <p>Having defined the preprocessing pipeline, we can now train and tune the models. We will use the <code>GridSearchCV()</code> function to carry out hyperparameter tuning[^tuning], which will search over a grid of hyperparameter values (specified by <code>params</code>) to find the best performing model. We will use 5-fold cross-validation to train the models, and will evaluate the models using F1 score and accuracy.</p>
 <p>For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in Scikit-learn, the <a href="https://scikit-learn.org/stable/modules/grid_search.html#">Tuning the Hyperparameters of an Estimator</a> section of the Scikit-learn documentation is a good place to start, and the <a href="https://inria.github.io/scikit-learn-mooc/python_scripts/parameter_tuning_grid_search.html">Hyperparameter Tuning by Grid Search</a> section of the Scikit-learn course is an excellent accompaniment.</p>
 <p>In addition, the AWS overview of <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html">hyperparameter tuning</a> is a good resource if you are only looking for a brief overview. For an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan’s <a href="https://www.jeremyjordan.me/hyperparameter-tuning/">Hyperparameter Tuning for Machine Learning Models</a> blogpost is thorough but easy to follow.</p>
@@ -646,8 +652,8 @@ knn: 0.74 (0.018)</code></pre>
 </div>
 </section>
 </section>
-<section id="model-evaluation" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="model-evaluation"><span class="header-section-number">7.3</span> Model Evaluation</h2>
+<section id="model-evaluation" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="model-evaluation"><span class="header-section-number">8.3</span> Model Evaluation</h2>
 <div id="evaluation" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get predictions on holdout set</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> best_model.predict(X_test)</span>
@@ -679,8 +685,8 @@ knn: 0.74 (0.018)</code></pre>
 </div>
 </div>
 </section>
-<section id="model-interpretation" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="model-interpretation"><span class="header-section-number">7.4</span> Model Interpretation</h2>
+<section id="model-interpretation" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="model-interpretation"><span class="header-section-number">8.4</span> Model Interpretation</h2>
 <p>We can compute the features that are most important in predicting heart disease.</p>
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get feature importance</span></span>
@@ -722,11 +728,11 @@ knn: 0.74 (0.018)</code></pre>
 </div>
 </div>
 </section>
-<section id="next-steps" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">7.5</span> Next Steps</h2>
+<section id="next-steps" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">8.5</span> Next Steps</h2>
 </section>
-<section id="resources" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="resources"><span class="header-section-number">7.6</span> Resources</h2>
+<section id="resources" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="resources"><span class="header-section-number">8.6</span> Resources</h2>
 <p>There are lots of great (and free) introductory resources for machine learning:</p>
 <ul>
 <li><a href="https://aws.amazon.com/machine-learning/mlu">Machine Learning University</a></li>
@@ -1036,7 +1042,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./linear_regression_py.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

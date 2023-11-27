@@ -18,6 +18,7 @@ rpy2 = "*"
 scipy = "*"
 pingouin = "*"
 tqdm = "*"
+pyjanitor = "*"
 
 [dev-packages]
 
