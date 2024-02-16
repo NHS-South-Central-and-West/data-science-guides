@@ -77,8 +77,7 @@ glimpse(deprivation)
 deprivation |> 
   select(!year) |>
   janitor::clean_names(case = "title", abbreviations = c("IMD")) |> 
-  modelsummary::datasummary_skim(align = "lccddddd", output = "gt")
-
+  modelsummary::datasummary_skim(align = "lcccccccc", output = "gt")
 ```
 
 Having taken a quick look at the data, we can now start to explore how life expectancy, our outcome variable (the variable that we are trying to explain), varies with the other variables in our dataset (the explanatory variables). We will start by plotting how life expectancy is distributed by IMD score, which is a measure of deprivation. The expectation is that there will be a negative association between the two variables, which means that areas with higher levels of deprivation (i.e. lower IMD scores) will have lower life expectancies.

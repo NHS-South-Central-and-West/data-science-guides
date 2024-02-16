@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.545">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>R Data Science Guides - 4&nbsp; Wrangling Data</title>
 <style>
 code{white-space: pre-wrap;}
@@ -19,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -53,6 +56,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
+
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -73,13 +77,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -88,35 +99,48 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
+<!-- umami cloud -->
+<script async="" src="https://us.umami.is/script.js" data-website-id="867323a1-232d-4de7-8e52-a92a2b3015ab"></script>
+
+
 </head>
+
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./wrangling_r.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./wrangling_r.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./figures/scw_logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+      <img src="./figures/scw_logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R Data Science Guides</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/NHS-South-Central-and-West/data-science-guides/tree/main/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/NHS-South-Central-and-West/data-science-guides/tree/main/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -127,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
@@ -153,8 +177,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sql.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing Data from SQL</span></span></a>
@@ -173,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
@@ -182,8 +206,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hypothesis_testing_r.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
@@ -196,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
@@ -205,8 +229,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ml_workflow_r.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
@@ -219,7 +243,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Deep Learning</span></span>
@@ -242,32 +266,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./version_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Version Control</span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#r-packages-for-data-wrangling" id="toc-r-packages-for-data-wrangling" class="nav-link active" data-scroll-target="#r-packages-for-data-wrangling"><span class="header-section-number">4.1</span> R Packages for Data Wrangling</a></li>
+  <li><a href="#r-packages-for-data-wrangling" id="toc-r-packages-for-data-wrangling" class="nav-link active" data-scroll-target="#r-packages-for-data-wrangling"><span class="header-section-number">4.1</span> R Packages for Data Wrangling</a></li>
   <li><a href="#fingertips-data" id="toc-fingertips-data" class="nav-link" data-scroll-target="#fingertips-data"><span class="header-section-number">4.2</span> Fingertips Data</a></li>
   <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">4.3</span> Data Wrangling</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">4.4</span> Next Steps</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">4.5</span> Resources</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/wrangling_r.qmd" class="toc-action">View source</a></p></div></div></nav>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/wrangling_r.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./wrangling_r.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></a></li></ol></nav>
+<div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title"><span id="sec-wrangling" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
@@ -281,77 +311,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><!-- links used throughout the book --><!-- intro --><!-- good science --><!-- wrangling --><!-- eda --><!-- hypothesis testing --><!-- machine learning --><!-- version control --><div class="cell">
-<details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># packages needed to run the code in this section</span></span>
-<span><span class="co"># install.packages(c("tidyverse", "here", "janitor", "remotes"))</span></span>
-<span><span class="co"># remotes::install_github("NHS-South-Central-and-West/scwplot")</span></span>
-<span><span class="co"># remotes::install_github("rOpenSci/fingertipsR")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</header>
+
+
+<!-- links used throughout the book -->
+<!-- intro -->
+<!-- good science -->
+<!-- wrangling -->
+<!-- eda -->
+<!-- hypothesis testing -->
+<!-- machine learning -->
+<!-- version control -->
+<div class="cell">
+<details class="code-fold">
+<summary>Setup Code (Click to Expand)</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("tidyverse", "here", "janitor", "remotes"))</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("NHS-South-Central-and-West/scwplot")</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("rOpenSci/fingertipsR")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>The first step in any analysis is to find the right data for the problem at hand, and to transform that data so that it is structured appropriately for the method of analysis. Finding the right data can be challenging, sometimes requiring getting data from multiple sources, and even then, the data might be a mess, with missing values, duplicates, formatting that makes it difficult to work with in R or Python, and a myriad of other problems. The process of transforming data to make it suitable for analysis is often referred to as data wrangling, or data munging. The data wrangling process can take many forms, from simple data cleaning to more complex transformations like combining multiple data sets, or creating new variables to enrich the data.</p>
-<section id="r-packages-for-data-wrangling" class="level2" data-number="4.1"><h2 data-number="4.1" class="anchored" data-anchor-id="r-packages-for-data-wrangling">
-<span class="header-section-number">4.1</span> R Packages for Data Wrangling</h2>
+<section id="r-packages-for-data-wrangling" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="r-packages-for-data-wrangling"><span class="header-section-number">4.1</span> R Packages for Data Wrangling</h2>
 <p>Data wrangling is a task that R is extremely well suited for, particularly thanks to the tidyverse ecosystem, which provides several packages that can be used to do a wide variety of data wrangling tasks, including:</p>
 <ul>
-<li>
-<a href="https://readr.tidyverse.org/">readr</a> - package for reading tabular/rectangular data (e.g.&nbsp;csv files).</li>
-<li>
-<a href="https://readxl.tidyverse.org/">readxl</a> - package for reading Excel files.</li>
-<li>
-<a href="https://dplyr.tidyverse.org/">dplyr</a> - set of functions for data manipulation (filtering rows, selecting columns, re-ordering rows, adding new variables with functions of existing variables, and collapsing many values down to a single summary).</li>
-<li>
-<a href="https://tidyr.tidyverse.org/">tidyr</a> - set of functions for data transformation (changing the representation of a dataset from wide to long, or vice versa, and splitting and combining columns).</li>
-<li>
-<a href="https://stringr.tidyverse.org/">stringr</a> - tools for working with strings.</li>
-<li>
-<a href="https://lubridate.tidyverse.org/">lubridate</a> - tools for dealing with dates and times.</li>
+<li><a href="https://readr.tidyverse.org/">readr</a> - package for reading tabular/rectangular data (e.g.&nbsp;csv files).</li>
+<li><a href="https://readxl.tidyverse.org/">readxl</a> - package for reading Excel files.</li>
+<li><a href="https://dplyr.tidyverse.org/">dplyr</a> - set of functions for data manipulation (filtering rows, selecting columns, re-ordering rows, adding new variables with functions of existing variables, and collapsing many values down to a single summary).</li>
+<li><a href="https://tidyr.tidyverse.org/">tidyr</a> - set of functions for data transformation (changing the representation of a dataset from wide to long, or vice versa, and splitting and combining columns).</li>
+<li><a href="https://stringr.tidyverse.org/">stringr</a> - tools for working with strings.</li>
+<li><a href="https://lubridate.tidyverse.org/">lubridate</a> - tools for dealing with dates and times.</li>
 </ul>
 <p>In addition to the tidyverse packages, there are a number of other packages that come in handy when dealing with data, including:</p>
 <ul>
-<li>
-<a href="https://here.r-lib.org/">here</a> - package that simplifies how you access files on your local machine by using the relative path based on the location of your R project.</li>
-<li>
-<a href="https://sfirke.github.io/janitor/">janitor</a> - set of tools for data cleaning.</li>
+<li><a href="https://here.r-lib.org/">here</a> - package that simplifies how you access files on your local machine by using the relative path based on the location of your R project.</li>
+<li><a href="https://sfirke.github.io/janitor/">janitor</a> - set of tools for data cleaning.</li>
 </ul>
 <p>Finally, there are a number of packages that help you work with particularly large data sets:</p>
 <ul>
-<li>
-<a href="https://vroom.r-lib.org/">vroom</a> - package that reads files quickly using the <a href="https://svn.r-project.org/R/branches/ALTREP/ALTREP.html">ALTREP framework</a>.</li>
-<li>
-<a href="https://rdatatable.gitlab.io/data.table/">data.table</a> - package that provides a high-performance version of base R’s data.frame with syntax and feature enhancements for ease of use, convenience and programming speed.</li>
-<li>
-<a href="https://arrow.apache.org/docs/r/">arrow</a> - package for using Apache Arrow, which handles in-memory and larger-than-memory data very quickly.</li>
-<li>
-<a href="https://spark.rstudio.com/">sparklyr</a> - R interface for Apache Spark.</li>
+<li><a href="https://vroom.r-lib.org/">vroom</a> - package that reads files quickly using the <a href="https://svn.r-project.org/R/branches/ALTREP/ALTREP.html">ALTREP framework</a>.</li>
+<li><a href="https://rdatatable.gitlab.io/data.table/">data.table</a> - package that provides a high-performance version of base R’s data.frame with syntax and feature enhancements for ease of use, convenience and programming speed.</li>
+<li><a href="https://arrow.apache.org/docs/r/">arrow</a> - package for using Apache Arrow, which handles in-memory and larger-than-memory data very quickly.</li>
+<li><a href="https://spark.rstudio.com/">sparklyr</a> - R interface for Apache Spark.</li>
 </ul>
 <p>Although the tidyverse packages are very popular, they are not required to work with data in R. There will be equivalent ways to do things using only base R functions too. However, I think the tidyverse is particularly user-friendly, especially for those that are coming to R from SQL, so I will focus on data wrangling using a tidyverse workflow in this guide.</p>
-</section><section id="fingertips-data" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="fingertips-data">
-<span class="header-section-number">4.2</span> Fingertips Data</h2>
+</section>
+<section id="fingertips-data" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="fingertips-data"><span class="header-section-number">4.2</span> Fingertips Data</h2>
 <p>We will use Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a> (for which there are packages available in <a href="https://github.com/ropensci/fingertipsR">R</a> and <a href="https://github.com/publichealthengland/PHDS_fingertips_py">Python</a>) as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it. Fingertips is a repository of public health data on a wide range of topics. The data included in this tutorial relates to the wider determinants of health.</p>
-<p>First, we can look at what is available. The <code><a href="https://docs.ropensci.org/fingertipsR/reference/indicators_unique.html">fingertipsR::indicators_unique()</a></code> function returns a list of all unique indicators from the Fingerips API, as well as their indicator IDs. We can use the <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> function to open the data in a new window and take a closer look at what is available.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/fingertips-indicators_f2389430099a41aace5a71fc53bd6abe">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://fingertips.phe.org.uk">fingertipsR</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">inds</span> <span class="op">&lt;-</span> <span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/indicators_unique.html">indicators_unique</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># View(inds)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>First, we can look at what is available. The <code>fingertipsR::indicators_unique()</code> function returns a list of all unique indicators from the Fingerips API, as well as their indicator IDs. We can use the <code>View()</code> function to open the data in a new window and take a closer look at what is available.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fingertipsR)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>inds <span class="ot">&lt;-</span> fingertipsR<span class="sc">::</span><span class="fu">indicators_unique</span>()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># View(inds)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If we were interested in a particular indicator, this would be a good way of finding the ID and getting the data. However, if we’re looking for a group of indicators about a particular topic, then the Fingertips profiles are going to be more useful.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/fingertips-profiles_e1630284d47f1974a0852122e0a6297d">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">profiles</span> <span class="op">&lt;-</span> <span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/profiles.html">profiles</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># View(profiles)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>profiles <span class="ot">&lt;-</span> fingertipsR<span class="sc">::</span><span class="fu">profiles</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># View(profiles)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>From the profiles, we can identify topics that are of particular interest, for example the Public Health Outcomes Framework (profile ID = 19).</p>
-<div class="cell" data-hash="wrangling_r_cache/html/phof-inds_5616d2101a9c702c7a098246af26d24c">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phof_inds</span> <span class="op">&lt;-</span> <span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/indicators.html">indicators</a></span><span class="op">(</span>ProfileID<span class="op">=</span><span class="fl">19</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># View(phof_inds)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>phof_inds <span class="ot">&lt;-</span> fingertipsR<span class="sc">::</span><span class="fu">indicators</span>(<span class="at">ProfileID=</span><span class="dv">19</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># View(phof_inds)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>There are lots of indicators available from this profile. We can also check the area types that the indicators in the Public Health Outcomes Framework are available for, using either the <code>fingerprintsR::area_types()</code> function, with the <code>ProfileID</code> argument set to the profile we are interested in, or the <code>fingertipsR::indicator_area_types()</code> function, with the <code>IndicatorID</code> argument set to one of the indicators that we are interested in.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/fingertips-area-types_40da0c0844301723576e2edbd200af25">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/area_types.html">area_types</a></span><span class="op">(</span>ProfileID<span class="op">=</span><span class="fl">19</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">AreaTypeID</span>, <span class="va">AreaTypeName</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fingertipsR<span class="sc">::</span><span class="fu">area_types</span>(<span class="at">ProfileID=</span><span class="dv">19</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(AreaTypeID, AreaTypeName)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   AreaTypeID                             AreaTypeName
 1           6                 Government Office Region
@@ -377,67 +410,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 21        502 Upper tier local authorities (post 4/23)
 22        502 Upper tier local authorities (post 4/23)</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/indicator_areatypes.html">indicator_areatypes</a></span><span class="op">(</span>IndicatorID<span class="op">=</span><span class="va">phof_inds</span><span class="op">$</span><span class="va">IndicatorID</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fingertipsR<span class="sc">::</span><span class="fu">indicator_areatypes</span>(<span class="at">IndicatorID=</span>phof_inds<span class="sc">$</span>IndicatorID[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 2
-  IndicatorID AreaTypeID
-        &lt;int&gt;      &lt;int&gt;
-1       90362        502
-2       90362        402
-3       90362        302
-4       90362        202
-5       90362        102
-6       90362         15
-7       90362          6</code></pre>
+<pre><code># A tibble: 10 × 2
+   IndicatorID AreaTypeID
+         &lt;int&gt;      &lt;int&gt;
+ 1       90362        502
+ 2       90362        501
+ 3       90362        402
+ 4       90362        401
+ 5       90362        302
+ 6       90362        301
+ 7       90362        202
+ 8       90362        102
+ 9       90362         15
+10       90362          6</code></pre>
 </div>
 </div>
 <p>The list of area types is quite long, but from the <code>indicator_area_types()</code> function, we can see that there are six area types available for the first indicator in the list of profile indicators. The area types ending in 2 are all upper tier local authorities (the different types being different local authority boundaries from different points in time), while the other two area types refer to Government Office Regions and England as a whole.</p>
 <p>We will use the most recent upper tier local authority boundaries, which have the <code>AreaTypeID</code>, 502.</p>
-<p>Having identified the profile and area type we are interested in, we can now pull the data from the Fingertips API using the <code><a href="https://docs.ropensci.org/fingertipsR/reference/fingertips_data.html">fingertipsR::fingertips_data()</a></code> function.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/import_07f89fac46c85edd73b094bb16b87630">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># pull wider determinants raw data from fingertips</span></span>
-<span><span class="va">phof_raw</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">fingertipsR</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/fingertipsR/reference/fingertips_data.html">fingertips_data</a></span><span class="op">(</span></span>
-<span>    ProfileID <span class="op">=</span> <span class="fl">19</span>,</span>
-<span>    AreaTypeID <span class="op">=</span> <span class="fl">502</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Having identified the profile and area type we are interested in, we can now pull the data from the Fingertips API using the <code>fingertipsR::fingertips_data()</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pull wider determinants raw data from fingertips</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="ot">&lt;-</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  fingertipsR<span class="sc">::</span><span class="fu">fingertips_data</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">ProfileID =</span> <span class="dv">19</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">AreaTypeID =</span> <span class="dv">502</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="wrangling_r_cache/html/check_791960983e97e2fe55a40887937a5b1f">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">phof_raw</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">glimpse</span>(phof_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 276,809
+<pre><code>Rows: 453,531
 Columns: 27
-$ IndicatorID                         &lt;int&gt; 90362, 90362, 90362, 90362, 90362,…
-$ IndicatorName                       &lt;chr&gt; "A01a - Healthy life expectancy at…
-$ ParentCode                          &lt;chr&gt; NA, NA, "E92000001", "E92000001", …
-$ ParentName                          &lt;chr&gt; NA, NA, "England", "England", "Eng…
-$ AreaCode                            &lt;chr&gt; "E92000001", "E92000001", "E120000…
-$ AreaName                            &lt;chr&gt; "England", "England", "North East …
-$ AreaType                            &lt;chr&gt; "England", "England", "Region", "R…
-$ Sex                                 &lt;chr&gt; "Male", "Female", "Male", "Male", …
-$ Age                                 &lt;chr&gt; "All ages", "All ages", "All ages"…
-$ CategoryType                        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ Category                            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ Timeperiod                          &lt;chr&gt; "2009 - 11", "2009 - 11", "2009 - …
-$ Value                               &lt;dbl&gt; 63.02647, 64.03794, 59.71114, 60.7…
-$ LowerCI95.0limit                    &lt;dbl&gt; 62.87787, 63.88135, 59.19049, 60.3…
-$ UpperCI95.0limit                    &lt;dbl&gt; 63.17508, 64.19453, 60.23179, 61.1…
-$ LowerCI99.8limit                    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ UpperCI99.8limit                    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ Count                               &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ Denominator                         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ Valuenote                           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ RecentTrend                         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ ComparedtoEnglandvalueorpercentiles &lt;chr&gt; "Not compared", "Not compared", "W…
-$ ComparedtoRegionvalueorpercentiles  &lt;chr&gt; "Not compared", "Not compared", "N…
-$ TimeperiodSortable                  &lt;int&gt; 20090000, 20090000, 20090000, 2009…
-$ Newdata                             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ Comparedtogoal                      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA…
-$ Timeperiodrange                     &lt;chr&gt; "3y", "3y", "3y", "3y", "3y", "3y"…</code></pre>
+$ IndicatorID                         &lt;int&gt; 90362, 90362, 90362, 90362, 90362, 90362, 90362, 90362, 90362, 90362, 9036…
+$ IndicatorName                       &lt;chr&gt; "A01a - Healthy life expectancy at birth", "A01a - Healthy life expectancy…
+$ ParentCode                          &lt;chr&gt; NA, NA, "E92000001", "E92000001", "E92000001", "E92000001", "E92000001", "…
+$ ParentName                          &lt;chr&gt; NA, NA, "England", "England", "England", "England", "England", "England", …
+$ AreaCode                            &lt;chr&gt; "E92000001", "E92000001", "E06000001", "E06000002", "E06000003", "E0600000…
+$ AreaName                            &lt;chr&gt; "England", "England", "Hartlepool", "Middlesbrough", "Redcar and Cleveland…
+$ AreaType                            &lt;chr&gt; "England", "England", "Counties &amp; UAs (from Apr 2023)", "Counties &amp; UAs (f…
+$ Sex                                 &lt;chr&gt; "Male", "Female", "Male", "Male", "Male", "Male", "Male", "Male", "Male", …
+$ Age                                 &lt;chr&gt; "All ages", "All ages", "All ages", "All ages", "All ages", "All ages", "A…
+$ CategoryType                        &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ Category                            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ Timeperiod                          &lt;chr&gt; "2009 - 11", "2009 - 11", "2009 - 11", "2009 - 11", "2009 - 11", "2009 - 1…
+$ Value                               &lt;dbl&gt; 63.02647, 64.03794, 56.73376, 58.01944, 59.20328, 61.39797, 64.08556, 59.3…
+$ LowerCI95.0limit                    &lt;dbl&gt; 62.87787, 63.88135, 55.13755, 56.43198, 57.51456, 59.75381, 62.56485, 57.6…
+$ UpperCI95.0limit                    &lt;dbl&gt; 63.17508, 64.19453, 58.32998, 59.60690, 60.89201, 63.04214, 65.60628, 61.0…
+$ LowerCI99.8limit                    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ UpperCI99.8limit                    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ Count                               &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ Denominator                         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ Valuenote                           &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ RecentTrend                         &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ ComparedtoEnglandvalueorpercentiles &lt;chr&gt; "Not compared", "Not compared", "Worse", "Worse", "Worse", "Similar", "Sim…
+$ Comparedtopercentiles               &lt;chr&gt; "Not compared", "Not compared", "Not compared", "Not compared", "Not compa…
+$ TimeperiodSortable                  &lt;int&gt; 20090000, 20090000, 20090000, 20090000, 20090000, 20090000, 20090000, 2009…
+$ Newdata                             &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ Comparedtogoal                      &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+$ Timeperiodrange                     &lt;chr&gt; "3y", "3y", "3y", "3y", "3y", "3y", "3y", "3y", "3y", "3y", "3y", "3y", "3…</code></pre>
 </div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phof_raw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">IndicatorName</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(IndicatorName) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                                  IndicatorName
 1                       A01a - Healthy life expectancy at birth
@@ -449,42 +485,43 @@ $ Timeperiodrange                     &lt;chr&gt; "3y", "3y", "3y", "3y", "3y", 
 </div>
 </div>
 <p>With the raw data imported, we are now able to start the process of cleaning and wrangling the data into a format that is ready for analysis.</p>
-</section><section id="data-wrangling" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="data-wrangling">
-<span class="header-section-number">4.3</span> Data Wrangling</h2>
-<p>First, we will clean the column names using the <code><a href="https://sfirke.github.io/janitor/reference/clean_names.html">janitor::clean_names()</a></code> function. This will convert all column names to lower case, remove any spaces and replace them with underscores, and remove any special characters. This will make it easier to work with the data in the future.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/clean-names_f1fab67fda1f6b7be99cbbb761b90647">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phof_raw</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">phof_raw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="data-wrangling" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="data-wrangling"><span class="header-section-number">4.3</span> Data Wrangling</h2>
+<p>First, we will clean the column names using the <code>janitor::clean_names()</code> function. This will convert all column names to lower case, remove any spaces and replace them with underscores, and remove any special characters. This will make it easier to work with the data in the future.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="ot">&lt;-</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We’ve got a total of 168 indicators, which means some of the indicators from the Public Health Outcomes Framework are not available for upper tier local authorities. We can filter the data to just the indicators we are interested in (as well as filtering any rows where the value is missing), using the <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> function. We can also use the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">dplyr::summarise()</a></code> functions to get the mean value of the indicators across all areas in the data. Below is an example:</p>
-<div class="cell" data-hash="wrangling_r_cache/html/summarise-values_037fc4c848aa37d9211bef2641220deb">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phof_raw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
-<span>    <span class="va">indicator_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90366</span>, <span class="fl">20101</span>, <span class="fl">11601</span><span class="op">)</span> <span class="op">&amp;</span></span>
-<span>    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">indicator_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We’ve got a total of 168 indicators, which means some of the indicators from the Public Health Outcomes Framework are not available for upper tier local authorities. We can filter the data to just the indicators we are interested in (as well as filtering any rows where the value is missing), using the <code>dplyr::filter()</code> function. We can also use the <code>dplyr::group_by()</code> and <code>dplyr::summarise()</code> functions to get the mean value of the indicators across all areas in the data. Below is an example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>) <span class="sc">&amp;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name) <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="fu">mean</span>(value))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-  indicator_name                                                 `mean(value)`
-  &lt;chr&gt;                                                                  &lt;dbl&gt;
-1 A01b - Life expectancy at birth                                        80.2 
-2 B16 - Utilisation of outdoor space for exercise/health reasons         16.3 
-3 C04 - Low birth weight of term babies                                   2.87</code></pre>
+  indicator_name                                                    `mean(value)`
+  &lt;chr&gt;                                                                     &lt;dbl&gt;
+1 A01b - Life expectancy at birth                                           80.3 
+2 B16 - Utilisation of outdoor space for exercise or health reasons         16.2 
+3 C04 - Low birth weight of term babies                                      2.87</code></pre>
 </div>
 </div>
-<p>The data pulled from the Fingertips API has a number of idiosyncracies that need addressing when wrangling the data. For example, the <code>timeperiod_sortable</code> column refers to the year that the data relates to, and it contains four superfluous zeros at the end of each year (i.e, 20230000). We can use the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code> function to create a <code>year</code> column which strips out the zeros from the <code>timeperiod_sortable</code> column (using the <code><a href="https://stringr.tidyverse.org/reference/str_remove.html">stringr::str_remove_all()</a></code> function).</p>
-<div class="cell" data-hash="wrangling_r_cache/html/format-years_38cf3193a1dec4f04e4c06186805de0d">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># filter for the indicators of interest and wrangle data into tidy structure</span></span>
-<span><span class="va">phof_raw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">indicator_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90366</span>, <span class="fl">20101</span>, <span class="fl">11601</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">area_code</span> <span class="op">==</span> <span class="st">"E92000001"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">indicator_name</span>, <span class="va">area_code</span>, <span class="va">timeperiod_sortable</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove_all</a></span><span class="op">(</span><span class="va">timeperiod_sortable</span>, <span class="st">"0000"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">indicator_name</span>, <span class="va">area_code</span>, <span class="va">year</span>, <span class="va">value</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The data pulled from the Fingertips API has a number of idiosyncracies that need addressing when wrangling the data. For example, the <code>timeperiod_sortable</code> column refers to the year that the data relates to, and it contains four superfluous zeros at the end of each year (i.e, 20230000). We can use the <code>dplyr::mutate()</code> function to create a <code>year</code> column which strips out the zeros from the <code>timeperiod_sortable</code> column (using the <code>stringr::str_remove_all()</code> function).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter for the indicators of interest and wrangle data into tidy structure</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>) <span class="sc">&amp;</span> area_code <span class="sc">==</span> <span class="st">"E92000001"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name, area_code, timeperiod_sortable) <span class="sc">|&gt;</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">mean</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">year =</span> stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(timeperiod_sortable, <span class="st">"0000"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_name, area_code, year, value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 39 × 4
+<pre><code># A tibble: 43 × 4
 # Groups:   indicator_name, area_code [3]
    indicator_name                  area_code year  value
    &lt;chr&gt;                           &lt;chr&gt;     &lt;chr&gt; &lt;dbl&gt;
@@ -498,84 +535,85 @@ $ Timeperiodrange                     &lt;chr&gt; "3y", "3y", "3y", "3y", "3y", 
  8 A01b - Life expectancy at birth E92000001 2008   80.4
  9 A01b - Life expectancy at birth E92000001 2009   80.7
 10 A01b - Life expectancy at birth E92000001 2010   81.0
-# ℹ 29 more rows</code></pre>
+# ℹ 33 more rows</code></pre>
 </div>
 </div>
 <p>We can also remove the ID that appended to the beginning of each indicator name. We can use <code>str_remove_all()</code> again, using a regular expression to remove everything up to and including the dash in the indicator name (and the space immediately after).</p>
-<div class="cell" data-hash="wrangling_r_cache/html/remove-inds-id_2a3461f8d354e60b07c1f483d6e46e5a">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phof_raw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">indicator_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90366</span>, <span class="fl">20101</span>, <span class="fl">11601</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>indicator_name <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove</a></span><span class="op">(</span><span class="va">indicator_name</span>, <span class="st">"^[^-]+- "</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">indicator_name</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">indicator_name =</span> stringr<span class="sc">::</span><span class="fu">str_remove</span>(indicator_name, <span class="st">"^[^-]+- "</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(indicator_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                            indicator_name
-1                                 Life expectancy at birth
-2 Utilisation of outdoor space for exercise/health reasons
-3                          Low birth weight of term babies</code></pre>
+<pre><code>                                               indicator_name
+1                                    Life expectancy at birth
+2 Utilisation of outdoor space for exercise or health reasons
+3                             Low birth weight of term babies</code></pre>
 </div>
 </div>
-<p>Finally, the data is structured in a wide format, with each indicator having its own column. This is not a tidy structure, as each column should represent a variable, and each row should represent an observation. We can use the <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">tidyr::pivot_wider()</a></code> function to convert the data into a tidy structure, with each indicator having its own row. We can also use the <code><a href="https://dplyr.tidyverse.org/reference/rename.html">dplyr::rename()</a></code> function to rename the columns to something more meaningful, and the <code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">tidyr::drop_na()</a></code> function to remove any rows where the value is missing.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/pivot-wider_d172f46c1be3339ff466f0e06e3fc900">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phof_raw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">indicator_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90366</span>, <span class="fl">20101</span>, <span class="fl">11601</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">indicator_id</span>, <span class="va">indicator_name</span>, <span class="va">area_code</span>, <span class="va">timeperiod_sortable</span>, <span class="va">sex</span>, <span class="va">value</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
-<span>    names_from <span class="op">=</span> <span class="va">indicator_name</span>,</span>
-<span>    values_from <span class="op">=</span> <span class="va">value</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
-<span>      life_expectancy <span class="op">=</span> <span class="va">`A01b - Life expectancy at birth`</span>,</span>
-<span>      low_birth_weight <span class="op">=</span> <span class="va">`C04 - Low birth weight of term babies`</span>,</span>
-<span>      outdoor_space <span class="op">=</span> <span class="va">`B16 - Utilisation of outdoor space for exercise/health reasons`</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, the data is structured in a wide format, with each indicator having its own column. This is not a tidy structure, as each column should represent a variable, and each row should represent an observation. We can use the <code>tidyr::pivot_wider()</code> function to convert the data into a tidy structure, with each indicator having its own row. We can also use the <code>dplyr::rename()</code> function to rename the columns to something more meaningful, and the <code>tidyr::drop_na()</code> function to remove any rows where the value is missing.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_id, indicator_name, area_code, timeperiod_sortable, sex, value) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> indicator_name,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> value</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">life_expectancy =</span> <span class="st">`</span><span class="at">A01b - Life expectancy at birth</span><span class="st">`</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">low_birth_weight =</span> <span class="st">`</span><span class="at">C04 - Low birth weight of term babies</span><span class="st">`</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise or health reasons</span><span class="st">`</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 9,159 × 7
-   indicator_id area_code timeperiod_sortable sex    life_expectancy
-          &lt;int&gt; &lt;chr&gt;                   &lt;int&gt; &lt;chr&gt;            &lt;dbl&gt;
- 1        90366 E92000001            20010000 Male              76.2
- 2        90366 E92000001            20010000 Female            80.7
- 3        90366 E12000001            20010000 Male              74.7
- 4        90366 E12000002            20010000 Male              74.8
- 5        90366 E12000003            20010000 Male              75.5
- 6        90366 E12000004            20010000 Male              76.2
- 7        90366 E12000005            20010000 Male              75.6
- 8        90366 E12000006            20010000 Male              77.3
- 9        90366 E12000007            20010000 Male              76.0
-10        90366 E12000008            20010000 Male              77.4
-# ℹ 9,149 more rows
-# ℹ 2 more variables: outdoor_space &lt;dbl&gt;, low_birth_weight &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 9,791 × 7
+   indicator_id area_code timeperiod_sortable sex    life_expectancy outdoor_space low_birth_weight
+          &lt;int&gt; &lt;chr&gt;                   &lt;int&gt; &lt;chr&gt;  &lt;list&gt;          &lt;list&gt;        &lt;list&gt;          
+ 1        90366 E92000001            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+ 2        90366 E92000001            20010000 Female &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+ 3        90366 E06000001            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+ 4        90366 E06000002            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+ 5        90366 E06000003            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+ 6        90366 E06000004            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+ 7        90366 E06000005            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+ 8        90366 E06000006            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+ 9        90366 E06000007            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+10        90366 E06000008            20010000 Male   &lt;dbl [1]&gt;       &lt;NULL&gt;        &lt;NULL&gt;          
+# ℹ 9,781 more rows</code></pre>
 </div>
 </div>
 <p>We can combine all of the above steps into a single function, which we can then apply to the raw data to get the data into a tidy structure.</p>
-<div class="cell" data-hash="wrangling_r_cache/html/function-wrangle-data_7aae88bd420c192d36934272cc3405dd">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># function to wrangle data into tidy structure</span></span>
-<span><span class="va">wrangle_phof_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">indicator_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90366</span>, <span class="fl">20101</span>, <span class="fl">11601</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">indicator_name</span>, <span class="va">area_code</span>, <span class="va">timeperiod_sortable</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html">str_remove_all</a></span><span class="op">(</span><span class="va">timeperiod_sortable</span>, <span class="st">"0000"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">indicator_name</span>, <span class="va">area_code</span>, <span class="va">year</span>, <span class="va">value</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span></span>
-<span>      names_from <span class="op">=</span> <span class="va">indicator_name</span>,</span>
-<span>      values_from <span class="op">=</span> <span class="va">value</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
-<span>      life_expectancy <span class="op">=</span> <span class="va">`A01b - Life expectancy at birth`</span>,</span>
-<span>      low_birth_weight <span class="op">=</span> <span class="va">`C04 - Low birth weight of term babies`</span>,</span>
-<span>      outdoor_space <span class="op">=</span> <span class="va">`B16 - Utilisation of outdoor space for exercise/health reasons`</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">phof</span> <span class="op">&lt;-</span> <span class="fu">wrangle_phof_data</span><span class="op">(</span><span class="va">phof_raw</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to wrangle data into tidy structure</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>wrangle_phof_data <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(indicator_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(indicator_name, area_code, timeperiod_sortable) <span class="sc">|&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">mean</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">year =</span> stringr<span class="sc">::</span><span class="fu">str_remove_all</span>(timeperiod_sortable, <span class="st">"0000"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(indicator_name, area_code, year, value) <span class="sc">|&gt;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_from =</span> indicator_name,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_from =</span> value</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">life_expectancy =</span> <span class="st">`</span><span class="at">A01b - Life expectancy at birth</span><span class="st">`</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">low_birth_weight =</span> <span class="st">`</span><span class="at">C04 - Low birth weight of term babies</span><span class="st">`</span>,</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise or health reasons</span><span class="st">`</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>phof <span class="ot">&lt;-</span> <span class="fu">wrangle_phof_data</span>(phof_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="next-steps" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="next-steps">
-<span class="header-section-number">4.4</span> Next Steps</h2>
+</section>
+<section id="next-steps" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">4.4</span> Next Steps</h2>
 <p>We have successfully imported, cleaned, and wrangled Fingertips data into a tidy structure. We can now move on to the next step of the data science process, which is to explore the data and perform some analysis.</p>
-<p>We could save the data to a CSV file at this point, using the <code><a href="https://readr.tidyverse.org/reference/write_delim.html">readr::write_csv()</a></code> function (for example, <code>readr::write_csv(phof, here::here("data/phof.csv"))</code>), or we could perform the analysis on the dataframe object we have created.</p>
-</section><section id="resources" class="level2" data-number="4.5"><h2 data-number="4.5" class="anchored" data-anchor-id="resources">
-<span class="header-section-number">4.5</span> Resources</h2>
+<p>We could save the data to a CSV file at this point, using the <code>readr::write_csv()</code> function (for example, <code>readr::write_csv(phof, here::here("data/phof.csv"))</code>), or we could perform the analysis on the dataframe object we have created.</p>
+</section>
+<section id="resources" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="resources"><span class="header-section-number">4.5</span> Resources</h2>
 <ul>
 <li><a href="https://vita.had.co.nz/papers/tidy-data.pdf">Hadley Wickham - Tidy Data</a></li>
 <li><a href="https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf">Data Transformation with {dplyr}</a></li>
@@ -589,7 +627,10 @@ $ Timeperiodrange                     &lt;chr&gt; "3y", "3y", "3y", "3y", "3y", 
 
 <!-- -->
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -719,10 +760,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -732,8 +772,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -746,6 +795,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -789,6 +957,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -814,6 +983,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -872,13 +1067,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./sql.html" class="pagination-link">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./sql.html" class="pagination-link  aria-label=" &lt;span="" data="" from="" sql&lt;="" span&gt;"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing Data from SQL</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./eda_r.html" class="pagination-link">
+      <a href="./eda_r.html" class="pagination-link" aria-label="<span class='chapter-number'>5</span>&nbsp; <span class='chapter-title'>Exploratory Data Analysis</span>">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1079,7 +1276,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-218"><a href="#cb24-218" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
 <span id="cb24-219"><a href="#cb24-219" aria-hidden="true" tabindex="-1"></a>      <span class="at">life_expectancy =</span> <span class="st">`</span><span class="at">A01b - Life expectancy at birth</span><span class="st">`</span>,</span>
 <span id="cb24-220"><a href="#cb24-220" aria-hidden="true" tabindex="-1"></a>      <span class="at">low_birth_weight =</span> <span class="st">`</span><span class="at">C04 - Low birth weight of term babies</span><span class="st">`</span>,</span>
-<span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise/health reasons</span><span class="st">`</span></span>
+<span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise or health reasons</span><span class="st">`</span></span>
 <span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb24-223"><a href="#cb24-223" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-224"><a href="#cb24-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -1104,7 +1301,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-245"><a href="#cb24-245" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
 <span id="cb24-246"><a href="#cb24-246" aria-hidden="true" tabindex="-1"></a>      <span class="at">life_expectancy =</span> <span class="st">`</span><span class="at">A01b - Life expectancy at birth</span><span class="st">`</span>,</span>
 <span id="cb24-247"><a href="#cb24-247" aria-hidden="true" tabindex="-1"></a>      <span class="at">low_birth_weight =</span> <span class="st">`</span><span class="at">C04 - Low birth weight of term babies</span><span class="st">`</span>,</span>
-<span id="cb24-248"><a href="#cb24-248" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise/health reasons</span><span class="st">`</span></span>
+<span id="cb24-248"><a href="#cb24-248" aria-hidden="true" tabindex="-1"></a>      <span class="at">outdoor_space =</span> <span class="st">`</span><span class="at">B16 - Utilisation of outdoor space for exercise or health reasons</span><span class="st">`</span></span>
 <span id="cb24-249"><a href="#cb24-249" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
 <span id="cb24-250"><a href="#cb24-250" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span>
 <span id="cb24-251"><a href="#cb24-251" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -1131,16 +1328,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center"><a href="https://python-data-science-guides.netlify.app"> Python Data Science Guides</a> <i class="fa-brands fa-python fa-xl" aria-label="python"></i></div>
+    <div class="nav-footer-center">
+<p><a href="https://python-data-science-guides.netlify.app"> Python Data Science Guides</a> <i class="fa-brands fa-python fa-xl" aria-label="python"></i></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/wrangling_r.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
+
 
 
 </body></html>
