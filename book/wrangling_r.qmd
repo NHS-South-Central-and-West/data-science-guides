@@ -194,7 +194,7 @@ phof_raw |>
   dplyr::rename(
       life_expectancy = `A01b - Life expectancy at birth`,
       low_birth_weight = `C04 - Low birth weight of term babies`,
-      outdoor_space = `B16 - Utilisation of outdoor space for exercise/health reasons`
+      outdoor_space = `B16 - Utilisation of outdoor space for exercise or health reasons`
   )
 
 ```
@@ -219,7 +219,7 @@ wrangle_phof_data <- function(data) {
     dplyr::rename(
       life_expectancy = `A01b - Life expectancy at birth`,
       low_birth_weight = `C04 - Low birth weight of term babies`,
-      outdoor_space = `B16 - Utilisation of outdoor space for exercise/health reasons`
+      outdoor_space = `B16 - Utilisation of outdoor space for exercise or health reasons`
     ) |>
     tidyr::drop_na()
 }

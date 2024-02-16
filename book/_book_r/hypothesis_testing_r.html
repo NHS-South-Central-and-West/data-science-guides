@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.545">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
 <title>R Data Science Guides - 6&nbsp; Hypothesis Testing</title>
 <style>
 code{white-space: pre-wrap;}
@@ -19,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -55,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -71,6 +75,7 @@ div.csl-right-inline {
 div.csl-indent {
   margin-left: 2em;
 }</style>
+
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -92,13 +97,20 @@ div.csl-indent {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -107,35 +119,77 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+}</script>
+<!-- umami cloud -->
+<script async="" src="https://us.umami.is/script.js" data-website-id="867323a1-232d-4de7-8e52-a92a2b3015ab"></script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 </head>
+
 <body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hypothesis_testing_r.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./hypothesis_testing_r.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hypothesis_testing_r.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./hypothesis_testing_r.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./figures/scw_logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+      <img src="./figures/scw_logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">R Data Science Guides</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/NHS-South-Central-and-West/data-science-guides/tree/main/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/NHS-South-Central-and-West/data-science-guides/tree/main/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -146,7 +200,7 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-<li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
@@ -172,8 +226,8 @@ div.csl-indent {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./sql.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Importing Data from SQL</span></span></a>
@@ -192,7 +246,7 @@ div.csl-indent {
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
@@ -201,8 +255,8 @@ div.csl-indent {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hypothesis_testing_r.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
@@ -215,7 +269,7 @@ div.csl-indent {
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
@@ -224,8 +278,8 @@ div.csl-indent {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ml_workflow_r.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">End-to-End Machine Learning Workflow</span></span></a>
@@ -238,7 +292,7 @@ div.csl-indent {
   </div>
 </li>
       </ul>
-</li>
+  </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Deep Learning</span></span>
@@ -261,41 +315,45 @@ div.csl-indent {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
-<li class="sidebar-item">
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./version_control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Version Control</span></a>
   </div>
 </li>
       </ul>
-</li>
+  </li>
     </ul>
-</div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#the-motivation-for-hypothesis-testing" id="toc-the-motivation-for-hypothesis-testing" class="nav-link active" data-scroll-target="#the-motivation-for-hypothesis-testing"><span class="header-section-number">6.1</span> The Motivation for Hypothesis Testing</a></li>
+  <li><a href="#the-motivation-for-hypothesis-testing" id="toc-the-motivation-for-hypothesis-testing" class="nav-link active" data-scroll-target="#the-motivation-for-hypothesis-testing"><span class="header-section-number">6.1</span> The Motivation for Hypothesis Testing</a></li>
   <li><a href="#the-problems-with-hypothesis-testing" id="toc-the-problems-with-hypothesis-testing" class="nav-link" data-scroll-target="#the-problems-with-hypothesis-testing"><span class="header-section-number">6.2</span> The Problems With Hypothesis Testing</a></li>
   <li><a href="#avoiding-the-pitfalls" id="toc-avoiding-the-pitfalls" class="nav-link" data-scroll-target="#avoiding-the-pitfalls"><span class="header-section-number">6.3</span> Avoiding the Pitfalls</a></li>
-  <li>
-<a href="#building-statistical-tests" id="toc-building-statistical-tests" class="nav-link" data-scroll-target="#building-statistical-tests"><span class="header-section-number">6.4</span> Building Statistical Tests</a>
+  <li><a href="#building-statistical-tests" id="toc-building-statistical-tests" class="nav-link" data-scroll-target="#building-statistical-tests"><span class="header-section-number">6.4</span> Building Statistical Tests</a>
   <ul class="collapse">
-<li><a href="#t-tests" id="toc-t-tests" class="nav-link" data-scroll-target="#t-tests"><span class="header-section-number">6.4.1</span> T-Tests</a></li>
+  <li><a href="#t-tests" id="toc-t-tests" class="nav-link" data-scroll-target="#t-tests"><span class="header-section-number">6.4.1</span> T-Tests</a></li>
   <li><a href="#chi-squared-tests" id="toc-chi-squared-tests" class="nav-link" data-scroll-target="#chi-squared-tests"><span class="header-section-number">6.4.2</span> Chi-Squared Tests</a></li>
   <li><a href="#simulation-based-statistical-tests" id="toc-simulation-based-statistical-tests" class="nav-link" data-scroll-target="#simulation-based-statistical-tests"><span class="header-section-number">6.4.3</span> Simulation-Based Statistical Tests</a></li>
-  </ul>
-</li>
+  </ul></li>
   <li><a href="#moving-beyond-testing" id="toc-moving-beyond-testing" class="nav-link" data-scroll-target="#moving-beyond-testing"><span class="header-section-number">6.5</span> Moving Beyond Testing</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">6.6</span> Next Steps</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">6.7</span> Resources</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/hypothesis_testing_r.qmd" class="toc-action">View source</a></p></div></div></nav>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/hypothesis_testing_r.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./hypothesis_testing_r.html">Statistical Inference</a></li><li class="breadcrumb-item"><a href="./hypothesis_testing_r.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></a></li></ol></nav>
+<div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title"><span id="sec-hypothesis-testing" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
@@ -309,30 +367,44 @@ div.csl-indent {
   </div>
   
 
-</header><!-- links used throughout the book --><!-- intro --><!-- good science --><!-- wrangling --><!-- eda --><!-- hypothesis testing --><!-- machine learning --><!-- version control --><div class="cell">
-<details><summary>Setup Code (Click to Expand)</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># packages needed to run the code in this section</span></span>
-<span><span class="co"># install.packages(c("tidyverse", "infer", "faux", "remotes"))</span></span>
-<span><span class="co"># remotes::install_github("NHS-South-Central-and-West/scwplot")</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/infer">infer</a></span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># set plot theme</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/theme_scw.html">theme_scw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># set random seed</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</header>
+
+
+<!-- links used throughout the book -->
+<!-- intro -->
+<!-- good science -->
+<!-- wrangling -->
+<!-- eda -->
+<!-- hypothesis testing -->
+<!-- machine learning -->
+<!-- version control -->
+<div class="cell">
+<details class="code-fold">
+<summary>Setup Code (Click to Expand)</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("tidyverse", "infer", "faux", "remotes"))</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("NHS-South-Central-and-West/scwplot")</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(dplyr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(infer)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># set plot theme</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(scwplot<span class="sc">::</span><span class="fu">theme_scw</span>(<span class="at">base_size =</span> <span class="dv">14</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># set random seed</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>This chapter will cover a topic that is well known to many practitioners - hypothesis testing. Hypothesis testing is a popular approach for attempting to make inferences about data without being led astray by noise. Although hypothesis testing remains very popular, it has been much criticised because the most common framework for testing, Null Hypothesis Significance Testing (NHST), has faced increasing criticisms regarding it’s external validity. If you have ever come across discussions about the “replication crisis” in science, you will have read about the many issues concerning the use of statistical significance as a measure of evidence in science and the misunderstanding and misuse of p-values. The null hypothesis significance testing framework is another of the central culprits in this crisis.</p>
 <p>Hypothesis testing may be one of the most prominent tools for statistical inference, but there is plenty of debate about how we should be doing it, and whether the method should be consigned to the history books of statistics, only to be remembered as that silly time in our lives when we used to do science really badly. Here I hope to be able to give readers a clear understanding of how hypothesis testing works, it’s biggest drawbacks, and some advice about how to carry out robust tests of hypotheses.</p>
 <p>Beyond this, I will make a case for moving away from hypothesis testing and towards the estimation of effect sizes. In doing so, I will demonstrate how to carry out some common statistical tests, using the guidelines in this chapter to inform how tests are carried out and how the results are presented. I will attempt to thread the needle between caution and clarity<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, but I recognise that this is not easy, and I’m not sure how successfully I will manage it!</p>
 <p>The compromise that I make here is that this chapter will be like a really terrible Choose Your Own Adventure book, where you choose to take the short route, which lays out a process for carrying out hypothesis testing in a robust manner, or you can tread the long, arduous path through this subject. The intention is that the shorter path should give you everything you need, particularly for anyone that is unfamiliar with hypothesis testing. However, if you have are looking to improve your understanding of hypothesis testing, you can choose to expand the sections with further details.</p>
-<section id="the-motivation-for-hypothesis-testing" class="level2" data-number="6.1"><h2 data-number="6.1" class="anchored" data-anchor-id="the-motivation-for-hypothesis-testing">
-<span class="header-section-number">6.1</span> The Motivation for Hypothesis Testing</h2>
+<section id="the-motivation-for-hypothesis-testing" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-motivation-for-hypothesis-testing"><span class="header-section-number">6.1</span> The Motivation for Hypothesis Testing</h2>
 <p>A hypothesis is a statement about an effect that we expect to observe in our sample data, that is intended to generalise to the population. We do not know what the true effect in the population is, but we have a theory about what it might be, and we can test that theory using a hypothesis about what we will observe in the sample.</p>
 <p>Our hypothesis might relate to how the mean value of a certain quantity of interest (like height) differs from one group to another, or how we expect the value of one quantity in our sample to change as the value of another quantity changes (like the effect of weight on height). A hypothesis test is a statistical method for empirically evaluating a hypothesis, to determine whether what we observe in our sample data is likely to exist in the population.</p>
 <p>Hypothesis testing is effectively a statistical method for testing the compatibility of the observed data against a relevant hypothesised effect, often the hypothesis of zero effect. The measure of that incompatibility is a test statistic, which quantifies the distance between the observed data and the expectations of the statistical test, given all the assumptions of the test (including the hypothesised effect size). For example, if testing the hypothesis that there is no effect, a distribution under the assumptions of the statistical test, including the null hypothesis, is generated, and the test statistic measures the distance between the observed data and the null distribution. A p-value is then calculated from this test statistic, representing the probability of a test statistic at least as extreme as the computed test statistic if all the assumptions of the statistical test are true, including the hypothesis that is being tested.</p>
@@ -359,8 +431,9 @@ Further Details
 </div>
 </div>
 </div>
-</section><section id="the-problems-with-hypothesis-testing" class="level2" data-number="6.2"><h2 data-number="6.2" class="anchored" data-anchor-id="the-problems-with-hypothesis-testing">
-<span class="header-section-number">6.2</span> The Problems With Hypothesis Testing</h2>
+</section>
+<section id="the-problems-with-hypothesis-testing" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="the-problems-with-hypothesis-testing"><span class="header-section-number">6.2</span> The Problems With Hypothesis Testing</h2>
 <p>Hypothesis testing serves an important purpose in science, both in academia and in industry. We use hypothesis testing to sift through noise in data to dry and draw conclusions, and this is a perfectly reasonable goal.</p>
 <p>However, the dominant framework for testing hypotheses, Null Hypothesis Significance Testing, is rife with issues. The primary problems with NHST are that it defines tests in terms of them being statistically significant or not, based on an arbitrary threshold value for p-values, and it frames p-values as the primary concern when interpreting a statistical model. While p-values are still relevant, they are not the whole story (nor the main part of the story).</p>
 <p>Further, the importance afforded to p-values in the NHST framework encourages certain common misconceptions about them, and the framing that prioritises them also makes those misconceptions even more harmful. P-values are not the measure of the substantive importance of the effect; they are not the probability that the null hypothesis is true; and finally, a statistically significant p-value does not confirm the alternative hypothesis, just as a non-significant p-values does not confirm the null. They are a measure of how surprising the observed data would be if the hypothesis being tested (like the null hypothesis), and all other assumptions of the statistical test, are true.</p>
@@ -378,13 +451,18 @@ Further Details
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>There are many complaints and criticisms that can be levelled at hypothesis testing. Here are some of the main ones.</p>
-<section id="p-values-statistical-significance" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="p-values-statistical-significance">P-Values &amp; Statistical Significance</h4>
+<section id="p-values-statistical-significance" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="p-values-statistical-significance">P-Values &amp; Statistical Significance</h4>
 <p>The biggest problems with NHST relate to the misuse and misunderstanding of p-values, and their dichotomisation in order to make arbitrary judgements about statistical significance. The extent of the issues surrounding p-values and statistical significance are so extensive that it led the American Statistical Association to make an official statement addressing the misconceptions and clarifying the correct usage of p-values <span class="citation" data-cites="wasserstein2016">(<a href="references.html#ref-wasserstein2016" role="doc-biblioref">Wasserstein and Lazar 2016</a>)</span>. The statement makes the point that p-values do not measure the probability that a hypothesis is true, or that the data was produced by random chance alone; nor should they be interpreted as measuring the size of an effect or the importance of a result; and that by themselves p-values are not a good measure of the evidence for a model or a hypothesis <span class="citation" data-cites="wasserstein2016">(<a href="references.html#ref-wasserstein2016" role="doc-biblioref">Wasserstein and Lazar 2016</a>)</span>. Unfortunately, these are all very common misconceptions that find their way into scientific research. The misconceptions go much further than this, however, as illustrated by <span class="citation" data-cites="greenland2016">Greenland et al. (<a href="references.html#ref-greenland2016" role="doc-biblioref">2016</a>)</span>. <span class="citation" data-cites="greenland2016">Greenland et al. (<a href="references.html#ref-greenland2016" role="doc-biblioref">2016</a>)</span> build on the wider discussion to include statistical tests, laying out a total of 25 different misconceptions about statistical testing, p-values (and confidence intervals) and statistical power<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. They make the case that the biggest culprit is the arbitrary use of thresholds for defining statistical significance, which frame p-values in problematic terms, reduce a need for critical thinking about findings, and are far too easily abused.</p>
 <p>This discussion has even permeated some of the media <span class="citation" data-cites="aschwanden2015 aschwanden2016">(<a href="references.html#ref-aschwanden2015" role="doc-biblioref">Aschwanden 2015</a>, <a href="references.html#ref-aschwanden2016" role="doc-biblioref">2016</a>)</span>. FiveThirtyEight have written about this issue in some detail, and their discussion of the topic is perhaps more accessible than the more detailed discussions going on. <span class="citation" data-cites="aschwanden2015">Aschwanden (<a href="references.html#ref-aschwanden2015" role="doc-biblioref">2015</a>)</span> is a particularly good summary of the discussion around p-values, and does a good job highlighting that the issues around p-values and the “replication crisis” are not evidence that science can’t be trusted, but rather that this stuff is extremely difficult, and that it takes a community of scientists working towards the truth, to try and achieve results.</p>
-</section><section id="garden-of-forking-paths" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="garden-of-forking-paths">Garden of Forking Paths</h4>
+</section>
+<section id="garden-of-forking-paths" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="garden-of-forking-paths">Garden of Forking Paths</h4>
 <p><span class="citation" data-cites="gelman2021">Gelman and Loken (<a href="references.html#ref-gelman2021" role="doc-biblioref">2021</a>)</span> add to the discussion by highlighting the role that the “garden of forking paths” approach to analysis, where there are many possible explanations for a statistically significant result, plays in the statistical crisis in science. It’s important to recognise how a scientific hypothesis can correspond to multiple statistical hypotheses <span class="citation" data-cites="gelman2021">(<a href="references.html#ref-gelman2021" role="doc-biblioref">Gelman and Loken 2021</a>)</span>, and to guard against this possibility. This effectively creates a “multiple comparisons” situation, where an analysis can uncover statistically significant results that can be used to support a theory by multiple “forking paths”. A “one-to-many mapping from scientific to statistical hypotheses” can create a situation that is equivalent to p-hacking but without the necessary intent <span class="citation" data-cites="gelman2021">(<a href="references.html#ref-gelman2021" role="doc-biblioref">Gelman and Loken 2021</a>)</span>.</p>
 <p>One of the central questions that <span class="citation" data-cites="gelman2021">Gelman and Loken (<a href="references.html#ref-gelman2021" role="doc-biblioref">2021</a>)</span> ask, is whether the same data-analysis decisions would have been made with a different data set. The garden of forking paths is driven by the fact that we devise scientific hypotheses using our common sense and domain knowledge, given the data we have, and we do not consider the myriad implicit choices that this involves. By not considering these implicit choices, we fail to account for the garden of forking paths.</p>
-</section><section id="comparisons-are-not-enough" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="comparisons-are-not-enough">Comparisons Are Not Enough</h4>
+</section>
+<section id="comparisons-are-not-enough" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="comparisons-are-not-enough">Comparisons Are Not Enough</h4>
 <p>I think that the biggest issue with p-values themselves is that we have placed far too much value in them. We use methods that are designed to compute p-values, we define “success” as the discovery of a statistically significant finding, and we give little thought to the design choices made in the process of carrying out these tests. This is partly driven by the frequency of misconceptions and misunderstandings of p-values, but it’s also a result of the methods we use.</p>
 <p>If we are more precise about how we think about p-values, this should help us avoid making the mistake of thinking they are proving a hypothesis or that they are sufficient evidence for a theory, but if we are more precise about what a p-value really represents, this raises significant questions about the methods we use. What purpose does a test for “statistical significance” serve if we acknowledge that p-values are not enough?</p>
 <p><span class="citation" data-cites="gelman2016">Gelman (<a href="references.html#ref-gelman2016" role="doc-biblioref">2016</a>)</span> argue that p-values are not the real problem, because the real problem is null hypothesis significance testing, which they refer to as a “parody of falsificationism in which straw-man null hypothesis A is rejected and this is taken as evidence in favour of preferred alternative B.” The null hypothesis significance testing framework places far too much weight on the shoulders of p-values, and even if we are doing a better job of hypothesis testing (being particularly careful not to make mistakes about how we use p-values), what is it really worth? When we are treating p-values as a part of the wider toolkit, hypothesis tests become less useful.</p>
@@ -392,8 +470,9 @@ Further Details
 </div>
 </div>
 </div>
-</section><section id="avoiding-the-pitfalls" class="level2" data-number="6.3"><h2 data-number="6.3" class="anchored" data-anchor-id="avoiding-the-pitfalls">
-<span class="header-section-number">6.3</span> Avoiding the Pitfalls</h2>
+</section>
+<section id="avoiding-the-pitfalls" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="avoiding-the-pitfalls"><span class="header-section-number">6.3</span> Avoiding the Pitfalls</h2>
 <p>There has been plenty of debate among statisticians about the issues around hypothesis testing and p-values, and while there is no detail too minor for two academics to throw hands over, there is a general consensus that our approach to p-values is a problem. What has not been settled, however, is what the right approach is. That makes this section of this chapter a little trickier. However, I will attempt to give some sensible advice about how to avoid the greatest dangers pose by hypothesis testing and the use of p-values more broadly.</p>
 <p>A more general approach to hypothesis testing would frame things in terms of a test hypothesis, which is a hypothesised effect (including but not limited to zero effect – the null hypothesis) that is assumed to be true, and a statistical test is carried out that considers how well the observed date conforms to our expectations given that the test’s assumptions, including the test hypothesis, are true.</p>
 <p>Perhaps unsurprisingly, the primary way to improve how we do hypothesis testing is to approach p-values differently. The simplest solution is not to use statistical significance at all. This is an arbitrary threshold that gives us very little good information, and allows researchers to avoid thinking critically about their findings. Instead, we should report the p-value itself, and be clear about what it is that p-values actually tell us!</p>
@@ -411,23 +490,30 @@ Further Details
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<section id="rethink-p-values" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="rethink-p-values">Rethink P-Values</h4>
+<section id="rethink-p-values" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="rethink-p-values">Rethink P-Values</h4>
 <p>The p-value is not a magic number. It does not give the probability that your research hypothesis is true, nor does it give the probability that the observed association is a product of random chance <span class="citation" data-cites="wasserstein2019">(<a href="references.html#ref-wasserstein2019" role="doc-biblioref">Wasserstein, Schirm, and Lazar 2019</a>)</span>. One of the biggest issues I have with p-values is that they feel, given the way we use them in NHST, like they <strong>should</strong> be the probability that our hypothesis is true. However, it is important to never let those urges win - the p-value is not a hypothesis probability.</p>
 <p>Instead, p-values are the degree to which the observed data are consistent with the pattern predicted by the research hypothesis, given the statistical test’s assumptions are not violated <span class="citation" data-cites="greenland2016">(<a href="references.html#ref-greenland2016" role="doc-biblioref">Greenland et al. 2016</a>)</span><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
 <p><span class="citation" data-cites="lakens2022">Lakens (<a href="references.html#ref-lakens2022" role="doc-biblioref">2022</a>)</span> recommends thinking about p-values as a statement about the probability of data, rather than a statement about the probability of a given hypothesis or theory. I think remembering this framing is a good way to avoid misconstruing exactly what p-values represent. Similarly, we can think about p-values as our confidence in what it is we observe in our data. How confident can we be that the data we observed is the product of random chance (and the assumptions that underpin our statistical model)? A p-value is an approximation of this.</p>
 <p>The point is that none of these definitions (or more precisely, intuitive explanations) of p-values are claiming that p-values are the probability that the research hypothesis is true. They say nothing about a hypothesis, because they are not a hypothesis probability.</p>
 <p>Framing p-values appropriately is one part of the necessary rethink about p-values. The other is the need to place less weight in what p-values tell us. Having acknowledged all the things that p-values are not, this part should be easy to understand. Given that p-values are not a hypothesis probability, and they are really a statement about our data, they are far from sufficient (though I would argue they are at least necessary) for our understanding of our data. Instead, they are part of a wider toolkit. A toolkit that contains even more important tools, like effect sizes!</p>
-</section><section id="stop-using-statistical-significance" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="stop-using-statistical-significance">Stop Using Statistical Significance</h4>
+</section>
+<section id="stop-using-statistical-significance" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="stop-using-statistical-significance">Stop Using Statistical Significance</h4>
 <p>In addition to the common misuse of p-values, the null hypothesis significance testing framework also defines an arbitrary threshold for what is considered a sufficiently “meaningful” result - statistical significance.</p>
 <p>The commonly defined significance threshold (or the alpha (<span class="math inline">\(\alpha\)</span>) level) is a p-value of 0.05. A p-value of less than 0.05 is deemed statistically significant, while a p-value greater than 0.05 is insignificant. So two p-values, one that equals 0.499 and another that equals 0.501 are both deemed to offer something very different to each other. One is treated as a sign of success, and the other is filed away in the desk drawer, never to be seen again! The arbitrariness of this threshold has been best highlighted by <span class="citation" data-cites="gelman2006">Gelman and Stern (<a href="references.html#ref-gelman2006" role="doc-biblioref">2006</a>)</span> when they demonstrated the fact that the difference between statistically significant and insignificant is not itself statistically significant.</p>
 <p>Defining whether a research finding is of real value based on such a meaningless threshold is clearly one of the contributing factors in the problems with hypothesis testing, and the simple solution is to just stop treating p-values as either statistically significant or not!</p>
 <p>If you need further evidence of the problems with how we have been using statistical significance, look no further than the man credited with first developing the method, Ronald A Fisher. <span class="citation" data-cites="fisher1956">Fisher (<a href="references.html#ref-fisher1956" role="doc-biblioref">1956</a>)</span> claimed that no researcher has a fixed level of significance that they are using to reject all hypotheses, regardless of their context. Ronald, I have some terrible, terrible news.</p>
 <p>Where possible, do not use terms like statistical significance, and do not use a threshold (the <span class="math inline">\(\alpha\)</span> level) for significance. Report p-values instead. P-values should be “viewed as a continuous measure of the compatibility between the data and the entire model used to compute it, ranging from 0 for complete incompatibility to 1 for perfect compatibility, and in this sense may be viewed as measuring the fit of the model to the data.” <span class="citation" data-cites="greenland2016">(<a href="references.html#ref-greenland2016" role="doc-biblioref">Greenland et al. 2016, 339</a>)</span></p>
-</section><section id="report-all-findings" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="report-all-findings">Report All Findings</h4>
+</section>
+<section id="report-all-findings" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="report-all-findings">Report All Findings</h4>
 <p>This suggestion ties in closely with the previous two. If p-values are treated like a continuous measure of compatibility, and we are no longer using thresholds to define whether a result is good or bad, this should reduce the urge to report findings selectively, based only on those that say the right thing.</p>
 <p>Do not carry out multiple tests and only show the significant results. Be open and transparent about your process and what was tested. Only reporting significant results is problematic for many reasons. There is no reason to favour statistical significant results. Instead, we should either report all our findings, as this is the most transparent approach, or we should select the substantively meaningful results, taking great care to avoid only reporting those that confirm our theory<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 <p>I think this principle is easier to follow in academia, where extensive reporting of findings is encouraged. I don’t think there is a downside to open and transparent reporting in academia (ignoring the potential risks posed to publication). However, in industry, there is often a need to be as clear and concise as possible. Reporting all results could potentially cause confusion, and make statistical findings much harder for non-technical audiences to understand. Therefore I think the advice for industry should be that reporting results should not be defined by the statistical significance of the results. We should report the results that matter, that contribute the most to our understanding of a quantity of interest, and that help others understand the findings. Communication of findings in industry should focus on communicating the key results from the analysis, and that should not be defined by significance.</p>
-</section><section id="build-scientific-models" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="build-scientific-models">Build Scientific Models</h4>
+</section>
+<section id="build-scientific-models" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="build-scientific-models">Build Scientific Models</h4>
 <p>Finally, it is important to think carefully about the implications of any hypothesis, and to understand that there is a difference between a scientific hypothesis and a statistical hypothesis<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. Statistical models do not, on their own, allow scientific hypotheses</p>
 <p>There are often many different statistical hypotheses that would be consistent with a particular scientific hypothesis. This is well explained and multiple examples are given by <span class="citation" data-cites="gelman2021">Gelman and Loken (<a href="references.html#ref-gelman2021" role="doc-biblioref">2021</a>)</span>.</p>
 <p>The garden of forking paths may be a particularly big issue in hypothesis testing, but it doesn’t go away if we scrap NHST. It is important to think about the ways that any scientific hypothesis can be explained by multiple statistical hypotheses, and it’s also very important to think about the many choices made when building any statistical model, and what this might mean for our work. There are so many different assumptions that go into the process of building a statistical model, and when we fail to consider the breadth of assumptions that underpin our work, we can easily invalidate our findings. As discussed earlier in this chapter, we have to remember that p-values are assuming that <strong>all</strong> of our assumptions are true, and if any of them are not true, we are in hot water.</p>
@@ -437,8 +523,9 @@ Further Details
 </div>
 </div>
 </div>
-</section><section id="building-statistical-tests" class="level2" data-number="6.4"><h2 data-number="6.4" class="anchored" data-anchor-id="building-statistical-tests">
-<span class="header-section-number">6.4</span> Building Statistical Tests</h2>
+</section>
+<section id="building-statistical-tests" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="building-statistical-tests"><span class="header-section-number">6.4</span> Building Statistical Tests</h2>
 <p>A generalised framework for hypothesis testing, that discards of NHST’s problematic baggage (instead following a Fisherian approach <span class="citation" data-cites="fisher1956">(<a href="references.html#ref-fisher1956" role="doc-biblioref">Fisher 1956</a>)</span>), would take the following steps:</p>
 <ol type="1">
 <li>Specify the test hypothesis (<span class="math inline">\(H_0\)</span>) that assumes some effect size against which the observed effect size will be compared - this will often be the assumption of zero effect (the null hypothesis), but it can be anything<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</li>
@@ -448,8 +535,8 @@ Further Details
 </ol>
 <p>The important takeaway is that the test statistic is a measure of the sample data, the test distribution is a measure of what we would expect to observe if the test hypothesis, and all other model assumptions, are true, and the statistical test is simply quantifying how compatible the observed data would be with the generated distribution.</p>
 <p>While there are many different statistical tests that are designed to test different data distributions, using different assumptions, the general framework is the same. Below are some examples of statistical tests that are commonly used.</p>
-<section id="t-tests" class="level3" data-number="6.4.1"><h3 data-number="6.4.1" class="anchored" data-anchor-id="t-tests">
-<span class="header-section-number">6.4.1</span> T-Tests</h3>
+<section id="t-tests" class="level3" data-number="6.4.1">
+<h3 data-number="6.4.1" class="anchored" data-anchor-id="t-tests"><span class="header-section-number">6.4.1</span> T-Tests</h3>
 <p>The general idea of a t-test is to calculate the statistical significance of the difference between two groups. What the groups represent depends on the type of t-test being carried out, whether it be comparing a single group of observed data against a null distribution that assumes the data was generated by chance, or comparing the difference between two observed groups against a null distribution that assumes the difference is zero.</p>
 <p>There are several broad groups of t-tests:</p>
 <ul>
@@ -461,25 +548,25 @@ Further Details
 <p>Finally, when deciding on the nature of a t-test, you must also decide if the test should be one-tailed or two-tailed. A one-tailed t-test is used to test a hypothesis that includes a directional component (such as <span class="math inline">\(x &gt; y\)</span>), while a two-tailed t-test is just testing whether there is a difference between two groups. A one-tailed t-test is appropriate when you believe the difference between two groups should be positive or negative, but if the only belief is that the groups are different, a two-tailed t-test is appropriate.</p>
 <p>A two-tailed t-test compares whether the sample mean(s) is different, whether larger or smaller, while a one-tailed t-test assumes the direction of the difference is known. For example, if it is known that Group A is either the same or bigger than Group B (or that Group A being smaller is not of interest), then a one-tailed t-test would be appropriate.</p>
 <p>I will simulate data from real-world examples to demonstrate one-sample, paired, and two-sample t-tests, however, these examples are not exhaustive, and there are many variations on t-test implementations.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
-<section id="one-sample-t-test" class="level4" data-number="6.4.1.1"><h4 data-number="6.4.1.1" class="anchored" data-anchor-id="one-sample-t-test">
-<span class="header-section-number">6.4.1.1</span> One-Sample T-Test</h4>
+<section id="one-sample-t-test" class="level4" data-number="6.4.1.1">
+<h4 data-number="6.4.1.1" class="anchored" data-anchor-id="one-sample-t-test"><span class="header-section-number">6.4.1.1</span> One-Sample T-Test</h4>
 <p>We can carry out a one-sample t-test using IQ scores as our example, because there is plenty of data out there about IQ scores that we can base our simulations on. The average IQ score is said to be around 100, and scores are normally distributed with a standard deviation of 15, meaning that the majority of people have an IQ in the range of 85-115.</p>
 <p>In a one-sample t-test we are interested in testing a sample mean against an “expected” mean. For example, perhaps we have a group of individuals that are viewed as “high achievers”, and we want to use IQ scores to test whether this group is meaningfully different to the rest of the population (despite being aware that IQ is not a particularly good test of either an individual’s intelligence or their potential).</p>
 <p>A one-sample t-test would allow us to do this because we are able to test the mean IQ score for our high achievers against the expected mean value if there was no real difference between them and the population, which would just be the mean IQ score in the population (100).</p>
 <p>Lets first start by simulating our high achievers’ IQ scores, assuming that their mean score is 105 (perhaps some of the group studied IQ tests extensively and are now able to ace the test), with a standard deviation of 15.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/unnamed-chunk-2_a99cd1a592a97a22fddd23e461df42b2">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># label: simulate-high-achievers</span></span>
-<span></span>
-<span><span class="va">high_achievers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean <span class="op">=</span> <span class="fl">105</span>, sd <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># label: simulate-high-achievers</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">score =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can take a look at the sample data we have simulated, to see how close it is to the true mean and standard deviation (because we are simulating the data it won’t be a perfect match).</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/summarise-sample_58288acbcb17574854efcab0e21e120c">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute summary statistics for our sample</span></span>
-<span><span class="va">high_achievers</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
-<span>    mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span>,</span>
-<span>    std_dev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute summary statistics for our sample</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(score),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">std_dev =</span> <span class="fu">sd</span>(score)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
    mean std_dev
@@ -488,20 +575,24 @@ Further Details
 </div>
 </div>
 <p>And we can visualise the data to get a better sense of what the group looks like.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/visualise-sample_0a6362811cf87212c5358d2a106b3155">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">high_achievers</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span>, colour <span class="op">=</span> <span class="st">"#FFFFFF"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">130</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"IQ Score"</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(score)) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">colour =</span> <span class="st">"#FFFFFF"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">80</span>, <span class="dv">130</span>, <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"IQ Score"</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="hypothesis_testing_r_files/figure-html/visualise-sample-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><img src="hypothesis_testing_r_files/figure-html/visualise-sample-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>It is not clear what the underlying distribution of our sample data is here. We already know that the data was drawn from a normal distribution, but if we did not, we would need more observations to confirm this.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/one-sample-test_b84fd70d91174b22e6c5dab4b1f45f5d">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://infer.tidymodels.org/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">high_achievers</span>, response <span class="op">=</span> <span class="va">score</span>, mu <span class="op">=</span> <span class="fl">100</span>, alternative <span class="op">=</span> <span class="st">"greater"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(high_achievers, <span class="at">response =</span> score, <span class="at">mu =</span> <span class="dv">100</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   statistic  t_df p_value alternative estimate lower_ci upper_ci
@@ -512,10 +603,10 @@ Further Details
 <p>The p-value of our one-sample t-test is 0.105. This means that we would expect to observe a sample mean at least as extreme as our observed mean (106), if the null that there is no difference between the high achiever group’s mean IQ score and the population mean IQ score is true, a little more than 10% of the time, or 1 in 10 times. That’s quite high, so I wouldn’t be confident that we are observing a meaningful difference.</p>
 <p>However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person, this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).</p>
 <p>If we increase our sample size, maybe we will have more luck!</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/increase-sample-size_ee972975443be3e7c8f39a4da0410f01">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">larger_sample</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">105</span>, sd <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://infer.tidymodels.org/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">larger_sample</span>, response <span class="op">=</span> <span class="va">score</span>, mu <span class="op">=</span> <span class="fl">100</span>, alternative <span class="op">=</span> <span class="st">"greater"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>larger_sample <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">score =</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">105</span>, <span class="at">sd =</span> <span class="dv">15</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(larger_sample, <span class="at">response =</span> score, <span class="at">mu =</span> <span class="dv">100</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   statistic  t_df p_value alternative estimate lower_ci upper_ci
@@ -526,26 +617,27 @@ Further Details
 <p>Increasing the sample size from 10 to 30 has decreased the probability of observing a test statistic at least as extreme as our sample mean if our data was generated by chance (and the assumptions of our statistical model are all met) from around 10% to just over 1.5%. That seems a lot more reasonable, and at this point I’d be more comfortable concluding that the high achiever’s IQ scores are meaningfully different to the average score in the population.</p>
 <p>Of course, our p-value doesn’t tell us anything about the substantive importance of the difference in IQ scores. We might be willing to conclude that there <strong>is</strong> a difference, but does it matter? Well, the answer is no because it’s IQ scores and IQ scores don’t matter.</p>
 <p>But what if, for some truly baffling reason, we had reason to believe IQ scores are not nonsense? In that case, how do we know if the difference between the mean value in the high achievers group and the population is large enough to be of scientific and substantive relevance? This is not a question that significance tests can answer, and is instead something that our domain expertise should answer.</p>
-</section><section id="paired-t-test" class="level4" data-number="6.4.1.2"><h4 data-number="6.4.1.2" class="anchored" data-anchor-id="paired-t-test">
-<span class="header-section-number">6.4.1.2</span> Paired T-Test</h4>
+</section>
+<section id="paired-t-test" class="level4" data-number="6.4.1.2">
+<h4 data-number="6.4.1.2" class="anchored" data-anchor-id="paired-t-test"><span class="header-section-number">6.4.1.2</span> Paired T-Test</h4>
 <p>When respondents in surveys are asked to self-report certain details about themselves, this can invite bias. Take, for example, the difference in <a href="https://digital.nhs.uk/data-and-information/areas-of-interest/public-health/health-survey-for-england-predicting-height-weight-and-body-mass-index-from-self-reported-data/differences-between-self-reported-and-interviewer-measured-height-weight-and-bmi-using-hse-2011-2016-data">self-reported and interviewer-measured height among men in the UK</a>. Although there are many proud short kings out there that will confidently declare their height, safe in the knowledge that good things come in small packages, there are plenty of men that wish they were a little bit taller (someone should write a song about that), and for whom a self-reported survey is an opportunity to dream big (literally). Any time that respondents are given the opportunity to report details about themselves that have any social baggage attached, there is a possibility that the responses will be subject to social desirability bias.</p>
 <p>In the case of self-reported and measured male heights, the differences are not particularly large in absolute terms. It’s very possible that the difference is actually a product of some random variation, or measurement error. We can test this!</p>
 <p>Using the mean values for reported and measured heights in 2016, calculating the standard deviation from the reported standard error<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, and calculating the correlation between the two variables using the value for each variable from 2011-2016<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>, we can simulate our sample data.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/simulate-male-heights_621808a01147204e6e88b5166e0259f7">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">short_kings</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">faux</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/faux/man/rnorm_multi.html">rnorm_multi</a></span><span class="op">(</span></span>
-<span>    n <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>    vars <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>    mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">177.23</span>, <span class="fl">175.71</span><span class="op">)</span>,</span>
-<span>    sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9.02</span>, <span class="fl">8.99</span><span class="op">)</span>,</span>
-<span>    r <span class="op">=</span> <span class="fl">0.83</span>,</span>
-<span>    varnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"self_reported_height"</span>, <span class="st">"measured_height"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height_diff <span class="op">=</span> <span class="va">self_reported_height</span> <span class="op">-</span> <span class="va">measured_height</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>short_kings <span class="ot">&lt;-</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  faux<span class="sc">::</span><span class="fu">rnorm_multi</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="dv">100</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">vars =</span> <span class="dv">2</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> <span class="fu">c</span>(<span class="fl">177.23</span>, <span class="fl">175.71</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">c</span>(<span class="fl">9.02</span>, <span class="fl">8.99</span>),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">r =</span> <span class="fl">0.83</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">varnames =</span> <span class="fu">c</span>(<span class="st">"self_reported_height"</span>, <span class="st">"measured_height"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">height_diff =</span> self_reported_height <span class="sc">-</span> measured_height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We have simulated the self-reported and measured height for 100 men, given the mean, standard deviation, and correlation as detailed in Table 1 of the above analysis<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>. Using these two simulated variables, we are then able to calculate the difference between the two, and carry out a simple one-sample t-test that compares that difference against a null hypothesis with mean zero.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/male-heights-test_c615758d6e7fb55b51bee74e33306ebf">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://infer.tidymodels.org/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">short_kings</span>, response <span class="op">=</span> <span class="va">height_diff</span>, mu <span class="op">=</span> <span class="fl">0</span>, direction <span class="op">=</span> <span class="st">"greater"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(short_kings, <span class="at">response =</span> height_diff, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">direction =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   statistic  t_df p_value alternative estimate lower_ci upper_ci
@@ -555,75 +647,82 @@ Further Details
 </div>
 <p>The difference between the self-reported and measured heights has a p-value of 0.00719, suggesting there is a 0.7% probability of observing a t-statistic at least as extreme as we observe here, if the data was generated by chance and if the assumptions of our statistical model are valid.</p>
 <p>The estimated difference between self-reported height and measured height is 1.4cm, with about 1cm difference from our estimate and our lower and upper confidence intervals, which suggests that the difference between self-reported height for men is larger than their measured heights. However, is 1.4cm significant enough to really care? I mean, none of this is important enough (or valid enough) to really care, but if we suspend disbelief for a moment, is a 1.4cm difference substantively meaningful? I’ll leave that up to you to decide.</p>
-</section><section id="two-samples-t-test" class="level4" data-number="6.4.1.3"><h4 data-number="6.4.1.3" class="anchored" data-anchor-id="two-samples-t-test">
-<span class="header-section-number">6.4.1.3</span> Two Samples T-Test</h4>
+</section>
+<section id="two-samples-t-test" class="level4" data-number="6.4.1.3">
+<h4 data-number="6.4.1.3" class="anchored" data-anchor-id="two-samples-t-test"><span class="header-section-number">6.4.1.3</span> Two Samples T-Test</h4>
 <p>So we’ve established a very real, totally scientific over-reporting of male height across the UK, and some clever, entrepreneurial, and not at all exploitative pharmaceutical company has had the good sense to develop a medication that gives you an extra couple of inches in height.</p>
 <p>In order to prove that it works it needs to go through testing (because we are particularly reckless, we don’t really care if it is safe in this example). An experiment is designed, with a treatment and control group that is representative of the wider male population, and the wonder drug is given to the treatment group.</p>
 <p>We can compare the change in height for the two groups in the 6 months after the treatment group have taken the medication, hypothesising that the drug has had a positive effect on the treatment group, helping them grow by a whopping 1.5cm! This is compared against the average increase in height for the control group that is approximately zero, with a very small standard deviation. A two-sample t-test can help us shed some light on whether we can be confident that this difference did not occur by chance.</p>
 <p>We simulate our treatment and control groups, with 20 observations in each, with the treatment group having a mean growth of 3cm and standard deviation of 3cm, and the control group having a mean growth of 0cm and a standard deviation of 0.5cm.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/simulate-height-experiment_e65cc454561bfc947a6b45342b6bb6ce">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">growers</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"treatment"</span>, <span class="st">"control"</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
-<span>    growth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">40</span>, mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span><span class="op">)</span>, sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>growers <span class="ot">&lt;-</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"control"</span>), <span class="at">times =</span> <span class="dv">20</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">growth =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Having simulated our treatment and control groups, we can compute a t-test to see if there is a difference in how much each group has grown, on average.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/height-experiment_38bcc02e4e9161e24d80ac255af1b857">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://infer.tidymodels.org/reference/t_test.html">t_test</a></span><span class="op">(</span><span class="va">growers</span>, formula <span class="op">=</span> <span class="va">growth</span> <span class="op">~</span> <span class="va">group</span>,</span>
-<span>       order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"treatment"</span>, <span class="st">"control"</span><span class="op">)</span>,</span>
-<span>       alternative <span class="op">=</span> <span class="st">"greater"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t_test</span>(growers, <span class="at">formula =</span> growth <span class="sc">~</span> group,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"control"</span>),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
-  statistic  t_df     p_value alternative estimate lower_ci upper_ci
-      &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-1      6.84  20.6 0.000000511 greater         3.94     2.95      Inf</code></pre>
+  statistic  t_df  p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1      21.4  36.4 1.66e-22 greater         3.20     2.95      Inf</code></pre>
 </div>
 </div>
 <p>The probability that we would observe a test statistic as large or larger than observed here is very, very small, and the results of the t-test estimate that the difference between the two groups is a little bit less than 4cm, with a lower confidence interval of just under 3cm, suggesting that this medication is having a positive difference on height in the treatment group!</p>
-</section></section><section id="chi-squared-tests" class="level3" data-number="6.4.2"><h3 data-number="6.4.2" class="anchored" data-anchor-id="chi-squared-tests">
-<span class="header-section-number">6.4.2</span> Chi-Squared Tests</h3>
+</section>
+</section>
+<section id="chi-squared-tests" class="level3" data-number="6.4.2">
+<h3 data-number="6.4.2" class="anchored" data-anchor-id="chi-squared-tests"><span class="header-section-number">6.4.2</span> Chi-Squared Tests</h3>
 <p>Although there are many ways that you may encounter chi-squared (<span class="math inline">\(\chi^2\)</span>) tests, the two most common are tests of independence and a goodness of fit tests. The chi-squared test of independence is a test of the association between two categorical variables, meaning whether the variables are related or not. It is testing whether they vary independently of each other. A chi-squared goodness of fit test is used to examine how well a theoretical distribution fits the distribution of a categorical variable. We will focus on the test of independence here, because I think this is the most common use case.</p>
 <p>A common use-case for chi-squared tests of independence is survey data, where individuals from different groups respond to a survey question that offers a finite number of discrete answers, like a scale from good to bad. A good example of categorical variables used in survey data is the impact of male baldness on 46 year old men, carried out by <span class="citation" data-cites="sinikumpu2021">Sinikumpu et al. (<a href="references.html#ref-sinikumpu2021" role="doc-biblioref">2021</a>)</span>. In this survey they grouped men by levels of baldness, and asked them various questions about their lives, from education to sex-life, to consider the impact that being bald has on men’s lives and well-being.</p>
 <p>We will use the education question as the basis for simulating the data for our chi-squared test. The survey splits education-level in to three groups - basic, secondary, and tertiary - while I have simplified the question by turning the levels of baldness into a binary categorical variable.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/simulate-survey_36958ba85fd11f1ca0f41e73ab51a27f">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">not_bald</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>    hair_status <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Not Bald"</span>, times <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>,</span>
-<span>    education <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span><span class="op">)</span>,</span>
-<span>      size <span class="op">=</span> <span class="fl">300</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>      prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.039</span>, <span class="fl">0.594</span>, <span class="fl">0.367</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="va">bald</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>    hair_status <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Bald"</span>, times <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>,</span>
-<span>    education <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span><span class="op">)</span>,</span>
-<span>      size <span class="op">=</span> <span class="fl">600</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>      prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.03</span>, <span class="fl">0.603</span>, <span class="fl">0.367</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span></span>
-<span><span class="va">baldness_survey</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">not_bald</span>, <span class="va">bald</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>not_bald <span class="ot">&lt;-</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Not Bald"</span>, <span class="at">times =</span> <span class="dv">300</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">300</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.039</span>, <span class="fl">0.594</span>, <span class="fl">0.367</span>))</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>bald <span class="ot">&lt;-</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Bald"</span>, <span class="at">times =</span> <span class="dv">600</span>),</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">600</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.03</span>, <span class="fl">0.603</span>, <span class="fl">0.367</span>))</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>baldness_survey <span class="ot">&lt;-</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(not_bald, bald)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We have simulated each of the different baldness categories individually, before combining them into a single dataset. I think there should be a more concise way of doing this, but I haven’t wrapped my head round how I should do that yet.</p>
 <p>We can visualise the difference between the three education-levels in terms of proportion of baldness, to see if there is an obvious difference.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/visualise-survey_ca47b423638d176bd085a2e1333314b6">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">baldness_survey</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">education</span>, fill <span class="op">=</span> <span class="va">hair_status</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span>, colour <span class="op">=</span> <span class="st">"#FFFFFF"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">scwplot</span><span class="fu">::</span><span class="fu"><a href="https://nhs-south-central-and-west.github.io/scwplot/reference/scale_qualitative.html">scale_fill_qualitative</a></span><span class="op">(</span><span class="st">"nhs"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Education Level"</span>, y <span class="op">=</span> <span class="st">"Proportion"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>baldness_survey <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(education, <span class="at">fill =</span> hair_status)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>, <span class="at">colour =</span> <span class="st">"#FFFFFF"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  scwplot<span class="sc">::</span><span class="fu">scale_fill_qualitative</span>(<span class="st">"nhs"</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Education Level"</span>, <span class="at">y =</span> <span class="st">"Proportion"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="hypothesis_testing_r_files/figure-html/visualise-survey-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><img src="hypothesis_testing_r_files/figure-html/visualise-survey-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>There’s a small difference between people with a basic education, but for secondary and tertiary education it seems to be pretty evenly split. Our chi-squared test can test this empirically.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/chi-sq-test_4acd4f61f064eff4c698b7f89c189169">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://infer.tidymodels.org/reference/chisq_test.html">chisq_test</a></span><span class="op">(</span><span class="va">baldness_survey</span>, <span class="va">education</span> <span class="op">~</span> <span class="va">hair_status</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq_test</span>(baldness_survey, education <span class="sc">~</span> hair_status)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   statistic chisq_df p_value
@@ -633,29 +732,29 @@ Further Details
 </div>
 <p>So our p-value tells us that we should expect to observe data at least extreme as our simulated survey data a little less than 20% of the time, if the null hypothesis that there is no difference in education levels across levels of hair loss is true. This is a smaller p-value than <span class="citation" data-cites="sinikumpu2021">Sinikumpu et al. (<a href="references.html#ref-sinikumpu2021" role="doc-biblioref">2021</a>)</span> observe (0.299), but that will be a consequence of the fact we are simulating the data using probabilistic samples, not replicating their results exactly.</p>
 <p>If we were to fudge the numbers a little bit, so as to artificially increase the difference in education levels based on the amount of hair a 46 year old man has, what would our results look like?</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/add-effect_71de523dadf620df90a2ab47d23eff47">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">not_bald</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>    hair_status <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Not Bald"</span>, times <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>,</span>
-<span>    education <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span><span class="op">)</span>,</span>
-<span>      size <span class="op">=</span> <span class="fl">300</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>      prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.15</span>, <span class="fl">0.55</span>, <span class="fl">0.3</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="va">bald</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>    hair_status <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"Bald"</span>, times <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>,</span>
-<span>    education <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span><span class="op">)</span>,</span>
-<span>      size <span class="op">=</span> <span class="fl">600</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>      prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.6</span>, <span class="fl">0.35</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span></span>
-<span><span class="va">baldness_survey_with_effect</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">not_bald</span>, <span class="va">bald</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://infer.tidymodels.org/reference/chisq_test.html">chisq_test</a></span><span class="op">(</span><span class="va">baldness_survey_with_effect</span>, <span class="va">education</span> <span class="op">~</span> <span class="va">hair_status</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>not_bald <span class="ot">&lt;-</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Not Bald"</span>, <span class="at">times =</span> <span class="dv">300</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">300</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.55</span>, <span class="fl">0.3</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>bald <span class="ot">&lt;-</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">hair_status =</span> <span class="fu">rep</span>(<span class="st">"Bald"</span>, <span class="at">times =</span> <span class="dv">600</span>),</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">education =</span> <span class="fu">sample</span>(</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="st">"Basic"</span>, <span class="st">"Secondary"</span>, <span class="st">"Tertiary"</span>),</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">600</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.6</span>, <span class="fl">0.35</span>))</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>baldness_survey_with_effect <span class="ot">&lt;-</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(not_bald, bald)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq_test</span>(baldness_survey_with_effect, education <span class="sc">~</span> hair_status)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   statistic chisq_df     p_value
@@ -664,95 +763,106 @@ Further Details
 </div>
 </div>
 <p>Having increased the number of respondents with a basic education (and in turn decreasing those with secondary and tertiary educations) for the not bald group, our chi-squared test results suggest the data we observe is much more extreme. The p-value for this test is extremely small, but that’s not totally surprising. We did fake our data, after all.</p>
-</section><section id="simulation-based-statistical-tests" class="level3" data-number="6.4.3"><h3 data-number="6.4.3" class="anchored" data-anchor-id="simulation-based-statistical-tests">
-<span class="header-section-number">6.4.3</span> Simulation-Based Statistical Tests</h3>
+</section>
+<section id="simulation-based-statistical-tests" class="level3" data-number="6.4.3">
+<h3 data-number="6.4.3" class="anchored" data-anchor-id="simulation-based-statistical-tests"><span class="header-section-number">6.4.3</span> Simulation-Based Statistical Tests</h3>
 <p>One of the reasons I always struggled with hypothesis testing when first learning about them is the seemingly endless variations of tests, each suited to a slightly different data distribution or context. While you could take on the arduous task of learning as many different tests as possible, it is probably (definitely) better to think in terms of the framework for carrying out a hypothesis test that was detailed earlier, and understanding all tests as generalisations of this framework.</p>
 <p>This was an idea pitched by the computer scientist Allen Downey, when he wrote that “there is only one test”. He’s right. This framework for understanding all hypothesis tests as variations on the same basic method uses simulated data from permutation or bootstrapping methods to generate the null distribution against which observed data can be evaluated.</p>
 <p>When classical significance testing methods were developed, simulation wasn’t possible, due to the absence of computational power. Now that we have high-powered machines that will do everything for us, we don’t have to worry about this so much, which makes simulation much more viable.</p>
 <p>Downey visualises how this simulation-based workflow for hypothesis testing works using the following diagram:</p>
 <p><img src="figures/hypothesis_testing.png" class="img-fluid"></p>
-<p>The <a href="https://github.com/tidymodels/infer">infer</a> workflow for carrying out simulation-based hypothesis tests is designed based on the same principles (<code><a href="https://infer.tidymodels.org/reference/specify.html">specify()</a></code>, <code><a href="https://infer.tidymodels.org/reference/hypothesize.html">hypothesize()</a></code>, <code><a href="https://infer.tidymodels.org/reference/generate.html">generate()</a></code>, <code><a href="https://infer.tidymodels.org/reference/calculate.html">calculate()</a></code>, &amp; <code><a href="https://infer.tidymodels.org/reference/visualize.html">visualize()</a></code>). This all-in-one process for hypothesis testing is a little more involved than the humble t-test, and the code for computing hypothesis tests using this approach is definitely more verbose. However, the power that this process gives you is that you can easily carry out any hypothesis test once you’ve learned Downey’s framework, and the consistency of the <a href="https://github.com/tidymodels/infer">infer</a> workflow makes it easier to learn how to do this. The <a href="https://github.com/tidymodels/infer">infer</a> documentation also provides a <a href="https://infer.tidymodels.org/articles/observed_stat_examples.html">pretty exhaustive list</a> of how to compute hypothesis tests under a variety of conditions.</p>
-<p>We can see <a href="https://github.com/tidymodels/infer">infer</a> in action by recalculating our IQ scores t-test that we carried out earlier on. Here is what that looks like using simulation-based methods.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/high-achievers-sim-test_5863be5086c2bc6d44f3d4d586878b35">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute test statistic</span></span>
-<span><span class="va">test_statistic</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">larger_sample</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/specify.html">specify</a></span><span class="op">(</span>response <span class="op">=</span> <span class="va">score</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/calculate.html">calculate</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># generate null distribution</span></span>
-<span><span class="va">null_distribution</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">larger_sample</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/specify.html">specify</a></span><span class="op">(</span>response <span class="op">=</span> <span class="va">score</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/hypothesize.html">hypothesize</a></span><span class="op">(</span>null <span class="op">=</span> <span class="st">"point"</span>, mu <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/generate.html">generate</a></span><span class="op">(</span>reps <span class="op">=</span> <span class="fl">1000</span>, type <span class="op">=</span> <span class="st">"bootstrap"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/calculate.html">calculate</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># calculate the p-value of observing a test statistic at least as extreme as </span></span>
-<span><span class="co"># our observed statistic if the data was generated by chance</span></span>
-<span><span class="va">p_value</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">null_distribution</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/get_p_value.html">get_p_value</a></span><span class="op">(</span>obs_stat <span class="op">=</span> <span class="va">test_statistic</span>, direction <span class="op">=</span> <span class="st">"greater"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># visualise the test statistic against the null</span></span>
-<span><span class="va">null_distribution</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/visualize.html">visualize</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/shade_p_value.html">shade_p_value</a></span><span class="op">(</span><span class="va">test_statistic</span>, direction <span class="op">=</span> <span class="cn">NULL</span>, color <span class="op">=</span> <span class="st">"#00A499"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
-<span>    <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">95</span>, y <span class="op">=</span> <span class="fl">125</span>,</span>
-<span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"t = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">test_statistic</span>, <span class="fl">2</span><span class="op">)</span>, <span class="st">"\n p = "</span>, <span class="va">p_value</span><span class="op">)</span>,</span>
-<span>    size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"grey30"</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"IQ Score"</span>, y <span class="op">=</span> <span class="cn">NULL</span>, title <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>{infer}</code> workflow for carrying out simulation-based hypothesis tests is designed based on the same principles (<code>specify()</code>, <code>hypothesize()</code>, <code>generate()</code>, <code>calculate()</code>, &amp; <code>visualize()</code>). This all-in-one process for hypothesis testing is a little more involved than the humble t-test, and the code for computing hypothesis tests using this approach is definitely more verbose. However, the power that this process gives you is that you can easily carry out any hypothesis test once you’ve learned Downey’s framework, and the consistency of the <code>{infer}</code> workflow makes it easier to learn how to do this. The <code>{infer}</code> documentation also provides a <a href="https://infer.tidymodels.org/articles/observed_stat_examples.html">pretty exhaustive list</a> of how to compute hypothesis tests under a variety of conditions.</p>
+<p>We can see <code>{infer}</code> in action by recalculating our IQ scores t-test that we carried out earlier on. Here is what that looks like using simulation-based methods.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute test statistic</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>test_statistic <span class="ot">&lt;-</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  larger_sample <span class="sc">|&gt;</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> score) <span class="sc">|&gt;</span> </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># generate null distribution</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  larger_sample <span class="sc">|&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> score) <span class="sc">|&gt;</span> </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p-value of observing a test statistic at least as extreme as </span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co"># our observed statistic if the data was generated by chance</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> </span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  null_distribution <span class="sc">|&gt;</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> test_statistic, <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co"># visualise the test statistic against the null</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="sc">|&gt;</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span> </span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(test_statistic, <span class="at">direction =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"#00A499"</span>) <span class="sc">+</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">95</span>, <span class="at">y =</span> <span class="dv">125</span>,</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">paste0</span>(<span class="st">"t = "</span>, <span class="fu">round</span>(test_statistic, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st"> p = "</span>, p_value),</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">8</span>), <span class="at">color=</span><span class="st">"grey30"</span></span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"IQ Score"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="hypothesis_testing_r_files/figure-html/high-achievers-sim-test-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><img src="hypothesis_testing_r_files/figure-html/high-achievers-sim-test-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>I think that one of the main strengths of this approach is the intuition it gives us for how hypothesis testing really works. By going through the process step-by-step, we can see what we are doing more easily. We compute our test statistic, which is some summary measure of the data (in this case the mean value), before simulating a null distribution under the assumption that there is no difference between our high achievers and the population. We do this by specifying the data we are testing (the response variable), stating our null hypothesis (that we are carrying out a test using a point estimate, and that the mean of the null is 100), and generating a distribution by taking 1000 bootstrap samples (where sample size is equal to our input and samples are drawn from our data with replacement).</p>
 <p>Having built a null distribution, we can compare our test statistic against that null and see how extreme it appears to be if the assumption that the null hypothesis is true is correct. We can quantify this by computing a p-value, which is just a measure of the proportion of values in our null distribution that are at least as extreme as the test statistic. In the above example, because we are carrying out a one-tailed test (<code>direction = "greater"</code>), we would just need to filter the null distribution for values equal to or greater than our sample mean. If we were carrying out a two-tailed test, we would have to calculate the absolute distance of all values from the null mean, and then filter for all values equal to or greater than the difference between our sample mean and the null mean.</p>
 <p>To further illustrate this workflow, below is the chi-squared test equivalent.</p>
-<div class="cell" data-hash="hypothesis_testing_r_cache/html/chi-squared-sim-test_a7b944b1cdb803567a8a09838a6433b0">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># calculate test statistic</span></span>
-<span><span class="va">chisq_statistic</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">baldness_survey</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/specify.html">specify</a></span><span class="op">(</span><span class="va">education</span> <span class="op">~</span> <span class="va">hair_status</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/hypothesize.html">hypothesize</a></span><span class="op">(</span>null <span class="op">=</span> <span class="st">"independence"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/calculate.html">calculate</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"Chisq"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># generate null distribution</span></span>
-<span><span class="va">chisq_null</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">baldness_survey</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/specify.html">specify</a></span><span class="op">(</span><span class="va">education</span> <span class="op">~</span> <span class="va">hair_status</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/hypothesize.html">hypothesize</a></span><span class="op">(</span>null <span class="op">=</span> <span class="st">"independence"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/generate.html">generate</a></span><span class="op">(</span>reps <span class="op">=</span> <span class="fl">1000</span>, type <span class="op">=</span> <span class="st">"permute"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/calculate.html">calculate</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"Chisq"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># calculate the p value from the test statistic and null distribution</span></span>
-<span><span class="va">chisq_p</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">chisq_null</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/get_p_value.html">get_p_value</a></span><span class="op">(</span><span class="va">chisq_statistic</span>, direction <span class="op">=</span> <span class="st">"greater"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># visualize the null distribution and test statistic</span></span>
-<span><span class="va">chisq_null</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/visualize.html">visualize</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://infer.tidymodels.org/reference/shade_p_value.html">shade_p_value</a></span><span class="op">(</span><span class="va">chisq_statistic</span>, direction <span class="op">=</span> <span class="cn">NULL</span>, color <span class="op">=</span> <span class="st">"#00A499"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, colour <span class="op">=</span> <span class="st">"#333333"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
-<span>    <span class="st">"text"</span>, x <span class="op">=</span> <span class="fl">7.5</span>, y <span class="op">=</span> <span class="fl">250</span>,</span>
-<span>    label <span class="op">=</span> </span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"χ2 = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">chisq_statistic</span><span class="op">$</span><span class="va">stat</span>, <span class="fl">2</span><span class="op">)</span>,</span>
-<span>             <span class="st">"\n p = "</span>, <span class="va">chisq_p</span><span class="op">)</span>,</span>
-<span>    size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, color<span class="op">=</span><span class="st">"grey30"</span></span>
-<span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chi-Squared Statistic"</span>, y <span class="op">=</span> <span class="cn">NULL</span>, title <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate test statistic</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>chisq_statistic <span class="ot">&lt;-</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  baldness_survey <span class="sc">|&gt;</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(education <span class="sc">~</span> hair_status) <span class="sc">|&gt;</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"Chisq"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># generate null distribution</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>chisq_null <span class="ot">&lt;-</span> </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  baldness_survey <span class="sc">|&gt;</span> </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(education <span class="sc">~</span> hair_status) <span class="sc">|&gt;</span> </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"Chisq"</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the p value from the test statistic and null distribution</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>chisq_p <span class="ot">&lt;-</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  chisq_null <span class="sc">|&gt;</span> </span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(chisq_statistic, <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="co"># visualize the null distribution and test statistic</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>chisq_null <span class="sc">|&gt;</span> </span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span> </span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(chisq_statistic, <span class="at">direction =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="st">"#00A499"</span>) <span class="sc">+</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#333333"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">7.5</span>, <span class="at">y =</span> <span class="dv">250</span>,</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> </span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste0</span>(<span class="st">"χ2 = "</span>, <span class="fu">round</span>(chisq_statistic<span class="sc">$</span>stat, <span class="dv">2</span>),</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>             <span class="st">"</span><span class="sc">\n</span><span class="st"> p = "</span>, chisq_p),</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fu">rel</span>(<span class="dv">8</span>), <span class="at">color=</span><span class="st">"grey30"</span></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Chi-Squared Statistic"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">title =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="hypothesis_testing_r_files/figure-html/chi-squared-sim-test-1.png" class="img-fluid" width="960"></p>
+<div>
+<figure class="figure">
+<p><img src="hypothesis_testing_r_files/figure-html/chi-squared-sim-test-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
 </div>
 </div>
-<p>As discussed above, the simulation-based approach to hypothesis testing involves carrying out the processes in the hypothesis test more explicitly, and this helps us gain intuition for what we are doing. This also forces us to think about how we specify and compute our test. It’s pretty easy to build a t-test without really getting as far as actually checking if it is the right approach, and you don’t need to think long and hard about exactly what is going on when you run a t-test. Downey’s “There is only one test” framework, and the <a href="https://github.com/tidymodels/infer">infer</a> implementation, forces you to think about what you are doing and to be a little more deliberate about your choices.</p>
-</section></section><section id="moving-beyond-testing" class="level2" data-number="6.5"><h2 data-number="6.5" class="anchored" data-anchor-id="moving-beyond-testing">
-<span class="header-section-number">6.5</span> Moving Beyond Testing</h2>
+</div>
+<p>As discussed above, the simulation-based approach to hypothesis testing involves carrying out the processes in the hypothesis test more explicitly, and this helps us gain intuition for what we are doing. This also forces us to think about how we specify and compute our test. It’s pretty easy to build a t-test without really getting as far as actually checking if it is the right approach, and you don’t need to think long and hard about exactly what is going on when you run a t-test. Downey’s “There is only one test” framework, and the <code>{infer}</code> implementation, forces you to think about what you are doing and to be a little more deliberate about your choices.</p>
+</section>
+</section>
+<section id="moving-beyond-testing" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="moving-beyond-testing"><span class="header-section-number">6.5</span> Moving Beyond Testing</h2>
 <p>Hypothesis testing is still a useful tool when we are looking to make conclusions about data without overinterpreting noise <span class="citation" data-cites="gelman2020">(<a href="references.html#ref-gelman2020" role="doc-biblioref">Gelman, Hill, and Vehtari 2020</a>)</span>. Simple statistical tests of difference between groups or differences from a hypothesised value have plenty of utility, especially in industry, where getting reasonably reliable results quickly can often be more valuable than taking more time to get more precision.</p>
 <p>However, where more precision is needed, a different approach may be necessary. Testing a test hypothesis can only give us some sense of the degree to which our data is consistent with the hypothesis. This may move us closer to being able to make inferences, especially if the testing approach is robust, and sound scientific models have been developed for which the hypothesis test is a reasonable statistical representation, but answering meaningful questions usually involves trying to make some assertions not just about the existence of an effect or a difference, but also quantifying it too. Where this is the goal, estimation is a better choice. The estimation approach to statistical inference does not rely on a hypothesis, and instead focuses on a “quantity of interest”, for which we use the data to estimate <span class="citation" data-cites="prytherch2022">(<a href="references.html#ref-prytherch2022" role="doc-biblioref">Prytherch 2022</a>)</span>. While testing tries to give us a sense of whether or not what we observe in our sample is likely to exist in the population, the estimation approach tries to measure the effect size itself.</p>
 <p>Although estimating an effect size is a good start, it is also important to quantify the precision of that estimate as well. Estimating the size of an effect, a point estimate, is inherently uncertain. This uncertainty can be a strength, rather than a weakness. By incorporating uncertainty in to our estimates, we can say more about what our sample data is telling us, and we are better able to make inferences about the population.</p>
@@ -769,7 +879,8 @@ Further Details
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<section id="estimate-meaningful-quantities" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="estimate-meaningful-quantities">Estimate Meaningful Quantities</h4>
+<section id="estimate-meaningful-quantities" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="estimate-meaningful-quantities">Estimate Meaningful Quantities</h4>
 <p>This is, I believe, the most important suggestion made in this chapter. I am borrowing a phrase used by the UNC Epidemiologist, Charles Poole, in a talk he gave about the value of p-values. He states that we should “stop testing null hypotheses, start estimating meaningful quantities” <span class="citation" data-cites="poole2022">(<a href="references.html#ref-poole2022" role="doc-biblioref">Poole 2022</a>)</span>. His (very firmly-held) position is that there is no reforming null hypothesis significance testing. Instead, our focus should be on estimation. <span class="citation" data-cites="poole2022">Poole (<a href="references.html#ref-poole2022" role="doc-biblioref">2022</a>)</span> argues that wherever significance testing is of some utility, we should instead frame the results in terms of substantive results and estimation of effect size. This would still do what hypothesis testing is attempting to do, but it should be more robust (if done properly), and the framing itself offers a lot more.</p>
 <p><span class="citation" data-cites="gelman2020">Gelman, Hill, and Vehtari (<a href="references.html#ref-gelman2020" role="doc-biblioref">2020</a>)</span> argue that we are generally capable of being interested in issues where effects exist, and that the presence of an effect is therefore not entirely interesting, in and of itself. Therefore, we should concern ourselves with the things that do matter, like the size of the effect, not the existence of the effect itself.</p>
 <p>Although I’m not going to take quite as strong a position as <span class="citation" data-cites="poole2022">Poole (<a href="references.html#ref-poole2022" role="doc-biblioref">2022</a>)</span> or <span class="citation" data-cites="gelman2020">Gelman, Hill, and Vehtari (<a href="references.html#ref-gelman2020" role="doc-biblioref">2020</a>)</span>, I do think his position is pretty much correct. I am of the view that hypothesis testing is generally a sub-optimal approach when trying to better understand phenomena using data. I think there are still plenty of situations where a hypothesis test is sufficient, and in industry where there is often value to providing functionally useful (if relatively imprecise) conclusions quickly, it is reasonable to turn to testing. However, there are lots of situations where an estimate of the effect size, and the precision of that estimate, are both very valuable!</p>
@@ -777,7 +888,9 @@ Further Details
 <p>Taking an estimation approach to statistical inference doesn’t necessarily alter the statistical methods used (though more on this at the end of this chapter), but it does require our adjusting how we approach these methods and what we look to get out of them.</p>
 <p>Estimation is not specifically about method. If statistical tests are used, then it requires taking the estimate of the effect size, or calculating it if the context means that any output does not offer an intuitive interpretation of effect. Other methods, like regression, can give a more direct measure of effect size (though there are plenty of regression models that also require work to produce more interpretable effect estimates).</p>
 <p>The important change in approach is to focus on the importance of the estimated effect size, not on the p-value, or statistical significance!</p>
-</section><section id="embrace-uncertainty" class="level4 unnumbered"><h4 class="unnumbered anchored" data-anchor-id="embrace-uncertainty">Embrace Uncertainty</h4>
+</section>
+<section id="embrace-uncertainty" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="embrace-uncertainty">Embrace Uncertainty</h4>
 <p>When we move away from testing null hypotheses and focus instead on the estimation of effect sizes, we go from testing for the existence of an effect to estimating the magnitude (effect size) and the direction (whether the effect is positive or negative). However, a key part of this that is missing is the precision with which we are able to estimate the effect. It’s important to remember, in any statistical modelling, that we are estimating quantities, and therefore any point estimate is just our best effort at quantifying an unknown population parameter. The point estimate is probably wrong! It is important that we acknowledge the uncertainty in our estimations and account for them in the way we present model outputs<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>.</p>
 <p>However, the embrace of uncertainty is not limited to our uncertainty in our estimates. It is a wider issue. We have to accept that every part of the process of estimating meaningful quantities is done with a degree of uncertainty, and as such the way we think about statistical modelling and the way we present our results should account for the existence of variance. Uncertainty exists everywhere in statistical analysis and inference <span class="citation" data-cites="wasserstein2019">(<a href="references.html#ref-wasserstein2019" role="doc-biblioref">Wasserstein, Schirm, and Lazar 2019</a>)</span>.</p>
 <p><span class="citation" data-cites="wasserstein2019">Wasserstein, Schirm, and Lazar (<a href="references.html#ref-wasserstein2019" role="doc-biblioref">2019</a>)</span> describe the use of “significance tests and dichotomized p-values” as an attempt by some practitioners to avoid dealing with uncertainty by escaping to a more simplistic world where results are either statistically significant or not. Perhaps a little uncharitable (though in an academic context I am more inclined to agree), but we’ve already discussed the importance of moving away from significance testing, so we should complete the journey and confront uncertainty head-on! We have to accept that findings are more uncertain than is often acknowledged. Our embrace of uncertainty should help us to seek out better methods, apply the necessary amount of care and critical thinking to our work, and draw inferences with the appropriate amount of confidence.</p>
@@ -788,15 +901,17 @@ Further Details
 </div>
 </div>
 </div>
-</section><section id="next-steps" class="level2" data-number="6.6"><h2 data-number="6.6" class="anchored" data-anchor-id="next-steps">
-<span class="header-section-number">6.6</span> Next Steps</h2>
+</section>
+<section id="next-steps" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">6.6</span> Next Steps</h2>
 <p>The goal for this chapter is that readers come away with an understanding of the significant limitations of null hypothesis significance testing and the more robust approaches to testing hypotheses, and the alternative approach of estimating meaningful effects. I hope that this chapter has helped set people up reasonably well when carrying out tests. Equally, I hope that they will consider the alternatives, recognising when it is defensible to carry out a statistical test and when estimating the effect size is necessary.</p>
 <p>I have taken a slightly more forgiving position than many of the statisticians that I respect, and from which I have learned so much, but I have deliberately done so because I think industry has slightly different incentives, and therefore slightly different requirements. I think that there are situations where the use of hypothesis testing is sufficient and defensible, and those situations are much more common in industry. The criticisms remain perfectly valid, but I hope I have given readers the tools to carry out more robust testing, and a good understanding of when to choose estimation instead, where necessary.</p>
 <p>While it is possible to use statistical tests for estimation, I also believe that the big wide world of estimation is better served by regression models. I think regression modelling is a better starting point than statistical tests because the structure of regression modelling places more emphasis on the effect size. Further, estimating effect sizes does not rule out the use of statistical tests, but it does require redirecting our focus and making sure to treat the magnitude and direction of effect size as the most important part of the analysis. The premise of statistical tests is that they test for the existence of an effect, and while packages like {infer} frame test outputs in a way that makes using statistical tests for these purposes, it does still require a little work to think about about the results of statistical tests in these terms. Further, I think that regression modelling gives a lot more flexibility when we are attempting to estimate an effect as precisely as possible, and the process and resulting outputs of a regression model lend themselves more naturally to a focus that steers away from hypothesis testing and towards estimating effects.</p>
 <p>If it hasn’t been made clear before, I think it is important to stress the distinction between the null hypothesis testing framework and the statistical tests used to carry them out. The tests themselves are not really the problem. However, they are closely tied to null hypothesis testing. Ultimately, the statistical tests discussed in this chapter (and many more) are just special cases of linear models <span class="citation" data-cites="lindelov2019">(<a href="references.html#ref-lindelov2019" role="doc-biblioref">Lindeløv 2019</a>)</span>, and the results in both will be identical <span class="citation" data-cites="zablotski2019">(<a href="references.html#ref-zablotski2019" role="doc-biblioref">Zablotski 2019</a>)</span> (if not the way the outputs are presented), so the same things can be achieved with either approach, but regression modelling offers more flexibility, allows for the layering of complexity/precision in estimates, and the way regression outputs are framed are generally a little more balanced. Treating regressions as the first point of call for inferential statistics is not a necessary prerequisite for “doing things the right way”, but doing things the right way becomes easier, because it is easier to frame everything in terms of the magnitude and direction of effects.</p>
 <p>The good news? The next chapter is about modelling linear effects using regression!</p>
-</section><section id="resources" class="level2" data-number="6.7"><h2 data-number="6.7" class="anchored" data-anchor-id="resources">
-<span class="header-section-number">6.7</span> Resources</h2>
+</section>
+<section id="resources" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="resources"><span class="header-section-number">6.7</span> Resources</h2>
 <ul>
 <li><a href="https://infer.tidymodels.org/">{infer}</a></li>
 <li><a href="https://seeing-theory.brown.edu/">Seeing Theory</a></li>
@@ -814,7 +929,7 @@ Further Details
 
 <!-- -->
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-aschwanden2015" class="csl-entry" role="listitem">
 Aschwanden, Christie. 2015. <span>“Science Isn’t Broken: It’s Just a Hell of a Lot Harder Than We Give It Credit For.”</span> FiveThirtyEight. <a href="https://fivethirtyeight.com/features/science-isnt-broken/">https://fivethirtyeight.com/features/science-isnt-broken/</a>.
 </div>
@@ -873,7 +988,9 @@ Wasserstein, Ronald L., Allen L. Schirm, and Nicole A. Lazar. 2019. <span>“Mov
 Zablotski, Yury. 2019. <span>“Statistical Tests Vs. Linear Regression.”</span> <a href="https://yury-zablotski.netlify.app/post/statistical-tests-vs-linear-regression/">https://yury-zablotski.netlify.app/post/statistical-tests-vs-linear-regression/</a>.
 </div>
 </div>
-</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
 <ol>
 <li id="fn1"><p>I could stubbornly refuse to write about hypothesis tests, like covering my eyes and ears and screaming as someone asks me how to do a t-test properly, but something tells me that isn’t going to stop them happening. I would rather give someone all the necessary resources (or at least as much as is possible in a relatively limited guide like this), and hope it helps them improve the way they go about asking questions of data.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>This is in contrast to academia, where it is rare that anything other than precision will matter.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
@@ -887,7 +1004,11 @@ Zablotski, Yury. 2019. <span>“Statistical Tests Vs. Linear Regression.”</spa
 <li id="fn10"><p>Using only five observations is less than ideal, but given that what we are doing is just illustrative, this will work fine.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>We have used the <a href="https://debruine.github.io/faux/"><code>{faux}</code></a> package to simulate this data because simulating two variables that are related to each other is a little more involved.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn12"><p>It is also worth noting that while the guidance here is about the estimation approach to statistical inference, it can also be applied to hypothesis testing too.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1017,10 +1138,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1030,8 +1150,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1044,6 +1173,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1087,6 +1335,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1112,6 +1361,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1170,13 +1445,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./eda_r.html" class="pagination-link">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./eda_r.html" class="pagination-link  aria-label=" &lt;span="" data="" analysis&lt;="" span&gt;"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./linear_regression_r.html" class="pagination-link">
+      <a href="./linear_regression_r.html" class="pagination-link" aria-label="<span class='chapter-number'>7</span>&nbsp; <span class='chapter-title'>Linear Regression</span>">
         <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Linear Regression</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1510,7 +1787,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb24-345"><a href="#cb24-345" aria-hidden="true" tabindex="-1"></a>growers <span class="ot">&lt;-</span></span>
 <span id="cb24-346"><a href="#cb24-346" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
 <span id="cb24-347"><a href="#cb24-347" aria-hidden="true" tabindex="-1"></a>    <span class="at">group =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"treatment"</span>, <span class="st">"control"</span>), <span class="at">times =</span> <span class="dv">20</span>),</span>
-<span id="cb24-348"><a href="#cb24-348" aria-hidden="true" tabindex="-1"></a>    <span class="at">growth =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>), <span class="at">sd =</span> <span class="fu">c</span>(<span class="dv">3</span>, .<span class="dv">5</span>))</span>
+<span id="cb24-348"><a href="#cb24-348" aria-hidden="true" tabindex="-1"></a>    <span class="at">growth =</span> <span class="fu">rnorm</span>(<span class="dv">40</span>, <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>), <span class="at">sd =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>))</span>
 <span id="cb24-349"><a href="#cb24-349" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb24-350"><a href="#cb24-350" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-351"><a href="#cb24-351" aria-hidden="true" tabindex="-1"></a></span>
@@ -1796,16 +2073,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer">
+<footer class="footer">
+  <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center"><a href="https://python-data-science-guides.netlify.app"> Python Data Science Guides</a> <i class="fa-brands fa-python fa-xl" aria-label="python"></i></div>
+    <div class="nav-footer-center">
+<p><a href="https://python-data-science-guides.netlify.app"> Python Data Science Guides</a> <i class="fa-brands fa-python fa-xl" aria-label="python"></i></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/hypothesis_testing_r.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
+
 
 
 </body></html>

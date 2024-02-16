@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.545">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -57,7 +57,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -84,7 +84,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,13 +99,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
+<!-- umami cloud -->
+<script async="" src="https://us.umami.is/script.js" data-website-id="58945850-4f1e-4b4e-828b-a23d83c41fa0"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -111,12 +120,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./eda_py.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./eda_py.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -126,7 +135,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/scw_logo.jpg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -134,7 +143,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Python Data Science Guides</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/NHS-South-Central-and-West/data-science-guides/tree/main/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/NHS-South-Central-and-West/data-science-guides/tree/main/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -266,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -283,12 +292,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">5.4</span> Next Steps</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">5.5</span> Resources</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/eda_py.qmd" class="toc-action">View source</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/eda_py.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./sql.html">Dealing with Data</a></li><li class="breadcrumb-item"><a href="./eda_py.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></a></li></ol></nav>
 <div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title"><span id="sec-eda" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
@@ -303,7 +312,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <!-- links used throughout the book -->
 <!-- intro -->
@@ -313,8 +324,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- hypothesis testing -->
 <!-- machine learning -->
 <!-- version control -->
-<div id="setup" class="cell" data-execution_count="2">
-<details>
+<div id="setup" class="cell" data-cache="false" data-execution_count="1">
+<details class="code-fold">
 <summary>Setup Code (Click to Expand)</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install pandas numpy matplotlib seaborn skimpy</span></span>
@@ -358,7 +369,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The first step when doing EDA is to inspect the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.</p>
 <p>We can use the <code>head()</code> and <code>info()</code> functions to get a sense of the structure of the data. The <code>head()</code> function returns the first five rows of the data, and the <code>info()</code> method returns a summary of the data, including the number of rows, the number of columns, the column names, and the data type of each column. The <code>info()</code> method is particularly useful for identifying missing values, as it returns the number of non-null values in each column. If the number of non-null values is less than the number of rows, then there are missing values in the column.</p>
 <p>In addition to these two methods, we can also use the <code>nunique()</code> method to count the number of unique values in each column, which helps identify categorical variables, and we can use the <code>unique()</code> method to get a list of the unique values in a column.</p>
-<div class="cell" data-execution_count="3">
+<div id="cell-df-head" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-head" class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -452,7 +463,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="df-info" class="cell" data-execution_count="4">
+<div id="df-info" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -474,7 +485,7 @@ dtypes: category(5), float64(1), int64(4)
 memory usage: 41.1 KB</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
+<div id="cell-count-unique" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count unique values in each column</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="count-unique" class="cell-output cell-output-display" data-execution_count="4">
@@ -491,7 +502,7 @@ heart_disease           2
 dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div id="cell-heart-disease-unique" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unique values of the outcome variable</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df.heart_disease.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-unique" class="cell-output cell-output-display" data-execution_count="5">
@@ -499,7 +510,7 @@ dtype: int64</code></pre>
 Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div id="cell-cholesterol-unique" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unique values of a continuous explanatory variable</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df.cholesterol.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="cholesterol-unique" class="cell-output cell-output-display" data-execution_count="6">
@@ -527,7 +538,7 @@ Categories (2, int64): [0, 1]</code></pre>
 <section id="summary-statistics" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="summary-statistics"><span class="header-section-number">5.2</span> Summary Statistics</h2>
 <p>Summary statistics are a quick and easy way to get a sense of the distribution and central tendency of the variables in the dataset. We can use the <code>describe()</code> method to get a quick overview of every column in the dataset, including the row count, the mean and standard deviation, the minimum and maximum value, and quartiles of each variable.</p>
-<div class="cell" data-execution_count="8">
+<div id="cell-df-describe" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of the data</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-describe" class="cell-output cell-output-display" data-execution_count="7">
@@ -618,7 +629,7 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 <p>While the <code>describe()</code> function is pretty effective, the <code>skimpy</code> package can provide a more detailed summary of the data, using the <code>skim()</code> function. If you are looking for a single function to capture the entire process of inspecting the data and computing summary statistics, <code>skim()</code> is the function for the job, giving you a wealth of information about the dataset as a whole and each variable in the data.</p>
 <p>Another package that provides a similar function is the [profiling][<code>ydata-profiling</code>] package, which can be used to generate a report containing a summary of the data, including the data types, missing values, and summary statistics. The <code>ydata-profiling</code> package is particularly useful for generating a report that can be shared with others, as it can be exported as an HTML file, however it’s a bit more resource-intensive than <code>skimpy</code>, so we will stick with <code>skimpy</code> for this tutorial.</p>
-<div class="cell" data-execution_count="9">
+<div id="cell-df-skim" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more detailed summary of the data</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>skim(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-skim" class="cell-output cell-output-display">
@@ -634,15 +645,15 @@ Categories (2, int64): [0, 1]</code></pre>
 │                                                        │ heart_disease         │                                │
 │                                                        └───────────────────────┘                                │
 │ <span style="font-style: italic">                                                    number                                                    </span>  │
-│ ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━━┳━━━━━━━━┳━━━━━━━━━━┓  │
-│ ┃<span style="font-weight: bold"> column_name                </span>┃<span style="font-weight: bold"> NA   </span>┃<span style="font-weight: bold"> NA %    </span>┃<span style="font-weight: bold"> mean    </span>┃<span style="font-weight: bold"> sd    </span>┃<span style="font-weight: bold"> p0     </span>┃<span style="font-weight: bold"> p25   </span>┃<span style="font-weight: bold"> p75   </span>┃<span style="font-weight: bold"> p100   </span>┃<span style="font-weight: bold"> hist     </span>┃  │
-│ ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━━╇━━━━━━━━╇━━━━━━━━━━┩  │
-│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">age                       </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">      0</span> │ <span style="color: #008080; text-decoration-color: #008080">     54</span> │ <span style="color: #008080; text-decoration-color: #008080">  9.4</span> │ <span style="color: #008080; text-decoration-color: #008080">    28</span> │ <span style="color: #008080; text-decoration-color: #008080">   47</span> │ <span style="color: #008080; text-decoration-color: #008080">   60</span> │ <span style="color: #008080; text-decoration-color: #008080">    77</span> │ <span style="color: #008000; text-decoration-color: #008000"> ▁▄▅█▅▁ </span> │  │
-│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">resting_bp                </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">      0</span> │ <span style="color: #008080; text-decoration-color: #008080">    130</span> │ <span style="color: #008080; text-decoration-color: #008080">   19</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">  120</span> │ <span style="color: #008080; text-decoration-color: #008080">  140</span> │ <span style="color: #008080; text-decoration-color: #008080">   200</span> │ <span style="color: #008000; text-decoration-color: #008000">    █▆▁ </span> │  │
-│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">cholesterol               </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">      0</span> │ <span style="color: #008080; text-decoration-color: #008080">    200</span> │ <span style="color: #008080; text-decoration-color: #008080">  110</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">  170</span> │ <span style="color: #008080; text-decoration-color: #008080">  270</span> │ <span style="color: #008080; text-decoration-color: #008080">   600</span> │ <span style="color: #008000; text-decoration-color: #008000">  ▃▂█▁  </span> │  │
-│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">max_hr                    </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">      0</span> │ <span style="color: #008080; text-decoration-color: #008080">    140</span> │ <span style="color: #008080; text-decoration-color: #008080">   25</span> │ <span style="color: #008080; text-decoration-color: #008080">    60</span> │ <span style="color: #008080; text-decoration-color: #008080">  120</span> │ <span style="color: #008080; text-decoration-color: #008080">  160</span> │ <span style="color: #008080; text-decoration-color: #008080">   200</span> │ <span style="color: #008000; text-decoration-color: #008000">  ▃██▆▁ </span> │  │
-│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">heart_peak_reading        </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">      0</span> │ <span style="color: #008080; text-decoration-color: #008080">   0.89</span> │ <span style="color: #008080; text-decoration-color: #008080">  1.1</span> │ <span style="color: #008080; text-decoration-color: #008080">  -2.6</span> │ <span style="color: #008080; text-decoration-color: #008080">    0</span> │ <span style="color: #008080; text-decoration-color: #008080">  1.5</span> │ <span style="color: #008080; text-decoration-color: #008080">   6.2</span> │ <span style="color: #008000; text-decoration-color: #008000">   █▆▃  </span> │  │
-│ └────────────────────────────┴──────┴─────────┴─────────┴───────┴────────┴───────┴───────┴────────┴──────────┘  │
+│ ┏━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━┳━━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━━━┳━━━━━━━┳━━━━━━┳━━━━━━┳━━━━━━━┳━━━━━━━━━┓  │
+│ ┃<span style="font-weight: bold"> column_name              </span>┃<span style="font-weight: bold"> NA   </span>┃<span style="font-weight: bold"> NA %   </span>┃<span style="font-weight: bold"> mean   </span>┃<span style="font-weight: bold"> sd    </span>┃<span style="font-weight: bold"> p0     </span>┃<span style="font-weight: bold"> p25   </span>┃<span style="font-weight: bold"> p50  </span>┃<span style="font-weight: bold"> p75  </span>┃<span style="font-weight: bold"> p100  </span>┃<span style="font-weight: bold"> hist    </span>┃  │
+│ ┡━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━╇━━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━━━╇━━━━━━━╇━━━━━━╇━━━━━━╇━━━━━━━╇━━━━━━━━━┩  │
+│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">age                     </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">    54</span> │ <span style="color: #008080; text-decoration-color: #008080">  9.4</span> │ <span style="color: #008080; text-decoration-color: #008080">    28</span> │ <span style="color: #008080; text-decoration-color: #008080">   47</span> │ <span style="color: #008080; text-decoration-color: #008080">  54</span> │ <span style="color: #008080; text-decoration-color: #008080">  60</span> │ <span style="color: #008080; text-decoration-color: #008080">   77</span> │ <span style="color: #008000; text-decoration-color: #008000">▁▃▅▇▅▁ </span> │  │
+│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">resting_bp              </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">   130</span> │ <span style="color: #008080; text-decoration-color: #008080">   19</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">  120</span> │ <span style="color: #008080; text-decoration-color: #008080"> 130</span> │ <span style="color: #008080; text-decoration-color: #008080"> 140</span> │ <span style="color: #008080; text-decoration-color: #008080">  200</span> │ <span style="color: #008000; text-decoration-color: #008000">   ▇▆▁ </span> │  │
+│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">cholesterol             </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">   200</span> │ <span style="color: #008080; text-decoration-color: #008080">  110</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">  170</span> │ <span style="color: #008080; text-decoration-color: #008080"> 220</span> │ <span style="color: #008080; text-decoration-color: #008080"> 270</span> │ <span style="color: #008080; text-decoration-color: #008080">  600</span> │ <span style="color: #008000; text-decoration-color: #008000"> ▃▂▇▁  </span> │  │
+│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">max_hr                  </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">   140</span> │ <span style="color: #008080; text-decoration-color: #008080">   25</span> │ <span style="color: #008080; text-decoration-color: #008080">    60</span> │ <span style="color: #008080; text-decoration-color: #008080">  120</span> │ <span style="color: #008080; text-decoration-color: #008080"> 140</span> │ <span style="color: #008080; text-decoration-color: #008080"> 160</span> │ <span style="color: #008080; text-decoration-color: #008080">  200</span> │ <span style="color: #008000; text-decoration-color: #008000"> ▃▇▇▆▁ </span> │  │
+│ │ <span style="color: #af87ff; text-decoration-color: #af87ff">heart_peak_reading      </span> │ <span style="color: #008080; text-decoration-color: #008080">   0</span> │ <span style="color: #008080; text-decoration-color: #008080">     0</span> │ <span style="color: #008080; text-decoration-color: #008080">  0.89</span> │ <span style="color: #008080; text-decoration-color: #008080">  1.1</span> │ <span style="color: #008080; text-decoration-color: #008080">  -2.6</span> │ <span style="color: #008080; text-decoration-color: #008080">    0</span> │ <span style="color: #008080; text-decoration-color: #008080"> 0.6</span> │ <span style="color: #008080; text-decoration-color: #008080"> 1.5</span> │ <span style="color: #008080; text-decoration-color: #008080">  6.2</span> │ <span style="color: #008000; text-decoration-color: #008000">  ▇▆▃  </span> │  │
+│ └──────────────────────────┴──────┴────────┴────────┴───────┴────────┴───────┴──────┴──────┴───────┴─────────┘  │
 │ <span style="font-style: italic">                                                   category                                                   </span>  │
 │ ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━┓  │
 │ ┃<span style="font-weight: bold"> column_name                          </span>┃<span style="font-weight: bold"> NA       </span>┃<span style="font-weight: bold"> NA %          </span>┃<span style="font-weight: bold"> ordered              </span>┃<span style="font-weight: bold"> unique            </span>┃  │
@@ -658,21 +669,21 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
 <p>If we want to examine a particular variable, the functions <code>mean()</code>, <code>median()</code>, <code>quantile()</code>, <code>min()</code>, and <code>max()</code> will return the same information as the <code>describe()</code> function. We can also get a sense of dispersion by computing the standard deviation or variance of a variable. The <code>std()</code> function returns the standard deviation of a variable, and the <code>var()</code> function returns the variance.</p>
-<div class="cell" data-execution_count="10">
+<div id="cell-avg-age" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean &amp; median age</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.age.mean(), df.age.median()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="avg-age" class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>(53.510893246187365, 54.0)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="11">
+<div id="cell-min-max-age" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># min and max age</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.age.<span class="bu">min</span>(), df.age.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="min-max-age" class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>(28, 77)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="12">
+<div id="cell-dispersion-age" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dispersion of age</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.age.std(), df.age.var()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="dispersion-age" class="cell-output cell-output-display" data-execution_count="11">
@@ -680,7 +691,7 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
 <p>Finally, we can use the <code>value_counts()</code> function to get a count of the number of observations in each category of a discrete variable.</p>
-<div class="cell" data-execution_count="13">
+<div id="cell-heart-disease-count" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease count</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'heart_disease'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-count" class="cell-output cell-output-display" data-execution_count="12">
@@ -690,7 +701,7 @@ Categories (2, int64): [0, 1]</code></pre>
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div id="cell-resting-ecg-count" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resting ecg count</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'resting_ecg'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="resting-ecg-count" class="cell-output cell-output-display" data-execution_count="13">
@@ -701,7 +712,7 @@ ST        178
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
+<div id="cell-angina-count" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'angina'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="angina-count" class="cell-output cell-output-display" data-execution_count="14">
@@ -711,7 +722,7 @@ Y    371
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="16">
+<div id="cell-cholesterol-count" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'cholesterol'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="cholesterol-count" class="cell-output cell-output-display" data-execution_count="15">
@@ -731,7 +742,7 @@ Name: count, Length: 222, dtype: int64</code></pre>
 </div>
 </div>
 <p>We can also use the <code>groupby()</code> method to get the counts of each category in a categorical variable, grouped by another categorical variable.</p>
-<div class="cell" data-execution_count="17">
+<div id="cell-heart-disease-by-resting-ecg-count" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">'resting_ecg'</span>])[<span class="st">'heart_disease'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-by-resting-ecg-count" class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>resting_ecg  heart_disease
@@ -745,7 +756,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>In addition to the counts, we can also get the proportions of each category using the <code>normalize=True</code> argument.</p>
-<div class="cell" data-execution_count="18">
+<div id="cell-heart-disease-by-resting-ecg-freq" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">'resting_ecg'</span>])[<span class="st">'heart_disease'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-by-resting-ecg-freq" class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>resting_ecg  heart_disease
@@ -770,54 +781,54 @@ Name: proportion, dtype: float64</code></pre>
 <section id="continuous-distributions" class="level4" data-number="5.3.1.1">
 <h4 data-number="5.3.1.1" class="anchored" data-anchor-id="continuous-distributions"><span class="header-section-number">5.3.1.1</span> Continuous Distributions</h4>
 <p>For continuous variables, we can use histograms to visualise the distribution of the data. We can use the <code>histplot()</code> function to create a histogram of a continuous variable. The <code>binwidth</code> argument allows us to specify the width of the bins in the histogram.</p>
-<div class="cell" data-execution_count="19">
+<div id="cell-age-dist" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, binwidth<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="age-dist" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-dist-output-1.png" width="813" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-dist-output-1.png" id="age-dist" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div id="cell-max-hr-dist" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr distribution</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'max_hr'</span>, binwidth<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="max-hr-dist" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-dist-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-dist-output-1.png" id="max-hr-dist" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="21">
+<div id="cell-cholesterol-dist" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol distribution</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'cholesterol'</span>, binwidth<span class="op">=</span><span class="dv">25</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="cholesterol-dist" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/cholesterol-dist-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/cholesterol-dist-output-1.png" id="cholesterol-dist" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="22">
+<div id="cell-filter-zeroes-cholesterol-dist" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol distribution</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'cholesterol'</span>, binwidth<span class="op">=</span><span class="dv">25</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="filter-zeroes-cholesterol-dist" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/filter-zeroes-cholesterol-dist-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/filter-zeroes-cholesterol-dist-output-1.png" id="filter-zeroes-cholesterol-dist" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
@@ -827,41 +838,41 @@ Name: proportion, dtype: float64</code></pre>
 <section id="discrete-distributions" class="level4" data-number="5.3.1.2">
 <h4 data-number="5.3.1.2" class="anchored" data-anchor-id="discrete-distributions"><span class="header-section-number">5.3.1.2</span> Discrete Distributions</h4>
 <p>We can use bar plots to visualise the distribution of discrete variables. We can use the <code>countplot()</code> function to create a bar plot of a discrete variable.</p>
-<div class="cell" data-execution_count="23">
+<div id="cell-heart-disease-dist" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease distribution</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="heart-disease-dist" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-dist-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-dist-output-1.png" id="heart-disease-dist" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="24">
+<div id="cell-sex-dist" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sex distribution</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'sex'</span>)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="sex-dist" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/sex-dist-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/sex-dist-output-1.png" id="sex-dist" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="25">
+<div id="cell-angina-dist" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina distribution</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'angina'</span>)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="angina-dist" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/angina-dist-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/angina-dist-output-1.png" id="angina-dist" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
@@ -874,54 +885,54 @@ Name: proportion, dtype: float64</code></pre>
 <section id="visualising-multiple-discrete-variables" class="level4" data-number="5.3.2.1">
 <h4 data-number="5.3.2.1" class="anchored" data-anchor-id="visualising-multiple-discrete-variables"><span class="header-section-number">5.3.2.1</span> Visualising Multiple Discrete Variables</h4>
 <p>Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). We can use the <code>countplot()</code> function to create bar plots, and the <code>hue</code> argument to split the bars by a particular variable and display them in different colours.</p>
-<div class="cell" data-execution_count="26">
+<div id="cell-heart-disease-by-sex" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by sex</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="heart-disease-by-sex" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-by-sex-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-by-sex-output-1.png" id="heart-disease-by-sex" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="27">
+<div id="cell-heart-disease-by-resting-ecg" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by resting ecg</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'resting_ecg'</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="heart-disease-by-resting-ecg" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-by-resting-ecg-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-by-resting-ecg-output-1.png" id="heart-disease-by-resting-ecg" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="28">
+<div id="cell-heart-disease-by-angina" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'angina'</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="heart-disease-by-angina" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-by-angina-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-by-angina-output-1.png" id="heart-disease-by-angina" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="29">
+<div id="cell-heart-disease-by-fasting-bs" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fasting bs</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'fasting_bs'</span>)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="heart-disease-by-fasting-bs" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/heart-disease-by-fasting-bs-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/heart-disease-by-fasting-bs-output-1.png" id="heart-disease-by-fasting-bs" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
@@ -933,33 +944,33 @@ Name: proportion, dtype: float64</code></pre>
 <section id="histogram-plots" class="level5" data-number="5.3.2.2.1">
 <h5 data-number="5.3.2.2.1" class="anchored" data-anchor-id="histogram-plots"><span class="header-section-number">5.3.2.2.1</span> Histogram Plots</h5>
 <p>We can use the <code>histplot()</code> function to create a histogram of a continuous variable. The <code>hue</code> argument allows us to split the histogram by a particular variable and display them in different colours, while the <code>multiple</code> argument allows us to specify how the histograms should be displayed. The <code>multiple</code> argument can be set to <code>stack</code> to stack the histograms on top of each other, or <code>dodge</code> to display the histograms side-by-side.</p>
-<div class="cell" data-execution_count="30">
+<div id="cell-age-by-heart-disease" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution by heart disease</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>, binwidth<span class="op">=</span><span class="dv">5</span>, multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="age-by-heart-disease" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-by-heart-disease-output-1.png" width="813" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-by-heart-disease-output-1.png" id="age-by-heart-disease" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="31">
+<div id="cell-cholesterol-by-heart-disease" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'cholesterol'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>, binwidth<span class="op">=</span><span class="dv">25</span>, multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="cholesterol-by-heart-disease" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/cholesterol-by-heart-disease-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/cholesterol-by-heart-disease-output-1.png" id="cholesterol-by-heart-disease" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="32">
+<div id="cell-filtered-zeroes-cholesterol-by-heart-disease" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter zero values</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>],</span>
@@ -971,9 +982,9 @@ Name: proportion, dtype: float64</code></pre>
 <span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="filtered-zeroes-cholesterol-by-heart-disease" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/filtered-zeroes-cholesterol-by-heart-disease-output-1.png" width="805" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/filtered-zeroes-cholesterol-by-heart-disease-output-1.png" id="filtered-zeroes-cholesterol-by-heart-disease" class="quarto-figure quarto-figure-center anchored figure-img" width="805" height="501"></p>
 </figure>
 </div>
 </div>
@@ -984,56 +995,56 @@ Name: proportion, dtype: float64</code></pre>
 <h5 data-number="5.3.2.2.2" class="anchored" data-anchor-id="box-plots"><span class="header-section-number">5.3.2.2.2</span> Box Plots</h5>
 <p>Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the <code>boxplot()</code> function to create box plots, and the <code>hue</code> argument to split the box plots by a particular variable and display them in different colours.</p>
 <p>However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained <a href="https://here.r-lib.org/">boxplots</a> by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.</p>
-<div class="cell" data-execution_count="33">
+<div id="cell-age-by-heart-disease-box" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; heart disease</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'age'</span>)</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="age-by-heart-disease-box" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-by-heart-disease-box-output-1.png" width="805" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-by-heart-disease-box-output-1.png" id="age-by-heart-disease-box" class="quarto-figure quarto-figure-center anchored figure-img" width="805" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="34">
+<div id="cell-age-box-split-by-sex" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; heart disease, split by sex</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(figsize=(10,6))</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'age'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="age-box-split-by-sex" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-box-split-by-sex-output-1.png" width="805" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-box-split-by-sex-output-1.png" id="age-box-split-by-sex" class="quarto-figure quarto-figure-center anchored figure-img" width="805" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="35">
+<div id="cell-max-hr-by-heart-disease-box" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr &amp; heart disease</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>)</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="max-hr-by-heart-disease-box" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-by-heart-disease-box-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-by-heart-disease-box-output-1.png" id="max-hr-by-heart-disease-box" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="36">
+<div id="cell-max-hr-box-split-by-sex" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr &amp; heart disease, split by sex</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(figsize=(10,6))</span></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="max-hr-box-split-by-sex" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-box-split-by-sex-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-box-split-by-sex-output-1.png" id="max-hr-box-split-by-sex" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
@@ -1043,87 +1054,87 @@ Name: proportion, dtype: float64</code></pre>
 <section id="visualising-multiple-discrete-variables-1" class="level4" data-number="5.3.2.3">
 <h4 data-number="5.3.2.3" class="anchored" data-anchor-id="visualising-multiple-discrete-variables-1"><span class="header-section-number">5.3.2.3</span> Visualising Multiple Discrete Variables</h4>
 <p>Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the <code>scatterplot()</code> function to create scatter plots, and the <code>hue</code> argument to split the scatter plots by a particular variable and display them in different colours.</p>
-<div class="cell" data-execution_count="37">
+<div id="cell-age-resting-bp-scatter" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>)</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="age-resting-bp-scatter" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-resting-bp-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-resting-bp-scatter-output-1.png" id="age-resting-bp-scatter" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="38">
+<div id="cell-filtered-zeroes-resting-bp-scatter" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.resting_bp<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>)</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="filtered-zeroes-resting-bp-scatter" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/filtered-zeroes-resting-bp-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/filtered-zeroes-resting-bp-scatter-output-1.png" id="filtered-zeroes-resting-bp-scatter" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="39">
+<div id="cell-age-cholesterol-scatter" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'cholesterol'</span>)</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="age-cholesterol-scatter" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-cholesterol-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-cholesterol-scatter-output-1.png" id="age-cholesterol-scatter" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="40">
+<div id="cell-age-max-hr-scatter" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="age-max-hr-scatter" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/age-max-hr-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/age-max-hr-scatter-output-1.png" id="age-max-hr-scatter" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The scatter plot visualising age and resting blood pressure highlights another observation that needs to be removed due to data quality issues.</p>
 <p>If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The <code>regplot()</code> function can be used to add a regression line to a scatter plot. The <code>ci</code> argument specifies whether or not to display the confidence interval of the regression line.</p>
-<div class="cell" data-execution_count="41">
+<div id="cell-max-hr-by-age-regression-plot" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; max hr</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>, ci<span class="op">=</span><span class="va">None</span>)</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="max-hr-by-age-regression-plot" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-by-age-regression-plot-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-by-age-regression-plot-output-1.png" id="max-hr-by-age-regression-plot" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>You can also include discrete variables by assigning the discrete groups different colours in the scatter plot, and if you add regression lines to these plots, separate regression lines will be fit to the discrete groups. This can be useful for visualising how the association between the two continuous variables varies across the discrete groups.</p>
 <p>The <code>lmplot()</code> function can be used to create scatter plots with regression lines, and the <code>hue</code> argument can be used to split the scatter plots by a particular variable and display them in different colours.</p>
-<div class="cell" data-execution_count="42">
+<div id="cell-resting-bp-heart-disease-scatter" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp, split by heart disease</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.resting_bp<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>)</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="resting-bp-heart-disease-scatter" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/resting-bp-heart-disease-scatter-output-1.png" width="812" height="501" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/resting-bp-heart-disease-scatter-output-1.png" id="resting-bp-heart-disease-scatter" class="quarto-figure quarto-figure-center anchored figure-img" width="812" height="501"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="43">
+<div id="cell-cholesterol-regression-plot" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; cholesterol, split by heart disease (with regression line)</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>],</span>
@@ -1135,14 +1146,14 @@ Name: proportion, dtype: float64</code></pre>
 <span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="cholesterol-regression-plot" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/cholesterol-regression-plot-output-1.png" width="960" height="662" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/cholesterol-regression-plot-output-1.png" id="cholesterol-regression-plot" class="quarto-figure quarto-figure-center anchored figure-img" width="960" height="662"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="44">
+<div id="cell-max-hr-regression-plot" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; max hr, split by heart disease (with regression line)</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df,</span>
@@ -1154,9 +1165,9 @@ Name: proportion, dtype: float64</code></pre>
 <span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<div id="max-hr-regression-plot" class="quarto-figure quarto-figure-center anchored">
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="eda_py_files/figure-html/max-hr-regression-plot-output-1.png" width="960" height="662" class="figure-img"></p>
+<p><img src="eda_py_files/figure-html/max-hr-regression-plot-output-1.png" id="max-hr-regression-plot" class="quarto-figure quarto-figure-center anchored figure-img" width="960" height="662"></p>
 </figure>
 </div>
 </div>
@@ -1319,10 +1330,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1332,8 +1342,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1346,6 +1365,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1389,6 +1527,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1414,6 +1553,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1475,12 +1640,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./wrangling_py.html" class="pagination-link">
+      <a href="./wrangling_py.html" class="pagination-link  aria-label=" &lt;span="" data&lt;="" span&gt;"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Wrangling Data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./hypothesis_testing_py.html" class="pagination-link">
+      <a href="./hypothesis_testing_py.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>Hypothesis Testing</span>">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -2073,12 +2238,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center"><a href="https://r-data-science-guides.netlify.app"> R Data Science Guides</a> <i class="fa-brands fa-r-project fa-xl" aria-label="r-project"></i></div>
+    <div class="nav-footer-center">
+<p><a href="https://r-data-science-guides.netlify.app"> R Data Science Guides</a> <i class="fa-brands fa-r-project fa-xl" aria-label="r-project"></i></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li><li><a href="https://github.com/NHS-South-Central-and-West/data-science-guides/blob/main/book/eda_py.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 
