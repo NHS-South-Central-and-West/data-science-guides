@@ -42,4 +42,4 @@ bibliography: references.bib
 
 format:
   html:
-    include-in-header: assets/umami_py.html
+    include-in-header: umami_py.html

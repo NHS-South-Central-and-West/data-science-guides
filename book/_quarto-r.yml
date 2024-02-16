@@ -43,4 +43,4 @@ bibliography: references.bib
 
 format:
   html:
-    include-in-header: assets/umami_r.html
+    include-in-header: umami_r.html
