@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <!-- umami cloud -->
-<script async="" src="https://us.umami.is/script.js" data-website-id="58945850-4f1e-4b4e-828b-a23d83c41fa0"></script>
+<script defer="" data-domains="python-data-science-guides.netlify.app" src="https://us.umami.is/script.js" data-website-id="30473ff8-62f5-401a-99ea-3b341e6aea14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -324,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- hypothesis testing -->
 <!-- machine learning -->
 <!-- version control -->
-<div id="setup" class="cell" data-cache="false" data-execution_count="1">
+<div id="setup" class="cell" data-cache="false" data-execution_count="2">
 <details class="code-fold">
 <summary>Setup Code (Click to Expand)</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
@@ -369,7 +369,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The first step when doing EDA is to inspect the data itself and get an idea of the structure of the dataset, the variable types, and the typical values of each variable. This gives a better understanding of exactly what data is being used and informs decisions both about the next steps in the exploratory process and any modelling choices.</p>
 <p>We can use the <code>head()</code> and <code>info()</code> functions to get a sense of the structure of the data. The <code>head()</code> function returns the first five rows of the data, and the <code>info()</code> method returns a summary of the data, including the number of rows, the number of columns, the column names, and the data type of each column. The <code>info()</code> method is particularly useful for identifying missing values, as it returns the number of non-null values in each column. If the number of non-null values is less than the number of rows, then there are missing values in the column.</p>
 <p>In addition to these two methods, we can also use the <code>nunique()</code> method to count the number of unique values in each column, which helps identify categorical variables, and we can use the <code>unique()</code> method to get a list of the unique values in a column.</p>
-<div id="cell-df-head" class="cell" data-execution_count="2">
+<div id="cell-df-head" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-head" class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -463,7 +463,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="df-info" class="cell" data-execution_count="3">
+<div id="df-info" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -485,7 +485,7 @@ dtypes: category(5), float64(1), int64(4)
 memory usage: 41.1 KB</code></pre>
 </div>
 </div>
-<div id="cell-count-unique" class="cell" data-execution_count="4">
+<div id="cell-count-unique" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count unique values in each column</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.nunique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="count-unique" class="cell-output cell-output-display" data-execution_count="4">
@@ -502,7 +502,7 @@ heart_disease           2
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="cell-heart-disease-unique" class="cell" data-execution_count="5">
+<div id="cell-heart-disease-unique" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unique values of the outcome variable</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df.heart_disease.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-unique" class="cell-output cell-output-display" data-execution_count="5">
@@ -510,7 +510,7 @@ dtype: int64</code></pre>
 Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
-<div id="cell-cholesterol-unique" class="cell" data-execution_count="6">
+<div id="cell-cholesterol-unique" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># unique values of a continuous explanatory variable</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df.cholesterol.unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="cholesterol-unique" class="cell-output cell-output-display" data-execution_count="6">
@@ -538,7 +538,7 @@ Categories (2, int64): [0, 1]</code></pre>
 <section id="summary-statistics" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="summary-statistics"><span class="header-section-number">5.2</span> Summary Statistics</h2>
 <p>Summary statistics are a quick and easy way to get a sense of the distribution and central tendency of the variables in the dataset. We can use the <code>describe()</code> method to get a quick overview of every column in the dataset, including the row count, the mean and standard deviation, the minimum and maximum value, and quartiles of each variable.</p>
-<div id="cell-df-describe" class="cell" data-execution_count="7">
+<div id="cell-df-describe" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summary of the data</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-describe" class="cell-output cell-output-display" data-execution_count="7">
@@ -629,7 +629,7 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 <p>While the <code>describe()</code> function is pretty effective, the <code>skimpy</code> package can provide a more detailed summary of the data, using the <code>skim()</code> function. If you are looking for a single function to capture the entire process of inspecting the data and computing summary statistics, <code>skim()</code> is the function for the job, giving you a wealth of information about the dataset as a whole and each variable in the data.</p>
 <p>Another package that provides a similar function is the [profiling][<code>ydata-profiling</code>] package, which can be used to generate a report containing a summary of the data, including the data types, missing values, and summary statistics. The <code>ydata-profiling</code> package is particularly useful for generating a report that can be shared with others, as it can be exported as an HTML file, however it’s a bit more resource-intensive than <code>skimpy</code>, so we will stick with <code>skimpy</code> for this tutorial.</p>
-<div id="cell-df-skim" class="cell" data-execution_count="8">
+<div id="cell-df-skim" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># more detailed summary of the data</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>skim(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="df-skim" class="cell-output cell-output-display">
@@ -669,21 +669,21 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
 <p>If we want to examine a particular variable, the functions <code>mean()</code>, <code>median()</code>, <code>quantile()</code>, <code>min()</code>, and <code>max()</code> will return the same information as the <code>describe()</code> function. We can also get a sense of dispersion by computing the standard deviation or variance of a variable. The <code>std()</code> function returns the standard deviation of a variable, and the <code>var()</code> function returns the variance.</p>
-<div id="cell-avg-age" class="cell" data-execution_count="9">
+<div id="cell-avg-age" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean &amp; median age</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df.age.mean(), df.age.median()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="avg-age" class="cell-output cell-output-display" data-execution_count="9">
 <pre><code>(53.510893246187365, 54.0)</code></pre>
 </div>
 </div>
-<div id="cell-min-max-age" class="cell" data-execution_count="10">
+<div id="cell-min-max-age" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># min and max age</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.age.<span class="bu">min</span>(), df.age.<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="min-max-age" class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>(28, 77)</code></pre>
 </div>
 </div>
-<div id="cell-dispersion-age" class="cell" data-execution_count="11">
+<div id="cell-dispersion-age" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dispersion of age</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.age.std(), df.age.var()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="dispersion-age" class="cell-output cell-output-display" data-execution_count="11">
@@ -691,7 +691,7 @@ Categories (2, int64): [0, 1]</code></pre>
 </div>
 </div>
 <p>Finally, we can use the <code>value_counts()</code> function to get a count of the number of observations in each category of a discrete variable.</p>
-<div id="cell-heart-disease-count" class="cell" data-execution_count="12">
+<div id="cell-heart-disease-count" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease count</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'heart_disease'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-count" class="cell-output cell-output-display" data-execution_count="12">
@@ -701,7 +701,7 @@ Categories (2, int64): [0, 1]</code></pre>
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="cell-resting-ecg-count" class="cell" data-execution_count="13">
+<div id="cell-resting-ecg-count" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># resting ecg count</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'resting_ecg'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="resting-ecg-count" class="cell-output cell-output-display" data-execution_count="13">
@@ -712,7 +712,7 @@ ST        178
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="cell-angina-count" class="cell" data-execution_count="14">
+<div id="cell-angina-count" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'angina'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="angina-count" class="cell-output cell-output-display" data-execution_count="14">
@@ -722,7 +722,7 @@ Y    371
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="cell-cholesterol-count" class="cell" data-execution_count="15">
+<div id="cell-cholesterol-count" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'cholesterol'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="cholesterol-count" class="cell-output cell-output-display" data-execution_count="15">
@@ -742,7 +742,7 @@ Name: count, Length: 222, dtype: int64</code></pre>
 </div>
 </div>
 <p>We can also use the <code>groupby()</code> method to get the counts of each category in a categorical variable, grouped by another categorical variable.</p>
-<div id="cell-heart-disease-by-resting-ecg-count" class="cell" data-execution_count="16">
+<div id="cell-heart-disease-by-resting-ecg-count" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">'resting_ecg'</span>])[<span class="st">'heart_disease'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-by-resting-ecg-count" class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>resting_ecg  heart_disease
@@ -756,7 +756,7 @@ Name: count, dtype: int64</code></pre>
 </div>
 </div>
 <p>In addition to the counts, we can also get the proportions of each category using the <code>normalize=True</code> argument.</p>
-<div id="cell-heart-disease-by-resting-ecg-freq" class="cell" data-execution_count="17">
+<div id="cell-heart-disease-by-resting-ecg-freq" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df.groupby([<span class="st">'resting_ecg'</span>])[<span class="st">'heart_disease'</span>].value_counts(normalize<span class="op">=</span><span class="va">True</span>).<span class="bu">round</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="heart-disease-by-resting-ecg-freq" class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>resting_ecg  heart_disease
@@ -781,7 +781,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="continuous-distributions" class="level4" data-number="5.3.1.1">
 <h4 data-number="5.3.1.1" class="anchored" data-anchor-id="continuous-distributions"><span class="header-section-number">5.3.1.1</span> Continuous Distributions</h4>
 <p>For continuous variables, we can use histograms to visualise the distribution of the data. We can use the <code>histplot()</code> function to create a histogram of a continuous variable. The <code>binwidth</code> argument allows us to specify the width of the bins in the histogram.</p>
-<div id="cell-age-dist" class="cell" data-execution_count="18">
+<div id="cell-age-dist" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, binwidth<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -794,7 +794,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-max-hr-dist" class="cell" data-execution_count="19">
+<div id="cell-max-hr-dist" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr distribution</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'max_hr'</span>, binwidth<span class="op">=</span><span class="dv">10</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -807,7 +807,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-cholesterol-dist" class="cell" data-execution_count="20">
+<div id="cell-cholesterol-dist" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol distribution</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'cholesterol'</span>, binwidth<span class="op">=</span><span class="dv">25</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -820,7 +820,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-filter-zeroes-cholesterol-dist" class="cell" data-execution_count="21">
+<div id="cell-filter-zeroes-cholesterol-dist" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol distribution</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'cholesterol'</span>, binwidth<span class="op">=</span><span class="dv">25</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -838,7 +838,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="discrete-distributions" class="level4" data-number="5.3.1.2">
 <h4 data-number="5.3.1.2" class="anchored" data-anchor-id="discrete-distributions"><span class="header-section-number">5.3.1.2</span> Discrete Distributions</h4>
 <p>We can use bar plots to visualise the distribution of discrete variables. We can use the <code>countplot()</code> function to create a bar plot of a discrete variable.</p>
-<div id="cell-heart-disease-dist" class="cell" data-execution_count="22">
+<div id="cell-heart-disease-dist" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease distribution</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -851,7 +851,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-sex-dist" class="cell" data-execution_count="23">
+<div id="cell-sex-dist" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sex distribution</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'sex'</span>)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -864,7 +864,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-angina-dist" class="cell" data-execution_count="24">
+<div id="cell-angina-dist" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina distribution</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'angina'</span>)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -885,7 +885,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="visualising-multiple-discrete-variables" class="level4" data-number="5.3.2.1">
 <h4 data-number="5.3.2.1" class="anchored" data-anchor-id="visualising-multiple-discrete-variables"><span class="header-section-number">5.3.2.1</span> Visualising Multiple Discrete Variables</h4>
 <p>Bar plots are an effective way to visualize the observed relationship (or association, at least) between a discrete explanatory variable and a discrete outcome (whether binary, ordinal, or categorical). We can use the <code>countplot()</code> function to create bar plots, and the <code>hue</code> argument to split the bars by a particular variable and display them in different colours.</p>
-<div id="cell-heart-disease-by-sex" class="cell" data-execution_count="25">
+<div id="cell-heart-disease-by-sex" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by sex</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -898,7 +898,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-heart-disease-by-resting-ecg" class="cell" data-execution_count="26">
+<div id="cell-heart-disease-by-resting-ecg" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># heart disease by resting ecg</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'resting_ecg'</span>)</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -911,7 +911,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-heart-disease-by-angina" class="cell" data-execution_count="27">
+<div id="cell-heart-disease-by-angina" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># angina</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'angina'</span>)</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -924,7 +924,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-heart-disease-by-fasting-bs" class="cell" data-execution_count="28">
+<div id="cell-heart-disease-by-fasting-bs" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fasting bs</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, hue<span class="op">=</span><span class="st">'fasting_bs'</span>)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -944,7 +944,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="histogram-plots" class="level5" data-number="5.3.2.2.1">
 <h5 data-number="5.3.2.2.1" class="anchored" data-anchor-id="histogram-plots"><span class="header-section-number">5.3.2.2.1</span> Histogram Plots</h5>
 <p>We can use the <code>histplot()</code> function to create a histogram of a continuous variable. The <code>hue</code> argument allows us to split the histogram by a particular variable and display them in different colours, while the <code>multiple</code> argument allows us to specify how the histograms should be displayed. The <code>multiple</code> argument can be set to <code>stack</code> to stack the histograms on top of each other, or <code>dodge</code> to display the histograms side-by-side.</p>
-<div id="cell-age-by-heart-disease" class="cell" data-execution_count="29">
+<div id="cell-age-by-heart-disease" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age distribution by heart disease</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>, binwidth<span class="op">=</span><span class="dv">5</span>, multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -957,7 +957,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-cholesterol-by-heart-disease" class="cell" data-execution_count="30">
+<div id="cell-cholesterol-by-heart-disease" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cholesterol</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'cholesterol'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>, binwidth<span class="op">=</span><span class="dv">25</span>, multiple<span class="op">=</span><span class="st">'dodge'</span>)</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -970,7 +970,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-filtered-zeroes-cholesterol-by-heart-disease" class="cell" data-execution_count="31">
+<div id="cell-filtered-zeroes-cholesterol-by-heart-disease" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter zero values</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>],</span>
@@ -995,7 +995,7 @@ Name: proportion, dtype: float64</code></pre>
 <h5 data-number="5.3.2.2.2" class="anchored" data-anchor-id="box-plots"><span class="header-section-number">5.3.2.2.2</span> Box Plots</h5>
 <p>Box plots visualize the characteristics of a continuous distribution over discrete groups. We can use the <code>boxplot()</code> function to create box plots, and the <code>hue</code> argument to split the box plots by a particular variable and display them in different colours.</p>
 <p>However, while box plots can be very useful, they are not always the most effective way of visualising this information, as explained <a href="https://here.r-lib.org/">boxplots</a> by Cedric Scherer. This guide uses box plots for the sake of simplicity, but it is worth considering other options when visualising distributions.</p>
-<div id="cell-age-by-heart-disease-box" class="cell" data-execution_count="32">
+<div id="cell-age-by-heart-disease-box" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; heart disease</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'age'</span>)</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1008,7 +1008,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-age-box-split-by-sex" class="cell" data-execution_count="33">
+<div id="cell-age-box-split-by-sex" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; heart disease, split by sex</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(figsize=(10,6))</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'age'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
@@ -1022,7 +1022,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-max-hr-by-heart-disease-box" class="cell" data-execution_count="34">
+<div id="cell-max-hr-by-heart-disease-box" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr &amp; heart disease</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>)</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1035,7 +1035,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-max-hr-box-split-by-sex" class="cell" data-execution_count="35">
+<div id="cell-max-hr-box-split-by-sex" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># max hr &amp; heart disease, split by sex</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(figsize=(10,6))</span></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'heart_disease'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>, hue<span class="op">=</span><span class="st">'sex'</span>)</span>
@@ -1054,7 +1054,7 @@ Name: proportion, dtype: float64</code></pre>
 <section id="visualising-multiple-discrete-variables-1" class="level4" data-number="5.3.2.3">
 <h4 data-number="5.3.2.3" class="anchored" data-anchor-id="visualising-multiple-discrete-variables-1"><span class="header-section-number">5.3.2.3</span> Visualising Multiple Discrete Variables</h4>
 <p>Scatter plots are an effective way to visualize how two continuous variables vary together. We can use the <code>scatterplot()</code> function to create scatter plots, and the <code>hue</code> argument to split the scatter plots by a particular variable and display them in different colours.</p>
-<div id="cell-age-resting-bp-scatter" class="cell" data-execution_count="36">
+<div id="cell-age-resting-bp-scatter" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>)</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1067,7 +1067,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-filtered-zeroes-resting-bp-scatter" class="cell" data-execution_count="37">
+<div id="cell-filtered-zeroes-resting-bp-scatter" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.resting_bp<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>)</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1080,7 +1080,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-age-cholesterol-scatter" class="cell" data-execution_count="38">
+<div id="cell-age-cholesterol-scatter" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'cholesterol'</span>)</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1092,7 +1092,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-age-max-hr-scatter" class="cell" data-execution_count="39">
+<div id="cell-age-max-hr-scatter" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1106,7 +1106,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <p>The scatter plot visualising age and resting blood pressure highlights another observation that needs to be removed due to data quality issues.</p>
 <p>If there appears to be an association between the two continuous variables that you have plotted, as is the case with age and maximum heart rate in the above plot, you can also add a regression line to visualize the strength of that association. The <code>regplot()</code> function can be used to add a regression line to a scatter plot. The <code>ci</code> argument specifies whether or not to display the confidence interval of the regression line.</p>
-<div id="cell-max-hr-by-age-regression-plot" class="cell" data-execution_count="40">
+<div id="cell-max-hr-by-age-regression-plot" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; max hr</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>df, x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'max_hr'</span>, ci<span class="op">=</span><span class="va">None</span>)</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1121,7 +1121,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 <p>You can also include discrete variables by assigning the discrete groups different colours in the scatter plot, and if you add regression lines to these plots, separate regression lines will be fit to the discrete groups. This can be useful for visualising how the association between the two continuous variables varies across the discrete groups.</p>
 <p>The <code>lmplot()</code> function can be used to create scatter plots with regression lines, and the <code>hue</code> argument can be used to split the scatter plots by a particular variable and display them in different colours.</p>
-<div id="cell-resting-bp-heart-disease-scatter" class="cell" data-execution_count="41">
+<div id="cell-resting-bp-heart-disease-scatter" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; resting bp, split by heart disease</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>df.loc[df.resting_bp<span class="op">!=</span><span class="dv">0</span>], x<span class="op">=</span><span class="st">'age'</span>, y<span class="op">=</span><span class="st">'resting_bp'</span>, hue<span class="op">=</span><span class="st">'heart_disease'</span>)</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1134,7 +1134,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-cholesterol-regression-plot" class="cell" data-execution_count="42">
+<div id="cell-cholesterol-regression-plot" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; cholesterol, split by heart disease (with regression line)</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df.loc[df.cholesterol<span class="op">!=</span><span class="dv">0</span>],</span>
@@ -1153,7 +1153,7 @@ Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-max-hr-regression-plot" class="cell" data-execution_count="43">
+<div id="cell-max-hr-regression-plot" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age &amp; max hr, split by heart disease (with regression line)</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>sns.lmplot(</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df,</span>

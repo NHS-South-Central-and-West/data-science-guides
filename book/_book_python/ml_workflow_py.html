@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <!-- umami cloud -->
-<script async="" src="https://us.umami.is/script.js" data-website-id="58945850-4f1e-4b4e-828b-a23d83c41fa0"></script>
+<script defer="" data-domains="python-data-science-guides.netlify.app" src="https://us.umami.is/script.js" data-website-id="30473ff8-62f5-401a-99ea-3b341e6aea14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -322,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="setup" class="cell" data-execution_count="1">
+<div id="setup" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Setup Code (Click to Expand)</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import libraries</span></span>
@@ -376,7 +376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <section id="data" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="data"><span class="header-section-number">8.1</span> Data</h2>
-<div id="cell-data_summary" class="cell" data-execution_count="2">
+<div id="cell-data_summary" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data summary</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.info()</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df.describe()</span>
@@ -495,7 +495,7 @@ memory usage: 71.8+ KB</code></pre>
 <section id="cleaning" class="level3" data-number="8.1.1">
 <h3 data-number="8.1.1" class="anchored" data-anchor-id="cleaning"><span class="header-section-number">8.1.1</span> Cleaning</h3>
 <p>Though in this instance, the data is relatively clean, the following steps are included to demonstrate how you might clean data in a real-world scenario. Dropping NAs and duplicates should, however, be done with care (see discussion below).</p>
-<div id="data_cleaning" class="cell" data-execution_count="3">
+<div id="data_cleaning" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check for missing values</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.isna().<span class="bu">sum</span>()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -510,7 +510,7 @@ memory usage: 71.8+ KB</code></pre>
 </div>
 <p>There are several variables for which there appear to be missing values in the form of zeroes. This was identified in the exploratory data analysis notebook in this project. Variables like <code>cholesterol</code> and <code>resting_bp</code> should not be zero, and because the target class is disproportionately distributed within these zero values, it is important to address the problem.</p>
 <p>There are a number of choices that could be made when it comes to dealing with null or missing values, and there are robust approaches to imputation (though it is necessary to take great care when doing so), however in the interest of simplicity, we will simply remove the rows with zero values in this instance.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<div id="remove-zero-values" class="cell" data-execution_count="4">
+<div id="remove-zero-values" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove zero values</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[(df[<span class="st">'cholesterol'</span>] <span class="op">!=</span> <span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">'resting_bp'</span>] <span class="op">!=</span> <span class="dv">0</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -518,7 +518,7 @@ memory usage: 71.8+ KB</code></pre>
 <section id="traintest-split" class="level3" data-number="8.1.2">
 <h3 data-number="8.1.2" class="anchored" data-anchor-id="traintest-split"><span class="header-section-number">8.1.2</span> Train/Test Split</h3>
 <p>One of the central tenets of machine learning is that the model should not be trained on the same data that it is evaluated on. This is because the model could learn spurious/random patterns and correlations in the training data, and this will harm the model’s ability to make good predictions on new, unseen data. There are many way of trying to resolve this, but the most simple approach is to split the data into a training and test set. The training set will be used to train the model, and the test set will be used to evaluate the model.</p>
-<div id="train_test_split" class="cell" data-execution_count="5">
+<div id="train_test_split" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># split data into train and test sets</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df.drop(<span class="st">'heart_disease'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">'heart_disease'</span>]</span>
@@ -536,7 +536,7 @@ memory usage: 71.8+ KB</code></pre>
 <li>Imputing missing values</li>
 </ul>
 <p>We will build a preprocessing recipe that one-hot encodes all categorical features, and normalises the numeric features so that they have a mean of zero and a standard deviation of one.</p>
-<div id="preprocessing" class="cell" data-execution_count="6">
+<div id="preprocessing" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># specify all features for the model</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>feats <span class="op">=</span> df.drop(<span class="st">'heart_disease'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -573,7 +573,7 @@ memory usage: 71.8+ KB</code></pre>
 <li>Neptune AI’s <a href="https://neptune.ai/blog/cross-validation-in-machine-learning-how-to-do-it-right">blog post</a> on cross-validation goes into detail discussing cross-validation strategies, and gives clear visual demonstrations of how each strategy works.</li>
 </ul>
 <p>We will use 5-fold stratified cross-validation to train our models. This means that the training data will be split into 5 folds, ensuring that each fold has the same proportion of the target classes. Each fold will be used as a test set once, and the remaining folds will be used as training sets. This will be repeated 5 times, and the average performance will be used to evaluate the model.</p>
-<div id="91ec1fd5" class="cell" data-execution_count="7">
+<div id="91ec1fd5" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select </span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>models <span class="op">=</span> []</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>models.append((<span class="st">'log'</span>, LogisticRegression(random_state<span class="op">=</span><span class="dv">123</span>)))</span>
@@ -621,7 +621,7 @@ rf: 0.77 (0.032)</code></pre>
 <p>For a more detailed discussion of hyperparameter tuning, and the different methods for tuning in Scikit-learn, the <a href="https://scikit-learn.org/stable/modules/grid_search.html#">Tuning the Hyperparameters of an Estimator</a> section of the Scikit-learn documentation is a good place to start, and the <a href="https://inria.github.io/scikit-learn-mooc/python_scripts/parameter_tuning_grid_search.html">Hyperparameter Tuning by Grid Search</a> section of the Scikit-learn course is an excellent accompaniment.</p>
 <p>In addition, the AWS overview of <a href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning-how-it-works.html">hyperparameter tuning</a> is a good resource if you are only looking for a brief overview. For an in-depth discussion about how hyperparameter tuning works, including the mathematics behind it, Jeremy Jordan’s <a href="https://www.jeremyjordan.me/hyperparameter-tuning/">Hyperparameter Tuning for Machine Learning Models</a> blogpost is thorough but easy to follow.</p>
 <p>There are a lot of different Python libraries for hyperparameter tuning, however the most popular libraries that are specifically designed for tuning are <a href="http://hyperopt.github.io/hyperopt/">Hyperopt</a> and <a href="https://optuna.org/">Optuna</a>. Both can be used to tune models built with Scikit-learn (and many other frameworks) and can often produce better results than Scikit-learn’s built-in hyperparameter tuning methods. I have had limited experience using Hyperopt, however I have used Optuna often and I would highly recommend it if/when you are ready to move beyond Scikit-learn’s options for tuning.</p>
-<div id="3a601028" class="cell" data-execution_count="8">
+<div id="3a601028" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> { </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'rf__bootstrap'</span>: [<span class="va">True</span>],</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'rf__max_depth'</span>: [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>],</span>
@@ -661,7 +661,7 @@ Training F1 Score: 0.79</code></pre>
 </section>
 <section id="model-evaluation" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="model-evaluation"><span class="header-section-number">8.3</span> Model Evaluation</h2>
-<div id="evaluation" class="cell" data-execution_count="9">
+<div id="evaluation" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get predictions on holdout set</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> best_model.predict(X_test)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -671,7 +671,7 @@ Training F1 Score: 0.79</code></pre>
 <pre><code>Holdout F1 Score: 0.82</code></pre>
 </div>
 </div>
-<div id="cell-confusion-matrix" class="cell" data-execution_count="10">
+<div id="cell-confusion-matrix" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get confusion matrix</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>conf_mat <span class="op">=</span> pd.crosstab(y_test, preds, rownames<span class="op">=</span>[<span class="st">'Actual'</span>], colnames<span class="op">=</span>[<span class="st">'Predicted'</span>])</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -699,7 +699,7 @@ Training F1 Score: 0.79</code></pre>
 <section id="model-interpretation" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="model-interpretation"><span class="header-section-number">8.4</span> Model Interpretation</h2>
 <p>We can compute the features that are most important in predicting heart disease.</p>
-<div id="cell-feature-importance" class="cell" data-execution_count="11">
+<div id="cell-feature-importance" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get feature importance</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>feature_importance <span class="op">=</span> best_model.named_steps[<span class="st">'rf'</span>].feature_importances_</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>

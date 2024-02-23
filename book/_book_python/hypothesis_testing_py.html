@@ -126,7 +126,7 @@ div.csl-indent {
   }
 }</script>
 <!-- umami cloud -->
-<script async="" src="https://us.umami.is/script.js" data-website-id="58945850-4f1e-4b4e-828b-a23d83c41fa0"></script>
+<script defer="" data-domains="python-data-science-guides.netlify.app" src="https://us.umami.is/script.js" data-website-id="30473ff8-62f5-401a-99ea-3b341e6aea14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -375,7 +375,7 @@ window.Quarto = {
 <!-- hypothesis testing -->
 <!-- machine learning -->
 <!-- version control -->
-<div id="setup" class="cell" data-cache="false" data-execution_count="1">
+<div id="setup" class="cell" data-cache="false" data-execution_count="2">
 <details class="code-fold">
 <summary>Setup Code (Click to Expand)</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
@@ -560,7 +560,7 @@ Further Details
 <p>In a one-sample t-test we are interested in testing a sample mean against an “expected” mean. For example, perhaps we have a group of individuals that are viewed as “high achievers”, and we want to use IQ scores to test whether this group is meaningfully different to the rest of the population (despite being aware that IQ is not a particularly good test of either an individual’s intelligence or their potential).</p>
 <p>A one-sample t-test would allow us to do this because we are able to test the mean IQ score for our high achievers against the expected mean value if there was no real difference between them and the population, which would just be the mean IQ score in the population (100).</p>
 <p>Lets first start by simulating our high achievers’ IQ scores, assuming that their mean score is 105 (perhaps some of the group studied IQ tests extensively and are now able to ace the test), with a standard deviation of 15.</p>
-<div id="simulate-high-achievers" class="cell" data-execution_count="2">
+<div id="simulate-high-achievers" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean and standard deviation</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mean, sd <span class="op">=</span> <span class="dv">105</span>, <span class="dv">15</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -568,7 +568,7 @@ Further Details
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>high_achievers <span class="op">=</span> np.random.normal(mean, sd, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can take a look at the sample data we have simulated, to see how close it is to the true mean and standard deviation (because we are simulating the data it won’t be a perfect match).</p>
-<div id="cell-summarise-sample" class="cell" data-execution_count="3">
+<div id="cell-summarise-sample" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute summary statistics for our sample</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>np.mean(high_achievers)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>np.std(high_achievers)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -577,7 +577,7 @@ Further Details
 </div>
 </div>
 <p>And we can visualise the data to get a better sense of what the group looks like.</p>
-<div id="cell-visualise-sample" class="cell" data-execution_count="4">
+<div id="cell-visualise-sample" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(x<span class="op">=</span>high_achievers, binwidth<span class="op">=</span><span class="dv">5</span>)</span>
@@ -597,7 +597,7 @@ Further Details
 </div>
 </div>
 <p>It is not clear what the underlying distribution of our sample data is here. We already know that the data was drawn from a normal distribution, but if we did not, we would need more observations to confirm this.</p>
-<div id="cell-one-sample-test" class="cell" data-execution_count="5">
+<div id="cell-one-sample-test" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pg.ttest(high_achievers, y <span class="op">=</span> <span class="dv">100</span>, alternative <span class="op">=</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="one-sample-test" class="cell-output cell-output-display" data-execution_count="5">
 <div>
@@ -638,7 +638,7 @@ Further Details
 <p>The p-value of our one-sample t-test is 0.105. This means that we would expect to observe a sample mean at least as extreme as our observed mean (106), if the null that there is no difference between the high achiever group’s mean IQ score and the population mean IQ score is true, a little more than 10% of the time, or 1 in 10 times. That’s quite high, so I wouldn’t be confident that we are observing a meaningful difference.</p>
 <p>However, we know that there is a meaningful difference between our high achievers and the population, because we specified a difference when we simulated our sample data. If we were to conclude that the results we observe in our t-test do not lend any support to our hypothesis that the high achievers are better at IQ tests than the average person, this would be a false negative (or sometimes unhelpfully referred to as a Type 1 Error).</p>
 <p>If we increase our sample size, maybe we will have more luck!</p>
-<div id="cell-increase-sample-size" class="cell" data-execution_count="6">
+<div id="cell-increase-sample-size" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>larger_sample <span class="op">=</span> np.random.normal(mean, sd, <span class="dv">30</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pg.ttest(larger_sample, y <span class="op">=</span> <span class="dv">100</span>, alternative <span class="op">=</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -687,13 +687,13 @@ Further Details
 <p>When respondents in surveys are asked to self-report certain details about themselves, this can invite bias. Take, for example, the difference in <a href="https://digital.nhs.uk/data-and-information/areas-of-interest/public-health/health-survey-for-england-predicting-height-weight-and-body-mass-index-from-self-reported-data/differences-between-self-reported-and-interviewer-measured-height-weight-and-bmi-using-hse-2011-2016-data">self-reported and interviewer-measured height among men in the UK</a>. Although there are many proud short kings out there that will confidently declare their height, safe in the knowledge that good things come in small packages, there are plenty of men that wish they were a little bit taller (someone should write a song about that), and for whom a self-reported survey is an opportunity to dream big (literally). Any time that respondents are given the opportunity to report details about themselves that have any social baggage attached, there is a possibility that the responses will be subject to social desirability bias.</p>
 <p>In the case of self-reported and measured male heights, the differences are not particularly large in absolute terms. It’s very possible that the difference is actually a product of some random variation, or measurement error. We can test this!</p>
 <p>Using the mean values for reported and measured heights in 2016, calculating the standard deviation from the reported standard error<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>, and calculating the correlation between the two variables using the value for each variable from 2011-2016<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>, we can simulate our sample data.</p>
-<div id="simulate-male-heights" class="cell" data-execution_count="7">
+<div id="simulate-male-heights" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mean, cov, n <span class="op">=</span> [<span class="fl">177.23</span>, <span class="fl">175.71</span>], [[<span class="dv">1</span>, <span class="fl">.83</span>], [<span class="fl">.83</span>,  <span class="dv">1</span>]], <span class="dv">100</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>self_reported, measured <span class="op">=</span> np.random.multivariate_normal(mean, cov, n).T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We have simulated the self-reported and measured height for 100 men, given the mean, standard deviation, and correlation as detailed in Table 1 of the above analysis, and carried out a paired t-test that compares the difference between the two simulated groups.</p>
-<div id="02a12c25" class="cell" data-execution_count="8">
+<div id="02a12c25" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pg.ttest(self_reported, measured, alternative<span class="op">=</span><span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
@@ -740,7 +740,7 @@ Further Details
 <p>In order to prove that it works it needs to go through testing (because we are particularly reckless, we don’t really care if it is safe in this example). An experiment is designed, with a treatment and control group that is representative of the wider male population, and the wonder drug is given to the treatment group.</p>
 <p>We can compare the change in height for the two groups in the 6 months after the treatment group have taken the medication, hypothesising that the drug has had a positive effect on the treatment group, helping them grow by a whopping 1.5cm! This is compared against the average increase in height for the control group that is approximately zero, with a very small standard deviation. A two-sample t-test can help us shed some light on whether we can be confident that this difference did not occur by chance.</p>
 <p>We simulate our treatment and control groups, with 20 observations in each, with the treatment group having a mean growth of 3cm and standard deviation of 3cm, and the control group having a mean growth of 0cm and a standard deviation of 0.5cm.</p>
-<div id="simulate-height-experiment" class="cell" data-execution_count="9">
+<div id="simulate-height-experiment" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create an empty list for the simulated data</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -765,7 +765,7 @@ Further Details
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>treatment, control <span class="op">=</span> np.random.normal(<span class="dv">3</span>, <span class="fl">.5</span>, <span class="dv">20</span>), np.random.normal(<span class="dv">0</span>, <span class="fl">.5</span>, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Having simulated our treatment and control groups, we can compute a t-test to see if there is a difference in how much each group has grown, on average.</p>
-<div id="cell-height-experiment" class="cell" data-execution_count="10">
+<div id="cell-height-experiment" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pg.ttest(x<span class="op">=</span>treatment, y<span class="op">=</span>control, paired<span class="op">=</span><span class="va">False</span>, alternative<span class="op">=</span><span class="st">'greater'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="height-experiment" class="cell-output cell-output-display" data-execution_count="10">
 <div>
@@ -811,7 +811,7 @@ Further Details
 <p>Although there are many ways that you may encounter chi-squared (<span class="math inline">\(\chi^2\)</span>) tests, the two most common are tests of independence and a goodness of fit tests. The chi-squared test of independence is a test of the association between two categorical variables, meaning whether the variables are related or not. It is testing whether they vary independently of each other. A chi-squared goodness of fit test is used to examine how well a theoretical distribution fits the distribution of a categorical variable. We will focus on the test of independence here, because I think this is the most common use case.</p>
 <p>A common use-case for chi-squared tests of independence is survey data, where individuals from different groups respond to a survey question that offers a finite number of discrete answers, like a scale from good to bad. A good example of categorical variables used in survey data is the impact of male baldness on 46 year old men, carried out by <span class="citation" data-cites="sinikumpu2021">Sinikumpu et al. (<a href="references.html#ref-sinikumpu2021" role="doc-biblioref">2021</a>)</span>. In this survey they grouped men by levels of baldness, and asked them various questions about their lives, from education to sex-life, to consider the impact that being bald has on men’s lives and well-being.</p>
 <p>We will use the education question as the basis for simulating the data for our chi-squared test. The survey splits education-level in to three groups - basic, secondary, and tertiary - while I have simplified the question by turning the levels of baldness into a binary categorical variable.</p>
-<div id="simulate-survey" class="cell" data-execution_count="11">
+<div id="simulate-survey" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create an empty list for the simulated data</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -848,7 +848,7 @@ Further Details
 </div>
 <p>We have simulated each of the different baldness categories individually, before combining them into a single dataset. I think there should be a more concise way of doing this, but I haven’t wrapped my head round how I should do that yet.</p>
 <p>We can visualise the difference between the three education-levels in terms of proportion of baldness, to see if there is an obvious difference.</p>
-<div id="cell-visualise-survey" class="cell" data-execution_count="12">
+<div id="cell-visualise-survey" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sns.histplot(</span>
@@ -873,7 +873,7 @@ Further Details
 </div>
 </div>
 <p>There’s a small difference between people with a basic education, but for secondary and tertiary education it seems to be pretty evenly split. Our chi-squared test can test this empirically.</p>
-<div id="cell-chi-sq-test" class="cell" data-execution_count="13">
+<div id="cell-chi-sq-test" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>expected, observed, stats <span class="op">=</span> pg.chi2_independence(baldness_survey, x<span class="op">=</span><span class="st">'education'</span>, y<span class="op">=</span><span class="st">'hair_status'</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>stats.<span class="bu">round</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -963,7 +963,7 @@ Further Details
 </div>
 <p>So our p-value tells us that we should expect to observe data at least extreme as our simulated survey data a little less than 20% of the time, if the null hypothesis that there is no difference in education levels across levels of hair loss is true. This is a smaller p-value than <span class="citation" data-cites="sinikumpu2021">Sinikumpu et al. (<a href="references.html#ref-sinikumpu2021" role="doc-biblioref">2021</a>)</span> observe (0.299), but that will be a consequence of the fact we are simulating the data using probabilistic samples, not replicating their results exactly.</p>
 <p>If we were to fudge the numbers a little bit, so as to artificially increase the difference in education levels based on the amount of hair a 46 year old man has, what would our results look like?</p>
-<div id="cell-add-effect" class="cell" data-execution_count="14">
+<div id="cell-add-effect" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1, empty list `data`:</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>

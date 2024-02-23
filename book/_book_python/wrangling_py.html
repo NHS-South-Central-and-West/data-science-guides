@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 <!-- umami cloud -->
-<script async="" src="https://us.umami.is/script.js" data-website-id="58945850-4f1e-4b4e-828b-a23d83c41fa0"></script>
+<script defer="" data-domains="python-data-science-guides.netlify.app" src="https://us.umami.is/script.js" data-website-id="30473ff8-62f5-401a-99ea-3b341e6aea14"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
@@ -320,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- hypothesis testing -->
 <!-- machine learning -->
 <!-- version control -->
-<div id="setup" class="cell" data-cache="false" data-execution_count="1">
+<div id="setup" class="cell" data-cache="false" data-execution_count="2">
 <details class="code-fold">
 <summary>Setup Code (Click to Expand)</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages needed to run the code in this section</span></span>
@@ -346,10 +346,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We will use Public Health England’s <a href="https://fingertips.phe.org.uk/">Fingertips API</a> (for which there are packages available in <a href="https://github.com/ropensci/fingertipsR">R</a> and <a href="https://github.com/publichealthengland/PHDS_fingertips_py">Python</a>) as the data source for this guide, as it represents a good opportunity to give a brief overview of this data and how to use it. Fingertips is a repository of public health data on a wide range of topics. The data included in this tutorial relates to the wider determinants of health.</p>
 <p>First, we can look at what is available.</p>
 <p>Unfortunately, the <code>fingertips_py</code> package does seem to be a little less mature than the R equivalent, and there are a lot of errors running the functions we would need to import the data. While this is the case, we’ll take a little shortcut, importing the data from a CSV that I’ve stored in the guides GitHub repository, using the Fingertips R package.</p>
-<div id="import-data" class="cell" data-execution_count="2">
+<div id="import-data" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="op">=</span> pd.read_csv(<span class="st">"https://raw.githubusercontent.com/NHS-South-Central-and-West/data-science-guides/main/data/phof.csv"</span>, low_memory<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="data-info" class="cell" data-execution_count="3">
+<div id="data-info" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>phof_raw.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -388,7 +388,7 @@ dtypes: float64(9), int64(2), object(16)
 memory usage: 54.5+ MB</code></pre>
 </div>
 </div>
-<div id="cell-describe-data" class="cell page-columns page-full" data-execution_count="4">
+<div id="cell-describe-data" class="cell page-columns page-full" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>phof_raw.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="describe-data" class="cell-output cell-output-display column-page" data-execution_count="4">
 <div>
@@ -530,7 +530,7 @@ memory usage: 54.5+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-glimpse-data" class="cell page-columns page-full" data-execution_count="5">
+<div id="cell-glimpse-data" class="cell page-columns page-full" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>phof_raw.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="glimpse-data" class="cell-output cell-output-display column-page" data-execution_count="5">
 <div>
@@ -696,14 +696,14 @@ memory usage: 54.5+ MB</code></pre>
 <section id="data-wrangling" class="level2 page-columns page-full" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="data-wrangling"><span class="header-section-number">4.3</span> Data Wrangling</h2>
 <p>First, we will clean the column names using the pyjanitor’s <code>clean_names</code> function. This will convert all column names to lower case and remove any spaces and special characters. This will make it easier to work with the data in the future.</p>
-<div id="clean-names" class="cell" data-execution_count="6">
+<div id="clean-names" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>phof_raw <span class="op">=</span> (</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    phof_raw</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .pipe(clean_names)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We’ve got a total of 168 indicators, which means some of the indicators from the Public Health Outcomes Framework are not available for upper tier local authorities. We can filter the data to just the indicators we are interested in (as well as filtering any rows where the value is missing), using the panda’s <code>loc</code> function. We can also use the <code>group_by</code> and <code>mean</code> functions to get the mean value of the indicators across all areas in the data. Below is an example:</p>
-<div id="cell-summarise-values" class="cell" data-execution_count="7">
+<div id="cell-summarise-values" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
@@ -720,7 +720,7 @@ Name: value, dtype: float64</code></pre>
 </div>
 </div>
 <p>The data pulled from the Fingertips API has a number of idiosyncracies that need addressing when wrangling the data. For example, the <code>timeperiodsortable</code> column refers to the year that the data relates to, and it contains four superfluous zeros at the end of each year (i.e, 20230000). We can use the pandas <code>assign</code> function to create a <code>year</code> column which strips out the zeros from the <code>timeperiodsortable</code> column by dividing it by 10000, and dropping the decimal place by converting year to integer (using the <code>astype(int)</code> function).</p>
-<div id="cell-format-years" class="cell page-columns page-full" data-execution_count="8">
+<div id="cell-format-years" class="cell page-columns page-full" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter for the indicators of interest and wrangle data into tidy structure</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
@@ -1034,7 +1034,7 @@ Name: value, dtype: float64</code></pre>
 </div>
 </div>
 <p>We can also remove the ID that is appended to the beginning of each indicator name. We can use <code>str.replace</code> to remove this part of the string from the indicator name, using a regular expression to remove everything up to and including the dash (and the space immediately after).</p>
-<div id="cell-remove-inds-id" class="cell page-columns page-full" data-execution_count="9">
+<div id="cell-remove-inds-id" class="cell page-columns page-full" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
@@ -1346,7 +1346,7 @@ Name: value, dtype: float64</code></pre>
 </div>
 </div>
 <p>Finally, the data is structured in a wide format, with each indicator having its own column. This is not a tidy structure, as each column should represent a variable, and each row should represent an observation. We can use the <code>pivot_table</code> function to convert the data into a tidy structure, with each indicator having its own row. Pandas will turn <code>areacode</code> and <code>timeperiodsortable</code> into the index of the dataframe, and in order to convert these variables back to columns we use <code>reset_index</code> and <code>rename_axis(None, axis=1)</code>. We can also use the <code>rename</code> function to rename the columns to something more meaningful, and the <code>dropna</code> function to remove any rows where the value is missing.</p>
-<div id="cell-pivot-wider" class="cell page-columns page-full" data-execution_count="10">
+<div id="cell-pivot-wider" class="cell page-columns page-full" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  phof_raw</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  .loc[(phof_raw[<span class="st">'indicatorid'</span>].isin([<span class="dv">90366</span>, <span class="dv">20101</span>, <span class="dv">11601</span>]))]</span>
@@ -1482,7 +1482,7 @@ Name: value, dtype: float64</code></pre>
 </div>
 </div>
 <p>We can combine all of the above steps into a single function, which we can then apply to the raw data to get the data into a tidy structure.</p>
-<div id="cell-function-wrangle-data" class="cell page-columns page-full" data-execution_count="11">
+<div id="cell-function-wrangle-data" class="cell page-columns page-full" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to wrangle data into tidy structure</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> wrangle_phof_data(data):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">"""</span></span>

@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://r-data-science-guides.netlify.app/index.html</loc>
-    <lastmod>2024-02-16T10:41:21.019Z</lastmod>
+    <lastmod>2024-02-23T14:39:32.841Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/intro.html</loc>
-    <lastmod>2024-02-16T10:41:21.020Z</lastmod>
+    <lastmod>2024-02-23T14:39:32.841Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/good_science.html</loc>
@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/wrangling_r.html</loc>
-    <lastmod>2024-02-16T11:33:04.945Z</lastmod>
+    <lastmod>2024-02-23T14:39:35.422Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/eda_r.html</loc>
@@ -30,15 +30,15 @@
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/linear_regression_r.html</loc>
-    <lastmod>2024-02-16T11:45:45.009Z</lastmod>
+    <lastmod>2024-02-23T14:39:35.389Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/ml_workflow_r.html</loc>
-    <lastmod>2024-02-16T10:41:21.027Z</lastmod>
+    <lastmod>2024-02-23T14:39:32.858Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/clustering_r.html</loc>
-    <lastmod>2024-02-16T10:41:21.014Z</lastmod>
+    <lastmod>2024-02-23T14:39:32.841Z</lastmod>
   </url>
   <url>
     <loc>https://r-data-science-guides.netlify.app/references.html</loc>
