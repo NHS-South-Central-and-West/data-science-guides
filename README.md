@@ -4,8 +4,8 @@ A repository containing the Data Science Guides, a book of worked examples in R 
 
 To access the R/Python versions of the book:
 
-- [R](https://r-data-science-guides.netlify.com)
-- [Python](https://python-data-science-guides.netlify.com)
+- [R](https://r-data-science-guides.netlify.app/)
+- [Python](https://python-data-science-guides.netlify.app/)
 
 ## Book Contents
 
